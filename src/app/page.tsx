@@ -70,13 +70,13 @@ export default function DashboardPage(): React.ReactElement {
               <span>
                 Income:{' '}
                 <span className="text-emerald-600 font-medium">
-                  ${dailyIncome.toLocaleString('en-US', { minimumFractionDigits: 2 })}
+                  €{dailyIncome.toLocaleString('en-US', { minimumFractionDigits: 2 })}
                 </span>
               </span>
               <span>
                 Spent:{' '}
                 <span className="text-rose-400 font-medium">
-                  ${dailyExpenses.toLocaleString('en-US', { minimumFractionDigits: 2 })}
+                  €{dailyExpenses.toLocaleString('en-US', { minimumFractionDigits: 2 })}
                 </span>
               </span>
             </div>
@@ -95,13 +95,13 @@ export default function DashboardPage(): React.ReactElement {
               <span>
                 Income:{' '}
                 <span className="text-emerald-600 font-medium">
-                  ${monthlyIncome.toLocaleString('en-US', { minimumFractionDigits: 2 })}
+                  €{monthlyIncome.toLocaleString('en-US', { minimumFractionDigits: 2 })}
                 </span>
               </span>
               <span>
                 Spent:{' '}
                 <span className="text-rose-400 font-medium">
-                  ${monthlyExpenses.toLocaleString('en-US', { minimumFractionDigits: 2 })}
+                  €{monthlyExpenses.toLocaleString('en-US', { minimumFractionDigits: 2 })}
                 </span>
               </span>
             </div>

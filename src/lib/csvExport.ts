@@ -18,7 +18,7 @@ interface CsvRow {
     amount: number;
 }
 
-const CSV_HEADERS = ['Date', 'Type', 'Description', 'Category', 'Amount ($)'] as const;
+const CSV_HEADERS = ['Date', 'Type', 'Description', 'Category', 'Amount (€)'] as const;
 
 /** Escape a cell value so commas and quotes inside strings don't break CSV. */
 const escapeCell = (value: string | number): string => {

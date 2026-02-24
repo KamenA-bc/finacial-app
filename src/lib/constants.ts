@@ -27,7 +27,7 @@ export const CHART_COLORS: readonly string[] = [
 ] as const;
 
 /** Currency symbol used throughout the UI. */
-export const CURRENCY_SYMBOL = '$';
+export const CURRENCY_SYMBOL = '€';
 
 /** Locale used for number formatting. */
 export const NUMBER_LOCALE = 'en-US';
