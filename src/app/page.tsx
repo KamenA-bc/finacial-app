@@ -1,65 +1,141 @@
-import Image from "next/image";
+/**
+ * Main dashboard page.
+ * Composes all components into a responsive two-column layout on desktop.
+ * Business logic is delegated entirely to useFinancialData().
+ */
+'use client';
 
-export default function Home() {
+import React from 'react';
+import { DashboardLayout } from '@/components/layout/DashboardLayout';
+import { DateNavigator } from '@/components/ui/DateNavigator';
+import { StatDisplay } from '@/components/ui/StatDisplay';
+import { IncomeForm } from '@/components/forms/IncomeForm';
+import { ExpenseForm } from '@/components/forms/ExpenseForm';
+import { CategoryChart } from '@/components/charts/CategoryChart';
+import { TransactionList } from '@/components/transactions/TransactionList';
+import { ExportButton } from '@/components/ui/ExportButton';
+import { useFinancialData } from '@/hooks/useFinancialData';
+
+/** Thin section card wrapper – clean white with gentle shadow. */
+const SectionCard = ({
+  title,
+  children,
+}: {
+  title?: string;
+  children: React.ReactNode;
+}): React.ReactElement => (
+  <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-5">
+    {title && (
+      <h2 className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-4">
+        {title}
+      </h2>
+    )}
+    {children}
+  </div>
+);
+
+/** Divider between stat displays. */
+const StatDivider = (): React.ReactElement => (
+  <div className="w-px bg-gray-100 self-stretch hidden sm:block" />
+);
+
+export default function DashboardPage(): React.ReactElement {
+  const {
+    dailyProfit,
+    monthlyProfit,
+    dailyIncome,
+    dailyExpenses,
+    monthlyIncome,
+    monthlyExpenses,
+  } = useFinancialData();
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+    <DashboardLayout>
+      {/* ── Date Navigator ───────────────────────────────────────────── */}
+      <div className="mb-5">
+        <DateNavigator />
+      </div>
+
+      {/* ── Profit Counters ──────────────────────────────────────────── */}
+      <SectionCard>
+        <div className="flex flex-col sm:flex-row sm:items-center gap-6 sm:gap-0 sm:divide-x sm:divide-gray-100">
+          {/* Daily */}
+          <div className="sm:pr-8 flex-1">
+            <StatDisplay
+              label="Daily Profit"
+              value={dailyProfit}
+              period="For the selected day"
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+            <div className="mt-3 flex gap-4 text-xs text-gray-400">
+              <span>
+                Income:{' '}
+                <span className="text-emerald-600 font-medium">
+                  ${dailyIncome.toLocaleString('en-US', { minimumFractionDigits: 2 })}
+                </span>
+              </span>
+              <span>
+                Spent:{' '}
+                <span className="text-rose-400 font-medium">
+                  ${dailyExpenses.toLocaleString('en-US', { minimumFractionDigits: 2 })}
+                </span>
+              </span>
+            </div>
+          </div>
+
+          <StatDivider />
+
+          {/* Monthly */}
+          <div className="sm:pl-8 flex-1">
+            <StatDisplay
+              label="Monthly Profit"
+              value={monthlyProfit}
+              period="Last 30 days"
+            />
+            <div className="mt-3 flex gap-4 text-xs text-gray-400">
+              <span>
+                Income:{' '}
+                <span className="text-emerald-600 font-medium">
+                  ${monthlyIncome.toLocaleString('en-US', { minimumFractionDigits: 2 })}
+                </span>
+              </span>
+              <span>
+                Spent:{' '}
+                <span className="text-rose-400 font-medium">
+                  ${monthlyExpenses.toLocaleString('en-US', { minimumFractionDigits: 2 })}
+                </span>
+              </span>
+            </div>
+          </div>
         </div>
-      </main>
-    </div>
+      </SectionCard>
+
+      {/* ── Export ───────────────────────────────────────────────────── */}
+      <div className="mt-4">
+        <ExportButton />
+      </div>
+
+      {/* ── Main Grid: Forms + Chart/List ────────────────────────────── */}
+      <div className="mt-4 grid grid-cols-1 lg:grid-cols-5 gap-4">
+        {/* LEFT: Input forms (2/5 width on desktop) */}
+        <div className="lg:col-span-2 flex flex-col gap-4">
+          <SectionCard>
+            <IncomeForm />
+          </SectionCard>
+          <SectionCard>
+            <ExpenseForm />
+          </SectionCard>
+        </div>
+
+        {/* RIGHT: Chart + Transaction list (3/5 width on desktop) */}
+        <div className="lg:col-span-3 flex flex-col gap-4">
+          <SectionCard title="Spending Breakdown">
+            <CategoryChart />
+          </SectionCard>
+          <SectionCard title="Today's Transactions">
+            <TransactionList />
+          </SectionCard>
+        </div>
+      </div>
+    </DashboardLayout>
   );
 }
