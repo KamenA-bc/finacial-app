@@ -29,8 +29,8 @@ export const IncomeForm = (): React.ReactElement => {
         resolver: zodResolver(incomeSchema),
     });
 
-    const onSubmit = (data: IncomeFormValues): void => {
-        addIncome({ date: selectedDate, amount: data.amount });
+    const onSubmit = async (data: IncomeFormValues): Promise<void> => {
+        await addIncome({ date: selectedDate, amount: data.amount });
         reset();
     };
 

@@ -39,8 +39,8 @@ export const ExpenseForm = (): React.ReactElement => {
         defaultValues: { category: EXPENSE_CATEGORIES[0] },
     });
 
-    const onSubmit = (data: ExpenseFormValues): void => {
-        addExpense({
+    const onSubmit = async (data: ExpenseFormValues): Promise<void> => {
+        await addExpense({
             date: selectedDate,
             amount: data.amount,
             description: data.description,

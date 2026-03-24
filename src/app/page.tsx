@@ -2,10 +2,11 @@
  * Main dashboard page.
  * Composes all components into a responsive two-column layout on desktop.
  * Business logic is delegated entirely to useFinancialData().
+ * Fetches transactions from Supabase on mount when user is authenticated.
  */
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import { DateNavigator } from '@/components/ui/DateNavigator';
 import { StatDisplay } from '@/components/ui/StatDisplay';
@@ -15,6 +16,10 @@ import { CategoryChart } from '@/components/charts/CategoryChart';
 import { TransactionList } from '@/components/transactions/TransactionList';
 import { ExportButton } from '@/components/ui/ExportButton';
 import { useFinancialData } from '@/hooks/useFinancialData';
+import { useAuth } from '@/components/auth/AuthProvider';
+import { useFinancialStore } from '@/store/transactionStore';
+import { Loader2 } from 'lucide-react';
+import { getMonthName, getCalendarMonthRange } from '@/lib/dateUtils';
 
 /** Thin section card wrapper – clean white with gentle shadow. */
 const SectionCard = ({
@@ -40,6 +45,19 @@ const StatDivider = (): React.ReactElement => (
 );
 
 export default function DashboardPage(): React.ReactElement {
+  const { user, loading: authLoading } = useAuth();
+  const fetchTransactions = useFinancialStore((s) => s.fetchTransactions);
+  const setUserId = useFinancialStore((s) => s.setUserId);
+  const isLoading = useFinancialStore((s) => s.isLoading);
+  const selectedDate = useFinancialStore((s) => s.selectedDate);
+
+  useEffect(() => {
+    if (user) {
+      setUserId(user.id);
+      fetchTransactions(user.id);
+    }
+  }, [user, setUserId, fetchTransactions]);
+
   const {
     dailyProfit,
     monthlyProfit,
@@ -48,6 +66,21 @@ export default function DashboardPage(): React.ReactElement {
     monthlyIncome,
     monthlyExpenses,
   } = useFinancialData();
+
+  // Compute month label from selected date
+  const selectedMonth = new Date(`${selectedDate}T00:00:00`);
+  const { start: monthStart, end: monthEnd } = getCalendarMonthRange(selectedDate);
+  const monthLabel = `${getMonthName(selectedMonth.getMonth())} ${monthStart.slice(8)}–${monthEnd.slice(8)}`;
+
+  if (authLoading || isLoading) {
+    return (
+      <DashboardLayout>
+        <div className="flex items-center justify-center py-20">
+          <Loader2 size={24} className="animate-spin text-gray-300" />
+        </div>
+      </DashboardLayout>
+    );
+  }
 
   return (
     <DashboardLayout>
@@ -89,7 +122,7 @@ export default function DashboardPage(): React.ReactElement {
             <StatDisplay
               label="Monthly Profit"
               value={monthlyProfit}
-              period="Last 30 days"
+              period={monthLabel}
             />
             <div className="mt-3 flex gap-4 text-xs text-gray-400">
               <span>

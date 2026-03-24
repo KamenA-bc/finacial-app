@@ -8,8 +8,7 @@ import { useMemo } from 'react';
 import { useFinancialStore } from '@/store/transactionStore';
 import { CategoryDataPoint, ExpenseEntry, IncomeEntry } from '@/types';
 import { EXPENSE_CATEGORIES } from '@/lib/constants';
-import { daysAgoString } from '@/lib/dateUtils';
-import { MAX_PAST_DAYS } from '@/lib/constants';
+import { getCalendarMonthRange } from '@/lib/dateUtils';
 
 interface FinancialData {
     /** All income entries for the selected day. */
@@ -47,13 +46,15 @@ export const useFinancialData = (): FinancialData => {
         const dailyExpenses = sumAmount(dailyExpenseEntries);
         const dailyProfit = dailyIncome - dailyExpenses;
 
-        // ── Monthly (last 30 days from today) ────────────────────────────────────
-        const monthlyStart = daysAgoString(MAX_PAST_DAYS);
+        // ── Monthly (calendar month of the selected date) ─────────────────────
+        const { start: monthStart, end: monthEnd } =
+            getCalendarMonthRange(selectedDate);
+
         const monthlyIncomeEntries = incomeEntries.filter(
-            (e) => e.date >= monthlyStart
+            (e) => e.date >= monthStart && e.date <= monthEnd
         );
         const monthlyExpenseEntries = expenseEntries.filter(
-            (e) => e.date >= monthlyStart
+            (e) => e.date >= monthStart && e.date <= monthEnd
         );
 
         const monthlyIncome = sumAmount(monthlyIncomeEntries);

@@ -51,3 +51,44 @@ export const isAtPastLimit = (dateStr: string): boolean => {
     const limit = daysAgoString(MAX_PAST_DAYS);
     return dateStr <= limit;
 };
+
+// ── History-page helpers ─────────────────────────────────────────────────────
+
+/** Full month names indexed 0–11. */
+const MONTH_NAMES = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December',
+] as const;
+
+/** Return the full name of a month (0-indexed). */
+export const getMonthName = (month: number): string => MONTH_NAMES[month];
+
+/** Return the number of days in a given month (1-indexed month). */
+export const getDaysInMonth = (year: number, month: number): number =>
+    new Date(year, month, 0).getDate();
+
+/**
+ * Return the first and last ISO date strings for a calendar month.
+ * @param year - Full year, e.g. 2026
+ * @param month - 0-indexed month (0 = January, 11 = December)
+ */
+export const getMonthRange = (
+    year: number,
+    month: number
+): { start: string; end: string } => {
+    const start = `${year}-${String(month + 1).padStart(2, '0')}-01`;
+    const lastDay = new Date(year, month + 1, 0).getDate();
+    const end = `${year}-${String(month + 1).padStart(2, '0')}-${String(lastDay).padStart(2, '0')}`;
+    return { start, end };
+};
+
+/**
+ * Get the calendar month range for a given ISO date string.
+ * Returns { start: 'YYYY-MM-01', end: 'YYYY-MM-DD' }.
+ */
+export const getCalendarMonthRange = (
+    dateStr: string
+): { start: string; end: string } => {
+    const d = new Date(`${dateStr}T00:00:00`);
+    return getMonthRange(d.getFullYear(), d.getMonth());
+};

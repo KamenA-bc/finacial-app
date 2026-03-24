@@ -1,0 +1,37 @@
+/**
+ * Server-side Supabase client factory for use in middleware and server components.
+ * Creates a new client per request with cookie-based session handling.
+ */
+
+import { createServerClient } from '@supabase/ssr';
+import { cookies } from 'next/headers';
+
+export const createSupabaseServerClient = async () => {
+    const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+    if (!url || !key) {
+        throw new Error(
+            'Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY.'
+        );
+    }
+
+    const cookieStore = await cookies();
+
+    return createServerClient(url, key, {
+        cookies: {
+            getAll() {
+                return cookieStore.getAll();
+            },
+            setAll(cookiesToSet) {
+                try {
+                    cookiesToSet.forEach(({ name, value, options }) =>
+                        cookieStore.set(name, value, options)
+                    );
+                } catch {
+                    // Ignore in Server Components (read-only cookies)
+                }
+            },
+        },
+    });
+};

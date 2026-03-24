@@ -40,10 +40,18 @@ export interface FinancialStore {
   expenseEntries: ExpenseEntry[];
   /** Currently selected date: YYYY-MM-DD */
   selectedDate: string;
-  addIncome: (entry: Omit<IncomeEntry, 'id'>) => void;
-  addExpense: (entry: Omit<ExpenseEntry, 'id'>) => void;
-  deleteIncome: (id: string) => void;
-  deleteExpense: (id: string) => void;
+  /** Authenticated user ID */
+  userId: string | null;
+  /** Whether data is being loaded from the server */
+  isLoading: boolean;
+  /** Last error from a server operation */
+  error: string | null;
+  setUserId: (userId: string | null) => void;
+  fetchTransactions: (userId: string) => Promise<void>;
+  addIncome: (entry: Omit<IncomeEntry, 'id'>) => Promise<void>;
+  addExpense: (entry: Omit<ExpenseEntry, 'id'>) => Promise<void>;
+  deleteIncome: (id: string) => Promise<void>;
+  deleteExpense: (id: string) => Promise<void>;
   setSelectedDate: (date: string) => void;
 }
 
