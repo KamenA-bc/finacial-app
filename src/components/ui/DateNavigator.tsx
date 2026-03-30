@@ -115,6 +115,8 @@ export const DateNavigator = (): React.ReactElement => {
     const setSelectedDate = useFinancialStore((s) => s.setSelectedDate);
 
     const [calendarOpen, setCalendarOpen] = useState(false);
+    const [manualDate, setManualDate] = useState('');
+    const [manualError, setManualError] = useState('');
 
     // Calendar view state (which month/year the popup shows)
     const selectedDateObj = new Date(`${selectedDate}T00:00:00`);
@@ -161,6 +163,14 @@ export const DateNavigator = (): React.ReactElement => {
 
         document.addEventListener('keydown', handleEsc);
         return () => document.removeEventListener('keydown', handleEsc);
+    }, [calendarOpen]);
+
+    // Clear manual input state when closing
+    useEffect(() => {
+        if (!calendarOpen) {
+            setManualDate('');
+            setManualError('');
+        }
     }, [calendarOpen]);
 
     // ── Arrow navigation ────────────────────────────────────────────────────
@@ -218,6 +228,48 @@ export const DateNavigator = (): React.ReactElement => {
 
     const handleTodayClick = (): void => {
         setSelectedDate(todayString());
+        setCalendarOpen(false);
+    };
+
+    const handleManualSubmit = (): void => {
+        setManualError('');
+        const trimmed = manualDate.trim();
+        if (!trimmed) return;
+
+        const parts = trimmed.split('/');
+        if (parts.length !== 3) {
+            setManualError('Формат: ДД/ММ/ГГГГ');
+            return;
+        }
+
+        const [d, m, y] = parts;
+        const day = parseInt(d, 10);
+        const month = parseInt(m, 10) - 1; // 0-indexed
+        let year = parseInt(y, 10);
+
+        if (year > 0 && year < 100) year += 2000;
+
+        const dateObj = new Date(year, month, day);
+        if (isNaN(dateObj.getTime()) || dateObj.getDate() !== day || dateObj.getMonth() !== month) {
+            setManualError('Невалидна дата');
+            return;
+        }
+
+        const iso = toISODateString(dateObj);
+        const today = todayString();
+        const minDate = daysAgoString(MAX_PAST_DAYS);
+
+        if (iso > today) {
+            setManualError('Не може да е в бъдещето');
+            return;
+        }
+
+        if (iso < minDate) {
+            setManualError(`Максимум 2 години назад`);
+            return;
+        }
+
+        setSelectedDate(iso);
         setCalendarOpen(false);
     };
 
@@ -367,11 +419,39 @@ export const DateNavigator = (): React.ReactElement => {
                         })}
                     </div>
 
+                    {/* Manual Input Footer */}
+                    <div className="mt-4 pt-3 border-t border-gray-100">
+                        <label className="block text-xs text-gray-400 font-medium mb-1.5 px-1">
+                            Въведете дата (ДД/ММ/ГГГГ)
+                        </label>
+                        <div className="flex gap-2 items-center px-1">
+                            <input
+                                type="text"
+                                placeholder="напр. 25/12/2023"
+                                value={manualDate}
+                                onChange={(e) => setManualDate(e.target.value)}
+                                onKeyDown={(e) => e.key === 'Enter' && handleManualSubmit()}
+                                className="flex-1 w-full px-2.5 py-1.5 text-xs text-gray-700 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:bg-white focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400 transition-colors"
+                            />
+                            <button
+                                onClick={handleManualSubmit}
+                                className="px-3 py-1.5 bg-gray-900 text-white text-xs font-medium rounded-md hover:bg-gray-800 transition-colors"
+                            >
+                                Отиди
+                            </button>
+                        </div>
+                        {manualError && (
+                            <p className="text-[10px] text-rose-500 mt-1.5 px-1 font-medium">
+                                {manualError}
+                            </p>
+                        )}
+                    </div>
+
                     {/* Footer: Today button */}
-                    <div className="mt-3 pt-3 border-t border-gray-100 flex justify-center">
+                    <div className="mt-2 pt-2 border-t border-gray-100 flex justify-center">
                         <button
                             onClick={handleTodayClick}
-                            className="text-xs font-medium text-emerald-600 hover:text-emerald-700 hover:bg-emerald-50 px-3 py-1.5 rounded-md transition-colors"
+                            className="text-xs font-medium text-emerald-600 hover:text-emerald-700 hover:bg-emerald-50 px-3 py-1.5 rounded-md transition-colors w-full"
                         >
                             Отиди на Днес
                         </button>
