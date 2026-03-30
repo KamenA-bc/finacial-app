@@ -1,7 +1,10 @@
 import { ExpenseCategory } from '@/types';
 
-/** Maximum number of past days the user can navigate back to. */
-export const MAX_PAST_DAYS = 30;
+/** Maximum number of past days for CSV export. */
+export const MAX_EXPORT_DAYS = 30;
+
+/** Maximum number of past days the user can navigate back to (≈ 2 years). */
+export const MAX_PAST_DAYS = 730;
 
 /** All allowed expense categories (single source of truth). */
 export const EXPENSE_CATEGORIES: readonly ExpenseCategory[] = [

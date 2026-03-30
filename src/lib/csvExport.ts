@@ -7,7 +7,7 @@
 
 import { IncomeEntry, ExpenseEntry } from '@/types';
 import { daysAgoString } from '@/lib/dateUtils';
-import { MAX_PAST_DAYS } from '@/lib/constants';
+import { MAX_EXPORT_DAYS } from '@/lib/constants';
 
 /** A normalised row used inside the CSV builder. */
 interface CsvRow {
@@ -43,7 +43,7 @@ export const exportToCsv = (
     incomeEntries: IncomeEntry[],
     expenseEntries: ExpenseEntry[]
 ): void => {
-    const monthlyStart = daysAgoString(MAX_PAST_DAYS);
+    const monthlyStart = daysAgoString(MAX_EXPORT_DAYS);
 
     const incomeRows: CsvRow[] = incomeEntries
         .filter((e) => e.date >= monthlyStart)
