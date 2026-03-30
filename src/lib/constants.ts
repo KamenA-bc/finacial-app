@@ -13,6 +13,10 @@ export const EXPENSE_CATEGORIES: readonly ExpenseCategory[] = [
     'Utilities',
     'Eating Out',
     'Entertainment',
+    'Medicine/Health',
+    'Fuel',
+    'Firm Expenses',
+    'Shopping',
     'Others',
 ] as const;
 
@@ -26,6 +30,10 @@ export const CHART_COLORS: readonly string[] = [
     '#BFB27C', // Utilities – warm sand
     '#BF7C7C', // Eating Out – muted rose
     '#A07CBF', // Entertainment – lavender
+    '#D9A0B0', // Medicine/Health - soft pink
+    '#EFA876', // Fuel - soft orange
+    '#C4B5A5', // Firm Expenses - taupe
+    '#8FBFA4', // Shopping - mint green
     '#9CBFBF', // Others – teal
 ] as const;
 

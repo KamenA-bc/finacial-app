@@ -10,6 +10,10 @@ import {
     MoreHorizontal,
     TrendingUp,
     Trash2,
+    Pill,
+    Fuel,
+    Briefcase,
+    ShoppingBag,
 } from 'lucide-react';
 import { ExpenseCategory, ExpenseEntry, IncomeEntry } from '@/types';
 import { useFinancialData } from '@/hooks/useFinancialData';
@@ -28,6 +32,10 @@ const CATEGORY_ICONS: Record<ExpenseCategory, React.ReactElement> = {
     Utilities: <Zap size={14} />,
     'Eating Out': <Utensils size={14} />,
     Entertainment: <Film size={14} />,
+    'Medicine/Health': <Pill size={14} />,
+    Fuel: <Fuel size={14} />,
+    'Firm Expenses': <Briefcase size={14} />,
+    Shopping: <ShoppingBag size={14} />,
     Others: <MoreHorizontal size={14} />,
 };
 
@@ -37,6 +45,10 @@ const CATEGORY_COLORS: Record<ExpenseCategory, string> = {
     Utilities: 'bg-amber-50 text-amber-600',
     'Eating Out': 'bg-rose-50 text-rose-500',
     Entertainment: 'bg-purple-50 text-purple-500',
+    'Medicine/Health': 'bg-pink-50 text-pink-500',
+    Fuel: 'bg-orange-50 text-orange-500',
+    'Firm Expenses': 'bg-slate-50 text-slate-500',
+    Shopping: 'bg-teal-50 text-teal-500',
     Others: 'bg-gray-100 text-gray-500',
 };
 

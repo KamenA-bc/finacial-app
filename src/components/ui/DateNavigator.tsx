@@ -180,6 +180,15 @@ export const DateNavigator = (): React.ReactElement => {
     // ── Calendar month navigation ───────────────────────────────────────────
 
     const goToPrevMonth = (): void => {
+        const minDateStr = daysAgoString(MAX_PAST_DAYS);
+        const minDateObj = new Date(`${minDateStr}T00:00:00`);
+        const prevMonth = viewMonth === 0 ? 11 : viewMonth - 1;
+        const prevYear = viewMonth === 0 ? viewYear - 1 : viewYear;
+
+        if (prevYear < minDateObj.getFullYear() || (prevYear === minDateObj.getFullYear() && prevMonth < minDateObj.getMonth())) {
+            return;
+        }
+
         setViewMonth((prev) => {
             if (prev === 0) {
                 setViewYear((y) => y - 1);
@@ -221,6 +230,13 @@ export const DateNavigator = (): React.ReactElement => {
     const canGoNextMonth = !(
         viewYear > now.getFullYear() ||
         (viewYear === now.getFullYear() && viewMonth >= now.getMonth())
+    );
+
+    const minDateStr = daysAgoString(MAX_PAST_DAYS);
+    const minDateObj = new Date(`${minDateStr}T00:00:00`);
+    const canGoPrevMonth = !(
+        viewYear < minDateObj.getFullYear() ||
+        (viewYear === minDateObj.getFullYear() && viewMonth <= minDateObj.getMonth())
     );
 
     const calendarGrid = calendarOpen
@@ -285,7 +301,8 @@ export const DateNavigator = (): React.ReactElement => {
                     <div className="flex items-center justify-between mb-3">
                         <button
                             onClick={goToPrevMonth}
-                            className="flex items-center justify-center w-7 h-7 rounded-full text-gray-400 hover:bg-gray-100 hover:text-gray-700 transition-colors"
+                            disabled={!canGoPrevMonth}
+                            className="flex items-center justify-center w-7 h-7 rounded-full text-gray-400 hover:bg-gray-100 hover:text-gray-700 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
                             aria-label="Previous month"
                         >
                             <ChevronLeft size={16} />

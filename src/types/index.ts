@@ -11,6 +11,10 @@ export type ExpenseCategory =
   | 'Utilities'
   | 'Eating Out'
   | 'Entertainment'
+  | 'Medicine/Health'
+  | 'Fuel'
+  | 'Firm Expenses'
+  | 'Shopping'
   | 'Others';
 
 /** Discriminated union for transaction type. */
