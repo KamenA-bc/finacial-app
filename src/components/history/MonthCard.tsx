@@ -23,7 +23,7 @@ const fmt = (n: number): string =>
 
 const formatDayDate = (dateStr: string): string => {
     const d = new Date(`${dateStr}T00:00:00`);
-    return d.toLocaleDateString('en-US', { weekday: 'short', day: 'numeric' });
+    return d.toLocaleDateString('bg-BG', { weekday: 'short', day: 'numeric' });
 };
 
 const DailyRow = ({ day }: { day: DailySummary }): React.ReactElement => {
@@ -122,7 +122,7 @@ export const MonthCard = ({
 
             {!data.hasData && !isFuture && (
                 <p className="px-5 pb-4 text-xs text-gray-300">
-                    No transactions
+                    Няма транзакции
                 </p>
             )}
 
@@ -130,15 +130,15 @@ export const MonthCard = ({
             {expanded && data.dailyBreakdown.length > 0 && (
                 <div className="border-t border-gray-100 px-5 pb-5 pt-3">
                     <p className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-3">
-                        Daily Breakdown
+                        Дневно разпределение
                     </p>
                     <table className="w-full">
                         <thead>
                             <tr className="text-xs text-gray-400 uppercase tracking-wider">
-                                <th className="text-left pb-2 font-medium">Day</th>
-                                <th className="text-right pb-2 font-medium pr-4">Income</th>
-                                <th className="text-right pb-2 font-medium pr-4">Expenses</th>
-                                <th className="text-right pb-2 font-medium">Profit</th>
+                                <th className="text-left pb-2 font-medium">Ден</th>
+                                <th className="text-right pb-2 font-medium pr-4">Приход</th>
+                                <th className="text-right pb-2 font-medium pr-4">Разход</th>
+                                <th className="text-right pb-2 font-medium">Печалба</th>
                             </tr>
                         </thead>
                         <tbody>

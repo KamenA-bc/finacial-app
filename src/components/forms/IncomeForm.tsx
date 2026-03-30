@@ -9,8 +9,8 @@ import { useFinancialStore } from '@/store/transactionStore';
 
 const incomeSchema = z.object({
     amount: z
-        .number({ error: 'Please enter a valid number' })
-        .positive('Amount must be greater than 0'),
+        .number({ error: 'Моля, въведете валидно число' })
+        .positive('Сумата трябва да е по-голяма от 0'),
 });
 
 type IncomeFormValues = z.infer<typeof incomeSchema>;
@@ -43,7 +43,7 @@ export const IncomeForm = (): React.ReactElement => {
             <div className="flex items-center gap-2 mb-1">
                 <TrendingUp size={16} className="text-emerald-500" />
                 <h3 className="text-sm font-semibold text-gray-700 uppercase tracking-wider">
-                    Log Income
+                    Добави приход
                 </h3>
             </div>
 
@@ -52,7 +52,7 @@ export const IncomeForm = (): React.ReactElement => {
                     htmlFor="income-amount"
                     className="text-xs text-gray-500 font-medium"
                 >
-                    Amount earned
+                    Спечелени пари
                 </label>
                 <div className="relative">
                     <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm">
@@ -81,7 +81,7 @@ export const IncomeForm = (): React.ReactElement => {
                 className="flex items-center justify-center gap-2 w-full py-2.5 rounded-md bg-emerald-500 text-white text-sm font-medium hover:bg-emerald-600 active:scale-[0.98] disabled:opacity-60 transition-all"
             >
                 <PlusCircle size={16} />
-                Add Income
+                Добави приход
             </button>
         </form>
     );

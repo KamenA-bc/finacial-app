@@ -20,11 +20,11 @@ import { MAX_PAST_DAYS } from '@/lib/constants';
 
 // ── Constants ────────────────────────────────────────────────────────────────
 
-const WEEKDAY_LABELS = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'] as const;
+const WEEKDAY_LABELS = ['Нд', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'] as const;
 
 const MONTH_NAMES_SHORT = [
-    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
+    'Яну', 'Фев', 'Мар', 'Апр', 'Май', 'Юни',
+    'Юли', 'Авг', 'Сеп', 'Окт', 'Ное', 'Дек',
 ] as const;
 
 // ── Calendar Grid Builder ────────────────────────────────────────────────────
@@ -249,7 +249,7 @@ export const DateNavigator = (): React.ReactElement => {
             <button
                 onClick={handlePrev}
                 disabled={atLimit}
-                aria-label="Previous day"
+                aria-label="Предишен ден"
                 className="flex items-center justify-center w-9 h-9 rounded-full border border-gray-200 text-gray-500 hover:border-gray-400 hover:text-gray-700 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
             >
                 <ChevronLeft size={18} />
@@ -260,7 +260,7 @@ export const DateNavigator = (): React.ReactElement => {
                 ref={triggerRef}
                 onClick={() => (calendarOpen ? setCalendarOpen(false) : openCalendar())}
                 className="flex items-center gap-2 text-gray-700 hover:text-gray-900 transition-colors cursor-pointer group"
-                aria-label="Open calendar picker"
+                aria-label="Отвори календар"
                 aria-expanded={calendarOpen}
                 id="date-navigator-trigger"
             >
@@ -273,7 +273,7 @@ export const DateNavigator = (): React.ReactElement => {
                 </span>
                 {atToday && (
                     <span className="text-xs font-medium text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">
-                        Today
+                        Днес
                     </span>
                 )}
             </button>
@@ -282,7 +282,7 @@ export const DateNavigator = (): React.ReactElement => {
             <button
                 onClick={handleNext}
                 disabled={atToday}
-                aria-label="Next day"
+                aria-label="Следващ ден"
                 className="flex items-center justify-center w-9 h-9 rounded-full border border-gray-200 text-gray-500 hover:border-gray-400 hover:text-gray-700 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
             >
                 <ChevronRight size={18} />
@@ -294,7 +294,7 @@ export const DateNavigator = (): React.ReactElement => {
                     ref={popoverRef}
                     className="absolute top-full left-1/2 -translate-x-1/2 mt-2 z-50 bg-white rounded-xl shadow-lg border border-gray-100 p-4 w-[300px] animate-[fadeSlideIn_150ms_ease-out]"
                     role="dialog"
-                    aria-label="Date picker calendar"
+                    aria-label="Избор на дата"
                     id="date-navigator-calendar"
                 >
                     {/* Month/year header */}
@@ -303,7 +303,7 @@ export const DateNavigator = (): React.ReactElement => {
                             onClick={goToPrevMonth}
                             disabled={!canGoPrevMonth}
                             className="flex items-center justify-center w-7 h-7 rounded-full text-gray-400 hover:bg-gray-100 hover:text-gray-700 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
-                            aria-label="Previous month"
+                            aria-label="Предишен месец"
                         >
                             <ChevronLeft size={16} />
                         </button>
@@ -314,7 +314,7 @@ export const DateNavigator = (): React.ReactElement => {
                             onClick={goToNextMonth}
                             disabled={!canGoNextMonth}
                             className="flex items-center justify-center w-7 h-7 rounded-full text-gray-400 hover:bg-gray-100 hover:text-gray-700 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
-                            aria-label="Next month"
+                            aria-label="Следващ месец"
                         >
                             <ChevronRight size={16} />
                         </button>
@@ -373,7 +373,7 @@ export const DateNavigator = (): React.ReactElement => {
                             onClick={handleTodayClick}
                             className="text-xs font-medium text-emerald-600 hover:text-emerald-700 hover:bg-emerald-50 px-3 py-1.5 rounded-md transition-colors"
                         >
-                            Jump to Today
+                            Отиди на Днес
                         </button>
                     </div>
                 </div>

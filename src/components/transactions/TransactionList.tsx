@@ -22,6 +22,7 @@ import {
     CURRENCY_SYMBOL,
     NUMBER_LOCALE,
     CURRENCY_FORMAT_OPTIONS,
+    CATEGORY_BG_MAP,
 } from '@/lib/constants';
 
 // ── Constants ────────────────────────────────────────────────────────────────
@@ -79,7 +80,7 @@ const ExpenseRow = ({
             <p className="text-sm text-gray-700 font-medium truncate">
                 {expense.description}
             </p>
-            <p className="text-xs text-gray-400">{expense.category}</p>
+            <p className="text-xs text-gray-400">{CATEGORY_BG_MAP[expense.category] ?? expense.category}</p>
         </div>
         <span className="text-sm font-semibold text-rose-500 tabular-nums flex-shrink-0">
             -{formatAmount(expense.amount)}
@@ -105,8 +106,8 @@ const IncomeRow = ({ income, onDelete }: IncomeRowProps): React.ReactElement => 
             <TrendingUp size={14} />
         </div>
         <div className="flex-1 min-w-0">
-            <p className="text-sm text-gray-700 font-medium">Income</p>
-            <p className="text-xs text-gray-400">Money earned</p>
+            <p className="text-sm text-gray-700 font-medium">Приход</p>
+            <p className="text-xs text-gray-400">Спечелени пари</p>
         </div>
         <span className="text-sm font-semibold text-emerald-600 tabular-nums flex-shrink-0">
             +{formatAmount(income.amount)}
@@ -135,7 +136,7 @@ export const TransactionList = (): React.ReactElement => {
     if (!hasEntries) {
         return (
             <p className="text-sm text-gray-300 text-center py-6">
-                No transactions for this day
+                Няма транзакции за този ден
             </p>
         );
     }

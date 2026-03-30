@@ -39,7 +39,7 @@ export const AnnualSummary = ({
             <div className="flex items-center gap-2 mb-5">
                 <BarChart3 size={18} className="text-gray-400" />
                 <h2 className="text-sm font-semibold text-gray-700 uppercase tracking-wider">
-                    {year} Annual Review
+                    {year} Годишен преглед
                 </h2>
             </div>
 
@@ -48,7 +48,7 @@ export const AnnualSummary = ({
                 <div className="flex flex-col gap-1">
                     <div className="flex items-center gap-1.5 text-xs text-gray-400 font-medium uppercase tracking-widest">
                         <TrendingUp size={12} className="text-emerald-500" />
-                        Total Income
+                        Общ приход
                     </div>
                     <p className="text-2xl font-bold text-emerald-600 tabular-nums">
                         +{formatCurrency(totalIncome)}
@@ -59,7 +59,7 @@ export const AnnualSummary = ({
                 <div className="flex flex-col gap-1">
                     <div className="flex items-center gap-1.5 text-xs text-gray-400 font-medium uppercase tracking-widest">
                         <TrendingDown size={12} className="text-rose-400" />
-                        Total Expenses
+                        Общи разходи
                     </div>
                     <p className="text-2xl font-bold text-rose-500 tabular-nums">
                         −{formatCurrency(totalExpenses)}
@@ -70,7 +70,7 @@ export const AnnualSummary = ({
                 <div className="flex flex-col gap-1">
                     <div className="flex items-center gap-1.5 text-xs text-gray-400 font-medium uppercase tracking-widest">
                         <BarChart3 size={12} className={profitClass} />
-                        Net Profit
+                        Нетна печалба
                     </div>
                     <p className={`text-2xl font-bold tabular-nums ${profitClass}`}>
                         {profitSign}{formatCurrency(totalProfit)}

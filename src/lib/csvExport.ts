@@ -7,18 +7,18 @@
 
 import { IncomeEntry, ExpenseEntry } from '@/types';
 import { daysAgoString } from '@/lib/dateUtils';
-import { MAX_EXPORT_DAYS } from '@/lib/constants';
+import { MAX_EXPORT_DAYS, CATEGORY_BG_MAP } from '@/lib/constants';
 
 /** A normalised row used inside the CSV builder. */
 interface CsvRow {
     date: string;
-    type: 'Income' | 'Expense';
+    type: 'Приход' | 'Разход';
     description: string;
     category: string;
     amount: number;
 }
 
-const CSV_HEADERS = ['Date', 'Type', 'Description', 'Category', 'Amount (€)'] as const;
+const CSV_HEADERS = ['Дата', 'Тип', 'Описание', 'Категория', 'Сума (€)'] as const;
 
 /** Escape a cell value so commas and quotes inside strings don't break CSV. */
 const escapeCell = (value: string | number): string => {
@@ -49,8 +49,8 @@ export const exportToCsv = (
         .filter((e) => e.date >= monthlyStart)
         .map((e) => ({
             date: e.date,
-            type: 'Income',
-            description: 'Money Earned',
+            type: 'Приход',
+            description: 'Спечелени пари',
             category: '',
             amount: e.amount,
         }));
@@ -59,9 +59,9 @@ export const exportToCsv = (
         .filter((e) => e.date >= monthlyStart)
         .map((e) => ({
             date: e.date,
-            type: 'Expense',
+            type: 'Разход',
             description: e.description,
-            category: e.category,
+            category: CATEGORY_BG_MAP[e.category] ?? e.category,
             amount: e.amount,
         }));
 

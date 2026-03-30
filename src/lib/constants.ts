@@ -20,6 +20,20 @@ export const EXPENSE_CATEGORIES: readonly ExpenseCategory[] = [
     'Others',
 ] as const;
 
+/** Mapping internal English categories to Bulgarian display text. */
+export const CATEGORY_BG_MAP: Record<ExpenseCategory, string> = {
+    'Public Transport': 'Градски транспорт',
+    'Groceries': 'Хранителни стоки',
+    'Utilities': 'Битови сметки',
+    'Eating Out': 'Хранене навън',
+    'Entertainment': 'Забавления',
+    'Medicine/Health': 'Медицина/Здраве',
+    'Fuel': 'Гориво',
+    'Firm Expenses': 'Фирмени разходи',
+    'Shopping': 'Пазаруване',
+    'Others': 'Други',
+};
+
 /**
  * Muted, sophisticated donut chart palette.
  * One colour per category in the same order as EXPENSE_CATEGORIES.
@@ -41,7 +55,7 @@ export const CHART_COLORS: readonly string[] = [
 export const CURRENCY_SYMBOL = '€';
 
 /** Locale used for number formatting. */
-export const NUMBER_LOCALE = 'en-US';
+export const NUMBER_LOCALE = 'bg-BG';
 
 /** Options for formatting currency amounts. */
 export const CURRENCY_FORMAT_OPTIONS: Intl.NumberFormatOptions = {

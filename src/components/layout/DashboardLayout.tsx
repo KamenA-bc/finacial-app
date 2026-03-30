@@ -21,8 +21,8 @@ export const DashboardLayout = ({
     const pathname = usePathname();
 
     const navLinks = [
-        { href: '/', label: 'Dashboard' },
-        { href: '/history', label: 'History', icon: <History size={14} /> },
+        { href: '/', label: 'Табло' },
+        { href: '/history', label: 'История', icon: <History size={14} /> },
     ];
 
     return (
@@ -69,10 +69,10 @@ export const DashboardLayout = ({
                         <button
                             onClick={signOut}
                             className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-xs text-gray-400 hover:text-gray-700 hover:bg-gray-50 transition-colors"
-                            aria-label="Sign out"
+                            aria-label="Изход"
                         >
                             <LogOut size={13} />
-                            <span className="hidden sm:inline">Sign out</span>
+                            <span className="hidden sm:inline">Изход</span>
                         </button>
                     </div>
                 </div>

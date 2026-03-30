@@ -4,15 +4,15 @@ import './globals.css';
 import { AuthProvider } from '@/components/auth/AuthProvider';
 
 const inter = Inter({
-  subsets: ['latin'],
+  subsets: ['cyrillic', 'latin'],
   display: 'swap',
   variable: '--font-inter',
 });
 
 export const metadata: Metadata = {
-  title: 'Finance Tracker – Personal Expense & Income Dashboard',
+  title: 'Finance Tracker – Персонално табло за приходи и разходи',
   description:
-    'A personal expense and income tracker. Log transactions, view category breakdowns, and monitor your daily and monthly profit.',
+    'Персонален тракер за разходи и приходи. Добавяйте транзакции, разглеждайте разпределение по категории и следете дневната и месечната си печалба.',
 };
 
 export default function RootLayout({
@@ -21,7 +21,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }): React.ReactElement {
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="bg" className={inter.variable}>
       <body className="antialiased font-sans">
         <AuthProvider>{children}</AuthProvider>
       </body>

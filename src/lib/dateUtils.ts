@@ -35,7 +35,7 @@ export const addDays = (dateStr: string, delta: number): string => {
 /** Format an ISO date string for human display (e.g. "Tuesday, Feb 24"). */
 export const formatDisplayDate = (dateStr: string): string => {
     const d = new Date(`${dateStr}T00:00:00`);
-    return d.toLocaleDateString('en-US', {
+    return d.toLocaleDateString('bg-BG', {
         weekday: 'long',
         month: 'short',
         day: 'numeric',
@@ -56,8 +56,8 @@ export const isAtPastLimit = (dateStr: string): boolean => {
 
 /** Full month names indexed 0–11. */
 const MONTH_NAMES = [
-    'January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December',
+    'Януари', 'Февруари', 'Март', 'Април', 'Май', 'Юни',
+    'Юли', 'Август', 'Септември', 'Октомври', 'Ноември', 'Декември',
 ] as const;
 
 /** Return the full name of a month (0-indexed). */

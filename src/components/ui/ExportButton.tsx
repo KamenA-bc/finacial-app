@@ -35,17 +35,17 @@ export const ExportButton = (): React.ReactElement => {
                 {exported ? (
                     <>
                         <CheckCircle size={15} />
-                        Downloaded!
+                        Изтеглен!
                     </>
                 ) : (
                     <>
                         <Download size={15} />
-                        Export to Google Sheets
+                        Експортирай в Google Sheets
                     </>
                 )}
             </button>
             <p className="text-xs text-gray-400">
-                Downloads last 30 days as .csv → import via{' '}
+                Изтегля последните 30 дни като .csv → импортирайте чрез{' '}
                 <span className="font-medium text-gray-500">
                     Google Sheets › File › Import
                 </span>

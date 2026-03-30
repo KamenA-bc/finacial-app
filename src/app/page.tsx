@@ -20,6 +20,7 @@ import { useAuth } from '@/components/auth/AuthProvider';
 import { useFinancialStore } from '@/store/transactionStore';
 import { Loader2 } from 'lucide-react';
 import { getMonthName, getCalendarMonthRange } from '@/lib/dateUtils';
+import { NUMBER_LOCALE, CURRENCY_FORMAT_OPTIONS } from '@/lib/constants';
 
 /** Thin section card wrapper – clean white with gentle shadow. */
 const SectionCard = ({
@@ -95,21 +96,21 @@ export default function DashboardPage(): React.ReactElement {
           {/* Daily */}
           <div className="sm:pr-8 flex-1">
             <StatDisplay
-              label="Daily Profit"
+              label="Дневна печалба"
               value={dailyProfit}
-              period="For the selected day"
+              period="За избрания ден"
             />
             <div className="mt-3 flex gap-4 text-xs text-gray-400">
               <span>
-                Income:{' '}
+                Приход:{' '}
                 <span className="text-emerald-600 font-medium">
-                  €{dailyIncome.toLocaleString('en-US', { minimumFractionDigits: 2 })}
+                  €{dailyIncome.toLocaleString(NUMBER_LOCALE, CURRENCY_FORMAT_OPTIONS)}
                 </span>
               </span>
               <span>
-                Spent:{' '}
+                Разход:{' '}
                 <span className="text-rose-400 font-medium">
-                  €{dailyExpenses.toLocaleString('en-US', { minimumFractionDigits: 2 })}
+                  €{dailyExpenses.toLocaleString(NUMBER_LOCALE, CURRENCY_FORMAT_OPTIONS)}
                 </span>
               </span>
             </div>
@@ -120,21 +121,21 @@ export default function DashboardPage(): React.ReactElement {
           {/* Monthly */}
           <div className="sm:pl-8 flex-1">
             <StatDisplay
-              label="Monthly Profit"
+              label="Месечна печалба"
               value={monthlyProfit}
               period={monthLabel}
             />
             <div className="mt-3 flex gap-4 text-xs text-gray-400">
               <span>
-                Income:{' '}
+                Приход:{' '}
                 <span className="text-emerald-600 font-medium">
-                  €{monthlyIncome.toLocaleString('en-US', { minimumFractionDigits: 2 })}
+                  €{monthlyIncome.toLocaleString(NUMBER_LOCALE, CURRENCY_FORMAT_OPTIONS)}
                 </span>
               </span>
               <span>
-                Spent:{' '}
+                Разход:{' '}
                 <span className="text-rose-400 font-medium">
-                  €{monthlyExpenses.toLocaleString('en-US', { minimumFractionDigits: 2 })}
+                  €{monthlyExpenses.toLocaleString(NUMBER_LOCALE, CURRENCY_FORMAT_OPTIONS)}
                 </span>
               </span>
             </div>
@@ -161,10 +162,10 @@ export default function DashboardPage(): React.ReactElement {
 
         {/* RIGHT: Chart + Transaction list (3/5 width on desktop) */}
         <div className="lg:col-span-3 flex flex-col gap-4">
-          <SectionCard title="Spending Breakdown">
+          <SectionCard title="Разпределение на разходите">
             <CategoryChart />
           </SectionCard>
-          <SectionCard title="Today's Transactions">
+          <SectionCard title="Днешни транзакции">
             <TransactionList />
           </SectionCard>
         </div>

@@ -49,7 +49,7 @@ export default function HistoryPage(): React.ReactElement {
                 <button
                     onClick={() => setYear((y) => y - 1)}
                     className="flex items-center justify-center w-9 h-9 rounded-full border border-gray-200 text-gray-500 hover:border-gray-400 hover:text-gray-700 transition-colors"
-                    aria-label="Previous year"
+                    aria-label="Предишна година"
                 >
                     <ChevronLeft size={18} />
                 </button>
@@ -60,7 +60,7 @@ export default function HistoryPage(): React.ReactElement {
                     onClick={() => setYear((y) => y + 1)}
                     disabled={year >= currentYear}
                     className="flex items-center justify-center w-9 h-9 rounded-full border border-gray-200 text-gray-500 hover:border-gray-400 hover:text-gray-700 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
-                    aria-label="Next year"
+                    aria-label="Следваща година"
                 >
                     <ChevronRight size={18} />
                 </button>

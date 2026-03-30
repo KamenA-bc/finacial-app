@@ -11,7 +11,7 @@ import {
 } from 'recharts';
 import { PieChart as PieIcon } from 'lucide-react';
 import { useFinancialData } from '@/hooks/useFinancialData';
-import { CHART_COLORS, CURRENCY_SYMBOL, NUMBER_LOCALE, CURRENCY_FORMAT_OPTIONS } from '@/lib/constants';
+import { CHART_COLORS, CURRENCY_SYMBOL, NUMBER_LOCALE, CURRENCY_FORMAT_OPTIONS, CATEGORY_BG_MAP } from '@/lib/constants';
 import { CategoryDataPoint } from '@/types';
 
 const formatTooltipValue = (value: number): string =>
@@ -44,16 +44,21 @@ export const CategoryChart = (): React.ReactElement => {
         return (
             <div className="flex flex-col items-center justify-center gap-3 py-10 text-gray-300">
                 <PieIcon size={40} strokeWidth={1.2} />
-                <p className="text-sm">No expenses logged today</p>
+                <p className="text-sm">Няма добавени разходи днес</p>
             </div>
         );
     }
+
+    const translatedBreakdown = categoryBreakdown.map((entry) => ({
+        ...entry,
+        name: CATEGORY_BG_MAP[entry.name as keyof typeof CATEGORY_BG_MAP] ?? entry.name,
+    }));
 
     return (
         <ResponsiveContainer width="100%" height={260}>
             <PieChart>
                 <Pie
-                    data={categoryBreakdown as CategoryDataPoint[]}
+                    data={translatedBreakdown}
                     cx="50%"
                     cy="50%"
                     innerRadius={65}

@@ -6,17 +6,17 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { PlusCircle, Receipt } from 'lucide-react';
 import { useFinancialStore } from '@/store/transactionStore';
-import { EXPENSE_CATEGORIES } from '@/lib/constants';
+import { EXPENSE_CATEGORIES, CATEGORY_BG_MAP } from '@/lib/constants';
 import { ExpenseCategory } from '@/types';
 
 const expenseSchema = z.object({
     description: z
         .string()
-        .min(1, 'Description is required')
-        .max(80, 'Description too long'),
+        .min(1, 'Описанието е задължително')
+        .max(80, 'Описанието е твърде дълго'),
     amount: z
-        .number({ error: 'Please enter a valid number' })
-        .positive('Amount must be greater than 0'),
+        .number({ error: 'Моля, въведете валидно число' })
+        .positive('Сумата трябва да е по-голяма от 0'),
     category: z.enum(
         EXPENSE_CATEGORIES as [ExpenseCategory, ...ExpenseCategory[]]
     ),
@@ -61,7 +61,7 @@ export const ExpenseForm = (): React.ReactElement => {
             <div className="flex items-center gap-2 mb-1">
                 <Receipt size={16} className="text-rose-400" />
                 <h3 className="text-sm font-semibold text-gray-700 uppercase tracking-wider">
-                    Log Expense
+                    Добави разход
                 </h3>
             </div>
 
@@ -71,12 +71,12 @@ export const ExpenseForm = (): React.ReactElement => {
                     htmlFor="expense-description"
                     className="text-xs text-gray-500 font-medium"
                 >
-                    Description
+                    Описание
                 </label>
                 <input
                     id="expense-description"
                     type="text"
-                    placeholder="e.g. Morning coffee"
+                    placeholder="напр. сутрешно кафе"
                     {...register('description')}
                     className={inputClass}
                 />
@@ -91,7 +91,7 @@ export const ExpenseForm = (): React.ReactElement => {
                     htmlFor="expense-amount"
                     className="text-xs text-gray-500 font-medium"
                 >
-                    Amount
+                    Сума
                 </label>
                 <div className="relative">
                     <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm">
@@ -118,7 +118,7 @@ export const ExpenseForm = (): React.ReactElement => {
                     htmlFor="expense-category"
                     className="text-xs text-gray-500 font-medium"
                 >
-                    Category
+                    Категория
                 </label>
                 <select
                     id="expense-category"
@@ -127,7 +127,7 @@ export const ExpenseForm = (): React.ReactElement => {
                 >
                     {EXPENSE_CATEGORIES.map((cat) => (
                         <option key={cat} value={cat}>
-                            {cat}
+                            {CATEGORY_BG_MAP[cat]}
                         </option>
                     ))}
                 </select>
@@ -142,7 +142,7 @@ export const ExpenseForm = (): React.ReactElement => {
                 className="flex items-center justify-center gap-2 w-full py-2.5 rounded-md bg-rose-400 text-white text-sm font-medium hover:bg-rose-500 active:scale-[0.98] disabled:opacity-60 transition-all"
             >
                 <PlusCircle size={16} />
-                Add Expense
+                Добави разход
             </button>
         </form>
     );
