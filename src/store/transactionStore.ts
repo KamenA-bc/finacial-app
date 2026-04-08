@@ -33,7 +33,7 @@ export const useFinancialStore = create<FinancialStore>()((set, get) => ({
                     .order('date', { ascending: true }),
                 supabase
                     .from('expense_entries')
-                    .select('id, date, amount, description, category')
+                    .select('id, date, amount, description, category, is_work_expense')
                     .eq('user_id', userId)
                     .order('date', { ascending: true }),
             ]);
@@ -43,7 +43,14 @@ export const useFinancialStore = create<FinancialStore>()((set, get) => ({
 
             set({
                 incomeEntries: (incomeRes.data ?? []) as IncomeEntry[],
-                expenseEntries: (expenseRes.data ?? []) as ExpenseEntry[],
+                expenseEntries: (expenseRes.data ?? []).map((e: Record<string, unknown>) => ({
+                    id: e.id as string,
+                    date: e.date as string,
+                    amount: e.amount as number,
+                    description: e.description as string,
+                    category: e.category as string,
+                    isWorkExpense: (e.is_work_expense as boolean) ?? false,
+                })) as ExpenseEntry[],
                 userId,
                 isLoading: false,
             });
@@ -90,14 +97,24 @@ export const useFinancialStore = create<FinancialStore>()((set, get) => ({
                     amount: entry.amount,
                     description: entry.description,
                     category: entry.category,
+                    is_work_expense: entry.isWorkExpense,
                 })
-                .select('id, date, amount, description, category')
+                .select('id, date, amount, description, category, is_work_expense')
                 .single();
 
             if (error) throw error;
 
+            const mapped: ExpenseEntry = {
+                id: (data as Record<string, unknown>).id as string,
+                date: (data as Record<string, unknown>).date as string,
+                amount: (data as Record<string, unknown>).amount as number,
+                description: (data as Record<string, unknown>).description as string,
+                category: (data as Record<string, unknown>).category as string as ExpenseEntry['category'],
+                isWorkExpense: ((data as Record<string, unknown>).is_work_expense as boolean) ?? false,
+            };
+
             set((state) => ({
-                expenseEntries: [...state.expenseEntries, data as ExpenseEntry],
+                expenseEntries: [...state.expenseEntries, mapped],
             }));
         } catch (err) {
             const message = err instanceof Error ? err.message : 'Failed to add expense';

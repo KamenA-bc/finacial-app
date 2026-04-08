@@ -8,30 +8,36 @@ export const MAX_PAST_DAYS = 730;
 
 /** All allowed expense categories (single source of truth). */
 export const EXPENSE_CATEGORIES: readonly ExpenseCategory[] = [
-    'Public Transport',
-    'Groceries',
-    'Utilities',
-    'Eating Out',
-    'Entertainment',
-    'Medicine/Health',
-    'Fuel',
-    'Firm Expenses',
+    'Магазини (Храна/Вода)',
+    'Eating out',
+    'Гориво',
+    'Градски транспорт',
+    'Health/Аптека',
+    'Beauty',
     'Shopping',
-    'Others',
+    'Entertainment',
+    'Пътуване',
+    'Сметки/Разходи',
+    'Фирмени разходи',
+    'Подаръци',
+    'Други',
 ] as const;
 
-/** Mapping internal English categories to Bulgarian display text. */
+/** Mapping internal categories to display text. */
 export const CATEGORY_BG_MAP: Record<ExpenseCategory, string> = {
-    'Public Transport': 'Градски транспорт',
-    'Groceries': 'Хранителни стоки',
-    'Utilities': 'Битови сметки',
-    'Eating Out': 'Хранене навън',
-    'Entertainment': 'Забавления',
-    'Medicine/Health': 'Медицина/Здраве',
-    'Fuel': 'Гориво',
-    'Firm Expenses': 'Фирмени разходи',
-    'Shopping': 'Пазаруване',
-    'Others': 'Други',
+    'Магазини (Храна/Вода)': 'Магазини (Храна/Вода)',
+    'Eating out': 'Eating out',
+    'Гориво': 'Гориво',
+    'Градски транспорт': 'Градски транспорт',
+    'Health/Аптека': 'Health/Аптека',
+    'Beauty': 'Beauty',
+    'Shopping': 'Shopping',
+    'Entertainment': 'Entertainment',
+    'Пътуване': 'Пътуване',
+    'Сметки/Разходи': 'Сметки/Разходи',
+    'Фирмени разходи': 'Фирмени разходи',
+    'Подаръци': 'Подаръци',
+    'Други': 'Други',
 };
 
 /**
@@ -39,16 +45,19 @@ export const CATEGORY_BG_MAP: Record<ExpenseCategory, string> = {
  * One colour per category in the same order as EXPENSE_CATEGORIES.
  */
 export const CHART_COLORS: readonly string[] = [
-    '#7C9CBF', // Public Transport – slate blue
-    '#7DBF9C', // Groceries – sage green
-    '#BFB27C', // Utilities – warm sand
-    '#BF7C7C', // Eating Out – muted rose
-    '#A07CBF', // Entertainment – lavender
-    '#D9A0B0', // Medicine/Health - soft pink
-    '#EFA876', // Fuel - soft orange
-    '#C4B5A5', // Firm Expenses - taupe
-    '#8FBFA4', // Shopping - mint green
-    '#9CBFBF', // Others – teal
+    '#7C9CBF', // Магазини (Храна/Вода)
+    '#7DBF9C', // Eating out
+    '#BFB27C', // Гориво
+    '#BF7C7C', // Градски транспорт
+    '#A07CBF', // Health/Аптека
+    '#D9A0B0', // Beauty
+    '#EFA876', // Shopping
+    '#C4B5A5', // Entertainment
+    '#8FBFA4', // Пътуване
+    '#9CBFBF', // Сметки/Разходи
+    '#C9B3C5', // Фирмени разходи
+    '#E2A398', // Подаръци
+    '#A18C74', // Други
 ] as const;
 
 /** Currency symbol used throughout the UI. */

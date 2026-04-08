@@ -4,18 +4,21 @@
  * explicit types, no `any`.
  */
 
-/** The 6 allowed expense categories. */
+/** All allowed expense categories. */
 export type ExpenseCategory =
-  | 'Public Transport'
-  | 'Groceries'
-  | 'Utilities'
-  | 'Eating Out'
-  | 'Entertainment'
-  | 'Medicine/Health'
-  | 'Fuel'
-  | 'Firm Expenses'
+  | 'Магазини (Храна/Вода)'
+  | 'Eating out'
+  | 'Гориво'
+  | 'Градски транспорт'
+  | 'Health/Аптека'
+  | 'Beauty'
   | 'Shopping'
-  | 'Others';
+  | 'Entertainment'
+  | 'Пътуване'
+  | 'Сметки/Разходи'
+  | 'Фирмени разходи'
+  | 'Подаръци'
+  | 'Други';
 
 /** Discriminated union for transaction type. */
 export type TransactionType = 'income' | 'expense';
@@ -36,6 +39,8 @@ export interface ExpenseEntry {
   readonly amount: number;
   readonly description: string;
   readonly category: ExpenseCategory;
+  /** Whether this expense was made for work purposes. */
+  readonly isWorkExpense: boolean;
 }
 
 /** Shape of the centralized Zustand store. */

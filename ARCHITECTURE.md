@@ -166,9 +166,9 @@ Auth is handled by Supabase Auth (email/password) via `@supabase/ssr`.
 
 | Constant | Value | Used in |
 |---|---|---|
-| `MAX_PAST_DAYS` | `30` | DateNavigator, csvExport, dateUtils |
-| `EXPENSE_CATEGORIES` | 6 categories | ExpenseForm, CategoryChart, useFinancialData, useHistoryData |
-| `CHART_COLORS` | 6 hex colors | CategoryChart |
+| `MAX_PAST_DAYS` | `730` | DateNavigator, csvExport, dateUtils |
+| `EXPENSE_CATEGORIES` | 13 categories | ExpenseForm, CategoryChart, useFinancialData, useHistoryData |
+| `CHART_COLORS` | 13 hex colors | CategoryChart |
 | `CURRENCY_SYMBOL` | `€` | StatDisplay, TransactionList, CategoryChart, AnnualSummary, MonthCard |
-| `NUMBER_LOCALE` | `en-US` | All formatters |
+| `NUMBER_LOCALE` | `bg-BG` | All formatters |
 | `CURRENCY_FORMAT_OPTIONS` | `{min: 2, max: 2}` | All formatters |

@@ -16,9 +16,10 @@ interface CsvRow {
     description: string;
     category: string;
     amount: number;
+    isWorkExpense: string;
 }
 
-const CSV_HEADERS = ['Дата', 'Тип', 'Описание', 'Категория', 'Сума (€)'] as const;
+const CSV_HEADERS = ['Дата', 'Тип', 'Описание', 'Категория', 'Сума (€)', 'Работни разходи'] as const;
 
 /** Escape a cell value so commas and quotes inside strings don't break CSV. */
 const escapeCell = (value: string | number): string => {
@@ -30,7 +31,7 @@ const escapeCell = (value: string | number): string => {
 };
 
 const rowToCsv = (row: CsvRow): string =>
-    [row.date, row.type, row.description, row.category, row.amount]
+    [row.date, row.type, row.description, row.category, row.amount, row.isWorkExpense]
         .map(escapeCell)
         .join(',');
 
@@ -53,6 +54,7 @@ export const exportToCsv = (
             description: 'Спечелени пари',
             category: '',
             amount: e.amount,
+            isWorkExpense: '',
         }));
 
     const expenseRows: CsvRow[] = expenseEntries
@@ -63,6 +65,7 @@ export const exportToCsv = (
             description: e.description,
             category: CATEGORY_BG_MAP[e.category] ?? e.category,
             amount: e.amount,
+            isWorkExpense: e.isWorkExpense ? 'Да' : 'Не',
         }));
 
     // Sort all rows by date ascending

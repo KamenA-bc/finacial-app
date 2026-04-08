@@ -4,7 +4,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { PlusCircle, Receipt } from 'lucide-react';
+import { PlusCircle, Receipt, Briefcase } from 'lucide-react';
 import { useFinancialStore } from '@/store/transactionStore';
 import { EXPENSE_CATEGORIES, CATEGORY_BG_MAP } from '@/lib/constants';
 import { ExpenseCategory } from '@/types';
@@ -20,6 +20,7 @@ const expenseSchema = z.object({
     category: z.enum(
         EXPENSE_CATEGORIES as [ExpenseCategory, ...ExpenseCategory[]]
     ),
+    isWorkExpense: z.boolean(),
 });
 
 type ExpenseFormValues = z.infer<typeof expenseSchema>;
@@ -33,11 +34,14 @@ export const ExpenseForm = (): React.ReactElement => {
         register,
         handleSubmit,
         reset,
+        watch,
         formState: { errors, isSubmitting },
     } = useForm<ExpenseFormValues>({
         resolver: zodResolver(expenseSchema),
-        defaultValues: { category: EXPENSE_CATEGORIES[0] },
+        defaultValues: { category: EXPENSE_CATEGORIES[0], isWorkExpense: false },
     });
+
+    const isWorkExpense = watch('isWorkExpense');
 
     const onSubmit = async (data: ExpenseFormValues): Promise<void> => {
         await addExpense({
@@ -45,8 +49,9 @@ export const ExpenseForm = (): React.ReactElement => {
             amount: data.amount,
             description: data.description,
             category: data.category,
+            isWorkExpense: data.isWorkExpense,
         });
-        reset({ category: EXPENSE_CATEGORIES[0] });
+        reset({ category: EXPENSE_CATEGORIES[0], isWorkExpense: false });
     };
 
     const inputClass =
@@ -135,6 +140,55 @@ export const ExpenseForm = (): React.ReactElement => {
                     <p className="text-xs text-rose-500">{errors.category.message}</p>
                 )}
             </div>
+
+            {/* Work Expense Checkbox */}
+            <label
+                htmlFor="expense-work"
+                className={`flex items-center gap-2.5 px-3 py-2.5 rounded-md border cursor-pointer transition-all ${
+                    isWorkExpense
+                        ? 'border-amber-300 bg-amber-50'
+                        : 'border-gray-200 bg-white hover:border-gray-300'
+                }`}
+            >
+                <input
+                    id="expense-work"
+                    type="checkbox"
+                    {...register('isWorkExpense')}
+                    className="sr-only peer"
+                />
+                <div
+                    className={`flex items-center justify-center w-4 h-4 rounded border-2 transition-all flex-shrink-0 ${
+                        isWorkExpense
+                            ? 'bg-amber-500 border-amber-500'
+                            : 'border-gray-300 bg-white'
+                    }`}
+                >
+                    {isWorkExpense && (
+                        <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
+                            <path
+                                d="M1 4L3.5 6.5L9 1"
+                                stroke="white"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                            />
+                        </svg>
+                    )}
+                </div>
+                <Briefcase
+                    size={14}
+                    className={`flex-shrink-0 transition-colors ${
+                        isWorkExpense ? 'text-amber-600' : 'text-gray-400'
+                    }`}
+                />
+                <span
+                    className={`text-sm font-medium transition-colors ${
+                        isWorkExpense ? 'text-amber-700' : 'text-gray-600'
+                    }`}
+                >
+                    Работни разходи
+                </span>
+            </label>
 
             <button
                 type="submit"
