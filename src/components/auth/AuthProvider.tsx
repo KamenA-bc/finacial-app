@@ -70,6 +70,8 @@ export const AuthProvider = ({
 
     const signOut = async (): Promise<void> => {
         await supabase.auth.signOut();
+        // Force a page reload/redirect to clear state and trigger middleware
+        window.location.href = '/login';
     };
 
     return (

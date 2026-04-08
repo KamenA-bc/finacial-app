@@ -29,6 +29,7 @@ type ExpenseFormValues = z.infer<typeof expenseSchema>;
 export const ExpenseForm = (): React.ReactElement => {
     const addExpense = useFinancialStore((s) => s.addExpense);
     const selectedDate = useFinancialStore((s) => s.selectedDate);
+    const storeError = useFinancialStore((s) => s.error);
 
     const {
         register,
@@ -198,6 +199,12 @@ export const ExpenseForm = (): React.ReactElement => {
                 <PlusCircle size={16} />
                 Добави разход
             </button>
+
+            {storeError && (
+                <p className="text-xs text-center text-rose-500 font-medium">
+                    Грешка: {storeError.includes('check constraint') ? 'Невалидна категория в базата данни (вижте инструкциите)' : storeError}
+                </p>
+            )}
         </form>
     );
 };
