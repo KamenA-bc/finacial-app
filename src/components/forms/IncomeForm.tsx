@@ -4,7 +4,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { PlusCircle, TrendingUp } from 'lucide-react';
+import { PlusCircle, TrendingUp, Briefcase } from 'lucide-react';
 import { useFinancialStore } from '@/store/transactionStore';
 
 const incomeSchema = z.object({
@@ -14,6 +14,7 @@ const incomeSchema = z.object({
     description: z
         .string()
         .max(100, 'Описанието е твърде дълго'),
+    isWorkIncome: z.boolean(),
 });
 
 type IncomeFormValues = z.infer<typeof incomeSchema>;
@@ -27,19 +28,23 @@ export const IncomeForm = (): React.ReactElement => {
         register,
         handleSubmit,
         reset,
+        watch,
         formState: { errors, isSubmitting },
     } = useForm<IncomeFormValues>({
         resolver: zodResolver(incomeSchema),
-        defaultValues: { description: '' },
+        defaultValues: { description: '', isWorkIncome: false },
     });
+
+    const isWorkIncome = watch('isWorkIncome');
 
     const onSubmit = async (data: IncomeFormValues): Promise<void> => {
         await addIncome({
             date: selectedDate,
             amount: data.amount,
             description: data.description || '',
+            isWorkIncome: data.isWorkIncome,
         });
-        reset();
+        reset({ description: '', isWorkIncome: false });
     };
 
     return (
@@ -105,6 +110,55 @@ export const IncomeForm = (): React.ReactElement => {
                     </p>
                 )}
             </div>
+
+            {/* Work Income Checkbox */}
+            <label
+                htmlFor="income-work"
+                className={`flex items-center gap-2.5 px-3 py-2.5 rounded-md border cursor-pointer transition-all ${
+                    isWorkIncome
+                        ? 'border-blue-300 bg-blue-50'
+                        : 'border-gray-200 bg-white hover:border-gray-300'
+                }`}
+            >
+                <input
+                    id="income-work"
+                    type="checkbox"
+                    {...register('isWorkIncome')}
+                    className="sr-only peer"
+                />
+                <div
+                    className={`flex items-center justify-center w-4 h-4 rounded border-2 transition-all flex-shrink-0 ${
+                        isWorkIncome
+                            ? 'bg-blue-500 border-blue-500'
+                            : 'border-gray-300 bg-white'
+                    }`}
+                >
+                    {isWorkIncome && (
+                        <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
+                            <path
+                                d="M1 4L3.5 6.5L9 1"
+                                stroke="white"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                            />
+                        </svg>
+                    )}
+                </div>
+                <Briefcase
+                    size={14}
+                    className={`flex-shrink-0 transition-colors ${
+                        isWorkIncome ? 'text-blue-600' : 'text-gray-400'
+                    }`}
+                />
+                <span
+                    className={`text-sm font-medium transition-colors ${
+                        isWorkIncome ? 'text-blue-700' : 'text-gray-600'
+                    }`}
+                >
+                    Работен приход
+                </span>
+            </label>
 
             <button
                 type="submit"

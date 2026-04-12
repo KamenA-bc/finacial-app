@@ -30,6 +30,8 @@ export interface IncomeEntry {
   readonly date: string;
   readonly amount: number;
   readonly description: string;
+  /** Whether this income was earned from work/job. */
+  readonly isWorkIncome: boolean;
 }
 
 /** A single expense entry logged by the user. */

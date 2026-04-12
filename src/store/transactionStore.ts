@@ -28,7 +28,7 @@ export const useFinancialStore = create<FinancialStore>()((set, get) => ({
             const [incomeRes, expenseRes] = await Promise.all([
                 supabase
                     .from('income_entries')
-                    .select('id, date, amount, description')
+                    .select('id, date, amount, description, is_work_income')
                     .eq('user_id', userId)
                     .order('date', { ascending: true }),
                 supabase
@@ -42,7 +42,13 @@ export const useFinancialStore = create<FinancialStore>()((set, get) => ({
             if (expenseRes.error) throw expenseRes.error;
 
             set({
-                incomeEntries: (incomeRes.data ?? []) as IncomeEntry[],
+                incomeEntries: (incomeRes.data ?? []).map((e: Record<string, unknown>) => ({
+                    id: e.id as string,
+                    date: e.date as string,
+                    amount: e.amount as number,
+                    description: e.description as string,
+                    isWorkIncome: ((e.is_work_income as boolean) ?? false),
+                })) as IncomeEntry[],
                 expenseEntries: (expenseRes.data ?? []).map((e: Record<string, unknown>) => ({
                     id: e.id as string,
                     date: e.date as string,
@@ -68,14 +74,22 @@ export const useFinancialStore = create<FinancialStore>()((set, get) => ({
         try {
             const { data, error } = await supabase
                 .from('income_entries')
-                .insert({ user_id: userId, date: entry.date, amount: entry.amount, description: entry.description })
-                .select('id, date, amount, description')
+                .insert({ user_id: userId, date: entry.date, amount: entry.amount, description: entry.description, is_work_income: entry.isWorkIncome })
+                .select('id, date, amount, description, is_work_income')
                 .single();
 
             if (error) throw error;
 
+            const mapped: IncomeEntry = {
+                id: (data as Record<string, unknown>).id as string,
+                date: (data as Record<string, unknown>).date as string,
+                amount: (data as Record<string, unknown>).amount as number,
+                description: (data as Record<string, unknown>).description as string,
+                isWorkIncome: ((data as Record<string, unknown>).is_work_income as boolean) ?? false,
+            };
+
             set((state) => ({
-                incomeEntries: [...state.incomeEntries, data as IncomeEntry],
+                incomeEntries: [...state.incomeEntries, mapped],
             }));
         } catch (err) {
             const message = err instanceof Error ? err.message : 'Failed to add income';

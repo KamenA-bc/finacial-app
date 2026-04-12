@@ -12,7 +12,7 @@ import { MAX_EXPORT_DAYS, CATEGORY_BG_MAP } from '@/lib/constants';
 /** A normalised row used inside the CSV builder. */
 interface CsvRow {
     date: string;
-    type: 'Приход' | 'Разход';
+    type: string;
     description: string;
     category: string;
     amount: number;
@@ -50,7 +50,7 @@ export const exportToCsv = (
         .filter((e) => e.date >= monthlyStart)
         .map((e) => ({
             date: e.date,
-            type: 'Приход',
+            type: e.isWorkIncome ? 'Приход (Работен)' : 'Приход',
             description: e.description || 'Приход',
             category: '',
             amount: e.amount,
