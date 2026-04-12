@@ -28,19 +28,24 @@ export default function ForgotPasswordPage(): React.ReactElement {
     });
 
     const onSubmit = async (data: ForgotPasswordValues): Promise<void> => {
-        setStatus('idle');
-        setMessage(null);
+        try {
+            setStatus('idle');
+            setMessage(null);
 
-        const { error } = await resetPassword(data.email);
+            const { error } = await resetPassword(data.email);
 
-        if (error) {
+            if (error) {
+                setStatus('error');
+                setMessage(error);
+            } else {
+                setStatus('success');
+                setMessage(
+                    'If an account exists with that email, a reset link has been sent.'
+                );
+            }
+        } catch (err: any) {
             setStatus('error');
-            setMessage(error);
-        } else {
-            setStatus('success');
-            setMessage(
-                'If an account exists with that email, a reset link has been sent.'
-            );
+            setMessage(err.message || 'An unexpected client error occurred.');
         }
     };
 

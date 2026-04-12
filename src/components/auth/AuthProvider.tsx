@@ -77,10 +77,14 @@ export const AuthProvider = ({
     };
 
     const resetPassword = async (email: string): Promise<{ error: string | null }> => {
-        const { error } = await supabase.auth.resetPasswordForEmail(email, {
-            redirectTo: `${window.location.origin}/update-password`,
-        });
-        return { error: error?.message ?? null };
+        try {
+            const { error } = await supabase.auth.resetPasswordForEmail(email, {
+                redirectTo: `${window.location.origin}/update-password`,
+            });
+            return { error: error?.message ?? null };
+        } catch (err: any) {
+            return { error: err?.message || 'Failed to initialize password reset' };
+        }
     };
 
     const updatePassword = async (password: string): Promise<{ error: string | null }> => {
