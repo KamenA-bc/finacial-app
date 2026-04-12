@@ -14,6 +14,8 @@ interface AuthContextValue {
     signUp: (email: string, password: string) => Promise<{ error: string | null }>;
     signIn: (email: string, password: string) => Promise<{ error: string | null }>;
     signOut: () => Promise<void>;
+    resetPassword: (email: string) => Promise<{ error: string | null }>;
+    updatePassword: (password: string) => Promise<{ error: string | null }>;
 }
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
@@ -74,8 +76,20 @@ export const AuthProvider = ({
         window.location.href = '/login';
     };
 
+    const resetPassword = async (email: string): Promise<{ error: string | null }> => {
+        const { error } = await supabase.auth.resetPasswordForEmail(email, {
+            redirectTo: `${window.location.origin}/update-password`,
+        });
+        return { error: error?.message ?? null };
+    };
+
+    const updatePassword = async (password: string): Promise<{ error: string | null }> => {
+        const { error } = await supabase.auth.updateUser({ password });
+        return { error: error?.message ?? null };
+    };
+
     return (
-        <AuthContext.Provider value={{ user, loading, signUp, signIn, signOut }}>
+        <AuthContext.Provider value={{ user, loading, signUp, signIn, signOut, resetPassword, updatePassword }}>
             {children}
         </AuthContext.Provider>
     );

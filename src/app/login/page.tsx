@@ -106,12 +106,20 @@ export default function LoginPage(): React.ReactElement {
 
                         {/* Password */}
                         <div className="flex flex-col gap-1">
-                            <label
-                                htmlFor="login-password"
-                                className="text-xs text-gray-500 font-medium"
-                            >
-                                Password
-                            </label>
+                            <div className="flex justify-between items-center">
+                                <label
+                                    htmlFor="login-password"
+                                    className="text-xs text-gray-500 font-medium"
+                                >
+                                    Password
+                                </label>
+                                <Link
+                                    href="/forgot-password"
+                                    className="text-[11px] text-gray-400 hover:text-gray-900 transition-colors"
+                                >
+                                    Forgot password?
+                                </Link>
+                            </div>
                             <div className="relative">
                                 <Lock
                                     size={15}
