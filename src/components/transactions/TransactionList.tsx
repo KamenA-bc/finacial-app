@@ -163,11 +163,14 @@ const IncomeRow = ({ income, onDelete }: IncomeRowProps): React.ReactElement => 
 
 // ── Main Component ────────────────────────────────────────────────────────────
 
+type FilterMode = 'all' | 'personal' | 'work';
+
 /** Lists both income and expense entries for the selected day with delete buttons. */
 export const TransactionList = (): React.ReactElement => {
     const { dailyExpenseEntries, dailyIncomeEntries } = useFinancialData();
     const deleteIncome = useFinancialStore((s) => s.deleteIncome);
     const deleteExpense = useFinancialStore((s) => s.deleteExpense);
+    const [filterMode, setFilterMode] = React.useState<FilterMode>('all');
 
     const hasEntries =
         dailyIncomeEntries.length > 0 || dailyExpenseEntries.length > 0;
@@ -180,22 +183,66 @@ export const TransactionList = (): React.ReactElement => {
         );
     }
 
+    const filteredIncome = dailyIncomeEntries.filter(entry => {
+        if (filterMode === 'all') return true;
+        if (filterMode === 'work') return entry.isWorkIncome;
+        return !entry.isWorkIncome; // personal
+    });
+
+    const filteredExpense = dailyExpenseEntries.filter(entry => {
+        if (filterMode === 'all') return true;
+        if (filterMode === 'work') return entry.isWorkExpense;
+        return !entry.isWorkExpense; // personal
+    });
+
+    const hasFilteredEntries = filteredIncome.length > 0 || filteredExpense.length > 0;
+
     return (
         <div className="flex flex-col">
-            {[...dailyIncomeEntries].reverse().map((income) => (
-                <IncomeRow
-                    key={income.id}
-                    income={income}
-                    onDelete={deleteIncome}
-                />
-            ))}
-            {[...dailyExpenseEntries].reverse().map((expense) => (
-                <ExpenseRow
-                    key={expense.id}
-                    expense={expense}
-                    onDelete={deleteExpense}
-                />
-            ))}
+            {/* Segmented Control */}
+            <div className="flex p-0.5 bg-gray-100/80 rounded-md mb-3">
+                <button
+                    onClick={() => setFilterMode('all')}
+                    className={`flex-1 text-[11px] font-medium py-1 rounded transition-all ${filterMode === 'all' ? 'bg-white text-gray-800 shadow-sm ring-1 ring-black/5' : 'text-gray-500 hover:text-gray-700 hover:bg-gray-200/50'}`}
+                >
+                    Всички
+                </button>
+                <button
+                    onClick={() => setFilterMode('personal')}
+                    className={`flex-1 text-[11px] font-medium py-1 rounded transition-all ${filterMode === 'personal' ? 'bg-white text-gray-800 shadow-sm ring-1 ring-black/5' : 'text-gray-500 hover:text-gray-700 hover:bg-gray-200/50'}`}
+                >
+                    Лични
+                </button>
+                <button
+                    onClick={() => setFilterMode('work')}
+                    className={`flex-1 text-[11px] font-medium py-1 rounded transition-all ${filterMode === 'work' ? 'bg-white text-gray-800 shadow-sm ring-1 ring-black/5' : 'text-gray-500 hover:text-gray-700 hover:bg-gray-200/50'}`}
+                >
+                    Работни
+                </button>
+            </div>
+
+            {hasFilteredEntries ? (
+                <>
+                    {[...filteredIncome].reverse().map((income) => (
+                        <IncomeRow
+                            key={income.id}
+                            income={income}
+                            onDelete={deleteIncome}
+                        />
+                    ))}
+                    {[...filteredExpense].reverse().map((expense) => (
+                        <ExpenseRow
+                            key={expense.id}
+                            expense={expense}
+                            onDelete={deleteExpense}
+                        />
+                    ))}
+                </>
+            ) : (
+                <p className="text-xs text-gray-300 text-center py-4">
+                    Няма {filterMode === 'work' ? 'работни' : 'лични'} транзакции.
+                </p>
+            )}
         </div>
     );
 };
