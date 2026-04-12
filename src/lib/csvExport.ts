@@ -51,7 +51,7 @@ export const exportToCsv = (
         .map((e) => ({
             date: e.date,
             type: 'Приход',
-            description: 'Спечелени пари',
+            description: e.description || 'Приход',
             category: '',
             amount: e.amount,
             isWorkExpense: '',

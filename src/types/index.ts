@@ -29,6 +29,7 @@ export interface IncomeEntry {
   /** ISO 8601 date string: YYYY-MM-DD */
   readonly date: string;
   readonly amount: number;
+  readonly description: string;
 }
 
 /** A single expense entry logged by the user. */

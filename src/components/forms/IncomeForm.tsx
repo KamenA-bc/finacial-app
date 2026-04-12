@@ -11,6 +11,9 @@ const incomeSchema = z.object({
     amount: z
         .number({ error: 'Моля, въведете валидно число' })
         .positive('Сумата трябва да е по-голяма от 0'),
+    description: z
+        .string()
+        .max(100, 'Описанието е твърде дълго'),
 });
 
 type IncomeFormValues = z.infer<typeof incomeSchema>;
@@ -27,10 +30,15 @@ export const IncomeForm = (): React.ReactElement => {
         formState: { errors, isSubmitting },
     } = useForm<IncomeFormValues>({
         resolver: zodResolver(incomeSchema),
+        defaultValues: { description: '' },
     });
 
     const onSubmit = async (data: IncomeFormValues): Promise<void> => {
-        await addIncome({ date: selectedDate, amount: data.amount });
+        await addIncome({
+            date: selectedDate,
+            amount: data.amount,
+            description: data.description || '',
+        });
         reset();
     };
 
@@ -71,6 +79,29 @@ export const IncomeForm = (): React.ReactElement => {
                 {errors.amount && (
                     <p className="text-xs text-rose-500 mt-0.5">
                         {errors.amount.message}
+                    </p>
+                )}
+            </div>
+
+            {/* Description (optional) */}
+            <div className="flex flex-col gap-1">
+                <label
+                    htmlFor="income-description"
+                    className="text-xs text-gray-500 font-medium"
+                >
+                    Описание{' '}
+                    <span className="text-gray-300 font-normal">(по избор)</span>
+                </label>
+                <input
+                    id="income-description"
+                    type="text"
+                    placeholder="напр. заплата, фрийланс..."
+                    {...register('description')}
+                    className="w-full px-3 py-2.5 border border-gray-200 rounded-md text-sm text-gray-800 placeholder-gray-300 focus:outline-none focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400 transition-colors"
+                />
+                {errors.description && (
+                    <p className="text-xs text-rose-500 mt-0.5">
+                        {errors.description.message}
                     </p>
                 )}
             </div>

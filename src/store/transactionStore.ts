@@ -28,7 +28,7 @@ export const useFinancialStore = create<FinancialStore>()((set, get) => ({
             const [incomeRes, expenseRes] = await Promise.all([
                 supabase
                     .from('income_entries')
-                    .select('id, date, amount')
+                    .select('id, date, amount, description')
                     .eq('user_id', userId)
                     .order('date', { ascending: true }),
                 supabase
@@ -68,8 +68,8 @@ export const useFinancialStore = create<FinancialStore>()((set, get) => ({
         try {
             const { data, error } = await supabase
                 .from('income_entries')
-                .insert({ user_id: userId, date: entry.date, amount: entry.amount })
-                .select('id, date, amount')
+                .insert({ user_id: userId, date: entry.date, amount: entry.amount, description: entry.description })
+                .select('id, date, amount, description')
                 .single();
 
             if (error) throw error;

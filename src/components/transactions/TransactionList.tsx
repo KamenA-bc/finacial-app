@@ -128,7 +128,9 @@ const IncomeRow = ({ income, onDelete }: IncomeRowProps): React.ReactElement => 
             <TrendingUp size={14} />
         </div>
         <div className="flex-1 min-w-0">
-            <p className="text-sm text-gray-700 font-medium">Приход</p>
+            <p className="text-sm text-gray-700 font-medium truncate">
+                {income.description || 'Приход'}
+            </p>
             <p className="text-xs text-gray-400">Спечелени пари</p>
         </div>
         <span className="text-sm font-semibold text-emerald-600 tabular-nums flex-shrink-0">
