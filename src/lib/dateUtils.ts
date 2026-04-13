@@ -3,7 +3,7 @@
  * No magic numbers: use constants from constants.ts.
  */
 
-import { MAX_PAST_DAYS } from '@/lib/constants';
+import { MAX_PAST_DAYS, MONTH_NAMES_BG } from '@/lib/constants';
 
 /** Convert a Date object to a local ISO date string: YYYY-MM-DD.
  *  Uses local date accessors (not toISOString which is always UTC).
@@ -54,14 +54,8 @@ export const isAtPastLimit = (dateStr: string): boolean => {
 
 // ── History-page helpers ─────────────────────────────────────────────────────
 
-/** Full month names indexed 0–11. */
-const MONTH_NAMES = [
-    'Януари', 'Февруари', 'Март', 'Април', 'Май', 'Юни',
-    'Юли', 'Август', 'Септември', 'Октомври', 'Ноември', 'Декември',
-] as const;
-
 /** Return the full name of a month (0-indexed). */
-export const getMonthName = (month: number): string => MONTH_NAMES[month];
+export const getMonthName = (month: number): string => MONTH_NAMES_BG[month];
 
 /** Return the number of days in a given month (1-indexed month). */
 export const getDaysInMonth = (year: number, month: number): number =>
@@ -91,4 +85,19 @@ export const getCalendarMonthRange = (
 ): { start: string; end: string } => {
     const d = new Date(`${dateStr}T00:00:00`);
     return getMonthRange(d.getFullYear(), d.getMonth());
+};
+
+/**
+ * Get the calendar year range for a given ISO date string.
+ * Returns { start: 'YYYY-01-01', end: 'YYYY-12-31' }.
+ */
+export const getCalendarYearRange = (
+    dateStr: string
+): { start: string; end: string } => {
+    const d = new Date(`${dateStr}T00:00:00`);
+    const year = d.getFullYear();
+    return {
+        start: `${year}-01-01`,
+        end: `${year}-12-31`,
+    };
 };

@@ -162,7 +162,7 @@ export default function DashboardPage(): React.ReactElement {
 
         {/* RIGHT: Chart + Transaction list (3/5 width on desktop) */}
         <div className="lg:col-span-3 flex flex-col gap-4">
-          <SectionCard title="Разпределение на разходите">
+          <SectionCard title="Анализ на разходите">
             <CategoryChart />
           </SectionCard>
           <SectionCard title="Днешни транзакции">

@@ -71,3 +71,9 @@ export const CURRENCY_FORMAT_OPTIONS: Intl.NumberFormatOptions = {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
 };
+
+/** Full month names in Bulgarian. */
+export const MONTH_NAMES_BG = [
+    'Януари', 'Февруари', 'Март', 'Април', 'Май', 'Юни',
+    'Юли', 'Август', 'Септември', 'Октомври', 'Ноември', 'Декември',
+] as const;

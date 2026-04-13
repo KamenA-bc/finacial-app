@@ -199,25 +199,29 @@ export const DateNavigator = (): React.ReactElement => {
             return;
         }
 
-        setViewMonth((prev) => {
-            if (prev === 0) {
-                setViewYear((y) => y - 1);
-                return 11;
-            }
-            return prev - 1;
-        });
+        if (viewMonth === 0) {
+            setViewYear((y) => y - 1);
+            setViewMonth(11);
+        } else {
+            setViewMonth((m) => m - 1);
+        }
     };
 
     const goToNextMonth = (): void => {
         const now = new Date();
         const nextMonth = viewMonth === 11 ? 0 : viewMonth + 1;
         const nextYear = viewMonth === 11 ? viewYear + 1 : viewYear;
-        // Don't go past current month
+
         if (nextYear > now.getFullYear() || (nextYear === now.getFullYear() && nextMonth > now.getMonth())) {
             return;
         }
-        setViewMonth(nextMonth);
-        if (viewMonth === 11) setViewYear((y) => y + 1);
+
+        if (viewMonth === 11) {
+            setViewYear((y) => y + 1);
+            setViewMonth(0);
+        } else {
+            setViewMonth((m) => m + 1);
+        }
     };
 
     const handleDayClick = (day: CalendarDay): void => {
