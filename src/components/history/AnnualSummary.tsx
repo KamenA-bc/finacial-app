@@ -7,7 +7,7 @@
 import React from 'react';
 import { TrendingUp, TrendingDown, BarChart3 } from 'lucide-react';
 import {
-    CURRENCY_SYMBOL,
+    getCurrencySymbol,
     NUMBER_LOCALE,
     CURRENCY_FORMAT_OPTIONS,
 } from '@/lib/constants';
@@ -19,8 +19,8 @@ interface AnnualSummaryProps {
     totalProfit: number;
 }
 
-const formatCurrency = (amount: number): string =>
-    `${CURRENCY_SYMBOL}${Math.abs(amount).toLocaleString(
+const formatCurrency = (amount: number, year: number): string =>
+    `${getCurrencySymbol(`${year}-01-01`)}${Math.abs(amount).toLocaleString(
         NUMBER_LOCALE,
         CURRENCY_FORMAT_OPTIONS
     )}`;
@@ -51,7 +51,7 @@ export const AnnualSummary = ({
                         Общ приход
                     </div>
                     <p className="text-2xl font-bold text-emerald-600 tabular-nums">
-                        +{formatCurrency(totalIncome)}
+                        +{formatCurrency(totalIncome, year)}
                     </p>
                 </div>
 
@@ -62,7 +62,7 @@ export const AnnualSummary = ({
                         Общи разходи
                     </div>
                     <p className="text-2xl font-bold text-rose-500 tabular-nums">
-                        −{formatCurrency(totalExpenses)}
+                        −{formatCurrency(totalExpenses, year)}
                     </p>
                 </div>
 
@@ -73,7 +73,7 @@ export const AnnualSummary = ({
                         Нетна печалба
                     </div>
                     <p className={`text-2xl font-bold tabular-nums ${profitClass}`}>
-                        {profitSign}{formatCurrency(totalProfit)}
+                        {profitSign}{formatCurrency(totalProfit, year)}
                     </p>
                 </div>
             </div>

@@ -6,6 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { PlusCircle, TrendingUp, Briefcase } from 'lucide-react';
 import { useFinancialStore } from '@/store/transactionStore';
+import { getCurrencySymbol } from '@/lib/constants';
 
 const incomeSchema = z.object({
     amount: z
@@ -69,7 +70,7 @@ export const IncomeForm = (): React.ReactElement => {
                 </label>
                 <div className="relative">
                     <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm">
-                        €
+                        {getCurrencySymbol(selectedDate)}
                     </span>
                     <input
                         id="income-amount"
@@ -78,7 +79,7 @@ export const IncomeForm = (): React.ReactElement => {
                         min="0"
                         placeholder="0.00"
                         {...register('amount', { valueAsNumber: true })}
-                        className="w-full pl-7 pr-4 py-2.5 border border-gray-200 rounded-md text-sm text-gray-800 placeholder-gray-300 focus:outline-none focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400 transition-colors"
+                        className={`w-full ${getCurrencySymbol(selectedDate).length > 1 ? 'pl-10' : 'pl-7'} pr-4 py-2.5 border border-gray-200 rounded-md text-sm text-gray-800 placeholder-gray-300 focus:outline-none focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400 transition-colors`}
                     />
                 </div>
                 {errors.amount && (

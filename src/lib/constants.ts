@@ -60,8 +60,18 @@ export const CHART_COLORS: readonly string[] = [
     '#A18C74', // Други
 ] as const;
 
-/** Currency symbol used throughout the UI. */
-export const CURRENCY_SYMBOL = '€';
+/** Date when currency switched from BGN to EUR. */
+export const CURRENCY_TRANSITION_DATE = '2026-01-01';
+
+/**
+ * Get currency symbol based on date.
+ * BGN (лв.) before 2026, EUR (€) from 2026 onwards.
+ */
+export const getCurrencySymbol = (date?: string | Date): string => {
+    if (!date) return '€'; // Default to EUR for current context if no date provided
+    const d = typeof date === 'string' ? date : date.toISOString().slice(0, 10);
+    return d < CURRENCY_TRANSITION_DATE ? 'лв.' : '€';
+};
 
 /** Locale used for number formatting. */
 export const NUMBER_LOCALE = 'bg-BG';

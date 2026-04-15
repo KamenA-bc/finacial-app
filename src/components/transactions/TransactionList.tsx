@@ -22,7 +22,7 @@ import { ExpenseCategory, ExpenseEntry, IncomeEntry } from '@/types';
 import { useFinancialData } from '@/hooks/useFinancialData';
 import { useFinancialStore } from '@/store/transactionStore';
 import {
-    CURRENCY_SYMBOL,
+    getCurrencySymbol,
     NUMBER_LOCALE,
     CURRENCY_FORMAT_OPTIONS,
     CATEGORY_BG_MAP,
@@ -62,8 +62,8 @@ const CATEGORY_COLORS: Record<ExpenseCategory, string> = {
     'Други': 'bg-gray-100 text-gray-500',
 };
 
-const formatAmount = (amount: number): string =>
-    `${CURRENCY_SYMBOL}${amount.toLocaleString(
+const formatAmount = (amount: number, date?: string): string =>
+    `${getCurrencySymbol(date)}${amount.toLocaleString(
         NUMBER_LOCALE,
         CURRENCY_FORMAT_OPTIONS
     )}`;
@@ -104,7 +104,7 @@ const ExpenseRow = ({
                 </div>
             </div>
             <span className={`text-sm font-semibold tabular-nums flex-shrink-0 ${amountColor}`}>
-                -{formatAmount(expense.amount)}
+                -{formatAmount(expense.amount, expense.date)}
             </span>
             <button
                 onClick={() => onDelete(expense.id)}
@@ -148,11 +148,11 @@ const IncomeRow = ({ income, onDelete }: IncomeRowProps): React.ReactElement => 
                 </div>
             </div>
             <span className={`text-sm font-semibold tabular-nums flex-shrink-0 ${amountColor}`}>
-                +{formatAmount(income.amount)}
+                +{formatAmount(income.amount, income.date)}
             </span>
             <button
                 onClick={() => onDelete(income.id)}
-                aria-label={`Delete income of ${formatAmount(income.amount)}`}
+                aria-label={`Delete income of ${formatAmount(income.amount, income.date)}`}
                 className="ml-1 flex-shrink-0 p-1 rounded text-gray-300 hover:text-rose-400 hover:bg-rose-50 opacity-0 group-hover:opacity-100 focus:opacity-100 transition-all"
             >
                 <Trash2 size={13} />

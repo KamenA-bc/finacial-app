@@ -2,7 +2,7 @@
 
 import React from 'react';
 import {
-    CURRENCY_SYMBOL,
+    getCurrencySymbol,
     NUMBER_LOCALE,
     CURRENCY_FORMAT_OPTIONS,
 } from '@/lib/constants';
@@ -12,10 +12,12 @@ interface StatDisplayProps {
     value: number;
     /** e.g. "Today" or "Last 30 days" */
     period: string;
+    /** Optional date to determine currency symbol */
+    date?: string;
 }
 
-const formatCurrency = (amount: number): string =>
-    `${CURRENCY_SYMBOL}${Math.abs(amount).toLocaleString(
+const formatCurrency = (amount: number, date?: string): string =>
+    `${getCurrencySymbol(date)}${Math.abs(amount).toLocaleString(
         NUMBER_LOCALE,
         CURRENCY_FORMAT_OPTIONS
     )}`;
@@ -28,6 +30,7 @@ export const StatDisplay = ({
     label,
     value,
     period,
+    date,
 }: StatDisplayProps): React.ReactElement => {
     const isPositive = value >= 0;
     const valueClass = isPositive ? 'text-emerald-600' : 'text-rose-500';
@@ -40,7 +43,7 @@ export const StatDisplay = ({
             </p>
             <p className={`text-3xl font-bold tabular-nums ${valueClass}`}>
                 {sign}
-                {formatCurrency(value)}
+                {formatCurrency(value, date)}
             </p>
             <p className="text-xs text-gray-400">{period}</p>
         </div>

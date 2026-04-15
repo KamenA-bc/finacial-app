@@ -12,27 +12,30 @@ import {
 import { PieChart as PieIcon, BarChart3, Calendar } from 'lucide-react';
 import { useFinancialData } from '@/hooks/useFinancialData';
 import { useFinancialStore } from '@/store/transactionStore';
-import { CHART_COLORS, CURRENCY_SYMBOL, NUMBER_LOCALE, CURRENCY_FORMAT_OPTIONS, CATEGORY_BG_MAP } from '@/lib/constants';
+import { CHART_COLORS, getCurrencySymbol, NUMBER_LOCALE, CURRENCY_FORMAT_OPTIONS, CATEGORY_BG_MAP } from '@/lib/constants';
 import { getMonthName } from '@/lib/dateUtils';
+import { CategoryDataPoint } from '@/types';
 
-const formatTooltipValue = (value: number): string =>
-    `${CURRENCY_SYMBOL}${value.toLocaleString(NUMBER_LOCALE, CURRENCY_FORMAT_OPTIONS)}`;
+const formatTooltipValue = (value: number, date?: string): string =>
+    `${getCurrencySymbol(date)}${value.toLocaleString(NUMBER_LOCALE, CURRENCY_FORMAT_OPTIONS)}`;
 
 interface CustomTooltipProps {
     active?: boolean;
     payload?: Array<{ name: string; value: number }>;
+    date?: string;
 }
 
 const CustomTooltip = ({
     active,
     payload,
+    date,
 }: CustomTooltipProps): React.ReactElement | null => {
     if (!active || !payload?.length) return null;
     const { name, value } = payload[0];
     return (
         <div className="bg-white border border-gray-100 shadow-md rounded-lg px-3 py-2 text-xs">
             <p className="font-bold text-gray-800 mb-1">{name}</p>
-            <p className="text-emerald-600 font-medium">{formatTooltipValue(value)}</p>
+            <p className="text-emerald-600 font-medium">{formatTooltipValue(value, date)}</p>
         </div>
     );
 };
@@ -55,6 +58,9 @@ export const CategoryChart = (): React.ReactElement => {
 
     const chartData = activeTab === 'monthly' ? monthlyCategoryBreakdown : yearlyCategoryBreakdown;
     const hasData = chartData.length > 0;
+
+    // Use current date for monthly view, first day of year for yearly view to determine currency
+    const contextDate = activeTab === 'monthly' ? selectedDate : `${year}-01-01`;
 
     const translatedBreakdown = chartData.map((entry) => ({
         ...entry,
@@ -133,7 +139,7 @@ export const CategoryChart = (): React.ReactElement => {
                                     />
                                 ))}
                             </Pie>
-                            <Tooltip content={<CustomTooltip />} />
+                            <Tooltip content={<CustomTooltip date={contextDate} />} />
                             <Legend
                                 iconType="circle"
                                 iconSize={8}

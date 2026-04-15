@@ -20,7 +20,7 @@ import { useAuth } from '@/components/auth/AuthProvider';
 import { useFinancialStore } from '@/store/transactionStore';
 import { Loader2 } from 'lucide-react';
 import { getMonthName, getCalendarMonthRange } from '@/lib/dateUtils';
-import { NUMBER_LOCALE, CURRENCY_FORMAT_OPTIONS } from '@/lib/constants';
+import { NUMBER_LOCALE, CURRENCY_FORMAT_OPTIONS, getCurrencySymbol } from '@/lib/constants';
 
 /** Thin section card wrapper – clean white with gentle shadow. */
 const SectionCard = ({
@@ -99,18 +99,19 @@ export default function DashboardPage(): React.ReactElement {
               label="Дневна печалба"
               value={dailyProfit}
               period="За избрания ден"
+              date={selectedDate}
             />
             <div className="mt-3 flex gap-4 text-xs text-gray-400">
               <span>
                 Приход:{' '}
                 <span className="text-emerald-600 font-medium">
-                  €{dailyIncome.toLocaleString(NUMBER_LOCALE, CURRENCY_FORMAT_OPTIONS)}
+                  {getCurrencySymbol(selectedDate)}{dailyIncome.toLocaleString(NUMBER_LOCALE, CURRENCY_FORMAT_OPTIONS)}
                 </span>
               </span>
               <span>
                 Разход:{' '}
                 <span className="text-rose-400 font-medium">
-                  €{dailyExpenses.toLocaleString(NUMBER_LOCALE, CURRENCY_FORMAT_OPTIONS)}
+                  {getCurrencySymbol(selectedDate)}{dailyExpenses.toLocaleString(NUMBER_LOCALE, CURRENCY_FORMAT_OPTIONS)}
                 </span>
               </span>
             </div>
@@ -124,18 +125,19 @@ export default function DashboardPage(): React.ReactElement {
               label="Месечна печалба"
               value={monthlyProfit}
               period={monthLabel}
+              date={selectedDate}
             />
             <div className="mt-3 flex gap-4 text-xs text-gray-400">
               <span>
                 Приход:{' '}
                 <span className="text-emerald-600 font-medium">
-                  €{monthlyIncome.toLocaleString(NUMBER_LOCALE, CURRENCY_FORMAT_OPTIONS)}
+                  {getCurrencySymbol(selectedDate)}{monthlyIncome.toLocaleString(NUMBER_LOCALE, CURRENCY_FORMAT_OPTIONS)}
                 </span>
               </span>
               <span>
                 Разход:{' '}
                 <span className="text-rose-400 font-medium">
-                  €{monthlyExpenses.toLocaleString(NUMBER_LOCALE, CURRENCY_FORMAT_OPTIONS)}
+                  {getCurrencySymbol(selectedDate)}{monthlyExpenses.toLocaleString(NUMBER_LOCALE, CURRENCY_FORMAT_OPTIONS)}
                 </span>
               </span>
             </div>

@@ -6,7 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { PlusCircle, Receipt, Briefcase } from 'lucide-react';
 import { useFinancialStore } from '@/store/transactionStore';
-import { EXPENSE_CATEGORIES, CATEGORY_BG_MAP } from '@/lib/constants';
+import { EXPENSE_CATEGORIES, CATEGORY_BG_MAP, getCurrencySymbol } from '@/lib/constants';
 import { ExpenseCategory } from '@/types';
 
 const expenseSchema = z.object({
@@ -101,7 +101,7 @@ export const ExpenseForm = (): React.ReactElement => {
                 </label>
                 <div className="relative">
                     <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm">
-                        €
+                        {getCurrencySymbol(selectedDate)}
                     </span>
                     <input
                         id="expense-amount"
@@ -110,7 +110,7 @@ export const ExpenseForm = (): React.ReactElement => {
                         min="0"
                         placeholder="0.00"
                         {...register('amount', { valueAsNumber: true })}
-                        className={`${inputClass} pl-7`}
+                        className={`${inputClass} ${getCurrencySymbol(selectedDate).length > 1 ? 'pl-10' : 'pl-7'}`}
                     />
                 </div>
                 {errors.amount && (

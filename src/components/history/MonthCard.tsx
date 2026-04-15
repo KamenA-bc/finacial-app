@@ -8,7 +8,7 @@ import React, { useState } from 'react';
 import { ChevronDown, ChevronUp, Calendar } from 'lucide-react';
 import { MonthlySummary, DailySummary } from '@/hooks/useHistoryData';
 import {
-    CURRENCY_SYMBOL,
+    getCurrencySymbol,
     NUMBER_LOCALE,
     CURRENCY_FORMAT_OPTIONS,
 } from '@/lib/constants';
@@ -18,8 +18,8 @@ interface MonthCardProps {
     isFuture: boolean;
 }
 
-const fmt = (n: number): string =>
-    `${CURRENCY_SYMBOL}${Math.abs(n).toLocaleString(NUMBER_LOCALE, CURRENCY_FORMAT_OPTIONS)}`;
+const fmt = (n: number, date?: string): string =>
+    `${getCurrencySymbol(date)}${Math.abs(n).toLocaleString(NUMBER_LOCALE, CURRENCY_FORMAT_OPTIONS)}`;
 
 const formatDayDate = (dateStr: string): string => {
     const d = new Date(`${dateStr}T00:00:00`);
@@ -34,13 +34,13 @@ const DailyRow = ({ day }: { day: DailySummary }): React.ReactElement => {
         <tr className="border-b border-gray-50 last:border-0">
             <td className="py-2 pr-4 text-xs text-gray-500">{formatDayDate(day.date)}</td>
             <td className="py-2 pr-4 text-xs text-emerald-600 tabular-nums text-right">
-                +{fmt(day.income)}
+                +{fmt(day.income, day.date)}
             </td>
             <td className="py-2 pr-4 text-xs text-rose-400 tabular-nums text-right">
-                −{fmt(day.expenses)}
+                −{fmt(day.expenses, day.date)}
             </td>
             <td className={`py-2 text-xs font-medium tabular-nums text-right ${profitClass}`}>
-                {sign}{fmt(day.profit)}
+                {sign}{fmt(day.profit, day.date)}
             </td>
         </tr>
     );
@@ -85,13 +85,13 @@ export const MonthCard = ({
                     {/* Summary stats */}
                     <div className="hidden sm:flex items-center gap-4 text-xs">
                         <span className="text-emerald-600 tabular-nums">
-                            +{fmt(data.income)}
+                            +{fmt(data.income, data.startDate)}
                         </span>
                         <span className="text-rose-400 tabular-nums">
-                            −{fmt(data.expenses)}
+                            −{fmt(data.expenses, data.startDate)}
                         </span>
                         <span className={`font-semibold tabular-nums ${profitClass}`}>
-                            {profitSign}{fmt(data.profit)}
+                            {profitSign}{fmt(data.profit, data.startDate)}
                         </span>
                     </div>
 
@@ -109,13 +109,13 @@ export const MonthCard = ({
             {data.hasData && (
                 <div className="sm:hidden flex items-center gap-4 px-5 pb-3 text-xs">
                     <span className="text-emerald-600 tabular-nums">
-                        +{fmt(data.income)}
+                        +{fmt(data.income, data.startDate)}
                     </span>
                     <span className="text-rose-400 tabular-nums">
-                        −{fmt(data.expenses)}
+                        −{fmt(data.expenses, data.startDate)}
                     </span>
                     <span className={`font-semibold tabular-nums ${profitClass}`}>
-                        {profitSign}{fmt(data.profit)}
+                        {profitSign}{fmt(data.profit, data.startDate)}
                     </span>
                 </div>
             )}
