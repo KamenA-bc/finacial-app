@@ -6,7 +6,6 @@ import {
     Pie,
     Cell,
     Tooltip,
-    Legend,
     ResponsiveContainer,
 } from 'recharts';
 import { PieChart as PieIcon, BarChart3, Calendar } from 'lucide-react';
@@ -112,41 +111,52 @@ export const CategoryChart = (): React.ReactElement => {
                 </div>
             </div>
 
-            <div className="flex-1 min-h-[260px] relative">
+            <div className="flex-1 relative">
                 {!hasData ? (
-                    <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 text-gray-300">
+                    <div className="min-h-[260px] flex flex-col items-center justify-center gap-3 text-gray-300">
                         <PieIcon size={44} strokeWidth={1} className="opacity-50" />
                         <p className="text-sm font-medium">Няма данни за избрания период</p>
                     </div>
                 ) : (
-                    <ResponsiveContainer width="100%" height={260}>
-                        <PieChart>
-                            <Pie
-                                data={translatedBreakdown}
-                                cx="50%"
-                                cy="50%"
-                                innerRadius={75}
-                                outerRadius={105}
-                                paddingAngle={4}
-                                dataKey="value"
-                                animationDuration={800}
-                            >
-                                {chartData.map((entry, index) => (
-                                    <Cell
-                                        key={entry.name}
-                                        fill={CHART_COLORS[index % CHART_COLORS.length]}
-                                        strokeWidth={0}
+                    <>
+                        <div style={{ width: '100%', height: 240 }}>
+                            <ResponsiveContainer width="100%" height="100%">
+                                <PieChart>
+                                    <Pie
+                                        data={translatedBreakdown}
+                                        cx="50%"
+                                        cy="50%"
+                                        innerRadius={70}
+                                        outerRadius={100}
+                                        paddingAngle={4}
+                                        dataKey="value"
+                                        animationDuration={800}
+                                    >
+                                        {chartData.map((entry, index) => (
+                                            <Cell
+                                                key={entry.name}
+                                                fill={CHART_COLORS[index % CHART_COLORS.length]}
+                                                strokeWidth={0}
+                                            />
+                                        ))}
+                                    </Pie>
+                                    <Tooltip content={<CustomTooltip date={contextDate} />} />
+                                </PieChart>
+                            </ResponsiveContainer>
+                        </div>
+                        {/* Custom legend rendered outside the chart to prevent overlap */}
+                        <div className="flex flex-wrap justify-center gap-x-3 gap-y-1.5 mt-3 px-2">
+                            {translatedBreakdown.map((entry, index) => (
+                                <div key={entry.name} className="flex items-center gap-1.5">
+                                    <span
+                                        className="inline-block w-2 h-2 rounded-full flex-shrink-0"
+                                        style={{ backgroundColor: CHART_COLORS[index % CHART_COLORS.length] }}
                                     />
-                                ))}
-                            </Pie>
-                            <Tooltip content={<CustomTooltip date={contextDate} />} />
-                            <Legend
-                                iconType="circle"
-                                iconSize={8}
-                                wrapperStyle={{ fontSize: '11px', color: '#6b7280', paddingTop: '15px' }}
-                            />
-                        </PieChart>
-                    </ResponsiveContainer>
+                                    <span className="text-[11px] text-gray-500 whitespace-nowrap">{entry.name}</span>
+                                </div>
+                            ))}
+                        </div>
+                    </>
                 )}
             </div>
         </div>
