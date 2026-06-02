@@ -17,6 +17,8 @@ import {
     Receipt,
     Sparkles,
     Gift,
+    AlertTriangle,
+    X,
 } from 'lucide-react';
 import { ExpenseCategory, ExpenseEntry, IncomeEntry } from '@/types';
 import { useFinancialData } from '@/hooks/useFinancialData';
@@ -68,28 +70,54 @@ const formatAmount = (amount: number, date?: string): string =>
         CURRENCY_FORMAT_OPTIONS
     )}`;
 
-// ── Delete Confirmation ───────────────────────────────────────────────────────
+// ── Delete Confirmation Dialog ───────────────────────────────────────────────
 
-interface DeleteConfirmProps {
+interface DeleteDialogProps {
+    description: string;
+    amount: string;
     onConfirm: () => void;
     onCancel: () => void;
 }
 
-const DeleteConfirm = ({ onConfirm, onCancel }: DeleteConfirmProps): React.ReactElement => (
-    <div className="flex items-center gap-1.5 ml-1 flex-shrink-0 animate-in fade-in">
-        <span className="text-[10px] text-gray-400 font-medium">Изтрий?</span>
-        <button
-            onClick={onConfirm}
-            className="px-1.5 py-0.5 rounded text-[10px] font-semibold text-white bg-rose-400 hover:bg-rose-500 transition-colors"
-        >
-            Да
-        </button>
-        <button
-            onClick={onCancel}
-            className="px-1.5 py-0.5 rounded text-[10px] font-semibold text-gray-500 bg-gray-100 hover:bg-gray-200 transition-colors"
-        >
-            Не
-        </button>
+const DeleteDialog = ({ description, amount, onConfirm, onCancel }: DeleteDialogProps): React.ReactElement => (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+        {/* Backdrop */}
+        <div className="absolute inset-0 bg-black/30 backdrop-blur-[2px]" onClick={onCancel} />
+        {/* Dialog */}
+        <div className="relative bg-white rounded-xl shadow-xl border border-gray-100 w-full max-w-xs p-5 flex flex-col items-center gap-4">
+            <button
+                onClick={onCancel}
+                className="absolute top-3 right-3 p-1 rounded-md text-gray-300 hover:text-gray-500 hover:bg-gray-50 transition-colors"
+                aria-label="Затвори"
+            >
+                <X size={16} />
+            </button>
+            <div className="flex items-center justify-center w-11 h-11 rounded-full bg-rose-50">
+                <AlertTriangle size={20} className="text-rose-400" />
+            </div>
+            <div className="text-center">
+                <p className="text-sm font-semibold text-gray-800 mb-1">Изтриване на транзакция</p>
+                <p className="text-xs text-gray-400 leading-relaxed">
+                    Сигурни ли сте, че искате да изтриете{' '}
+                    <span className="font-medium text-gray-600">&quot;{description}&quot;</span>{' '}
+                    ({amount})?
+                </p>
+            </div>
+            <div className="flex gap-2.5 w-full">
+                <button
+                    onClick={onCancel}
+                    className="flex-1 py-2 rounded-lg text-sm font-medium text-gray-600 bg-gray-100 hover:bg-gray-200 transition-colors"
+                >
+                    Отказ
+                </button>
+                <button
+                    onClick={onConfirm}
+                    className="flex-1 py-2 rounded-lg text-sm font-medium text-white bg-rose-400 hover:bg-rose-500 active:scale-[0.98] transition-all"
+                >
+                    Изтрий
+                </button>
+            </div>
+        </div>
     </div>
 );
 
@@ -97,19 +125,10 @@ const DeleteConfirm = ({ onConfirm, onCancel }: DeleteConfirmProps): React.React
 
 interface ExpenseRowProps {
     expense: ExpenseEntry;
-    onRequestDelete: (id: string) => void;
-    isPendingDelete: boolean;
-    onConfirmDelete: () => void;
-    onCancelDelete: () => void;
+    onDelete: (id: string) => void;
 }
 
-const ExpenseRow = ({
-    expense,
-    onRequestDelete,
-    isPendingDelete,
-    onConfirmDelete,
-    onCancelDelete,
-}: ExpenseRowProps): React.ReactElement => {
+const ExpenseRow = ({ expense, onDelete }: ExpenseRowProps): React.ReactElement => {
     const amountColor = expense.isWithKami
         ? 'text-pink-500'
         : expense.isWorkExpense
@@ -150,30 +169,23 @@ const ExpenseRow = ({
             <span className={`text-sm font-semibold tabular-nums flex-shrink-0 ${amountColor}`}>
                 -{formatAmount(expense.amount, expense.date)}
             </span>
-            {isPendingDelete ? (
-                <DeleteConfirm onConfirm={onConfirmDelete} onCancel={onCancelDelete} />
-            ) : (
-                <button
-                    onClick={() => onRequestDelete(expense.id)}
-                    aria-label={`Delete expense: ${expense.description}`}
-                    className="ml-1 flex-shrink-0 p-1 rounded text-gray-300 hover:text-rose-400 hover:bg-rose-50 transition-colors"
-                >
-                    <Trash2 size={13} />
-                </button>
-            )}
+            <button
+                onClick={() => onDelete(expense.id)}
+                aria-label={`Delete expense: ${expense.description}`}
+                className="ml-1 flex-shrink-0 p-1 rounded text-gray-300 hover:text-rose-400 hover:bg-rose-50 transition-colors"
+            >
+                <Trash2 size={13} />
+            </button>
         </div>
     );
 };
 
 interface IncomeRowProps {
     income: IncomeEntry;
-    onRequestDelete: (id: string) => void;
-    isPendingDelete: boolean;
-    onConfirmDelete: () => void;
-    onCancelDelete: () => void;
+    onDelete: (id: string) => void;
 }
 
-const IncomeRow = ({ income, onRequestDelete, isPendingDelete, onConfirmDelete, onCancelDelete }: IncomeRowProps): React.ReactElement => (
+const IncomeRow = ({ income, onDelete }: IncomeRowProps): React.ReactElement => (
     <div className="flex items-center gap-3 py-2.5 border-b border-gray-50 last:border-0">
         <div className="flex items-center justify-center w-7 h-7 rounded-full flex-shrink-0 bg-emerald-50 text-emerald-500">
             <TrendingUp size={14} />
@@ -187,17 +199,13 @@ const IncomeRow = ({ income, onRequestDelete, isPendingDelete, onConfirmDelete, 
         <span className="text-sm font-semibold tabular-nums flex-shrink-0 text-emerald-600">
             +{formatAmount(income.amount, income.date)}
         </span>
-        {isPendingDelete ? (
-            <DeleteConfirm onConfirm={onConfirmDelete} onCancel={onCancelDelete} />
-        ) : (
-            <button
-                onClick={() => onRequestDelete(income.id)}
-                aria-label={`Delete income of ${formatAmount(income.amount, income.date)}`}
-                className="ml-1 flex-shrink-0 p-1 rounded text-gray-300 hover:text-rose-400 hover:bg-rose-50 transition-colors"
-            >
-                <Trash2 size={13} />
-            </button>
-        )}
+        <button
+            onClick={() => onDelete(income.id)}
+            aria-label={`Delete income of ${formatAmount(income.amount, income.date)}`}
+            className="ml-1 flex-shrink-0 p-1 rounded text-gray-300 hover:text-rose-400 hover:bg-rose-50 transition-colors"
+        >
+            <Trash2 size={13} />
+        </button>
     </div>
 );
 
@@ -205,30 +213,48 @@ const IncomeRow = ({ income, onRequestDelete, isPendingDelete, onConfirmDelete, 
 
 type FilterMode = 'all' | 'personal' | 'work' | 'kami';
 
+interface PendingDelete {
+    id: string;
+    type: 'income' | 'expense';
+    description: string;
+    amount: string;
+}
+
 /** Lists both income and expense entries for the selected day with delete buttons. */
 export const TransactionList = (): React.ReactElement => {
     const { dailyExpenseEntries, dailyIncomeEntries } = useFinancialData();
     const deleteIncome = useFinancialStore((s) => s.deleteIncome);
     const deleteExpense = useFinancialStore((s) => s.deleteExpense);
     const [filterMode, setFilterMode] = useState<FilterMode>('all');
-    const [pendingDeleteId, setPendingDeleteId] = useState<string | null>(null);
-    const [pendingDeleteType, setPendingDeleteType] = useState<'income' | 'expense' | null>(null);
+    const [pendingDelete, setPendingDelete] = useState<PendingDelete | null>(null);
 
-    const requestDelete = (id: string, type: 'income' | 'expense'): void => {
-        setPendingDeleteId(id);
-        setPendingDeleteType(type);
+    const requestDeleteExpense = (id: string): void => {
+        const entry = dailyExpenseEntries.find((e) => e.id === id);
+        if (!entry) return;
+        setPendingDelete({
+            id,
+            type: 'expense',
+            description: entry.description,
+            amount: formatAmount(entry.amount, entry.date),
+        });
+    };
+
+    const requestDeleteIncome = (id: string): void => {
+        const entry = dailyIncomeEntries.find((e) => e.id === id);
+        if (!entry) return;
+        setPendingDelete({
+            id,
+            type: 'income',
+            description: entry.description || 'Приход',
+            amount: formatAmount(entry.amount, entry.date),
+        });
     };
 
     const confirmDelete = (): void => {
-        if (pendingDeleteId && pendingDeleteType === 'income') deleteIncome(pendingDeleteId);
-        if (pendingDeleteId && pendingDeleteType === 'expense') deleteExpense(pendingDeleteId);
-        setPendingDeleteId(null);
-        setPendingDeleteType(null);
-    };
-
-    const cancelDelete = (): void => {
-        setPendingDeleteId(null);
-        setPendingDeleteType(null);
+        if (!pendingDelete) return;
+        if (pendingDelete.type === 'income') deleteIncome(pendingDelete.id);
+        if (pendingDelete.type === 'expense') deleteExpense(pendingDelete.id);
+        setPendingDelete(null);
     };
 
     const hasEntries =
@@ -260,6 +286,16 @@ export const TransactionList = (): React.ReactElement => {
 
     return (
         <div className="flex flex-col">
+            {/* Delete Confirmation Modal */}
+            {pendingDelete && (
+                <DeleteDialog
+                    description={pendingDelete.description}
+                    amount={pendingDelete.amount}
+                    onConfirm={confirmDelete}
+                    onCancel={() => setPendingDelete(null)}
+                />
+            )}
+
             {/* Segmented Control */}
             <div className="flex p-0.5 bg-gray-100/80 rounded-md mb-3">
                 <button
@@ -294,20 +330,14 @@ export const TransactionList = (): React.ReactElement => {
                         <IncomeRow
                             key={income.id}
                             income={income}
-                            onRequestDelete={(id) => requestDelete(id, 'income')}
-                            isPendingDelete={pendingDeleteId === income.id}
-                            onConfirmDelete={confirmDelete}
-                            onCancelDelete={cancelDelete}
+                            onDelete={requestDeleteIncome}
                         />
                     ))}
                     {[...filteredExpense].reverse().map((expense) => (
                         <ExpenseRow
                             key={expense.id}
                             expense={expense}
-                            onRequestDelete={(id) => requestDelete(id, 'expense')}
-                            isPendingDelete={pendingDeleteId === expense.id}
-                            onConfirmDelete={confirmDelete}
-                            onCancelDelete={cancelDelete}
+                            onDelete={requestDeleteExpense}
                         />
                     ))}
                 </>
