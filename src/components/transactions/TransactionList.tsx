@@ -17,7 +17,6 @@ import {
     Receipt,
     Sparkles,
     Gift,
-    Users,
 } from 'lucide-react';
 import { ExpenseCategory, ExpenseEntry, IncomeEntry } from '@/types';
 import { useFinancialData } from '@/hooks/useFinancialData';
@@ -80,12 +79,20 @@ const ExpenseRow = ({
     expense,
     onDelete,
 }: ExpenseRowProps): React.ReactElement => {
-    const amountColor = expense.isWorkExpense
-        ? 'text-amber-500'
-        : 'text-rose-500';
+    const amountColor = expense.isWithKami
+        ? 'text-pink-500'
+        : expense.isWorkExpense
+            ? 'text-amber-500'
+            : 'text-rose-500';
+
+    const rowBg = expense.isWithKami
+        ? 'bg-pink-50/40'
+        : expense.isWorkExpense
+            ? 'bg-amber-50/40'
+            : '';
 
     return (
-        <div className="flex items-center gap-3 py-2.5 border-b border-gray-50 last:border-0 group">
+        <div className={`flex items-center gap-3 py-2.5 px-2 -mx-2 rounded-lg border-b border-gray-50 last:border-0 group ${rowBg}`}>
             <div
                 className={`flex items-center justify-center w-7 h-7 rounded-full flex-shrink-0 ${CATEGORY_COLORS[expense.category]}`}
             >
@@ -103,7 +110,7 @@ const ExpenseRow = ({
                         </span>
                     )}
                     {expense.isWithKami && (
-                        <span className="text-[10px] font-semibold text-teal-600 bg-teal-50 border border-teal-200 px-1.5 py-0.5 rounded-full leading-none">
+                        <span className="text-[10px] font-semibold text-pink-600 bg-pink-50 border border-pink-200 px-1.5 py-0.5 rounded-full leading-none">
                             С Ками
                         </span>
                     )}
@@ -128,49 +135,29 @@ interface IncomeRowProps {
     onDelete: (id: string) => void;
 }
 
-const IncomeRow = ({ income, onDelete }: IncomeRowProps): React.ReactElement => {
-    const isWork = income.isWorkIncome;
-    const amountColor = isWork ? 'text-blue-600' : 'text-emerald-600';
-    const iconWrapperClass = isWork 
-        ? 'bg-blue-50 text-blue-500' 
-        : 'bg-emerald-50 text-emerald-500';
-
-    return (
-        <div className="flex items-center gap-3 py-2.5 border-b border-gray-50 last:border-0 group">
-            <div className={`flex items-center justify-center w-7 h-7 rounded-full flex-shrink-0 ${iconWrapperClass}`}>
-                {isWork ? <Briefcase size={14} /> : <TrendingUp size={14} />}
-            </div>
-            <div className="flex-1 min-w-0">
-                <p className="text-sm text-gray-700 font-medium truncate">
-                    {income.description || 'Приход'}
-                </p>
-                <div className="flex items-center gap-1.5">
-                    <p className="text-xs text-gray-400">Спечелени пари</p>
-                    {isWork && (
-                        <span className="text-[10px] font-semibold text-blue-600 bg-blue-50 border border-blue-200 px-1.5 py-0.5 rounded-full leading-none">
-                            Работен
-                        </span>
-                    )}
-                    {income.isWithKami && (
-                        <span className="text-[10px] font-semibold text-teal-600 bg-teal-50 border border-teal-200 px-1.5 py-0.5 rounded-full leading-none">
-                            С Ками
-                        </span>
-                    )}
-                </div>
-            </div>
-            <span className={`text-sm font-semibold tabular-nums flex-shrink-0 ${amountColor}`}>
-                +{formatAmount(income.amount, income.date)}
-            </span>
-            <button
-                onClick={() => onDelete(income.id)}
-                aria-label={`Delete income of ${formatAmount(income.amount, income.date)}`}
-                className="ml-1 flex-shrink-0 p-1 rounded text-gray-300 hover:text-rose-400 hover:bg-rose-50 opacity-0 group-hover:opacity-100 focus:opacity-100 transition-all"
-            >
-                <Trash2 size={13} />
-            </button>
+const IncomeRow = ({ income, onDelete }: IncomeRowProps): React.ReactElement => (
+    <div className="flex items-center gap-3 py-2.5 border-b border-gray-50 last:border-0 group">
+        <div className="flex items-center justify-center w-7 h-7 rounded-full flex-shrink-0 bg-emerald-50 text-emerald-500">
+            <TrendingUp size={14} />
         </div>
-    );
-};
+        <div className="flex-1 min-w-0">
+            <p className="text-sm text-gray-700 font-medium truncate">
+                {income.description || 'Приход'}
+            </p>
+            <p className="text-xs text-gray-400">Спечелени пари</p>
+        </div>
+        <span className="text-sm font-semibold tabular-nums flex-shrink-0 text-emerald-600">
+            +{formatAmount(income.amount, income.date)}
+        </span>
+        <button
+            onClick={() => onDelete(income.id)}
+            aria-label={`Delete income of ${formatAmount(income.amount, income.date)}`}
+            className="ml-1 flex-shrink-0 p-1 rounded text-gray-300 hover:text-rose-400 hover:bg-rose-50 opacity-0 group-hover:opacity-100 focus:opacity-100 transition-all"
+        >
+            <Trash2 size={13} />
+        </button>
+    </div>
+);
 
 // ── Main Component ────────────────────────────────────────────────────────────
 

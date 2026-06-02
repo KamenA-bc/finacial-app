@@ -199,7 +199,7 @@ export const ExpenseForm = (): React.ReactElement => {
                 htmlFor="expense-kami"
                 className={`flex items-center gap-2.5 px-3 py-2.5 rounded-md border cursor-pointer transition-all ${
                     isWithKami
-                        ? 'border-teal-300 bg-teal-50'
+                        ? 'border-pink-300 bg-pink-50'
                         : 'border-gray-200 bg-white hover:border-gray-300'
                 }`}
             >
@@ -212,7 +212,7 @@ export const ExpenseForm = (): React.ReactElement => {
                 <div
                     className={`flex items-center justify-center w-4 h-4 rounded border-2 transition-all flex-shrink-0 ${
                         isWithKami
-                            ? 'bg-teal-500 border-teal-500'
+                            ? 'bg-pink-500 border-pink-500'
                             : 'border-gray-300 bg-white'
                     }`}
                 >
@@ -231,12 +231,12 @@ export const ExpenseForm = (): React.ReactElement => {
                 <Users
                     size={14}
                     className={`flex-shrink-0 transition-colors ${
-                        isWithKami ? 'text-teal-600' : 'text-gray-400'
+                        isWithKami ? 'text-pink-600' : 'text-gray-400'
                     }`}
                 />
                 <span
                     className={`text-sm font-medium transition-colors ${
-                        isWithKami ? 'text-teal-700' : 'text-gray-600'
+                        isWithKami ? 'text-pink-700' : 'text-gray-600'
                     }`}
                 >
                     С Ками
