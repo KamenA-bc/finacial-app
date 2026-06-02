@@ -86,9 +86,9 @@ const ExpenseRow = ({
             : 'text-rose-500';
 
     const rowBg = expense.isWithKami
-        ? 'bg-pink-50/40'
+        ? 'bg-pink-50/60'
         : expense.isWorkExpense
-            ? 'bg-amber-50/40'
+            ? 'bg-amber-50/60'
             : '';
 
     return (

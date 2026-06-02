@@ -47,7 +47,7 @@ export default function LoginPage(): React.ReactElement {
         'w-full px-3 py-2.5 pl-10 border border-gray-200 rounded-md text-sm text-gray-800 placeholder-gray-300 focus:outline-none focus:border-gray-900 focus:ring-1 focus:ring-gray-900 transition-colors bg-white';
 
     return (
-        <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
+        <div className="min-h-screen flex items-center justify-center px-4" style={{ backgroundColor: '#faf9f7' }}>
             <div className="w-full max-w-sm">
                 {/* Header */}
                 <div className="text-center mb-8">

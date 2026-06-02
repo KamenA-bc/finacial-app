@@ -26,7 +26,7 @@ export const DashboardLayout = ({
     ];
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen" style={{ backgroundColor: '#faf9f7' }}>
             {/* Header */}
             <header className="sticky top-0 z-10 bg-white/80 backdrop-blur-sm border-b border-gray-100">
                 <div className="max-w-5xl mx-auto px-4 sm:px-6 h-14 flex items-center gap-2.5">
