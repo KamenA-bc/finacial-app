@@ -32,6 +32,8 @@ export interface IncomeEntry {
   readonly description: string;
   /** Whether this income was earned from work/job. */
   readonly isWorkIncome: boolean;
+  /** Whether this transaction is shared with Kami. */
+  readonly isWithKami: boolean;
 }
 
 /** A single expense entry logged by the user. */
@@ -44,6 +46,8 @@ export interface ExpenseEntry {
   readonly category: ExpenseCategory;
   /** Whether this expense was made for work purposes. */
   readonly isWorkExpense: boolean;
+  /** Whether this transaction is shared with Kami. */
+  readonly isWithKami: boolean;
 }
 
 /** Shape of the centralized Zustand store. */

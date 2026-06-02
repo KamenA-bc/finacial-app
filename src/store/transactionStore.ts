@@ -28,12 +28,12 @@ export const useFinancialStore = create<FinancialStore>()((set, get) => ({
             const [incomeRes, expenseRes] = await Promise.all([
                 supabase
                     .from('income_entries')
-                    .select('id, date, amount, description, is_work_income')
+                    .select('id, date, amount, description, is_work_income, is_with_kami')
                     .eq('user_id', userId)
                     .order('date', { ascending: true }),
                 supabase
                     .from('expense_entries')
-                    .select('id, date, amount, description, category, is_work_expense')
+                    .select('id, date, amount, description, category, is_work_expense, is_with_kami')
                     .eq('user_id', userId)
                     .order('date', { ascending: true }),
             ]);
@@ -48,6 +48,7 @@ export const useFinancialStore = create<FinancialStore>()((set, get) => ({
                     amount: e.amount as number,
                     description: e.description as string,
                     isWorkIncome: ((e.is_work_income as boolean) ?? false),
+                    isWithKami: ((e.is_with_kami as boolean) ?? false),
                 })) as IncomeEntry[],
                 expenseEntries: (expenseRes.data ?? []).map((e: Record<string, unknown>) => ({
                     id: e.id as string,
@@ -56,6 +57,7 @@ export const useFinancialStore = create<FinancialStore>()((set, get) => ({
                     description: e.description as string,
                     category: e.category as string,
                     isWorkExpense: (e.is_work_expense as boolean) ?? false,
+                    isWithKami: (e.is_with_kami as boolean) ?? false,
                 })) as ExpenseEntry[],
                 userId,
                 isLoading: false,
@@ -74,8 +76,8 @@ export const useFinancialStore = create<FinancialStore>()((set, get) => ({
         try {
             const { data, error } = await supabase
                 .from('income_entries')
-                .insert({ user_id: userId, date: entry.date, amount: entry.amount, description: entry.description, is_work_income: entry.isWorkIncome })
-                .select('id, date, amount, description, is_work_income')
+                .insert({ user_id: userId, date: entry.date, amount: entry.amount, description: entry.description, is_work_income: entry.isWorkIncome, is_with_kami: entry.isWithKami })
+                .select('id, date, amount, description, is_work_income, is_with_kami')
                 .single();
 
             if (error) throw error;
@@ -86,6 +88,7 @@ export const useFinancialStore = create<FinancialStore>()((set, get) => ({
                 amount: (data as Record<string, unknown>).amount as number,
                 description: (data as Record<string, unknown>).description as string,
                 isWorkIncome: ((data as Record<string, unknown>).is_work_income as boolean) ?? false,
+                isWithKami: ((data as Record<string, unknown>).is_with_kami as boolean) ?? false,
             };
 
             set((state) => ({
@@ -112,8 +115,9 @@ export const useFinancialStore = create<FinancialStore>()((set, get) => ({
                     description: entry.description,
                     category: entry.category,
                     is_work_expense: entry.isWorkExpense,
+                    is_with_kami: entry.isWithKami,
                 })
-                .select('id, date, amount, description, category, is_work_expense')
+                .select('id, date, amount, description, category, is_work_expense, is_with_kami')
                 .single();
 
             if (error) throw error;
@@ -125,6 +129,7 @@ export const useFinancialStore = create<FinancialStore>()((set, get) => ({
                 description: (data as Record<string, unknown>).description as string,
                 category: (data as Record<string, unknown>).category as string as ExpenseEntry['category'],
                 isWorkExpense: ((data as Record<string, unknown>).is_work_expense as boolean) ?? false,
+                isWithKami: ((data as Record<string, unknown>).is_with_kami as boolean) ?? false,
             };
 
             set((state) => ({

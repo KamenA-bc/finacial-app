@@ -17,6 +17,7 @@ import {
     Receipt,
     Sparkles,
     Gift,
+    Users,
 } from 'lucide-react';
 import { ExpenseCategory, ExpenseEntry, IncomeEntry } from '@/types';
 import { useFinancialData } from '@/hooks/useFinancialData';
@@ -101,6 +102,11 @@ const ExpenseRow = ({
                             Работни
                         </span>
                     )}
+                    {expense.isWithKami && (
+                        <span className="text-[10px] font-semibold text-teal-600 bg-teal-50 border border-teal-200 px-1.5 py-0.5 rounded-full leading-none">
+                            С Ками
+                        </span>
+                    )}
                 </div>
             </div>
             <span className={`text-sm font-semibold tabular-nums flex-shrink-0 ${amountColor}`}>
@@ -145,6 +151,11 @@ const IncomeRow = ({ income, onDelete }: IncomeRowProps): React.ReactElement => 
                             Работен
                         </span>
                     )}
+                    {income.isWithKami && (
+                        <span className="text-[10px] font-semibold text-teal-600 bg-teal-50 border border-teal-200 px-1.5 py-0.5 rounded-full leading-none">
+                            С Ками
+                        </span>
+                    )}
                 </div>
             </div>
             <span className={`text-sm font-semibold tabular-nums flex-shrink-0 ${amountColor}`}>
@@ -163,7 +174,7 @@ const IncomeRow = ({ income, onDelete }: IncomeRowProps): React.ReactElement => 
 
 // ── Main Component ────────────────────────────────────────────────────────────
 
-type FilterMode = 'all' | 'personal' | 'work';
+type FilterMode = 'all' | 'personal' | 'work' | 'kami';
 
 /** Lists both income and expense entries for the selected day with delete buttons. */
 export const TransactionList = (): React.ReactElement => {
@@ -186,12 +197,14 @@ export const TransactionList = (): React.ReactElement => {
     const filteredIncome = dailyIncomeEntries.filter(entry => {
         if (filterMode === 'all') return true;
         if (filterMode === 'work') return entry.isWorkIncome;
+        if (filterMode === 'kami') return entry.isWithKami;
         return !entry.isWorkIncome; // personal
     });
 
     const filteredExpense = dailyExpenseEntries.filter(entry => {
         if (filterMode === 'all') return true;
         if (filterMode === 'work') return entry.isWorkExpense;
+        if (filterMode === 'kami') return entry.isWithKami;
         return !entry.isWorkExpense; // personal
     });
 
@@ -219,6 +232,12 @@ export const TransactionList = (): React.ReactElement => {
                 >
                     Работни
                 </button>
+                <button
+                    onClick={() => setFilterMode('kami')}
+                    className={`flex-1 text-[11px] font-medium py-1 rounded transition-all ${filterMode === 'kami' ? 'bg-white text-gray-800 shadow-sm ring-1 ring-black/5' : 'text-gray-500 hover:text-gray-700 hover:bg-gray-200/50'}`}
+                >
+                    С Ками
+                </button>
             </div>
 
             {hasFilteredEntries ? (
@@ -240,7 +259,7 @@ export const TransactionList = (): React.ReactElement => {
                 </>
             ) : (
                 <p className="text-xs text-gray-300 text-center py-4">
-                    Няма {filterMode === 'work' ? 'работни' : 'лични'} транзакции.
+                    Няма {filterMode === 'work' ? 'работни' : filterMode === 'kami' ? '"С Ками"' : 'лични'} транзакции.
                 </p>
             )}
         </div>

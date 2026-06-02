@@ -4,7 +4,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { PlusCircle, Receipt, Briefcase } from 'lucide-react';
+import { PlusCircle, Receipt, Briefcase, Users } from 'lucide-react';
 import { useFinancialStore } from '@/store/transactionStore';
 import { EXPENSE_CATEGORIES, CATEGORY_BG_MAP, getCurrencySymbol } from '@/lib/constants';
 import { ExpenseCategory } from '@/types';
@@ -21,6 +21,7 @@ const expenseSchema = z.object({
         EXPENSE_CATEGORIES as [ExpenseCategory, ...ExpenseCategory[]]
     ),
     isWorkExpense: z.boolean(),
+    isWithKami: z.boolean(),
 });
 
 type ExpenseFormValues = z.infer<typeof expenseSchema>;
@@ -39,10 +40,11 @@ export const ExpenseForm = (): React.ReactElement => {
         formState: { errors, isSubmitting },
     } = useForm<ExpenseFormValues>({
         resolver: zodResolver(expenseSchema),
-        defaultValues: { category: EXPENSE_CATEGORIES[0], isWorkExpense: false },
+        defaultValues: { category: EXPENSE_CATEGORIES[0], isWorkExpense: false, isWithKami: false },
     });
 
     const isWorkExpense = watch('isWorkExpense');
+    const isWithKami = watch('isWithKami');
 
     const onSubmit = async (data: ExpenseFormValues): Promise<void> => {
         await addExpense({
@@ -51,8 +53,9 @@ export const ExpenseForm = (): React.ReactElement => {
             description: data.description,
             category: data.category,
             isWorkExpense: data.isWorkExpense,
+            isWithKami: data.isWithKami,
         });
-        reset({ category: EXPENSE_CATEGORIES[0], isWorkExpense: false });
+        reset({ category: EXPENSE_CATEGORIES[0], isWorkExpense: false, isWithKami: false });
     };
 
     const inputClass =
@@ -188,6 +191,55 @@ export const ExpenseForm = (): React.ReactElement => {
                     }`}
                 >
                     Работни разходи
+                </span>
+            </label>
+
+            {/* With Kami Checkbox */}
+            <label
+                htmlFor="expense-kami"
+                className={`flex items-center gap-2.5 px-3 py-2.5 rounded-md border cursor-pointer transition-all ${
+                    isWithKami
+                        ? 'border-teal-300 bg-teal-50'
+                        : 'border-gray-200 bg-white hover:border-gray-300'
+                }`}
+            >
+                <input
+                    id="expense-kami"
+                    type="checkbox"
+                    {...register('isWithKami')}
+                    className="sr-only peer"
+                />
+                <div
+                    className={`flex items-center justify-center w-4 h-4 rounded border-2 transition-all flex-shrink-0 ${
+                        isWithKami
+                            ? 'bg-teal-500 border-teal-500'
+                            : 'border-gray-300 bg-white'
+                    }`}
+                >
+                    {isWithKami && (
+                        <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
+                            <path
+                                d="M1 4L3.5 6.5L9 1"
+                                stroke="white"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                            />
+                        </svg>
+                    )}
+                </div>
+                <Users
+                    size={14}
+                    className={`flex-shrink-0 transition-colors ${
+                        isWithKami ? 'text-teal-600' : 'text-gray-400'
+                    }`}
+                />
+                <span
+                    className={`text-sm font-medium transition-colors ${
+                        isWithKami ? 'text-teal-700' : 'text-gray-600'
+                    }`}
+                >
+                    С Ками
                 </span>
             </label>
 

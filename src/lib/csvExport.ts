@@ -17,9 +17,10 @@ interface CsvRow {
     category: string;
     amount: number;
     isWorkExpense: string;
+    isWithKami: string;
 }
 
-const CSV_HEADERS = ['Дата', 'Тип', 'Описание', 'Категория', 'Сума', 'Работни разходи'] as const;
+const CSV_HEADERS = ['Дата', 'Тип', 'Описание', 'Категория', 'Сума', 'Работни разходи', 'С Ками'] as const;
 
 /** Escape a cell value so commas and quotes inside strings don't break CSV. */
 const escapeCell = (value: string | number): string => {
@@ -31,7 +32,7 @@ const escapeCell = (value: string | number): string => {
 };
 
 const rowToCsv = (row: CsvRow): string =>
-    [row.date, row.type, row.description, row.category, row.amount, row.isWorkExpense]
+    [row.date, row.type, row.description, row.category, row.amount, row.isWorkExpense, row.isWithKami]
         .map(escapeCell)
         .join(',');
 
@@ -55,6 +56,7 @@ export const exportToCsv = (
             category: '',
             amount: e.amount,
             isWorkExpense: '',
+            isWithKami: e.isWithKami ? 'Да' : 'Не',
         }));
 
     const expenseRows: CsvRow[] = expenseEntries
@@ -66,6 +68,7 @@ export const exportToCsv = (
             category: CATEGORY_BG_MAP[e.category] ?? e.category,
             amount: e.amount,
             isWorkExpense: e.isWorkExpense ? 'Да' : 'Не',
+            isWithKami: e.isWithKami ? 'Да' : 'Не',
         }));
 
     // Sort all rows by date ascending
