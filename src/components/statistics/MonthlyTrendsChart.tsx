@@ -2,8 +2,9 @@
  * MonthlyTrendsChart – grouped bar chart showing income, expenses, and profit
  * for each month of the year. Uses Recharts BarChart.
  *
- * On mobile the chart is placed inside a horizontally scrollable container
- * with a minimum width so bars are always readable and tappable.
+ * Mobile: horizontally scrollable, no tooltip (avoids stuck-selection UX issues),
+ * black dotted vertical separators between months.
+ * Desktop: full-width responsive with hover tooltip.
  */
 'use client';
 
@@ -17,6 +18,7 @@ import {
     Tooltip,
     Legend,
     ResponsiveContainer,
+    ReferenceLine,
 } from 'recharts';
 import { BarChart3 } from 'lucide-react';
 import {
@@ -84,31 +86,33 @@ const CustomTooltip = ({
     );
 };
 
-/** The actual chart — rendered at a fixed width inside the scrollable area. */
+/** Shared chart internals. `showTooltip` controls whether tooltip is rendered. */
 const ChartContent = ({
     year,
     data,
+    showTooltip,
 }: {
     year: number;
     data: MonthlyTrendPoint[];
+    showTooltip: boolean;
 }): React.ReactElement => (
     <BarChart
         data={data}
         margin={{ top: 5, right: 10, left: 0, bottom: 5 }}
         barCategoryGap="35%"
     >
+        {/* Subtle horizontal grid + black dotted vertical month separators */}
         <CartesianGrid
             strokeDasharray="3 3"
             stroke="#f3f4f6"
             horizontal={true}
-            vertical={true}
-            verticalCoordinatesGenerator={undefined}
+            vertical={false}
         />
         <XAxis
             dataKey="month"
             tick={{ fontSize: 11, fill: '#9ca3af' }}
             axisLine={{ stroke: '#e5e7eb' }}
-            tickLine={false}
+            tickLine={{ stroke: '#1f2937', strokeDasharray: '2 2' }}
         />
         <YAxis
             tick={{ fontSize: 11, fill: '#9ca3af' }}
@@ -119,10 +123,22 @@ const ChartContent = ({
                 v >= 1000 ? `${(v / 1000).toFixed(0)}k` : String(v)
             }
         />
-        <Tooltip
-            content={<CustomTooltip year={year} />}
-            trigger="click"
-        />
+
+        {/* Black dotted vertical separators between each month */}
+        {data.map((_, index) => (
+            <ReferenceLine
+                key={index}
+                x={data[index].month}
+                stroke="#1f2937"
+                strokeDasharray="3 3"
+                strokeWidth={0.75}
+                strokeOpacity={0.35}
+            />
+        ))}
+
+        {showTooltip && (
+            <Tooltip content={<CustomTooltip year={year} />} />
+        )}
         <Legend
             iconType="circle"
             iconSize={8}
@@ -148,7 +164,6 @@ export const MonthlyTrendsChart = ({
                     Месечни тенденции
                 </h2>
             </div>
-            {/* Scroll hint — only visible on mobile when chart is scrollable */}
             {hasData && (
                 <span className="text-[10px] text-gray-300 sm:hidden">
                     ← плъзни →
@@ -163,18 +178,18 @@ export const MonthlyTrendsChart = ({
             </div>
         ) : (
             <>
-                {/* Desktop: responsive chart that fills width */}
+                {/* Desktop: responsive chart with hover tooltip */}
                 <div className="hidden sm:block">
-                    <ResponsiveContainer width="100%" height={300}>
-                        <ChartContent year={year} data={data} />
+                    <ResponsiveContainer width="100%" height={340}>
+                        <ChartContent year={year} data={data} showTooltip={true} />
                     </ResponsiveContainer>
                 </div>
 
-                {/* Mobile: horizontally scrollable with fixed min-width */}
+                {/* Mobile: scrollable, taller, no tooltip (no stuck selections) */}
                 <div className="sm:hidden overflow-x-auto -mx-2 px-2 pb-2">
-                    <div style={{ width: 700, height: 280 }}>
+                    <div style={{ width: 750, height: 340 }}>
                         <ResponsiveContainer width="100%" height="100%">
-                            <ChartContent year={year} data={data} />
+                            <ChartContent year={year} data={data} showTooltip={false} />
                         </ResponsiveContainer>
                     </div>
                 </div>
