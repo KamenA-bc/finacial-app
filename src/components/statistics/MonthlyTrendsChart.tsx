@@ -95,9 +95,15 @@ const ChartContent = ({
     <BarChart
         data={data}
         margin={{ top: 5, right: 10, left: 0, bottom: 5 }}
-        barCategoryGap="25%"
+        barCategoryGap="35%"
     >
-        <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
+        <CartesianGrid
+            strokeDasharray="3 3"
+            stroke="#f3f4f6"
+            horizontal={true}
+            vertical={true}
+            verticalCoordinatesGenerator={undefined}
+        />
         <XAxis
             dataKey="month"
             tick={{ fontSize: 11, fill: '#9ca3af' }}
@@ -113,7 +119,10 @@ const ChartContent = ({
                 v >= 1000 ? `${(v / 1000).toFixed(0)}k` : String(v)
             }
         />
-        <Tooltip content={<CustomTooltip year={year} />} />
+        <Tooltip
+            content={<CustomTooltip year={year} />}
+            trigger="click"
+        />
         <Legend
             iconType="circle"
             iconSize={8}
