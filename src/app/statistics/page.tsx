@@ -121,9 +121,7 @@ export default function StatisticsPage(): React.ReactElement {
                 <FunFacts
                     year={year}
                     biggestSpendingDay={stats.biggestSpendingDay}
-                    biggestEarningDay={stats.biggestEarningDay}
                     avgDailyExpense={stats.avgDailyExpense}
-                    activeDays={stats.activeDays}
                     kamiSpending={stats.kamiSpending}
                 />
             </div>

@@ -82,10 +82,16 @@ export interface StatisticsData {
 const sumAmount = (entries: Array<{ amount: number }>): number =>
     entries.reduce((acc, e) => acc + e.amount, 0);
 
-/** Check if a description mentions "Kami" (case-insensitive, supports Cyrillic). */
-const isKamiEntry = (description: string): boolean => {
+/** Check if a description mentions "Kami" (case-insensitive, supports Cyrillic variants). */
+const isKamiEntry = (description: string | null | undefined): boolean => {
+    if (!description) return false;
     const lower = description.toLowerCase();
-    return lower.includes('ками') || lower.includes('kami');
+    return (
+        lower.includes('ками') ||
+        lower.includes('kami') ||
+        lower.includes('камен') ||
+        lower.includes('kamen')
+    );
 };
 
 // ── Hook ─────────────────────────────────────────────────────────────────────
@@ -236,10 +242,14 @@ export const useStatisticsData = (year: number): StatisticsData => {
         yearExpense.forEach((e) => allDates.add(e.date));
         const activeDays = allDates.size;
 
-        // Kami spending: search descriptions
-        const kamiSpending = sumAmount(
+        // Kami spending: search descriptions in both income and expenses
+        const kamiExpenses = sumAmount(
             yearExpense.filter((e) => isKamiEntry(e.description))
         );
+        const kamiIncome = sumAmount(
+            yearIncome.filter((e) => isKamiEntry(e.description))
+        );
+        const kamiSpending = kamiExpenses + kamiIncome;
 
         return {
             totalIncome,
