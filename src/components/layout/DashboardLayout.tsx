@@ -30,24 +30,24 @@ export const DashboardLayout = ({
         <div className="min-h-screen" style={{ backgroundColor: '#faf9f7' }}>
             {/* Header */}
             <header className="sticky top-0 z-10 bg-white/80 backdrop-blur-sm border-b border-gray-100">
-                <div className="max-w-5xl mx-auto px-4 sm:px-6 h-14 flex items-center gap-2.5">
+                <div className="max-w-5xl mx-auto px-3 sm:px-6 h-14 flex items-center gap-2">
                     {/* Logo */}
-                    <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-gray-900">
+                    <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-gray-900 flex-shrink-0">
                         <Wallet size={14} className="text-white" />
                     </div>
-                    <span className="font-semibold text-gray-900 tracking-tight">
+                    <span className="font-semibold text-gray-900 tracking-tight hidden sm:block">
                         Finance Tracker
                     </span>
 
                     {/* Navigation */}
-                    <nav className="flex items-center gap-1 ml-6">
+                    <nav className="flex items-center gap-0.5 sm:gap-1 ml-2 sm:ml-6">
                         {navLinks.map((link) => {
                             const isActive = pathname === link.href;
                             return (
                                 <Link
                                     key={link.href}
                                     href={link.href}
-                                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${
+                                    className={`flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1.5 rounded-md text-[11px] sm:text-xs font-medium transition-colors ${
                                         isActive
                                             ? 'bg-gray-100 text-gray-900'
                                             : 'text-gray-400 hover:text-gray-700 hover:bg-gray-50'
@@ -61,7 +61,7 @@ export const DashboardLayout = ({
                     </nav>
 
                     {/* Right: user + sign out */}
-                    <div className="ml-auto flex items-center gap-3">
+                    <div className="ml-auto flex items-center gap-3 flex-shrink-0">
                         {user && (
                             <span className="text-xs text-gray-400 hidden sm:block truncate max-w-[160px]">
                                 {user.email}
@@ -69,7 +69,7 @@ export const DashboardLayout = ({
                         )}
                         <button
                             onClick={signOut}
-                            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-xs text-gray-400 hover:text-gray-700 hover:bg-gray-50 transition-colors"
+                            className="flex items-center gap-1.5 px-2 py-1.5 rounded-md text-xs text-gray-400 hover:text-gray-700 hover:bg-gray-50 transition-colors"
                             aria-label="Изход"
                         >
                             <LogOut size={13} />
