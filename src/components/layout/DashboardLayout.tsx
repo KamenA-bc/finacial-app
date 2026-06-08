@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Wallet, LogOut, History } from 'lucide-react';
+import { Wallet, LogOut, History, BarChart3 } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useAuth } from '@/components/auth/AuthProvider';
@@ -23,6 +23,7 @@ export const DashboardLayout = ({
     const navLinks = [
         { href: '/', label: 'Табло' },
         { href: '/history', label: 'История', icon: <History size={14} /> },
+        { href: '/statistics', label: 'Статистика', icon: <BarChart3 size={14} /> },
     ];
 
     return (

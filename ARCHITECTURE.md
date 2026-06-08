@@ -33,13 +33,14 @@ finacial-app/
 │   │   ├── login/page.tsx      # Login page (public)
 │   │   ├── register/page.tsx   # Registration page (public)
 │   │   ├── history/page.tsx    # Monthly/Annual history summaries
+│   │   ├── statistics/page.tsx # Yearly statistics & insights
 │   │   └── api/cron/           # API routes (cron jobs)
 │   │
 │   ├── components/
 │   │   ├── auth/
 │   │   │   └── AuthProvider.tsx    # React Context providing Supabase auth state/actions
 │   │   ├── layout/
-│   │   │   └── DashboardLayout.tsx # Sticky header, nav links (Dashboard, History), sign-out
+│   │   │   └── DashboardLayout.tsx # Sticky header, nav links (Dashboard, History, Statistics), sign-out
 │   │   ├── ui/
 │   │   │   ├── DateNavigator.tsx   # Day-by-day nav + calendar popup (dashboard)
 │   │   │   ├── StatDisplay.tsx     # Large typographic profit/loss display
@@ -51,13 +52,21 @@ finacial-app/
 │   │   │   └── CategoryChart.tsx   # Donut chart (Recharts PieChart) for expense categories
 │   │   ├── transactions/
 │   │   │   └── TransactionList.tsx # Income/expense rows for selected day, with delete
-│   │   └── history/
-│   │       ├── AnnualSummary.tsx   # Year-level income/expense/profit summary
-│   │       └── MonthCard.tsx       # Expandable month card with daily breakdown table
+│   │   ├── history/
+│   │   │   ├── AnnualSummary.tsx   # Year-level income/expense/profit summary
+│   │   │   └── MonthCard.tsx       # Expandable month card with daily breakdown table
+│   │   └── statistics/
+│   │       ├── OverviewCards.tsx       # KPI cards (income/expenses/profit/savings rate)
+│   │       ├── RecordHighlights.tsx    # Best/worst month records (2×2 grid)
+│   │       ├── SpendingHabits.tsx      # Category ranking bar chart + metrics
+│   │       ├── IncomeBreakdown.tsx     # Work vs personal split bars
+│   │       ├── MonthlyTrendsChart.tsx  # 12-month grouped bar chart (Recharts)
+│   │       └── FunFacts.tsx           # Biggest day, avg daily, Kami spending
 │   │
 │   ├── hooks/
 │   │   ├── useFinancialData.ts     # Derived daily/monthly stats from store (memoized)
-│   │   └── useHistoryData.ts       # Aggregates data by month/year for history page
+│   │   ├── useHistoryData.ts       # Aggregates data by month/year for history page
+│   │   └── useStatisticsData.ts    # Yearly statistics, records, trends (memoized)
 │   │
 │   ├── store/
 │   │   └── transactionStore.ts     # Zustand store — single source of truth, syncs with Supabase
@@ -148,6 +157,17 @@ User visits any route
 - Year selector → `useState(currentYear)`
 - **AnnualSummary** → reads from `useHistoryData(year)`
 - **MonthCard** × 12 → expandable cards with daily breakdown table
+
+### Statistics Page (`/statistics`)
+- **DashboardLayout** → wraps page with header/nav
+- Year selector → `useState(currentYear)` (same pattern as History)
+- **OverviewCards** → 4 KPI cards (income, expenses, profit, savings rate)
+- **RecordHighlights** → 2×2 grid of best/worst month records
+- **MonthlyTrendsChart** → Recharts grouped BarChart (income/expenses/profit × 12 months)
+- **SpendingHabits** → top category + horizontal bar ranking + transaction metrics
+- **IncomeBreakdown** → work vs personal split bars for income and expenses
+- **FunFacts** → biggest day, avg daily expense, active days, Kami spending
+- All data derived from `useStatisticsData(year)` hook (memoized, no extra API calls)
 
 ---
 
