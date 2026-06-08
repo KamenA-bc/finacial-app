@@ -51,7 +51,7 @@ const FactCard = ({
     valueClass = 'text-gray-700',
     className = '',
 }: FactCardProps): React.ReactElement => (
-    <div className={`flex items-start gap-3 p-4 bg-gray-50/50 rounded-lg border border-gray-100 ${className}`}>
+    <div className={`flex items-start gap-3 p-4 bg-gray-50/50 rounded-lg border border-gray-100 overflow-hidden ${className}`}>
         <div className={`flex items-center justify-center w-9 h-9 rounded-lg flex-shrink-0 ${iconBg}`}>
             {icon}
         </div>
@@ -59,7 +59,7 @@ const FactCard = ({
             <p className="text-xs text-gray-400 font-medium uppercase tracking-wider">
                 {label}
             </p>
-            <p className={`text-lg font-bold tabular-nums ${valueClass}`}>
+            <p className={`text-base sm:text-lg font-bold tabular-nums break-all ${valueClass}`}>
                 {value}
             </p>
             {subtext && (
@@ -86,9 +86,9 @@ export const FunFacts = ({
         {/* Row 1: Kami + Worst Day side by side */}
         <div className="grid grid-cols-2 gap-3 mb-3">
             <FactCard
-                label="Разход с Ками"
+                label="С Ками"
                 value={kamiSpending > 0 ? `−${fmt(kamiSpending, year)}` : '—'}
-                subtext={kamiSpending > 0 ? 'общо за годината' : 'Добавете "Ками" в описанието'}
+                subtext={kamiSpending > 0 ? 'общо за годината' : 'Няма маркирани'}
                 icon={<Heart size={15} className="text-pink-500" />}
                 iconBg="bg-pink-50"
                 valueClass={kamiSpending > 0 ? 'text-pink-500' : 'text-gray-300'}

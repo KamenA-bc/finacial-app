@@ -1,6 +1,7 @@
 /**
  * OverviewCards – top-level KPI summary for the statistics page.
  * Shows total income, expenses, net profit, and savings rate.
+ * Cards are uniform height on mobile with auto-scaling text.
  */
 'use client';
 
@@ -69,13 +70,13 @@ export const OverviewCards = ({
             {cards.map((card) => (
                 <div
                     key={card.label}
-                    className="bg-white rounded-xl shadow-sm border border-gray-100 p-5 flex flex-col gap-1.5"
+                    className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 sm:p-5 flex flex-col justify-between min-h-[100px]"
                 >
-                    <div className="flex items-center gap-1.5 text-xs text-gray-400 font-medium uppercase tracking-widest">
+                    <div className="flex items-center gap-1.5 text-[10px] sm:text-xs text-gray-400 font-medium uppercase tracking-widest mb-2">
                         {card.icon}
-                        {card.label}
+                        <span className="leading-tight">{card.label}</span>
                     </div>
-                    <p className={`text-2xl font-bold tabular-nums ${card.valueClass}`}>
+                    <p className={`text-xl sm:text-2xl font-bold tabular-nums break-all ${card.valueClass}`}>
                         {card.value}
                     </p>
                 </div>
