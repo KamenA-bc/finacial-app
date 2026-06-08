@@ -1,6 +1,9 @@
 /**
  * MonthlyTrendsChart – grouped bar chart showing income, expenses, and profit
  * for each month of the year. Uses Recharts BarChart.
+ *
+ * On mobile the chart is placed inside a horizontally scrollable container
+ * with a minimum width so bars are always readable and tappable.
  */
 'use client';
 
@@ -81,17 +84,67 @@ const CustomTooltip = ({
     );
 };
 
+/** The actual chart — rendered at a fixed width inside the scrollable area. */
+const ChartContent = ({
+    year,
+    data,
+}: {
+    year: number;
+    data: MonthlyTrendPoint[];
+}): React.ReactElement => (
+    <BarChart
+        data={data}
+        margin={{ top: 5, right: 10, left: 0, bottom: 5 }}
+        barCategoryGap="25%"
+    >
+        <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
+        <XAxis
+            dataKey="month"
+            tick={{ fontSize: 11, fill: '#9ca3af' }}
+            axisLine={{ stroke: '#e5e7eb' }}
+            tickLine={false}
+        />
+        <YAxis
+            tick={{ fontSize: 11, fill: '#9ca3af' }}
+            axisLine={false}
+            tickLine={false}
+            width={50}
+            tickFormatter={(v: number) =>
+                v >= 1000 ? `${(v / 1000).toFixed(0)}k` : String(v)
+            }
+        />
+        <Tooltip content={<CustomTooltip year={year} />} />
+        <Legend
+            iconType="circle"
+            iconSize={8}
+            wrapperStyle={{ fontSize: '11px', color: '#6b7280', paddingTop: '10px' }}
+            formatter={(value: string) => LABEL_MAP[value] ?? value}
+        />
+        <Bar dataKey="income" fill="#6ee7b7" radius={[3, 3, 0, 0]} />
+        <Bar dataKey="expenses" fill="#fda4af" radius={[3, 3, 0, 0]} />
+        <Bar dataKey="profit" fill="#93c5fd" radius={[3, 3, 0, 0]} />
+    </BarChart>
+);
+
 export const MonthlyTrendsChart = ({
     year,
     data,
     hasData,
 }: MonthlyTrendsChartProps): React.ReactElement => (
     <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-5">
-        <div className="flex items-center gap-2 mb-4">
-            <BarChart3 size={16} className="text-gray-400" />
-            <h2 className="text-xs font-semibold uppercase tracking-widest text-gray-400">
-                Месечни тенденции
-            </h2>
+        <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-2">
+                <BarChart3 size={16} className="text-gray-400" />
+                <h2 className="text-xs font-semibold uppercase tracking-widest text-gray-400">
+                    Месечни тенденции
+                </h2>
+            </div>
+            {/* Scroll hint — only visible on mobile when chart is scrollable */}
+            {hasData && (
+                <span className="text-[10px] text-gray-300 sm:hidden">
+                    ← плъзни →
+                </span>
+            )}
         </div>
 
         {!hasData ? (
@@ -100,40 +153,23 @@ export const MonthlyTrendsChart = ({
                 <p className="text-sm font-medium">Няма данни за тази година</p>
             </div>
         ) : (
-            <ResponsiveContainer width="100%" height={300}>
-                <BarChart
-                    data={data}
-                    margin={{ top: 5, right: 5, left: 0, bottom: 5 }}
-                    barCategoryGap="20%"
-                >
-                    <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
-                    <XAxis
-                        dataKey="month"
-                        tick={{ fontSize: 11, fill: '#9ca3af' }}
-                        axisLine={{ stroke: '#e5e7eb' }}
-                        tickLine={false}
-                    />
-                    <YAxis
-                        tick={{ fontSize: 11, fill: '#9ca3af' }}
-                        axisLine={false}
-                        tickLine={false}
-                        width={60}
-                        tickFormatter={(v: number) =>
-                            v >= 1000 ? `${(v / 1000).toFixed(0)}k` : String(v)
-                        }
-                    />
-                    <Tooltip content={<CustomTooltip year={year} />} />
-                    <Legend
-                        iconType="circle"
-                        iconSize={8}
-                        wrapperStyle={{ fontSize: '11px', color: '#6b7280', paddingTop: '10px' }}
-                        formatter={(value: string) => LABEL_MAP[value] ?? value}
-                    />
-                    <Bar dataKey="income" fill="#6ee7b7" radius={[3, 3, 0, 0]} />
-                    <Bar dataKey="expenses" fill="#fda4af" radius={[3, 3, 0, 0]} />
-                    <Bar dataKey="profit" fill="#93c5fd" radius={[3, 3, 0, 0]} />
-                </BarChart>
-            </ResponsiveContainer>
+            <>
+                {/* Desktop: responsive chart that fills width */}
+                <div className="hidden sm:block">
+                    <ResponsiveContainer width="100%" height={300}>
+                        <ChartContent year={year} data={data} />
+                    </ResponsiveContainer>
+                </div>
+
+                {/* Mobile: horizontally scrollable with fixed min-width */}
+                <div className="sm:hidden overflow-x-auto -mx-2 px-2 pb-2">
+                    <div style={{ width: 700, height: 280 }}>
+                        <ResponsiveContainer width="100%" height="100%">
+                            <ChartContent year={year} data={data} />
+                        </ResponsiveContainer>
+                    </div>
+                </div>
+            </>
         )}
     </div>
 );
