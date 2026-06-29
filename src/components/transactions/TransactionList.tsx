@@ -161,7 +161,7 @@ const ExpenseRow = ({ expense, onDelete }: ExpenseRowProps): React.ReactElement 
                     )}
                     {expense.isWithKami && (
                         <span className="text-[10px] font-semibold text-pink-600 bg-pink-50 border border-pink-200 px-1.5 py-0.5 rounded-full leading-none">
-                            С Ками
+                            ❤️
                         </span>
                     )}
                 </div>
@@ -333,7 +333,7 @@ export const TransactionList = (): React.ReactElement => {
                     onClick={() => setFilterMode('kami')}
                     className={`flex-1 text-[11px] font-medium py-1 rounded transition-all ${filterMode === 'kami' ? 'bg-white text-gray-800 shadow-sm ring-1 ring-black/5' : 'text-gray-500 hover:text-gray-700 hover:bg-gray-200/50'}`}
                 >
-                    С Ками
+                    ❤️
                 </button>
             </div>
 
@@ -356,7 +356,7 @@ export const TransactionList = (): React.ReactElement => {
                 </>
             ) : (
                 <p className="text-xs text-gray-300 text-center py-4">
-                    Няма {filterMode === 'work' ? 'работни' : filterMode === 'kami' ? '"С Ками"' : 'лични'} транзакции.
+                    Няма {filterMode === 'work' ? 'работни' : filterMode === 'kami' ? '❤️' : 'лични'} транзакции.
                 </p>
             )}
         </div>
