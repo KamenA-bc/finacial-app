@@ -132,7 +132,7 @@ const ExpenseRow = ({ expense, onDelete }: ExpenseRowProps): React.ReactElement 
     const isBoth = expense.isWithKami && expense.isWorkExpense;
 
     const amountColor = isBoth
-        ? 'text-violet-500'
+        ? 'text-purple-500'
         : expense.isWithKami
             ? 'text-pink-500'
             : expense.isWorkExpense
@@ -140,7 +140,7 @@ const ExpenseRow = ({ expense, onDelete }: ExpenseRowProps): React.ReactElement 
                 : 'text-rose-500';
 
     const rowBg = isBoth
-        ? 'bg-violet-50/60'
+        ? 'bg-purple-50/60'
         : expense.isWithKami
             ? 'bg-pink-50/60'
             : expense.isWorkExpense
