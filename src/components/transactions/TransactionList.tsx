@@ -129,17 +129,23 @@ interface ExpenseRowProps {
 }
 
 const ExpenseRow = ({ expense, onDelete }: ExpenseRowProps): React.ReactElement => {
-    const amountColor = expense.isWithKami
-        ? 'text-pink-500'
-        : expense.isWorkExpense
-            ? 'text-amber-500'
-            : 'text-rose-500';
+    const isBoth = expense.isWithKami && expense.isWorkExpense;
 
-    const rowBg = expense.isWithKami
-        ? 'bg-pink-50/60'
-        : expense.isWorkExpense
-            ? 'bg-amber-50/60'
-            : '';
+    const amountColor = isBoth
+        ? 'text-violet-500'
+        : expense.isWithKami
+            ? 'text-pink-500'
+            : expense.isWorkExpense
+                ? 'text-amber-500'
+                : 'text-rose-500';
+
+    const rowBg = isBoth
+        ? 'bg-violet-50/60'
+        : expense.isWithKami
+            ? 'bg-pink-50/60'
+            : expense.isWorkExpense
+                ? 'bg-amber-50/60'
+                : '';
 
     return (
         <div className={`flex items-center gap-3 py-2.5 px-2 -mx-2 rounded-lg border-b border-gray-50 last:border-0 ${rowBg}`}>
