@@ -224,7 +224,7 @@ const IncomeRow = ({ income, onDelete }: IncomeRowProps): React.ReactElement => 
 
 // ── Main Component ────────────────────────────────────────────────────────────
 
-type FilterMode = 'all' | 'personal' | 'work' | 'kami' | 'others';
+type FilterMode = 'all' | 'income' | 'expenses';
 
 interface PendingDelete {
     id: string;
@@ -281,21 +281,8 @@ export const TransactionList = (): React.ReactElement => {
         );
     }
 
-    const filteredIncome = dailyIncomeEntries.filter(entry => {
-        if (filterMode === 'all') return true;
-        if (filterMode === 'work') return entry.isWorkIncome;
-        if (filterMode === 'kami') return entry.isWithKami;
-        if (filterMode === 'others') return false;
-        return !entry.isWorkIncome; // personal
-    });
-
-    const filteredExpense = dailyExpenseEntries.filter(entry => {
-        if (filterMode === 'all') return true;
-        if (filterMode === 'work') return entry.isWorkExpense;
-        if (filterMode === 'kami') return entry.isWithKami;
-        if (filterMode === 'others') return entry.isWithOthers;
-        return !entry.isWorkExpense; // personal
-    });
+    const filteredIncome = filterMode === 'expenses' ? [] : dailyIncomeEntries;
+    const filteredExpense = filterMode === 'income' ? [] : dailyExpenseEntries;
 
     const hasFilteredEntries = filteredIncome.length > 0 || filteredExpense.length > 0;
 
@@ -320,28 +307,16 @@ export const TransactionList = (): React.ReactElement => {
                     Всички
                 </button>
                 <button
-                    onClick={() => setFilterMode('personal')}
-                    className={`flex-1 text-[11px] font-medium py-1 rounded transition-all ${filterMode === 'personal' ? 'bg-white text-gray-800 shadow-sm ring-1 ring-black/5' : 'text-gray-500 hover:text-gray-700 hover:bg-gray-200/50'}`}
+                    onClick={() => setFilterMode('income')}
+                    className={`flex-1 text-[11px] font-medium py-1 rounded transition-all ${filterMode === 'income' ? 'bg-white text-gray-800 shadow-sm ring-1 ring-black/5' : 'text-gray-500 hover:text-gray-700 hover:bg-gray-200/50'}`}
                 >
-                    Лични
+                    Приходи
                 </button>
                 <button
-                    onClick={() => setFilterMode('work')}
-                    className={`flex-1 text-[11px] font-medium py-1 rounded transition-all ${filterMode === 'work' ? 'bg-white text-gray-800 shadow-sm ring-1 ring-black/5' : 'text-gray-500 hover:text-gray-700 hover:bg-gray-200/50'}`}
+                    onClick={() => setFilterMode('expenses')}
+                    className={`flex-1 text-[11px] font-medium py-1 rounded transition-all ${filterMode === 'expenses' ? 'bg-white text-gray-800 shadow-sm ring-1 ring-black/5' : 'text-gray-500 hover:text-gray-700 hover:bg-gray-200/50'}`}
                 >
-                    Работни
-                </button>
-                <button
-                    onClick={() => setFilterMode('kami')}
-                    className={`flex-1 text-[11px] font-medium py-1 rounded transition-all ${filterMode === 'kami' ? 'bg-white text-gray-800 shadow-sm ring-1 ring-black/5' : 'text-gray-500 hover:text-gray-700 hover:bg-gray-200/50'}`}
-                >
-                    ❤️
-                </button>
-                <button
-                    onClick={() => setFilterMode('others')}
-                    className={`flex-1 text-[11px] font-medium py-1 rounded transition-all ${filterMode === 'others' ? 'bg-white text-gray-800 shadow-sm ring-1 ring-black/5' : 'text-gray-500 hover:text-gray-700 hover:bg-gray-200/50'}`}
-                >
-                    С Други
+                    Разходи
                 </button>
             </div>
 
@@ -364,7 +339,7 @@ export const TransactionList = (): React.ReactElement => {
                 </>
             ) : (
                 <p className="text-xs text-gray-300 text-center py-4">
-                    Няма {filterMode === 'work' ? 'работни' : filterMode === 'kami' ? '❤️' : filterMode === 'others' ? '"С Други"' : 'лични'} транзакции.
+                    Няма {filterMode === 'income' ? 'приходи' : filterMode === 'expenses' ? 'разходи' : 'транзакции'}.
                 </p>
             )}
         </div>
