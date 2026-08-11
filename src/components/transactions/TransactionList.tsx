@@ -29,6 +29,7 @@ import {
     CURRENCY_FORMAT_OPTIONS,
     CATEGORY_BG_MAP,
 } from '@/lib/constants';
+import { getExpenseRowColors } from '@/lib/expenseRowColors';
 
 // ── Constants ────────────────────────────────────────────────────────────────
 
@@ -129,23 +130,11 @@ interface ExpenseRowProps {
 }
 
 const ExpenseRow = ({ expense, onDelete }: ExpenseRowProps): React.ReactElement => {
-    const isBoth = expense.isWithKami && expense.isWorkExpense;
-
-    const amountColor = isBoth
-        ? 'text-purple-500'
-        : expense.isWithKami
-            ? 'text-pink-500'
-            : expense.isWorkExpense
-                ? 'text-amber-500'
-                : 'text-rose-500';
-
-    const rowBg = isBoth
-        ? 'bg-purple-50/60'
-        : expense.isWithKami
-            ? 'bg-pink-50/60'
-            : expense.isWorkExpense
-                ? 'bg-amber-50/60'
-                : '';
+    const { amountColor, rowBg } = getExpenseRowColors(
+        expense.isWorkExpense,
+        expense.isWithKami,
+        expense.isWithOthers,
+    );
 
     return (
         <div className={`flex items-center gap-3 py-2.5 px-2 -mx-2 rounded-lg border-b border-gray-50 last:border-0 ${rowBg}`}>
@@ -168,6 +157,11 @@ const ExpenseRow = ({ expense, onDelete }: ExpenseRowProps): React.ReactElement 
                     {expense.isWithKami && (
                         <span className="text-[10px] font-semibold text-pink-600 bg-pink-50 border border-pink-200 px-1.5 py-0.5 rounded-full leading-none">
                             ❤️
+                        </span>
+                    )}
+                    {expense.isWithOthers && (
+                        <span className="text-[10px] font-semibold text-green-600 bg-green-50 border border-green-200 px-1.5 py-0.5 rounded-full leading-none">
+                            С Други
                         </span>
                     )}
                 </div>
@@ -230,7 +224,7 @@ const IncomeRow = ({ income, onDelete }: IncomeRowProps): React.ReactElement => 
 
 // ── Main Component ────────────────────────────────────────────────────────────
 
-type FilterMode = 'all' | 'personal' | 'work' | 'kami';
+type FilterMode = 'all' | 'personal' | 'work' | 'kami' | 'others';
 
 interface PendingDelete {
     id: string;
@@ -291,6 +285,7 @@ export const TransactionList = (): React.ReactElement => {
         if (filterMode === 'all') return true;
         if (filterMode === 'work') return entry.isWorkIncome;
         if (filterMode === 'kami') return entry.isWithKami;
+        if (filterMode === 'others') return false;
         return !entry.isWorkIncome; // personal
     });
 
@@ -298,6 +293,7 @@ export const TransactionList = (): React.ReactElement => {
         if (filterMode === 'all') return true;
         if (filterMode === 'work') return entry.isWorkExpense;
         if (filterMode === 'kami') return entry.isWithKami;
+        if (filterMode === 'others') return entry.isWithOthers;
         return !entry.isWorkExpense; // personal
     });
 
@@ -341,6 +337,12 @@ export const TransactionList = (): React.ReactElement => {
                 >
                     ❤️
                 </button>
+                <button
+                    onClick={() => setFilterMode('others')}
+                    className={`flex-1 text-[11px] font-medium py-1 rounded transition-all ${filterMode === 'others' ? 'bg-white text-gray-800 shadow-sm ring-1 ring-black/5' : 'text-gray-500 hover:text-gray-700 hover:bg-gray-200/50'}`}
+                >
+                    С Други
+                </button>
             </div>
 
             {hasFilteredEntries ? (
@@ -362,7 +364,7 @@ export const TransactionList = (): React.ReactElement => {
                 </>
             ) : (
                 <p className="text-xs text-gray-300 text-center py-4">
-                    Няма {filterMode === 'work' ? 'работни' : filterMode === 'kami' ? '❤️' : 'лични'} транзакции.
+                    Няма {filterMode === 'work' ? 'работни' : filterMode === 'kami' ? '❤️' : filterMode === 'others' ? '"С Други"' : 'лични'} транзакции.
                 </p>
             )}
         </div>

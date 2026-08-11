@@ -18,9 +18,10 @@ interface CsvRow {
     amount: number;
     isWorkExpense: string;
     isWithKami: string;
+    isWithOthers: string;
 }
 
-const CSV_HEADERS = ['Дата', 'Тип', 'Описание', 'Категория', 'Сума', 'Работни разходи', '❤️'] as const;
+const CSV_HEADERS = ['Дата', 'Тип', 'Описание', 'Категория', 'Сума', 'Работни разходи', '❤️', 'С Други'] as const;
 
 /** Escape a cell value so commas and quotes inside strings don't break CSV. */
 const escapeCell = (value: string | number): string => {
@@ -32,7 +33,7 @@ const escapeCell = (value: string | number): string => {
 };
 
 const rowToCsv = (row: CsvRow): string =>
-    [row.date, row.type, row.description, row.category, row.amount, row.isWorkExpense, row.isWithKami]
+    [row.date, row.type, row.description, row.category, row.amount, row.isWorkExpense, row.isWithKami, row.isWithOthers]
         .map(escapeCell)
         .join(',');
 
@@ -57,6 +58,7 @@ export const exportToCsv = (
             amount: e.amount,
             isWorkExpense: '',
             isWithKami: e.isWithKami ? 'Да' : 'Не',
+            isWithOthers: '',
         }));
 
     const expenseRows: CsvRow[] = expenseEntries
@@ -69,6 +71,7 @@ export const exportToCsv = (
             amount: e.amount,
             isWorkExpense: e.isWorkExpense ? 'Да' : 'Не',
             isWithKami: e.isWithKami ? 'Да' : 'Не',
+            isWithOthers: e.isWithOthers ? 'Да' : 'Не',
         }));
 
     // Sort all rows by date ascending

@@ -48,6 +48,8 @@ export interface ExpenseEntry {
   readonly isWorkExpense: boolean;
   /** Whether this transaction is shared with Kami. */
   readonly isWithKami: boolean;
+  /** Whether this transaction is shared with others. */
+  readonly isWithOthers: boolean;
 }
 
 /** Shape of the centralized Zustand store. */

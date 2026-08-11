@@ -4,7 +4,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { PlusCircle, Receipt, Briefcase, Users } from 'lucide-react';
+import { PlusCircle, Receipt, Briefcase, Users, UsersRound } from 'lucide-react';
 import { useFinancialStore } from '@/store/transactionStore';
 import { EXPENSE_CATEGORIES, CATEGORY_BG_MAP, getCurrencySymbol } from '@/lib/constants';
 import { ExpenseCategory } from '@/types';
@@ -22,6 +22,7 @@ const expenseSchema = z.object({
     ),
     isWorkExpense: z.boolean(),
     isWithKami: z.boolean(),
+    isWithOthers: z.boolean(),
 });
 
 type ExpenseFormValues = z.infer<typeof expenseSchema>;
@@ -40,11 +41,12 @@ export const ExpenseForm = (): React.ReactElement => {
         formState: { errors, isSubmitting },
     } = useForm<ExpenseFormValues>({
         resolver: zodResolver(expenseSchema),
-        defaultValues: { category: EXPENSE_CATEGORIES[0], isWorkExpense: false, isWithKami: false },
+        defaultValues: { category: EXPENSE_CATEGORIES[0], isWorkExpense: false, isWithKami: false, isWithOthers: false },
     });
 
     const isWorkExpense = watch('isWorkExpense');
     const isWithKami = watch('isWithKami');
+    const isWithOthers = watch('isWithOthers');
 
     const onSubmit = async (data: ExpenseFormValues): Promise<void> => {
         await addExpense({
@@ -54,8 +56,9 @@ export const ExpenseForm = (): React.ReactElement => {
             category: data.category,
             isWorkExpense: data.isWorkExpense,
             isWithKami: data.isWithKami,
+            isWithOthers: data.isWithOthers,
         });
-        reset({ category: EXPENSE_CATEGORIES[0], isWorkExpense: false, isWithKami: false });
+        reset({ category: EXPENSE_CATEGORIES[0], isWorkExpense: false, isWithKami: false, isWithOthers: false });
     };
 
     const inputClass =
@@ -240,6 +243,55 @@ export const ExpenseForm = (): React.ReactElement => {
                     }`}
                 >
                     ❤️
+                </span>
+            </label>
+
+            {/* With Others Checkbox */}
+            <label
+                htmlFor="expense-others"
+                className={`flex items-center gap-2.5 px-3 py-2.5 rounded-md border cursor-pointer transition-all ${
+                    isWithOthers
+                        ? 'border-green-300 bg-green-50'
+                        : 'border-gray-200 bg-white hover:border-gray-300'
+                }`}
+            >
+                <input
+                    id="expense-others"
+                    type="checkbox"
+                    {...register('isWithOthers')}
+                    className="sr-only peer"
+                />
+                <div
+                    className={`flex items-center justify-center w-4 h-4 rounded border-2 transition-all flex-shrink-0 ${
+                        isWithOthers
+                            ? 'bg-green-500 border-green-500'
+                            : 'border-gray-300 bg-white'
+                    }`}
+                >
+                    {isWithOthers && (
+                        <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
+                            <path
+                                d="M1 4L3.5 6.5L9 1"
+                                stroke="white"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                            />
+                        </svg>
+                    )}
+                </div>
+                <UsersRound
+                    size={14}
+                    className={`flex-shrink-0 transition-colors ${
+                        isWithOthers ? 'text-green-600' : 'text-gray-400'
+                    }`}
+                />
+                <span
+                    className={`text-sm font-medium transition-colors ${
+                        isWithOthers ? 'text-green-700' : 'text-gray-600'
+                    }`}
+                >
+                    С Други
                 </span>
             </label>
 

@@ -33,7 +33,7 @@ export const useFinancialStore = create<FinancialStore>()((set, get) => ({
                     .order('date', { ascending: true }),
                 supabase
                     .from('expense_entries')
-                    .select('id, date, amount, description, category, is_work_expense, is_with_kami')
+                    .select('id, date, amount, description, category, is_work_expense, is_with_kami, is_with_others')
                     .eq('user_id', userId)
                     .order('date', { ascending: true }),
             ]);
@@ -58,6 +58,7 @@ export const useFinancialStore = create<FinancialStore>()((set, get) => ({
                     category: e.category as string,
                     isWorkExpense: (e.is_work_expense as boolean) ?? false,
                     isWithKami: (e.is_with_kami as boolean) ?? false,
+                    isWithOthers: (e.is_with_others as boolean) ?? false,
                 })) as ExpenseEntry[],
                 userId,
                 isLoading: false,
@@ -116,8 +117,9 @@ export const useFinancialStore = create<FinancialStore>()((set, get) => ({
                     category: entry.category,
                     is_work_expense: entry.isWorkExpense,
                     is_with_kami: entry.isWithKami,
+                    is_with_others: entry.isWithOthers,
                 })
-                .select('id, date, amount, description, category, is_work_expense, is_with_kami')
+                .select('id, date, amount, description, category, is_work_expense, is_with_kami, is_with_others')
                 .single();
 
             if (error) throw error;
@@ -130,6 +132,7 @@ export const useFinancialStore = create<FinancialStore>()((set, get) => ({
                 category: (data as Record<string, unknown>).category as string as ExpenseEntry['category'],
                 isWorkExpense: ((data as Record<string, unknown>).is_work_expense as boolean) ?? false,
                 isWithKami: ((data as Record<string, unknown>).is_with_kami as boolean) ?? false,
+                isWithOthers: ((data as Record<string, unknown>).is_with_others as boolean) ?? false,
             };
 
             set((state) => ({
