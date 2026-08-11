@@ -44,23 +44,23 @@ export const getExpenseRowColors = (
     switch (flagKey(isWorkExpense, isWithKami, isWithOthers)) {
         // ── Single flags ──────────────────────────────────────────────
         case 4: // Work only
-            return { amountColor: 'text-amber-500', rowBg: 'bg-amber-50/60' };
+            return { amountColor: 'text-amber-500', rowBg: 'bg-amber-50/80' };
         case 2: // Kami only
-            return { amountColor: 'text-pink-500', rowBg: 'bg-pink-50/60' };
+            return { amountColor: 'text-pink-500', rowBg: 'bg-pink-50/80' };
         case 1: // Others only
-            return { amountColor: 'text-green-500', rowBg: 'bg-green-50/60' };
+            return { amountColor: 'text-green-500', rowBg: 'bg-green-50/80' };
 
         // ── Two-flag blends ───────────────────────────────────────────
         case 6: // Work + Kami  →  purple (matches existing repo convention)
-            return { amountColor: 'text-purple-500', rowBg: 'bg-purple-50/60' };
+            return { amountColor: 'text-purple-500', rowBg: 'bg-purple-50/80' };
         case 5: // Work + Others  →  lime (amber↔green blend)
-            return { amountColor: 'text-lime-500', rowBg: 'bg-lime-50/60' };
+            return { amountColor: 'text-lime-500', rowBg: 'bg-lime-50/80' };
         case 3: // Kami + Others  →  cyan (pink↔green blend)
-            return { amountColor: 'text-cyan-500', rowBg: 'bg-cyan-50/60' };
+            return { amountColor: 'text-cyan-500', rowBg: 'bg-cyan-50/80' };
 
         // ── Three-flag blend ──────────────────────────────────────────
         case 7: // Work + Kami + Others  →  violet (three-way blend)
-            return { amountColor: 'text-violet-500', rowBg: 'bg-violet-50/60' };
+            return { amountColor: 'text-violet-500', rowBg: 'bg-violet-50/80' };
 
         // ── No flags ──────────────────────────────────────────────────
         default: // 0 — plain expense

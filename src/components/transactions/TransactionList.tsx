@@ -147,20 +147,20 @@ const ExpenseRow = ({ expense, onDelete }: ExpenseRowProps): React.ReactElement 
                 <p className="text-sm text-gray-700 font-medium truncate">
                     {expense.description}
                 </p>
-                <div className="flex items-center gap-1.5">
-                    <p className="text-xs text-gray-400">{CATEGORY_BG_MAP[expense.category] ?? expense.category}</p>
+                <div className="flex flex-wrap items-center gap-1.5 mt-0.5">
+                    <p className="text-xs text-gray-400 whitespace-nowrap">{CATEGORY_BG_MAP[expense.category] ?? expense.category}</p>
                     {expense.isWorkExpense && (
-                        <span className="text-[10px] font-semibold text-amber-600 bg-amber-50 border border-amber-200 px-1.5 py-0.5 rounded-full leading-none">
+                        <span className="whitespace-nowrap text-[10px] font-semibold text-amber-600 bg-amber-50 border border-amber-200 px-1.5 py-0.5 rounded-full leading-none">
                             Работни
                         </span>
                     )}
                     {expense.isWithKami && (
-                        <span className="text-[10px] font-semibold text-pink-600 bg-pink-50 border border-pink-200 px-1.5 py-0.5 rounded-full leading-none">
+                        <span className="whitespace-nowrap text-[10px] font-semibold text-pink-600 bg-pink-50 border border-pink-200 px-1.5 py-0.5 rounded-full leading-none">
                             ❤️
                         </span>
                     )}
                     {expense.isWithOthers && (
-                        <span className="text-[10px] font-semibold text-green-600 bg-green-50 border border-green-200 px-1.5 py-0.5 rounded-full leading-none">
+                        <span className="whitespace-nowrap text-[10px] font-semibold text-green-600 bg-green-50 border border-green-200 px-1.5 py-0.5 rounded-full leading-none">
                             С Други
                         </span>
                     )}
@@ -199,10 +199,10 @@ const IncomeRow = ({ income, onDelete }: IncomeRowProps): React.ReactElement => 
                 <p className="text-sm text-gray-700 font-medium truncate">
                     {income.description || 'Приход'}
                 </p>
-                <div className="flex items-center gap-1.5">
-                    <p className="text-xs text-gray-400">Спечелени пари</p>
+                <div className="flex flex-wrap items-center gap-1.5 mt-0.5">
+                    <p className="text-xs text-gray-400 whitespace-nowrap">Спечелени пари</p>
                     {isWork && (
-                        <span className="text-[10px] font-semibold text-blue-600 bg-blue-50 border border-blue-200 px-1.5 py-0.5 rounded-full leading-none">
+                        <span className="whitespace-nowrap text-[10px] font-semibold text-blue-600 bg-blue-50 border border-blue-200 px-1.5 py-0.5 rounded-full leading-none">
                             Работен
                         </span>
                     )}

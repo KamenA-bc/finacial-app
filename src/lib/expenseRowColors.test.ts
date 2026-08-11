@@ -37,19 +37,19 @@ describe('getExpenseRowColors – single flags', () => {
     it('returns amber for work-only expense', () => {
         const result = getExpenseRowColors(true, false, false);
         expect(result.amountColor).toBe('text-amber-500');
-        expect(result.rowBg).toBe('bg-amber-50/60');
+        expect(result.rowBg).toBe('bg-amber-50/80');
     });
 
     it('returns pink for kami-only expense', () => {
         const result = getExpenseRowColors(false, true, false);
         expect(result.amountColor).toBe('text-pink-500');
-        expect(result.rowBg).toBe('bg-pink-50/60');
+        expect(result.rowBg).toBe('bg-pink-50/80');
     });
 
     it('returns green for others-only expense', () => {
         const result = getExpenseRowColors(false, false, true);
         expect(result.amountColor).toBe('text-green-500');
-        expect(result.rowBg).toBe('bg-green-50/60');
+        expect(result.rowBg).toBe('bg-green-50/80');
     });
 });
 
@@ -59,19 +59,19 @@ describe('getExpenseRowColors – two-flag blends', () => {
     it('returns purple for work + kami blend', () => {
         const result = getExpenseRowColors(true, true, false);
         expect(result.amountColor).toBe('text-purple-500');
-        expect(result.rowBg).toBe('bg-purple-50/60');
+        expect(result.rowBg).toBe('bg-purple-50/80');
     });
 
     it('returns lime for work + others blend', () => {
         const result = getExpenseRowColors(true, false, true);
         expect(result.amountColor).toBe('text-lime-500');
-        expect(result.rowBg).toBe('bg-lime-50/60');
+        expect(result.rowBg).toBe('bg-lime-50/80');
     });
 
     it('returns cyan for kami + others blend', () => {
         const result = getExpenseRowColors(false, true, true);
         expect(result.amountColor).toBe('text-cyan-500');
-        expect(result.rowBg).toBe('bg-cyan-50/60');
+        expect(result.rowBg).toBe('bg-cyan-50/80');
     });
 });
 
@@ -81,7 +81,7 @@ describe('getExpenseRowColors – three-flag blend', () => {
     it('returns violet for work + kami + others blend', () => {
         const result = getExpenseRowColors(true, true, true);
         expect(result.amountColor).toBe('text-violet-500');
-        expect(result.rowBg).toBe('bg-violet-50/60');
+        expect(result.rowBg).toBe('bg-violet-50/80');
     });
 });
 
