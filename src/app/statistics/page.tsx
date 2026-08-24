@@ -18,6 +18,7 @@ import { useStatisticsData } from '@/hooks/useStatisticsData';
 import { useAuth } from '@/components/auth/AuthProvider';
 import { useFinancialStore } from '@/store/transactionStore';
 import { PdfExportButton } from '@/components/ui/PdfExportButton';
+import { ExcelExportButton } from '@/components/ui/ExcelExportButton';
 
 export default function StatisticsPage(): React.ReactElement {
     const currentYear = new Date().getFullYear();
@@ -27,6 +28,8 @@ export default function StatisticsPage(): React.ReactElement {
     const fetchTransactions = useFinancialStore((s) => s.fetchTransactions);
     const setUserId = useFinancialStore((s) => s.setUserId);
     const isLoading = useFinancialStore((s) => s.isLoading);
+    const incomeEntries = useFinancialStore((s) => s.incomeEntries);
+    const expenseEntries = useFinancialStore((s) => s.expenseEntries);
 
     useEffect(() => {
         if (user) {
@@ -71,9 +74,14 @@ export default function StatisticsPage(): React.ReactElement {
                 </button>
             </div>
 
-            {/* ── PDF Export ──────────────────────────────────────────── */}
-            <div className="flex justify-center mb-4">
+            {/* ── Export Actions (PDF & Excel) ─────────────────────────── */}
+            <div className="flex flex-wrap justify-center items-center gap-4 mb-6">
                 <PdfExportButton stats={stats} year={year} />
+                <ExcelExportButton
+                    incomeEntries={incomeEntries}
+                    expenseEntries={expenseEntries}
+                    year={year}
+                />
             </div>
 
             {/* ── Content ──────────────────────────────────────────────── */}
