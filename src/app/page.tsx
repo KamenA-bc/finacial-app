@@ -85,12 +85,16 @@ export default function DashboardPage(): React.ReactElement {
 
   return (
     <DashboardLayout>
-      {/* ── Top Bar: Date Navigator + Unified SaaS Export Action ────── */}
+      {/* ── Top Bar: Date Navigator + SaaS Export Action ────────────── */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
         <div className="flex-1">
           <DateNavigator />
         </div>
-        <div className="flex justify-end">
+        <div className="flex items-center justify-between sm:justify-end gap-2 w-full sm:w-auto">
+          <span className="text-[11px] font-medium text-gray-400 bg-white border border-gray-100 shadow-2xs px-2.5 py-1.5 rounded-lg flex items-center gap-1.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+            {new Date().getFullYear()} г.
+          </span>
           <ExportDropdown />
         </div>
       </div>

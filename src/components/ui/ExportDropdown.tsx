@@ -231,6 +231,18 @@ export const ExportDropdown = ({ year: propYear }: ExportDropdownProps): React.R
                             </p>
                         </div>
                     </button>
+
+                    {/* Google Sheets Import Hint Footer */}
+                    <div className="mt-1.5 pt-2 border-t border-gray-100 px-2.5 py-2 bg-gray-50/80 rounded-b-lg">
+                        <p className="text-[10px] font-semibold text-gray-600 flex items-center gap-1 mb-1">
+                            💡 Как да импортирате в Google Sheets:
+                        </p>
+                        <ol className="text-[10px] text-gray-400 leading-relaxed list-decimal list-inside space-y-0.5">
+                            <li>Отворете <span className="font-medium text-gray-600">drive.google.com</span> или <span className="font-medium text-gray-600">Google Sheets</span></li>
+                            <li>Натиснете <span className="font-medium text-gray-600">File › Import</span> (Файл › Импортиране)</li>
+                            <li>Качете изтегления <span className="font-medium text-emerald-600">.xlsx</span> или <span className="font-medium text-blue-600">.csv</span> файл</li>
+                        </ol>
+                    </div>
                 </div>
             )}
         </div>

@@ -17,7 +17,6 @@ import { FunFacts } from '@/components/statistics/FunFacts';
 import { useStatisticsData } from '@/hooks/useStatisticsData';
 import { useAuth } from '@/components/auth/AuthProvider';
 import { useFinancialStore } from '@/store/transactionStore';
-import { ExportDropdown } from '@/components/ui/ExportDropdown';
 
 export default function StatisticsPage(): React.ReactElement {
     const currentYear = new Date().getFullYear();
@@ -73,10 +72,7 @@ export default function StatisticsPage(): React.ReactElement {
                 </button>
             </div>
 
-            {/* ── Unified Export Menu ───────────────────────────────────── */}
-            <div className="flex justify-center mb-6">
-                <ExportDropdown year={year} />
-            </div>
+
 
             {/* ── Content ──────────────────────────────────────────────── */}
             <div className="flex flex-col gap-5">
