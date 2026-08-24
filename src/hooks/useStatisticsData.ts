@@ -13,23 +13,23 @@ import { EXPENSE_CATEGORIES, CATEGORY_BG_MAP } from '@/lib/constants';
 
 // ── Interfaces ───────────────────────────────────────────────────────────────
 
-interface MonthRecord {
+export interface MonthRecord {
     month: string;
     amount: number;
 }
 
-interface DayRecord {
+export interface DayRecord {
     date: string;
     amount: number;
 }
 
-interface CategoryRankEntry {
+export interface CategoryRankEntry {
     name: string;
     displayName: string;
     amount: number;
 }
 
-interface MonthlyTrendPoint {
+export interface MonthlyTrendPoint {
     month: string;
     income: number;
     expenses: number;
