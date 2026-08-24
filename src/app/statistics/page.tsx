@@ -17,8 +17,7 @@ import { FunFacts } from '@/components/statistics/FunFacts';
 import { useStatisticsData } from '@/hooks/useStatisticsData';
 import { useAuth } from '@/components/auth/AuthProvider';
 import { useFinancialStore } from '@/store/transactionStore';
-import { PdfExportButton } from '@/components/ui/PdfExportButton';
-import { ExcelExportButton } from '@/components/ui/ExcelExportButton';
+import { ExportDropdown } from '@/components/ui/ExportDropdown';
 
 export default function StatisticsPage(): React.ReactElement {
     const currentYear = new Date().getFullYear();
@@ -74,14 +73,9 @@ export default function StatisticsPage(): React.ReactElement {
                 </button>
             </div>
 
-            {/* ── Export Actions (PDF & Excel) ─────────────────────────── */}
-            <div className="flex flex-wrap justify-center items-center gap-4 mb-6">
-                <PdfExportButton stats={stats} year={year} />
-                <ExcelExportButton
-                    incomeEntries={incomeEntries}
-                    expenseEntries={expenseEntries}
-                    year={year}
-                />
+            {/* ── Unified Export Menu ───────────────────────────────────── */}
+            <div className="flex justify-center mb-6">
+                <ExportDropdown year={year} />
             </div>
 
             {/* ── Content ──────────────────────────────────────────────── */}

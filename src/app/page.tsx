@@ -14,7 +14,7 @@ import { IncomeForm } from '@/components/forms/IncomeForm';
 import { ExpenseForm } from '@/components/forms/ExpenseForm';
 import { CategoryChart } from '@/components/charts/CategoryChart';
 import { TransactionList } from '@/components/transactions/TransactionList';
-import { ExportButton } from '@/components/ui/ExportButton';
+import { ExportDropdown } from '@/components/ui/ExportDropdown';
 import { useFinancialData } from '@/hooks/useFinancialData';
 import { useAuth } from '@/components/auth/AuthProvider';
 import { useFinancialStore } from '@/store/transactionStore';
@@ -85,9 +85,14 @@ export default function DashboardPage(): React.ReactElement {
 
   return (
     <DashboardLayout>
-      {/* ── Date Navigator ───────────────────────────────────────────── */}
-      <div className="mb-5">
-        <DateNavigator />
+      {/* ── Top Bar: Date Navigator + Unified SaaS Export Action ────── */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+        <div className="flex-1">
+          <DateNavigator />
+        </div>
+        <div className="flex justify-end">
+          <ExportDropdown />
+        </div>
       </div>
 
       {/* ── Profit Counters ──────────────────────────────────────────── */}
@@ -144,11 +149,6 @@ export default function DashboardPage(): React.ReactElement {
           </div>
         </div>
       </SectionCard>
-
-      {/* ── Export ───────────────────────────────────────────────────── */}
-      <div className="mt-4">
-        <ExportButton />
-      </div>
 
       {/* ── Main Grid: Forms + Chart/List ────────────────────────────── */}
       <div className="mt-4 grid grid-cols-1 lg:grid-cols-5 gap-4">
