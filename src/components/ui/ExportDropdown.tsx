@@ -18,6 +18,7 @@ import {
 import { useFinancialStore } from '@/store/transactionStore';
 import { useStatisticsData } from '@/hooks/useStatisticsData';
 import { exportToCsv } from '@/lib/csvExport';
+import { logError } from '@/lib/errorLogger';
 
 const SUCCESS_DISPLAY_MS = 2500;
 
@@ -83,7 +84,7 @@ export const ExportDropdown = ({ year: propYear }: ExportDropdownProps): React.R
             setDoneFormat('pdf');
             setTimeout(() => setDoneFormat(null), SUCCESS_DISPLAY_MS);
         } catch (err) {
-            console.error('PDF export failed:', err);
+            logError('exportPdf', err, { year });
         } finally {
             setLoadingFormat(null);
         }
@@ -100,7 +101,7 @@ export const ExportDropdown = ({ year: propYear }: ExportDropdownProps): React.R
             setDoneFormat('excel');
             setTimeout(() => setDoneFormat(null), SUCCESS_DISPLAY_MS);
         } catch (err) {
-            console.error('Excel export failed:', err);
+            logError('exportExcel', err, { year });
         } finally {
             setLoadingFormat(null);
         }
@@ -116,7 +117,7 @@ export const ExportDropdown = ({ year: propYear }: ExportDropdownProps): React.R
             setDoneFormat('csv');
             setTimeout(() => setDoneFormat(null), SUCCESS_DISPLAY_MS);
         } catch (err) {
-            console.error('CSV export failed:', err);
+            logError('exportCsv', err);
         } finally {
             setLoadingFormat(null);
         }

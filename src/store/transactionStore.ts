@@ -9,6 +9,7 @@ import { create } from 'zustand';
 import { FinancialStore, IncomeEntry, ExpenseEntry } from '@/types';
 import { toISODateString } from '@/lib/dateUtils';
 import { supabase } from '@/lib/supabase';
+import { logError, extractErrorMessage } from '@/lib/errorLogger';
 
 export const useFinancialStore = create<FinancialStore>()((set, get) => ({
     incomeEntries: [],
@@ -64,7 +65,8 @@ export const useFinancialStore = create<FinancialStore>()((set, get) => ({
                 isLoading: false,
             });
         } catch (err) {
-            const message = err instanceof Error ? err.message : 'Failed to fetch transactions';
+            const message = extractErrorMessage(err);
+            logError('fetchTransactions', err, { userId });
             set({ error: message, isLoading: false });
         }
     },
@@ -96,7 +98,8 @@ export const useFinancialStore = create<FinancialStore>()((set, get) => ({
                 incomeEntries: [...state.incomeEntries, mapped],
             }));
         } catch (err) {
-            const message = err instanceof Error ? err.message : 'Failed to add income';
+            const message = extractErrorMessage(err);
+            logError('addIncome', err, { userId: get().userId });
             set({ error: message });
         }
     },
@@ -139,7 +142,8 @@ export const useFinancialStore = create<FinancialStore>()((set, get) => ({
                 expenseEntries: [...state.expenseEntries, mapped],
             }));
         } catch (err) {
-            const message = err instanceof Error ? err.message : 'Failed to add expense';
+            const message = extractErrorMessage(err);
+            logError('addExpense', err, { userId: get().userId });
             set({ error: message });
         }
     },
@@ -158,7 +162,8 @@ export const useFinancialStore = create<FinancialStore>()((set, get) => ({
                 incomeEntries: state.incomeEntries.filter((e) => e.id !== id),
             }));
         } catch (err) {
-            const message = err instanceof Error ? err.message : 'Failed to delete income';
+            const message = extractErrorMessage(err);
+            logError('deleteIncome', err, { entryId: id });
             set({ error: message });
         }
     },
@@ -177,7 +182,8 @@ export const useFinancialStore = create<FinancialStore>()((set, get) => ({
                 expenseEntries: state.expenseEntries.filter((e) => e.id !== id),
             }));
         } catch (err) {
-            const message = err instanceof Error ? err.message : 'Failed to delete expense';
+            const message = extractErrorMessage(err);
+            logError('deleteExpense', err, { entryId: id });
             set({ error: message });
         }
     },
