@@ -65,7 +65,7 @@ export interface FinancialStore {
   /** Last error from a server operation */
   error: string | null;
   setUserId: (userId: string | null) => void;
-  fetchTransactions: (userId: string) => Promise<void>;
+  fetchTransactions: (userId: string, isRetry?: boolean) => Promise<void>;
   addIncome: (entry: Omit<IncomeEntry, 'id'>) => Promise<void>;
   addExpense: (entry: Omit<ExpenseEntry, 'id'>) => Promise<void>;
   deleteIncome: (id: string) => Promise<void>;

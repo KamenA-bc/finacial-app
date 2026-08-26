@@ -23,18 +23,18 @@ export const useFinancialStore = create<FinancialStore>()((set, get) => ({
         set({ userId });
     },
 
-    fetchTransactions: async (userId: string): Promise<void> => {
+    fetchTransactions: async (userId: string, isRetry = false) => {
         set({ isLoading: true, error: null });
         try {
             const [incomeRes, expenseRes] = await Promise.all([
                 supabase
                     .from('income_entries')
-                    .select('id, date, amount, description, is_work_income, is_with_kami')
+                    .select('*')
                     .eq('user_id', userId)
                     .order('date', { ascending: true }),
                 supabase
                     .from('expense_entries')
-                    .select('id, date, amount, description, category, is_work_expense, is_with_kami, is_with_others')
+                    .select('*')
                     .eq('user_id', userId)
                     .order('date', { ascending: true }),
             ]);
@@ -42,31 +42,43 @@ export const useFinancialStore = create<FinancialStore>()((set, get) => ({
             if (incomeRes.error) throw incomeRes.error;
             if (expenseRes.error) throw expenseRes.error;
 
+            const incomeEntries: IncomeEntry[] = (incomeRes.data ?? []).map((row) => ({
+                id: row.id,
+                date: row.date,
+                amount: Number(row.amount),
+                description: row.description ?? '',
+                isWorkIncome: Boolean(row.is_work_income),
+                isWithKami: Boolean(row.is_with_kami),
+            }));
+
+            const expenseEntries: ExpenseEntry[] = (expenseRes.data ?? []).map((row) => ({
+                id: row.id,
+                date: row.date,
+                amount: Number(row.amount),
+                description: row.description ?? '',
+                category: row.category,
+                isWorkExpense: Boolean(row.is_work_expense),
+                isWithKami: Boolean(row.is_with_kami),
+                isWithOthers: Boolean(row.is_with_others),
+            }));
+
             set({
-                incomeEntries: (incomeRes.data ?? []).map((e: Record<string, unknown>) => ({
-                    id: e.id as string,
-                    date: e.date as string,
-                    amount: e.amount as number,
-                    description: e.description as string,
-                    isWorkIncome: ((e.is_work_income as boolean) ?? false),
-                    isWithKami: ((e.is_with_kami as boolean) ?? false),
-                })) as IncomeEntry[],
-                expenseEntries: (expenseRes.data ?? []).map((e: Record<string, unknown>) => ({
-                    id: e.id as string,
-                    date: e.date as string,
-                    amount: e.amount as number,
-                    description: e.description as string,
-                    category: e.category as string,
-                    isWorkExpense: (e.is_work_expense as boolean) ?? false,
-                    isWithKami: (e.is_with_kami as boolean) ?? false,
-                    isWithOthers: (e.is_with_others as boolean) ?? false,
-                })) as ExpenseEntry[],
+                incomeEntries,
+                expenseEntries,
                 userId,
                 isLoading: false,
             });
         } catch (err) {
             const message = extractErrorMessage(err);
-            logError('fetchTransactions', err, { userId });
+
+            // Handle transient clock-skew / JWT future errors with a silent retry
+            if (!isRetry && message.toLowerCase().includes('jwt issued at future')) {
+                await new Promise((resolve) => setTimeout(resolve, 1000));
+                await supabase.auth.refreshSession();
+                return useFinancialStore.getState().fetchTransactions(userId, true);
+            }
+
+            logError('fetchTransactions', err, { userId, isRetry });
             set({ error: message, isLoading: false });
         }
     },
