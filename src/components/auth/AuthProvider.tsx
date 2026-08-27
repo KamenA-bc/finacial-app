@@ -48,7 +48,34 @@ export const AuthProvider = ({
             setUser(session?.user ?? null);
         });
 
-        return () => subscription.unsubscribe();
+        // ── Proactive session refresh on tab resume ──────────────────
+        // When the user returns after the tab was hidden for a while,
+        // refresh the session immediately so the next Supabase call
+        // uses a fresh JWT — avoids "JWT Issued at future" clock-skew
+        // errors on the first request after idle.
+        let hiddenAt: number | null = null;
+        const STALE_THRESHOLD_MS = 30_000; // 30 seconds
+
+        const handleVisibilityChange = (): void => {
+            if (document.visibilityState === 'hidden') {
+                hiddenAt = Date.now();
+            } else if (document.visibilityState === 'visible' && hiddenAt !== null) {
+                const elapsed = Date.now() - hiddenAt;
+                hiddenAt = null;
+                if (elapsed >= STALE_THRESHOLD_MS) {
+                    // Fire-and-forget — if it fails the retry wrapper in the
+                    // store will handle it on the next data operation.
+                    supabase.auth.refreshSession().catch(() => {});
+                }
+            }
+        };
+
+        document.addEventListener('visibilitychange', handleVisibilityChange);
+
+        return () => {
+            subscription.unsubscribe();
+            document.removeEventListener('visibilitychange', handleVisibilityChange);
+        };
     }, []);
 
     const signUp = async (

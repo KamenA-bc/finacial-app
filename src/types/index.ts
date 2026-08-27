@@ -64,8 +64,10 @@ export interface FinancialStore {
   isLoading: boolean;
   /** Last error from a server operation */
   error: string | null;
+  /** Epoch ms of the last successful fetchTransactions — used to deduplicate fetches across pages. */
+  lastFetchedAt: number | null;
   setUserId: (userId: string | null) => void;
-  fetchTransactions: (userId: string, isRetry?: boolean) => Promise<void>;
+  fetchTransactions: (userId: string) => Promise<void>;
   addIncome: (entry: Omit<IncomeEntry, 'id'>) => Promise<void>;
   addExpense: (entry: Omit<ExpenseEntry, 'id'>) => Promise<void>;
   deleteIncome: (id: string) => Promise<void>;
