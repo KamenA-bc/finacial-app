@@ -23,6 +23,12 @@ vi.mock('@/lib/supabase', () => ({
     },
 }));
 
+vi.mock('@/lib/supabaseRetry', () => ({
+    withJwtRetry: vi.fn(async (operation) => {
+        return await operation();
+    }),
+}));
+
 // ── extractErrorMessage ──────────────────────────────────────────────────────
 
 describe('extractErrorMessage', () => {
@@ -163,6 +169,9 @@ describe('persistToSupabase', () => {
 
         await persistToSupabase(entry);
 
+        const { withJwtRetry } = await import('@/lib/supabaseRetry');
+        expect(withJwtRetry).toHaveBeenCalled();
+
         expect(mockInsert).toHaveBeenCalledWith({
             action: 'fetchTransactions',
             message: 'JWT expired',
@@ -189,7 +198,7 @@ describe('persistToSupabase', () => {
         await expect(persistToSupabase(entry)).resolves.toBeUndefined();
         expect(consoleErrorSpy).toHaveBeenCalledWith(
             '[ErrorLogger] Supabase insert failed:',
-            'RLS policy violation'
+            { message: 'RLS policy violation' }
         );
     });
 });

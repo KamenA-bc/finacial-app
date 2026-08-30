@@ -8,6 +8,7 @@
 import React, { useState } from 'react';
 import { FileText, CheckCircle, Loader2 } from 'lucide-react';
 import type { StatisticsData } from '@/hooks/useStatisticsData';
+import { logError, extractErrorMessage } from '@/lib/errorLogger';
 
 /** Duration (ms) the success indicator stays visible after export. */
 const SUCCESS_DISPLAY_MS = 2500;
@@ -30,7 +31,9 @@ export const PdfExportButton = ({ stats, year }: PdfExportButtonProps): React.Re
             setState('done');
             setTimeout(() => setState('idle'), SUCCESS_DISPLAY_MS);
         } catch (err) {
-            console.error('PDF export failed:', err);
+            const message = extractErrorMessage(err);
+            logError('exportPdf', err, { year });
+            window.alert(`Грешка при генериране на PDF: ${message}`);
             setState('error');
             setTimeout(() => setState('idle'), SUCCESS_DISPLAY_MS);
         }

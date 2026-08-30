@@ -7,6 +7,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabase';
 import type { User } from '@supabase/supabase-js';
+import { extractErrorMessage } from '@/lib/errorLogger';
 
 interface AuthContextValue {
     user: User | null;
@@ -109,8 +110,9 @@ export const AuthProvider = ({
                 redirectTo: `${window.location.origin}/update-password`,
             });
             return { error: error?.message ?? null };
-        } catch (err: any) {
-            return { error: err?.message || 'Failed to initialize password reset' };
+        } catch (err: unknown) {
+            const msg = extractErrorMessage(err);
+            return { error: msg || 'Failed to initialize password reset' };
         }
     };
 

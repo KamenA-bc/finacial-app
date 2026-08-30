@@ -7,6 +7,7 @@ import { z } from 'zod';
 import { Mail, Loader2, ArrowLeft, KeyRound } from 'lucide-react';
 import { useAuth } from '@/components/auth/AuthProvider';
 import Link from 'next/link';
+import { extractErrorMessage } from '@/lib/errorLogger';
 
 const forgotPasswordSchema = z.object({
     email: z.string().email('Please enter a valid email'),
@@ -43,9 +44,10 @@ export default function ForgotPasswordPage(): React.ReactElement {
                     'If an account exists with that email, a reset link has been sent.'
                 );
             }
-        } catch (err: any) {
+        } catch (err: unknown) {
             setStatus('error');
-            setMessage(err.message || 'An unexpected client error occurred.');
+            const msg = extractErrorMessage(err);
+            setMessage(msg || 'An unexpected client error occurred.');
         }
     };
 

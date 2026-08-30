@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { Table, CheckCircle, Loader2 } from 'lucide-react';
 import { useFinancialStore } from '@/store/transactionStore';
+import { logError, extractErrorMessage } from '@/lib/errorLogger';
 
 /** Brief duration (ms) the success state is shown after export. */
 const SUCCESS_DISPLAY_MS = 2500;
@@ -27,7 +28,9 @@ export const ExportButton = (): React.ReactElement => {
             setState('done');
             setTimeout(() => setState('idle'), SUCCESS_DISPLAY_MS);
         } catch (err) {
-            console.error('Excel export failed:', err);
+            const message = extractErrorMessage(err);
+            logError('exportExcel', err, { currentYear });
+            window.alert(`Грешка при експортиране: ${message}`);
             setState('error');
             setTimeout(() => setState('idle'), SUCCESS_DISPLAY_MS);
         }

@@ -13,6 +13,7 @@
  */
 
 import type { IncomeEntry, ExpenseEntry } from '@/types';
+import type ExcelJS from 'exceljs';
 import { MONTH_NAMES_BG, CATEGORY_BG_MAP, getCurrencySymbol } from '@/lib/constants';
 import { getMonthRange } from '@/lib/dateUtils';
 
@@ -89,13 +90,12 @@ export function getMonthlyTransactions(
  * Separated from browser download logic to enable clean unit testing.
  */
 export function buildWorkbook(
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    ExcelJS: any,
+    ExcelJSModule: typeof ExcelJS,
     incomeEntries: IncomeEntry[],
     expenseEntries: ExpenseEntry[],
     year: number
 ) {
-    const workbook = new ExcelJS.Workbook();
+    const workbook = new ExcelJSModule.Workbook();
     workbook.creator = 'Finance App';
     workbook.created = new Date();
 
@@ -121,7 +121,7 @@ export function buildWorkbook(
     summarySheet.getRow(3).values = ['Месец', 'Общо приходи', 'Общо разходи', 'Печалба'];
     const summaryHeaderRow = summarySheet.getRow(3);
     summaryHeaderRow.height = 24;
-    summaryHeaderRow.eachCell((cell: any) => {
+    summaryHeaderRow.eachCell((cell: ExcelJS.Cell) => {
         cell.font = { name: 'Arial', size: 10, bold: true, color: { argb: EXCEL_COLORS.headerText } };
         cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: '374151' } };
         cell.alignment = { vertical: 'middle', horizontal: 'center' };
@@ -179,7 +179,7 @@ export function buildWorkbook(
     totalRow.values = ['ОБЩО ЗА ГОДИНАТА', totalYearIncome, totalYearExpense, totalProfit];
     totalRow.height = 24;
 
-    totalRow.eachCell((cell: any, colIdx: number) => {
+    totalRow.eachCell((cell: ExcelJS.Cell, colIdx: number) => {
         cell.font = { name: 'Arial', size: 10, bold: true, color: { argb: EXCEL_COLORS.summaryText } };
         cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: EXCEL_COLORS.summaryBg } };
         cell.border = {
@@ -211,7 +211,7 @@ export function buildWorkbook(
         sheet.getRow(1).values = [...COLUMNS_HEADERS];
         sheet.getRow(1).height = 26;
 
-        sheet.getRow(1).eachCell((cell: any, colIdx: number) => {
+        sheet.getRow(1).eachCell((cell: ExcelJS.Cell, colIdx: number) => {
             cell.font = { name: 'Arial', size: 10, bold: true, color: { argb: EXCEL_COLORS.headerText } };
             cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: EXCEL_COLORS.headerBg } };
             cell.alignment = { vertical: 'middle', horizontal: colIdx === 5 ? 'right' : 'left' };
@@ -265,7 +265,7 @@ export function buildWorkbook(
             subtotalRow.values = ['ОБЩО ЗА МЕСЕЦА', '', `Приходи: +${monthTotalInc.toFixed(2)}`, `Разходи: −${monthTotalExp.toFixed(2)}`, monthProfit];
             subtotalRow.height = 24;
 
-            subtotalRow.eachCell((cell: any, colIdx: number) => {
+            subtotalRow.eachCell((cell: ExcelJS.Cell) => {
                 cell.font = { name: 'Arial', size: 10, bold: true, color: { argb: EXCEL_COLORS.summaryText } };
                 cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: EXCEL_COLORS.summaryBg } };
                 cell.border = {

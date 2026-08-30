@@ -14,6 +14,7 @@
  */
 
 import { supabase } from '@/lib/supabase';
+import { withJwtRetry } from '@/lib/supabaseRetry';
 
 // ── Types ────────────────────────────────────────────────────────────────────
 
@@ -137,17 +138,20 @@ export function logError(
  * Separated for testability.
  */
 export async function persistToSupabase(entry: ErrorLogEntry): Promise<void> {
-    const { error } = await supabase.from('error_logs').insert({
-        action: entry.action,
-        message: entry.message,
-        stack: entry.stack,
-        severity: entry.severity,
-        metadata: entry.metadata,
-    });
-
-    if (error) {
+    try {
+        await withJwtRetry(async () => {
+            const { error } = await supabase.from('error_logs').insert({
+                action: entry.action,
+                message: entry.message,
+                stack: entry.stack,
+                severity: entry.severity,
+                metadata: entry.metadata,
+            });
+            if (error) throw error;
+        }, 'persistToSupabase');
+    } catch (persistErr) {
         // Don't throw — this is a best-effort logging mechanism.
         // Log to console so Vercel runtime logs still capture it.
-        console.error('[ErrorLogger] Supabase insert failed:', error.message);
+        console.error('[ErrorLogger] Supabase insert failed:', persistErr);
     }
 }
