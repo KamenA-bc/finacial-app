@@ -51,9 +51,9 @@ describe('StatusNotification', () => {
         });
         expect(toast).toHaveClass('animate-toast-out');
 
-        // After exit transition (180ms), it is unmounted
+        // After exit transition (220ms), it is unmounted
         act(() => {
-            vi.advanceTimersByTime(180);
+            vi.advanceTimersByTime(220);
         });
         expect(screen.queryByRole('status')).not.toBeInTheDocument();
     });
@@ -74,7 +74,7 @@ describe('StatusNotification', () => {
         expect(toast).toHaveClass('animate-toast-out');
 
         act(() => {
-            vi.advanceTimersByTime(180);
+            vi.advanceTimersByTime(220);
         });
 
         expect(screen.queryByRole('status')).not.toBeInTheDocument();

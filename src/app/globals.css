@@ -52,11 +52,11 @@ input[type='number'] {
   }
 }
 
-/* Subtle toast entrance from top */
+/* Seamless, flowing toast entrance from top */
 @keyframes toastSlideInTop {
   from {
     opacity: 0;
-    transform: translateY(-8px);
+    transform: translateY(-6px);
   }
   to {
     opacity: 1;
@@ -64,7 +64,7 @@ input[type='number'] {
   }
 }
 
-/* Subtle toast exit to bottom */
+/* Seamless, flowing toast exit to bottom */
 @keyframes toastSlideOutBottom {
   from {
     opacity: 1;
@@ -72,7 +72,7 @@ input[type='number'] {
   }
   to {
     opacity: 0;
-    transform: translateY(8px);
+    transform: translateY(6px);
   }
 }
 
@@ -82,10 +82,11 @@ input[type='number'] {
 }
 
 .animate-toast-in {
-  animation: toastSlideInTop 180ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: toastSlideInTop 260ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 .animate-toast-out {
-  animation: toastSlideOutBottom 180ms cubic-bezier(0.4, 0, 1, 1) forwards;
+  animation: toastSlideOutBottom 220ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
+
 
