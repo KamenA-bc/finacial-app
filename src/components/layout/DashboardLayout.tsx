@@ -5,6 +5,7 @@ import { Wallet, LogOut, History, BarChart3 } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useAuth } from '@/components/auth/AuthProvider';
+import { StatusNotification } from '@/components/ui/StatusNotification';
 
 interface DashboardLayoutProps {
     children: React.ReactNode;
@@ -78,6 +79,9 @@ export const DashboardLayout = ({
                     </div>
                 </div>
             </header>
+
+            {/* Global Status Notification */}
+            <StatusNotification />
 
             {/* Page body */}
             <main className="max-w-5xl mx-auto px-4 sm:px-6 py-6">

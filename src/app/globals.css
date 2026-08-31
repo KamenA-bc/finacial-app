@@ -41,3 +41,51 @@ input[type='number'] {
     transform: translateY(0);
   }
 }
+
+/* 2-second countdown timer line animation for success toast */
+@keyframes drainLine {
+  from {
+    transform: scaleX(1);
+  }
+  to {
+    transform: scaleX(0);
+  }
+}
+
+/* Subtle toast entrance from top */
+@keyframes toastSlideInTop {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Subtle toast exit to bottom */
+@keyframes toastSlideOutBottom {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+.animate-drain {
+  animation: drainLine 2000ms linear forwards;
+  transform-origin: left;
+}
+
+.animate-toast-in {
+  animation: toastSlideInTop 180ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-toast-out {
+  animation: toastSlideOutBottom 180ms cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+

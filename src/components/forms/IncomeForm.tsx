@@ -6,6 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { PlusCircle, TrendingUp, Briefcase } from 'lucide-react';
 import { useFinancialStore } from '@/store/transactionStore';
+import { useToastStore } from '@/store/toastStore';
 import { getCurrencySymbol } from '@/lib/constants';
 
 const incomeSchema = z.object({
@@ -24,6 +25,7 @@ type IncomeFormValues = z.infer<typeof incomeSchema>;
 export const IncomeForm = (): React.ReactElement => {
     const addIncome = useFinancialStore((s) => s.addIncome);
     const selectedDate = useFinancialStore((s) => s.selectedDate);
+    const showToast = useToastStore((s) => s.showToast);
 
     const {
         register,
@@ -46,7 +48,11 @@ export const IncomeForm = (): React.ReactElement => {
             isWorkIncome: data.isWorkIncome,
             isWithKami: false,
         });
-        reset({ description: '', isWorkIncome: false });
+        const currentError = useFinancialStore.getState().error;
+        if (!currentError) {
+            showToast('Успешно добавено');
+            reset({ description: '', isWorkIncome: false });
+        }
     };
 
     return (

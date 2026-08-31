@@ -6,6 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { PlusCircle, Receipt, Briefcase, Users, UsersRound } from 'lucide-react';
 import { useFinancialStore } from '@/store/transactionStore';
+import { useToastStore } from '@/store/toastStore';
 import { EXPENSE_CATEGORIES, CATEGORY_BG_MAP, getCurrencySymbol } from '@/lib/constants';
 import { ExpenseCategory } from '@/types';
 
@@ -32,6 +33,7 @@ export const ExpenseForm = (): React.ReactElement => {
     const addExpense = useFinancialStore((s) => s.addExpense);
     const selectedDate = useFinancialStore((s) => s.selectedDate);
     const storeError = useFinancialStore((s) => s.error);
+    const showToast = useToastStore((s) => s.showToast);
 
     const {
         register,
@@ -58,7 +60,11 @@ export const ExpenseForm = (): React.ReactElement => {
             isWithKami: data.isWithKami,
             isWithOthers: data.isWithOthers,
         });
-        reset({ category: EXPENSE_CATEGORIES[0], isWorkExpense: false, isWithKami: false, isWithOthers: false });
+        const currentError = useFinancialStore.getState().error;
+        if (!currentError) {
+            showToast('Успешно добавено');
+            reset({ category: EXPENSE_CATEGORIES[0], isWorkExpense: false, isWithKami: false, isWithOthers: false });
+        }
     };
 
     const inputClass =
