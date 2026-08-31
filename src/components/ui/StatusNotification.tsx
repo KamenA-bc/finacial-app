@@ -4,7 +4,7 @@ import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { useToastStore } from '@/store/toastStore';
 
 const TOAST_DURATION_MS = 2000;
-const EXIT_ANIMATION_MS = 220;
+const EXIT_ANIMATION_MS = 260;
 
 /**
  * Ultra-clean, soft muted sage status notification indicator (Option 2).
