@@ -85,7 +85,7 @@ export const FunFacts = ({
             {/* Row 1: Kami + Worst Day — stacked on mobile, side-by-side on sm+ */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <FactCard
-                    label="❤️"
+                    label="Kami ❤️"
                     value={kamiSpending > 0 ? `−${fmt(kamiSpending, year)}` : '—'}
                     subtext={kamiSpending > 0 ? 'общо за годината' : 'Няма маркирани'}
                     icon={<Heart size={15} className="text-pink-500" />}

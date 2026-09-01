@@ -121,7 +121,7 @@ describe('excelExport – buildWorkbook', () => {
         const columns = headerValues.slice(1, 6);
         expect(columns).toEqual(['Дата', 'Тип', 'Описание', 'Категория', 'Сума']);
         expect(columns).not.toContain('Работни разходи');
-        expect(columns).not.toContain('❤️');
+        expect(columns).not.toContain('Kami ❤️');
         expect(columns).not.toContain('С Други');
     });
 

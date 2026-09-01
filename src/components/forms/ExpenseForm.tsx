@@ -248,7 +248,7 @@ export const ExpenseForm = (): React.ReactElement => {
                         isWithKami ? 'text-pink-700' : 'text-gray-600'
                     }`}
                 >
-                    ❤️
+                    Kami ❤️
                 </span>
             </label>
 

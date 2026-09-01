@@ -131,10 +131,10 @@ describe('CSV export – mixed income and expenses', () => {
         expect(lines.length).toBe(3);
     });
 
-    it('includes both ❤️ and С Други columns', () => {
+    it('includes both Kami ❤️ and С Други columns', () => {
         exportToCsv([makeIncome()], [makeExpense()]);
         const header = capturedCsvContent.split('\n')[0];
-        expect(header).toContain('❤️');
+        expect(header).toContain('Kami ❤️');
         expect(header).toContain('С Други');
     });
 });

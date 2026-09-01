@@ -21,7 +21,7 @@ interface CsvRow {
     isWithOthers: string;
 }
 
-const CSV_HEADERS = ['Дата', 'Тип', 'Описание', 'Категория', 'Сума', 'Работни разходи', '❤️', 'С Други'] as const;
+const CSV_HEADERS = ['Дата', 'Тип', 'Описание', 'Категория', 'Сума', 'Работни разходи', 'Kami ❤️', 'С Други'] as const;
 
 /** Escape a cell value so commas and quotes inside strings don't break CSV. */
 const escapeCell = (value: string | number): string => {

@@ -156,7 +156,7 @@ const ExpenseRow = ({ expense, onDelete }: ExpenseRowProps): React.ReactElement 
                     )}
                     {expense.isWithKami && (
                         <span className="whitespace-nowrap text-[10px] font-semibold text-pink-600 bg-pink-50 border border-pink-200 px-1.5 py-0.5 rounded-full leading-none">
-                            ❤️
+                            Kami ❤️
                         </span>
                     )}
                     {expense.isWithOthers && (

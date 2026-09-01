@@ -548,7 +548,7 @@ function drawFunFacts(ctx: DrawContext, stats: StatisticsData): void {
 
     const facts = [
         {
-            label: '❤️',
+            label: 'Kami ❤️',
             value: stats.kamiSpending > 0 ? `−${fmtCurrency(stats.kamiSpending, ctx.year)}` : '—',
             sub: stats.kamiSpending > 0 ? 'общо за годината' : 'Няма маркирани',
             color: stats.kamiSpending > 0 ? C.pink : C.gray400,
