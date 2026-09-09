@@ -2,7 +2,7 @@ import React, { Suspense } from 'react';
 import type { Metadata } from 'next';
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import { DashboardClient } from '@/components/dashboard/DashboardClient';
-import { Loader2 } from 'lucide-react';
+import { DashboardSkeleton } from '@/components/dashboard/DashboardSkeleton';
 
 export const metadata: Metadata = {
   title: 'Табло | Finance Tracker',
@@ -17,13 +17,7 @@ export const metadata: Metadata = {
 export default function DashboardPage(): React.ReactElement {
   return (
     <DashboardLayout>
-      <Suspense
-        fallback={
-          <div className="flex items-center justify-center py-20">
-            <Loader2 size={24} className="animate-spin text-stone-300" />
-          </div>
-        }
-      >
+      <Suspense fallback={<DashboardSkeleton />}>
         <DashboardClient />
       </Suspense>
     </DashboardLayout>

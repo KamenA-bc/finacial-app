@@ -10,6 +10,7 @@
 'use client';
 
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 import { FinancialStore, IncomeEntry, ExpenseEntry } from '@/types';
 import { toISODateString } from '@/lib/dateUtils';
 import { supabase } from '@/lib/supabase';
@@ -46,7 +47,9 @@ function resolveTargetYear(targetYear?: number, selectedDate?: string): number {
     return new Date().getFullYear();
 }
 
-export const useFinancialStore = create<FinancialStore>()((set, get) => ({
+export const useFinancialStore = create<FinancialStore>()(
+    persist(
+        (set, get) => ({
     incomeEntries: [],
     expenseEntries: [],
     selectedDate: toISODateString(new Date()),
@@ -365,4 +368,14 @@ export const useFinancialStore = create<FinancialStore>()((set, get) => ({
     setSelectedDate: (date: string): void => {
         set({ selectedDate: date });
     },
-}));
+}),
+        {
+            name: 'finance-tracker-store-cache',
+            partialize: (state) => ({
+                incomeEntries: state.incomeEntries,
+                expenseEntries: state.expenseEntries,
+                loadedYears: state.loadedYears,
+            }),
+        }
+    )
+);

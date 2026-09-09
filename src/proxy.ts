@@ -23,6 +23,29 @@ export async function proxy(request: NextRequest): Promise<NextResponse> {
         return NextResponse.next();
     }
 
+    // ── Performance Fast-Path ──────────────────────────────────────────────
+    // 1. If request has no Supabase auth token cookies, redirect to /login immediately in 0ms
+    //    instead of waiting 600-1000ms for an external Supabase Auth network call to fail.
+    const allCookies = request.cookies.getAll();
+    const hasAuthCookie = allCookies.some((c) =>
+        c.name.startsWith('sb-') && c.name.includes('-auth-token')
+    );
+
+    if (!hasAuthCookie) {
+        const loginUrl = new URL('/login', request.url);
+        return NextResponse.redirect(loginUrl);
+    }
+
+    // 2. Next.js link prefetch optimization:
+    //    When user hovers or viewport sees a link, Next.js sends a background prefetch request.
+    //    Bypass blocking getUser() call on prefetches to prevent network congestion on mobile.
+    const isPrefetch =
+        request.headers.get('x-purpose') === 'prefetch' ||
+        request.headers.get('purpose') === 'prefetch';
+    if (isPrefetch) {
+        return NextResponse.next();
+    }
+
     let response = NextResponse.next({
         request: { headers: request.headers },
     });

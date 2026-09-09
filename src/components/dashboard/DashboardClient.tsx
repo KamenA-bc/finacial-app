@@ -12,6 +12,7 @@ import { useAuth } from '@/components/auth/AuthProvider';
 import { useFinancialStore } from '@/store/transactionStore';
 import { Loader2 } from 'lucide-react';
 import { ErrorBoundary } from '@/components/ui/ErrorBoundary';
+import { DashboardSkeleton } from '@/components/dashboard/DashboardSkeleton';
 import { getMonthName, getCalendarMonthRange } from '@/lib/dateUtils';
 import { NUMBER_LOCALE, CURRENCY_FORMAT_OPTIONS, getCurrencySymbol } from '@/lib/constants';
 
@@ -93,11 +94,7 @@ export function DashboardClient(): React.ReactElement {
   const monthLabel = `${getMonthName(selectedMonth.getMonth())} ${monthStart.slice(8)}–${monthEnd.slice(8)}`;
 
   if (!mounted || authLoading || (!isYearReady && isLoading)) {
-    return (
-      <div className="flex items-center justify-center py-20">
-        <Loader2 size={24} className="animate-spin text-stone-300" />
-      </div>
-    );
+    return <DashboardSkeleton />;
   }
 
   return (
