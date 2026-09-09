@@ -264,6 +264,22 @@ describe('transactionStore - Optimistic Updates & Reliability', () => {
             // Should have been skipped
             expect(supabase.from).not.toHaveBeenCalled();
         });
+
+        it('reuses in-flight fetch promise when called concurrently for the same user and year', async () => {
+            useFinancialStore.setState({
+                userId: 'user-xyz',
+                loadedYears: [],
+                lastFetchedAt: null,
+            });
+
+            const call1 = useFinancialStore.getState().fetchTransactions('user-xyz', 2026);
+            const call2 = useFinancialStore.getState().fetchTransactions('user-xyz', 2026);
+
+            await Promise.all([call1, call2]);
+
+            // supabase.from should only be called twice (1 for income, 1 for expense), NOT 4 times
+            expect(supabase.from).toHaveBeenCalledTimes(2);
+        });
     });
 
     describe('deduplication & cache clearing', () => {

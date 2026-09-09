@@ -47,6 +47,9 @@ function resolveTargetYear(targetYear?: number, selectedDate?: string): number {
     return new Date().getFullYear();
 }
 
+// ── Module-level in-flight fetch deduplication map ───────────────────────────
+const inFlightFetches = new Map<string, Promise<void>>();
+
 export const useFinancialStore = create<FinancialStore>()(
     persist(
         (set, get) => ({
@@ -67,6 +70,15 @@ export const useFinancialStore = create<FinancialStore>()(
         const { lastFetchedAt, userId: currentUserId, loadedYears, selectedDate } = get();
         const year = resolveTargetYear(targetYear, selectedDate);
 
+        // ── In-Flight Deduplication Guard ────────────────────────────────────
+        // Reuses active in-flight network promise when multiple components or rapid
+        // re-renders call fetchTransactions concurrently within milliseconds.
+        const inFlightKey = `${userId}:${year}`;
+        const activeFetch = inFlightFetches.get(inFlightKey);
+        if (activeFetch) {
+            return activeFetch;
+        }
+
         // ── Mock Test User Guard: skip real DB query in E2E mock sessions ──
         if (!userId || isMockTestUser(userId)) {
             set((state) => ({
@@ -78,113 +90,123 @@ export const useFinancialStore = create<FinancialStore>()(
             return;
         }
 
-        // ── Deduplication guard: skip if year is already loaded and was fetched recently ──
+        // ── Cache guard: skip if year is already loaded and was fetched recently ──
         const isYearLoaded = loadedYears.includes(year);
         if (currentUserId === userId && isYearLoaded && lastFetchedAt && Date.now() - lastFetchedAt < FETCH_DEDUP_MS) {
             return;
         }
 
-        // Only set full-screen loader if the target year is not yet cached in memory
-        if (!isYearLoaded) {
-            set({ isLoading: true, error: null });
-        }
-        try {
-            const startDate = `${year}-01-01`;
-            const endDate = `${year}-12-31`;
+        const runFetch = async (): Promise<void> => {
+            // Only set full-screen loader if the target year is not yet cached in memory
+            if (!isYearLoaded) {
+                set({ isLoading: true, error: null });
+            }
+            try {
+                const startDate = `${year}-01-01`;
+                const endDate = `${year}-12-31`;
 
-            const [incomeRes, expenseRes] = await withJwtRetry(async () => {
-                const results = await Promise.all([
-                    supabase
-                        .from('income_entries')
-                        .select('id, date, amount, description, is_work_income, is_with_kami')
-                        .eq('user_id', userId)
-                        .gte('date', startDate)
-                        .lte('date', endDate)
-                        .order('date', { ascending: true }),
-                    supabase
-                        .from('expense_entries')
-                        .select('id, date, amount, description, category, is_work_expense, is_with_kami, is_with_others')
-                        .eq('user_id', userId)
-                        .gte('date', startDate)
-                        .lte('date', endDate)
-                        .order('date', { ascending: true }),
-                ]);
+                const [incomeRes, expenseRes] = await withJwtRetry(async () => {
+                    const results = await Promise.all([
+                        supabase
+                            .from('income_entries')
+                            .select('id, date, amount, description, is_work_income, is_with_kami')
+                            .eq('user_id', userId)
+                            .gte('date', startDate)
+                            .lte('date', endDate)
+                            .order('date', { ascending: true }),
+                        supabase
+                            .from('expense_entries')
+                            .select('id, date, amount, description, category, is_work_expense, is_with_kami, is_with_others')
+                            .eq('user_id', userId)
+                            .gte('date', startDate)
+                            .lte('date', endDate)
+                            .order('date', { ascending: true }),
+                    ]);
 
-                if (results[0].error) throw results[0].error;
-                if (results[1].error) throw results[1].error;
+                    if (results[0].error) throw results[0].error;
+                    if (results[1].error) throw results[1].error;
 
-                return results;
-            }, 'fetchTransactions');
+                    return results;
+                }, 'fetchTransactions');
 
-            const newIncomeEntries: IncomeEntry[] = (incomeRes.data ?? []).map((row) => ({
-                id: row.id,
-                date: row.date,
-                amount: Number(row.amount),
-                description: row.description ?? '',
-                isWorkIncome: Boolean(row.is_work_income),
-                isWithKami: Boolean(row.is_with_kami),
-            }));
+                const newIncomeEntries: IncomeEntry[] = (incomeRes.data ?? []).map((row) => ({
+                    id: row.id,
+                    date: row.date,
+                    amount: Number(row.amount),
+                    description: row.description ?? '',
+                    isWorkIncome: Boolean(row.is_work_income),
+                    isWithKami: Boolean(row.is_with_kami),
+                }));
 
-            const newExpenseEntries: ExpenseEntry[] = (expenseRes.data ?? []).map((row) => ({
-                id: row.id,
-                date: row.date,
-                amount: Number(row.amount),
-                description: row.description ?? '',
-                category: row.category,
-                isWorkExpense: Boolean(row.is_work_expense),
-                isWithKami: Boolean(row.is_with_kami),
-                isWithOthers: Boolean(row.is_with_others),
-            }));
+                const newExpenseEntries: ExpenseEntry[] = (expenseRes.data ?? []).map((row) => ({
+                    id: row.id,
+                    date: row.date,
+                    amount: Number(row.amount),
+                    description: row.description ?? '',
+                    category: row.category,
+                    isWorkExpense: Boolean(row.is_work_expense),
+                    isWithKami: Boolean(row.is_with_kami),
+                    isWithOthers: Boolean(row.is_with_others),
+                }));
 
-            set((state) => {
-                const incomeMap = new Map<string, IncomeEntry>();
-                state.incomeEntries.forEach((e) => {
-                    if (e.id.startsWith('temp_')) {
-                        const matchingServer = newIncomeEntries.some(
-                            (s) => s.date === e.date && s.amount === e.amount && s.description === e.description
-                        );
-                        if (!matchingServer) {
+                set((state) => {
+                    const incomeMap = new Map<string, IncomeEntry>();
+                    state.incomeEntries.forEach((e) => {
+                        if (e.id.startsWith('temp_')) {
+                            const matchingServer = newIncomeEntries.some(
+                                (s) => s.date === e.date && s.amount === e.amount && s.description === e.description
+                            );
+                            if (!matchingServer) {
+                                incomeMap.set(e.id, e);
+                            }
+                        } else {
                             incomeMap.set(e.id, e);
                         }
-                    } else {
-                        incomeMap.set(e.id, e);
-                    }
-                });
-                newIncomeEntries.forEach((e) => incomeMap.set(e.id, e));
+                    });
+                    newIncomeEntries.forEach((e) => incomeMap.set(e.id, e));
 
-                const expenseMap = new Map<string, ExpenseEntry>();
-                state.expenseEntries.forEach((e) => {
-                    if (e.id.startsWith('temp_')) {
-                        const matchingServer = newExpenseEntries.some(
-                            (s) => s.date === e.date && s.amount === e.amount && s.description === e.description && s.category === e.category
-                        );
-                        if (!matchingServer) {
+                    const expenseMap = new Map<string, ExpenseEntry>();
+                    state.expenseEntries.forEach((e) => {
+                        if (e.id.startsWith('temp_')) {
+                            const matchingServer = newExpenseEntries.some(
+                                (s) => s.date === e.date && s.amount === e.amount && s.description === e.description && s.category === e.category
+                            );
+                            if (!matchingServer) {
+                                expenseMap.set(e.id, e);
+                            }
+                        } else {
                             expenseMap.set(e.id, e);
                         }
-                    } else {
-                        expenseMap.set(e.id, e);
-                    }
+                    });
+                    newExpenseEntries.forEach((e) => expenseMap.set(e.id, e));
+
+                    const updatedLoadedYears = state.loadedYears.includes(year)
+                        ? state.loadedYears
+                        : [...state.loadedYears, year];
+
+                    return {
+                        incomeEntries: Array.from(incomeMap.values()).sort((a, b) => a.date.localeCompare(b.date)),
+                        expenseEntries: Array.from(expenseMap.values()).sort((a, b) => a.date.localeCompare(b.date)),
+                        loadedYears: updatedLoadedYears,
+                        userId,
+                        isLoading: false,
+                        lastFetchedAt: Date.now(),
+                    };
                 });
-                newExpenseEntries.forEach((e) => expenseMap.set(e.id, e));
+            } catch (err) {
+                const message = extractErrorMessage(err);
+                const isUnloadAbort = typeof window !== 'undefined' && (!navigator.onLine || document.visibilityState === 'hidden');
+                logError('fetchTransactions', err, { userId, year, isUnloadAbort }, isUnloadAbort ? 'warning' : 'error');
+                set({ error: message, isLoading: false });
+            }
+        };
 
-                const updatedLoadedYears = state.loadedYears.includes(year)
-                    ? state.loadedYears
-                    : [...state.loadedYears, year];
+        const fetchPromise = runFetch().finally(() => {
+            inFlightFetches.delete(inFlightKey);
+        });
 
-                return {
-                    incomeEntries: Array.from(incomeMap.values()).sort((a, b) => a.date.localeCompare(b.date)),
-                    expenseEntries: Array.from(expenseMap.values()).sort((a, b) => a.date.localeCompare(b.date)),
-                    loadedYears: updatedLoadedYears,
-                    userId,
-                    isLoading: false,
-                    lastFetchedAt: Date.now(),
-                };
-            });
-        } catch (err) {
-            const message = extractErrorMessage(err);
-            logError('fetchTransactions', err, { userId, year });
-            set({ error: message, isLoading: false });
-        }
+        inFlightFetches.set(inFlightKey, fetchPromise);
+        return fetchPromise;
     },
 
     addIncome: async (entry: Omit<IncomeEntry, 'id'>): Promise<void> => {
