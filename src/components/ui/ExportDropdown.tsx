@@ -19,8 +19,11 @@ import { useFinancialStore } from '@/store/transactionStore';
 import { useStatisticsData } from '@/hooks/useStatisticsData';
 import { exportToCsv } from '@/lib/csvExport';
 import { logError } from '@/lib/errorLogger';
+import { useToastStore } from '@/store/toastStore';
 
 const SUCCESS_DISPLAY_MS = 2500;
+
+type ExportFormat = 'pdf' | 'excel' | 'csv';
 
 interface ExportDropdownProps {
     /** Optional year override (defaults to current year) */
@@ -28,19 +31,19 @@ interface ExportDropdownProps {
 }
 
 export const ExportDropdown = ({ year: propYear }: ExportDropdownProps): React.ReactElement => {
-    const currentYear = new Date().getFullYear();
-    const year = propYear ?? currentYear;
+    const incomeEntries = useFinancialStore((s) => s.incomeEntries);
+    const expenseEntries = useFinancialStore((s) => s.expenseEntries);
+    const selectedDate = useFinancialStore((s) => s.selectedDate);
+
+    const year = propYear ?? (selectedDate ? parseInt(selectedDate.slice(0, 4), 10) : new Date().getFullYear());
+    const stats = useStatisticsData(year);
 
     const [isOpen, setIsOpen] = useState(false);
-    const [loadingFormat, setLoadingFormat] = useState<'pdf' | 'excel' | 'csv' | null>(null);
-    const [doneFormat, setDoneFormat] = useState<'pdf' | 'excel' | 'csv' | null>(null);
+    const [loadingFormat, setLoadingFormat] = useState<ExportFormat | null>(null);
+    const [doneFormat, setDoneFormat] = useState<ExportFormat | null>(null);
 
     const dropdownRef = useRef<HTMLDivElement>(null);
     const buttonRef = useRef<HTMLButtonElement>(null);
-
-    const incomeEntries = useFinancialStore((s) => s.incomeEntries);
-    const expenseEntries = useFinancialStore((s) => s.expenseEntries);
-    const stats = useStatisticsData(year);
 
     // Close on click outside
     useEffect(() => {
@@ -85,6 +88,7 @@ export const ExportDropdown = ({ year: propYear }: ExportDropdownProps): React.R
             setTimeout(() => setDoneFormat(null), SUCCESS_DISPLAY_MS);
         } catch (err) {
             logError('exportPdf', err, { year });
+            useToastStore.getState().showToast('Възникна грешка при генериране на PDF файл', 'error');
         } finally {
             setLoadingFormat(null);
         }
@@ -102,6 +106,7 @@ export const ExportDropdown = ({ year: propYear }: ExportDropdownProps): React.R
             setTimeout(() => setDoneFormat(null), SUCCESS_DISPLAY_MS);
         } catch (err) {
             logError('exportExcel', err, { year });
+            useToastStore.getState().showToast('Възникна грешка при генериране на Excel файл', 'error');
         } finally {
             setLoadingFormat(null);
         }
@@ -118,6 +123,7 @@ export const ExportDropdown = ({ year: propYear }: ExportDropdownProps): React.R
             setTimeout(() => setDoneFormat(null), SUCCESS_DISPLAY_MS);
         } catch (err) {
             logError('exportCsv', err);
+            useToastStore.getState().showToast('Възникна грешка при експортиране на CSV файл', 'error');
         } finally {
             setLoadingFormat(null);
         }

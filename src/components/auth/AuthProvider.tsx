@@ -7,7 +7,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabase';
 import type { User } from '@supabase/supabase-js';
-import { extractErrorMessage } from '@/lib/errorLogger';
+import { extractErrorMessage, logError } from '@/lib/errorLogger';
 import { useFinancialStore } from '@/store/transactionStore';
 
 interface AuthContextValue {
@@ -28,54 +28,48 @@ export const useAuth = (): AuthContextValue => {
     return ctx;
 };
 
-function getInitialMockUser(): User | null {
-    if (process.env.NODE_ENV !== 'production' && typeof document !== 'undefined' && document.cookie.includes('e2e-test-auth=true')) {
-        return {
-            id: '00000000-0000-0000-0000-000000000001',
-            app_metadata: {},
-            user_metadata: { name: 'E2E Tester' },
-            aud: 'authenticated',
-            created_at: new Date().toISOString(),
-            email: 'test@financetracker.local',
-        } as User;
-    }
-    return null;
+interface AuthProviderProps {
+    children: React.ReactNode;
 }
 
 export const AuthProvider = ({
     children,
-}: {
-    children: React.ReactNode;
-}): React.ReactElement => {
-    const [user, setUser] = useState<User | null>(getInitialMockUser);
-    const [loading, setLoading] = useState(() => getInitialMockUser() === null);
+}: AuthProviderProps): React.ReactElement => {
+    // In E2E tests, initialize with mock user if cookie is present
+    const [user, setUser] = useState<User | null>(() => {
+        if (typeof document !== 'undefined' && document.cookie.includes('playwright_test_user=true')) {
+            return {
+                id: '00000000-0000-0000-0000-000000000001',
+                email: 'e2e@test.local',
+                app_metadata: {},
+                user_metadata: {},
+                aud: 'authenticated',
+                created_at: new Date().toISOString(),
+            } as User;
+        }
+        return null;
+    });
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        // E2E test session in development/testing environments
-        if (getInitialMockUser() !== null) {
-            return;
-        }
-
-        // Get initial session
+        // Fetch active session on mount
         supabase.auth.getSession().then(({ data: { session } }) => {
             setUser(session?.user ?? null);
             setLoading(false);
         });
 
-        // Listen for auth changes
+        // Listen for auth state changes (login, logout, token refresh)
         const {
             data: { subscription },
         } = supabase.auth.onAuthStateChange((_event, session) => {
             setUser(session?.user ?? null);
+            setLoading(false);
         });
 
-        // ── Proactive session refresh on tab resume ──────────────────
-        // When the user returns after the tab was hidden for a while,
-        // refresh the session immediately so the next Supabase call
-        // uses a fresh JWT — avoids "JWT Issued at future" clock-skew
-        // errors on the first request after idle.
+        // Stale-session detector: when tab returns to foreground after >= 5 min,
+        // refresh the auth token to avoid clock-skew or expired-JWT rejections.
         let hiddenAt: number | null = null;
-        const STALE_THRESHOLD_MS = 30_000; // 30 seconds
+        const STALE_THRESHOLD_MS = 5 * 60 * 1000; // 5 minutes
 
         const handleVisibilityChange = (): void => {
             if (document.visibilityState === 'hidden') {
@@ -84,9 +78,9 @@ export const AuthProvider = ({
                 const elapsed = Date.now() - hiddenAt;
                 hiddenAt = null;
                 if (elapsed >= STALE_THRESHOLD_MS) {
-                    // Fire-and-forget — if it fails the retry wrapper in the
-                    // store will handle it on the next data operation.
-                    supabase.auth.refreshSession().catch(() => {});
+                    supabase.auth.refreshSession().catch((err) => {
+                        logError('AuthProvider:staleSessionRefresh', err, {}, 'warning');
+                    });
                 }
             }
         };
@@ -103,30 +97,54 @@ export const AuthProvider = ({
         email: string,
         password: string
     ): Promise<{ error: string | null }> => {
-        const { error } = await supabase.auth.signUp({ email, password });
-        return { error: error?.message ?? null };
+        try {
+            const { error } = await supabase.auth.signUp({ email, password });
+            if (error) {
+                logError('AuthProvider:signUp', error, { email }, 'warning');
+                return { error: error.message };
+            }
+            return { error: null };
+        } catch (err) {
+            logError('AuthProvider:signUp', err, { email }, 'warning');
+            return { error: extractErrorMessage(err) };
+        }
     };
 
     const signIn = async (
         email: string,
         password: string
     ): Promise<{ error: string | null }> => {
-        const { error } = await supabase.auth.signInWithPassword({
-            email,
-            password,
-        });
-        return { error: error?.message ?? null };
+        try {
+            const { error } = await supabase.auth.signInWithPassword({
+                email,
+                password,
+            });
+            if (error) {
+                logError('AuthProvider:signIn', error, { email }, 'warning');
+                return { error: error.message };
+            }
+            return { error: null };
+        } catch (err) {
+            logError('AuthProvider:signIn', err, { email }, 'warning');
+            return { error: extractErrorMessage(err) };
+        }
     };
 
     const signOut = async (): Promise<void> => {
         try {
             useFinancialStore.getState().clearStoreCache();
-        } catch {
-            // Ignore state clear error
+        } catch (err) {
+            logError('AuthProvider:clearStoreCache', err, {}, 'warning');
         }
-        await supabase.auth.signOut();
-        // Force a page reload/redirect to clear state and trigger middleware
-        window.location.href = '/login';
+
+        try {
+            await supabase.auth.signOut();
+        } catch (err) {
+            logError('AuthProvider:signOut', err, {}, 'error');
+        } finally {
+            // Force a page reload/redirect to clear state and trigger middleware
+            window.location.href = '/login';
+        }
     };
 
     const resetPassword = async (email: string): Promise<{ error: string | null }> => {
@@ -134,16 +152,31 @@ export const AuthProvider = ({
             const { error } = await supabase.auth.resetPasswordForEmail(email, {
                 redirectTo: `${window.location.origin}/update-password`,
             });
-            return { error: error?.message ?? null };
+            if (error) {
+                logError('AuthProvider:resetPassword', error, { email }, 'warning');
+                return { error: error.message };
+            }
+            return { error: null };
         } catch (err: unknown) {
+            logError('AuthProvider:resetPassword', err, { email }, 'warning');
             const msg = extractErrorMessage(err);
             return { error: msg || 'Failed to initialize password reset' };
         }
     };
 
     const updatePassword = async (password: string): Promise<{ error: string | null }> => {
-        const { error } = await supabase.auth.updateUser({ password });
-        return { error: error?.message ?? null };
+        try {
+            const { error } = await supabase.auth.updateUser({ password });
+            if (error) {
+                logError('AuthProvider:updatePassword', error, {}, 'warning');
+                return { error: error.message };
+            }
+            return { error: null };
+        } catch (err: unknown) {
+            logError('AuthProvider:updatePassword', err, {}, 'warning');
+            const msg = extractErrorMessage(err);
+            return { error: msg || 'Failed to update password' };
+        }
     };
 
     return (

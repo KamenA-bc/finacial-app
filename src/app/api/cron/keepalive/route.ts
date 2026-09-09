@@ -42,6 +42,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         });
     } catch (err) {
         const message = err instanceof Error ? err.message : 'Unknown error';
+        console.error('[CRON keepalive] Database ping failed:', message);
         return NextResponse.json({ error: message }, { status: 500 });
     }
 }

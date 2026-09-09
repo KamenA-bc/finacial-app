@@ -189,7 +189,15 @@ export const useFinancialStore = create<FinancialStore>()(
 
     addIncome: async (entry: Omit<IncomeEntry, 'id'>): Promise<void> => {
         const userId = get().userId;
-        if (!userId) return;
+        if (!userId) {
+            logError(
+                'addIncome:unauthorized',
+                new Error('Attempted to add income without an authenticated userId'),
+                { entry },
+                'warning'
+            );
+            return;
+        }
 
         const tempId = generateTempId('temp_inc');
         const optimisticEntry: IncomeEntry = {
@@ -267,7 +275,15 @@ export const useFinancialStore = create<FinancialStore>()(
 
     addExpense: async (entry: Omit<ExpenseEntry, 'id'>): Promise<void> => {
         const userId = get().userId;
-        if (!userId) return;
+        if (!userId) {
+            logError(
+                'addExpense:unauthorized',
+                new Error('Attempted to add expense without an authenticated userId'),
+                { entry },
+                'warning'
+            );
+            return;
+        }
 
         const tempId = generateTempId('temp_exp');
         const optimisticEntry: ExpenseEntry = {
@@ -352,7 +368,15 @@ export const useFinancialStore = create<FinancialStore>()(
     deleteIncome: async (id: string): Promise<void> => {
         const previousEntries = get().incomeEntries;
         const target = previousEntries.find((e) => e.id === id);
-        if (!target) return;
+        if (!target) {
+            logError(
+                'deleteIncome:notFound',
+                new Error(`Attempted to delete income with id ${id} not found in store`),
+                { entryId: id },
+                'warning'
+            );
+            return;
+        }
 
         // 1. Optimistically remove immediately from local state
         set((state) => ({
@@ -385,7 +409,15 @@ export const useFinancialStore = create<FinancialStore>()(
     deleteExpense: async (id: string): Promise<void> => {
         const previousEntries = get().expenseEntries;
         const target = previousEntries.find((e) => e.id === id);
-        if (!target) return;
+        if (!target) {
+            logError(
+                'deleteExpense:notFound',
+                new Error(`Attempted to delete expense with id ${id} not found in store`),
+                { entryId: id },
+                'warning'
+            );
+            return;
+        }
 
         // 1. Optimistically remove immediately from local state
         set((state) => ({
@@ -423,8 +455,8 @@ export const useFinancialStore = create<FinancialStore>()(
         if (typeof window !== 'undefined') {
             try {
                 localStorage.removeItem('finance-tracker-store-cache');
-            } catch {
-                // Ignore storage removal errors
+            } catch (err) {
+                logError('clearStoreCache:localStorage', err, {}, 'info');
             }
         }
         set({

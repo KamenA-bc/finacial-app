@@ -4,6 +4,7 @@ import './globals.css';
 import { AuthProvider } from '@/components/auth/AuthProvider';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { WebVitals } from '@/components/telemetry/WebVitals';
+import { GlobalErrorListener } from '@/components/telemetry/GlobalErrorListener';
 
 const inter = Inter({
   subsets: ['cyrillic', 'latin'],
@@ -25,6 +26,7 @@ export default function RootLayout({
   return (
     <html lang="bg" className={inter.variable}>
       <body className="antialiased font-sans">
+        <GlobalErrorListener />
         <AuthProvider>{children}</AuthProvider>
         <WebVitals />
         <SpeedInsights />

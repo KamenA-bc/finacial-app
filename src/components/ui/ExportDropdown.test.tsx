@@ -30,7 +30,13 @@ vi.mock('@/lib/csvExport', () => ({
     exportToCsv: vi.fn(),
 }));
 
+vi.mock('@/lib/errorLogger', () => ({
+    logError: vi.fn(),
+    extractErrorMessage: vi.fn((err: unknown) => (err instanceof Error ? err.message : String(err))),
+}));
+
 import { exportToCsv } from '@/lib/csvExport';
+import { logError } from '@/lib/errorLogger';
 
 describe('ExportDropdown Component', () => {
     beforeEach(() => {
@@ -70,4 +76,21 @@ describe('ExportDropdown Component', () => {
 
         expect(exportToCsv).toHaveBeenCalled();
     });
+
+    it('catches export failure, logs error, and notifies user with error toast', async () => {
+        const { useToastStore } = await import('@/store/toastStore');
+
+        vi.mocked(exportToCsv).mockImplementationOnce(() => {
+            throw new Error('Disk write failure');
+        });
+
+        render(<ExportDropdown year={2026} />);
+        fireEvent.click(screen.getByRole('button', { name: /експортирай данни/i }));
+        fireEvent.click(screen.getByText('CSV Файл (.csv)'));
+
+        expect(logError).toHaveBeenCalledWith('exportCsv', expect.anything());
+        expect(useToastStore.getState().isOpen).toBe(true);
+        expect(useToastStore.getState().variant).toBe('error');
+    });
 });
+

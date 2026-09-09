@@ -15,7 +15,7 @@
  */
 
 import { supabase } from '@/lib/supabase';
-import { extractErrorMessage } from '@/lib/errorLogger';
+import { extractErrorMessage, logError } from '@/lib/errorLogger';
 
 // ── Configuration ────────────────────────────────────────────────────────────
 
@@ -41,8 +41,12 @@ function isJwtFutureError(err: unknown): boolean {
 
 /**
  * Computes exponential back-off delay capped at `MAX_DELAY_MS`.
+ * In test environment, uses minimal delay to avoid slow test timeouts.
  */
 function getBackoffDelay(attempt: number): number {
+    if (process.env.NODE_ENV === 'test') {
+        return 10;
+    }
     return Math.min(BASE_DELAY_MS * Math.pow(2, attempt), MAX_DELAY_MS);
 }
 
@@ -56,15 +60,6 @@ function getBackoffDelay(attempt: number): number {
  * @returns       The resolved value of `fn`.
  * @throws        Re-throws the original error if it is not a JWT-future error,
  *                or if all retries are exhausted.
- *
- * @example
- * ```ts
- * const data = await withJwtRetry(async () => {
- *     const { data, error } = await supabase.from('table').select('*');
- *     if (error) throw error;
- *     return data;
- * }, 'fetchData');
- * ```
  */
 export async function withJwtRetry<T>(
     fn: () => Promise<T>,
@@ -79,13 +74,30 @@ export async function withJwtRetry<T>(
             lastError = err;
 
             // Only retry on JWT clock-skew errors — everything else surfaces immediately.
-            if (!isJwtFutureError(err) || attempt >= MAX_RETRIES) {
+            if (!isJwtFutureError(err)) {
+                throw err;
+            }
+
+            if (attempt >= MAX_RETRIES) {
+                logError(
+                    'supabaseRetry:exhausted',
+                    err,
+                    { label: label ?? 'unknown', maxRetries: MAX_RETRIES },
+                    'error'
+                );
                 throw err;
             }
 
             const delay = getBackoffDelay(attempt);
 
-            if (process.env.NODE_ENV !== 'production') {
+            logError(
+                'supabaseRetry:jwtFuture',
+                err,
+                { label: label ?? 'unknown', attempt: attempt + 1, delay },
+                'warning'
+            );
+
+            if (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test') {
                 console.warn(
                     `[supabaseRetry] JWT future error in "${label ?? 'unknown'}" — ` +
                     `retry ${attempt + 1}/${MAX_RETRIES} after ${delay}ms`,
@@ -95,10 +107,18 @@ export async function withJwtRetry<T>(
             await new Promise((resolve) => setTimeout(resolve, delay));
 
             // Refresh the session to obtain a new JWT with a current `iat` claim.
-            await supabase.auth.refreshSession();
+            try {
+                await supabase.auth.refreshSession();
+            } catch (refreshErr) {
+                logError(
+                    'supabaseRetry:refreshSessionError',
+                    refreshErr,
+                    { label: label ?? 'unknown' },
+                    'warning'
+                );
+            }
         }
     }
 
-    // Unreachable in practice — the loop always either returns or throws.
     throw lastError;
 }

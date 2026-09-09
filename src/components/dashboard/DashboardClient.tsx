@@ -168,7 +168,9 @@ export function DashboardClient(): React.ReactElement {
         {/* LEFT: Quick Transaction Logger (2/5 width on desktop) */}
         <div className="lg:col-span-2 flex flex-col gap-4">
           <SectionCard title="Бързо въвеждане">
-            <QuickTransactionForm />
+            <ErrorBoundary fallbackTitle="Неуспешно зареждане на формата" actionName="DashboardQuickTransactionForm">
+              <QuickTransactionForm />
+            </ErrorBoundary>
           </SectionCard>
         </div>
 
@@ -180,7 +182,9 @@ export function DashboardClient(): React.ReactElement {
             </ErrorBoundary>
           </SectionCard>
           <SectionCard title="Днешни транзакции">
-            <TransactionList />
+            <ErrorBoundary fallbackTitle="Неуспешно зареждане на списъка" actionName="DashboardTransactionList">
+              <TransactionList />
+            </ErrorBoundary>
           </SectionCard>
         </div>
       </div>

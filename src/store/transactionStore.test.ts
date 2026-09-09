@@ -379,5 +379,78 @@ describe('transactionStore - Optimistic Updates & Reliability', () => {
             expect(state.userId).toBeNull();
         });
     });
+
+    describe('error exit logging & observability', () => {
+        it('logs a warning when addIncome is called without an authenticated userId', async () => {
+            const { logError } = await import('@/lib/errorLogger');
+            useFinancialStore.setState({ userId: null });
+
+            await useFinancialStore.getState().addIncome({
+                date: '2026-09-09',
+                amount: 100,
+                description: 'Unauth income',
+                isWorkIncome: false,
+                isWithKami: false,
+            });
+
+            expect(logError).toHaveBeenCalledWith(
+                'addIncome:unauthorized',
+                expect.anything(),
+                expect.anything(),
+                'warning'
+            );
+        });
+
+        it('logs a warning when addExpense is called without an authenticated userId', async () => {
+            const { logError } = await import('@/lib/errorLogger');
+            useFinancialStore.setState({ userId: null });
+
+            await useFinancialStore.getState().addExpense({
+                date: '2026-09-09',
+                amount: 50,
+                description: 'Unauth expense',
+                category: 'Други',
+                isWorkExpense: false,
+                isWithKami: false,
+                isWithOthers: false,
+            });
+
+            expect(logError).toHaveBeenCalledWith(
+                'addExpense:unauthorized',
+                expect.anything(),
+                expect.anything(),
+                'warning'
+            );
+        });
+
+        it('logs a warning when deleteExpense is called for a non-existent ID', async () => {
+            const { logError } = await import('@/lib/errorLogger');
+            useFinancialStore.setState({ expenseEntries: [] });
+
+            await useFinancialStore.getState().deleteExpense('non-existent-uuid');
+
+            expect(logError).toHaveBeenCalledWith(
+                'deleteExpense:notFound',
+                expect.anything(),
+                expect.objectContaining({ entryId: 'non-existent-uuid' }),
+                'warning'
+            );
+        });
+
+        it('logs a warning when deleteIncome is called for a non-existent ID', async () => {
+            const { logError } = await import('@/lib/errorLogger');
+            useFinancialStore.setState({ incomeEntries: [] });
+
+            await useFinancialStore.getState().deleteIncome('non-existent-uuid');
+
+            expect(logError).toHaveBeenCalledWith(
+                'deleteIncome:notFound',
+                expect.anything(),
+                expect.objectContaining({ entryId: 'non-existent-uuid' }),
+                'warning'
+            );
+        });
+    });
 });
+
 
