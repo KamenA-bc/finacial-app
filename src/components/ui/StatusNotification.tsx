@@ -3,7 +3,7 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { useToastStore } from '@/store/toastStore';
 
-const TOAST_DURATION_MS = 2000;
+const TOAST_DURATION_MS = 3000;
 const EXIT_ANIMATION_MS = 260;
 
 /**

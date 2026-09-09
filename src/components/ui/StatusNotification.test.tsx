@@ -35,7 +35,7 @@ describe('StatusNotification', () => {
         });
     });
 
-    it('starts exit animation at 2000ms and completely unmounts after exit transition', () => {
+    it('starts exit animation at 3000ms and completely unmounts after exit transition', () => {
         render(<StatusNotification />);
 
         act(() => {
@@ -45,9 +45,9 @@ describe('StatusNotification', () => {
         const toast = screen.getByRole('status');
         expect(toast).toHaveClass('animate-toast-in');
 
-        // At 2000ms, exit animation starts
+        // At 3000ms, exit animation starts
         act(() => {
-            vi.advanceTimersByTime(2000);
+            vi.advanceTimersByTime(3000);
         });
         expect(toast).toHaveClass('animate-toast-out');
 

@@ -42,7 +42,7 @@ input[type='number'] {
   }
 }
 
-/* 2-second countdown timer line animation for success toast */
+/* 3-second countdown timer line animation for success toast */
 @keyframes drainLine {
   from {
     transform: scaleX(1);
@@ -52,15 +52,18 @@ input[type='number'] {
   }
 }
 
-/* Seamless, flowing toast entrance from top */
+/* Natural, smooth toast entrance with gentle scale and glide */
 @keyframes toastSlideInTop {
-  from {
+  0% {
     opacity: 0;
-    transform: translateY(-6px);
+    transform: translateY(-12px) scale(0.96);
   }
-  to {
+  60% {
+    opacity: 0.85;
+  }
+  100% {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
   }
 }
 
@@ -68,21 +71,21 @@ input[type='number'] {
 @keyframes toastSlideOutBottom {
   from {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
   }
   to {
     opacity: 0;
-    transform: translateY(6px);
+    transform: translateY(6px) scale(0.97);
   }
 }
 
 .animate-drain {
-  animation: drainLine 2000ms linear forwards;
+  animation: drainLine 3000ms linear forwards;
   transform-origin: left;
 }
 
 .animate-toast-in {
-  animation: toastSlideInTop 380ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: toastSlideInTop 440ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 .animate-toast-out {
