@@ -36,6 +36,21 @@ export const AuthProvider = ({
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        // E2E test session in development/testing environments
+        if (process.env.NODE_ENV !== 'production' && typeof document !== 'undefined' && document.cookie.includes('e2e-test-auth=true')) {
+            const mockUser = {
+                id: 'e2e-test-user-id',
+                app_metadata: {},
+                user_metadata: { name: 'E2E Tester' },
+                aud: 'authenticated',
+                created_at: new Date().toISOString(),
+                email: 'test@financetracker.local',
+            } as User;
+            setUser(mockUser);
+            setLoading(false);
+            return;
+        }
+
         // Get initial session
         supabase.auth.getSession().then(({ data: { session } }) => {
             setUser(session?.user ?? null);

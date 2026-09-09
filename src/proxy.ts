@@ -18,6 +18,11 @@ export async function proxy(request: NextRequest): Promise<NextResponse> {
         return NextResponse.next();
     }
 
+    // Allow automated testing with e2e-test-auth cookie in non-production environments
+    if (process.env.NODE_ENV !== 'production' && request.cookies.get('e2e-test-auth')?.value === 'true') {
+        return NextResponse.next();
+    }
+
     let response = NextResponse.next({
         request: { headers: request.headers },
     });
