@@ -13,8 +13,10 @@ const EXIT_ANIMATION_MS = 260;
  */
 export const StatusNotification = (): React.ReactElement | null => {
     const { isOpen, message, variant, id, hideToast } = useToastStore();
-    const [isExiting, setIsExiting] = useState(false);
+    const [exitingToastId, setExitingToastId] = useState<number | null>(null);
     const timersRef = useRef<NodeJS.Timeout[]>([]);
+
+    const isExiting = exitingToastId === id;
 
     const clearActiveTimers = useCallback(() => {
         timersRef.current.forEach((t) => clearTimeout(t));
@@ -23,23 +25,20 @@ export const StatusNotification = (): React.ReactElement | null => {
 
     useEffect(() => {
         if (!isOpen) {
-            setIsExiting(false);
             clearActiveTimers();
             return;
         }
 
-        setIsExiting(false);
         clearActiveTimers();
 
         // 1. Start exit animation after the 3s timer line drains
         const exitTimer = setTimeout(() => {
-            setIsExiting(true);
+            setExitingToastId(id);
         }, TOAST_DURATION_MS);
 
         // 2. Hide from store after exit animation completes
         const hideTimer = setTimeout(() => {
             hideToast();
-            setIsExiting(false);
         }, TOAST_DURATION_MS + EXIT_ANIMATION_MS);
 
         timersRef.current = [exitTimer, hideTimer];
@@ -49,11 +48,10 @@ export const StatusNotification = (): React.ReactElement | null => {
 
     const handleDismiss = (): void => {
         if (isExiting) return;
-        setIsExiting(true);
+        setExitingToastId(id);
         clearActiveTimers();
         const hideTimer = setTimeout(() => {
             hideToast();
-            setIsExiting(false);
         }, EXIT_ANIMATION_MS);
         timersRef.current = [hideTimer];
     };

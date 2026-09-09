@@ -44,10 +44,9 @@ finacial-app/
 │   │   ├── ui/
 │   │   │   ├── DateNavigator.tsx   # Day-by-day nav + calendar popup (dashboard)
 │   │   │   ├── StatDisplay.tsx     # Large typographic profit/loss display
-│   │   │   └── ExportButton.tsx    # CSV export button (last 30 days)
+│   │   │   └── ExportDropdown.tsx  # Unified PDF, Excel (.xlsx), CSV export menu
 │   │   ├── forms/
-│   │   │   ├── IncomeForm.tsx      # Log income (React Hook Form + Zod)
-│   │   │   └── ExpenseForm.tsx     # Log expense with category (React Hook Form + Zod)
+│   │   │   └── QuickTransactionForm.tsx # Unified Income/Expense form with toggle chips
 │   │   ├── charts/
 │   │   │   └── CategoryChart.tsx   # Donut chart (Recharts PieChart) for expense categories
 │   │   ├── transactions/
@@ -81,7 +80,7 @@ finacial-app/
 │   ├── types/
 │   │   └── index.ts                # IncomeEntry, ExpenseEntry, FinancialStore, etc.
 │   │
-│   └── middleware.ts               # Route protection — redirects unauthenticated users to /login
+│   └── proxy.ts                    # Route protection & auth fast-path (Next.js 16)
 │
 ├── vercel.json                     # Vercel deployment config
 ├── package.json                    # Dependencies and scripts
@@ -146,9 +145,8 @@ User visits any route
 - **DashboardLayout** → wraps page with header/nav
 - **DateNavigator** → allows day-by-day nav + calendar popup → writes to `store.selectedDate`
 - **StatDisplay** × 2 → shows daily + monthly profit (reads `useFinancialData()`)
-- **ExportButton** → triggers CSV download of last 30 days
-- **IncomeForm** → adds income for selected date → calls `store.addIncome()`
-- **ExpenseForm** → adds expense for selected date → calls `store.addExpense()`
+- **ExportDropdown** → unified export popover (PDF, Excel, CSV)
+- **QuickTransactionForm** → unified income/expense entry with flag chips → calls `store.addIncome()` / `store.addExpense()`
 - **CategoryChart** → donut chart of day's expense categories
 - **TransactionList** → lists day's transactions with delete buttons
 

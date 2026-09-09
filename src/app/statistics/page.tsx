@@ -40,8 +40,6 @@ export default function StatisticsPage(): React.ReactElement {
     const setUserId = useFinancialStore((s) => s.setUserId);
     const isLoading = useFinancialStore((s) => s.isLoading);
     const loadedYears = useFinancialStore((s) => s.loadedYears);
-    const incomeEntries = useFinancialStore((s) => s.incomeEntries);
-    const expenseEntries = useFinancialStore((s) => s.expenseEntries);
 
     useEffect(() => {
         if (user) {

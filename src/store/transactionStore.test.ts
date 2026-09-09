@@ -22,15 +22,15 @@ const mockGte = vi.fn(() => ({ lte: mockLte }));
 
 vi.mock('@/lib/supabase', () => ({
     supabase: {
-        from: vi.fn((table: string) => ({
-            select: vi.fn((cols: string) => ({
-                eq: vi.fn((col: string, val: string) => ({
+        from: vi.fn(() => ({
+            select: vi.fn(() => ({
+                eq: vi.fn(() => ({
                     gte: mockGte,
                     lte: mockLte,
                     order: mockOrder,
                 })),
             })),
-            insert: vi.fn((payload: unknown) => ({
+            insert: vi.fn(() => ({
                 select: vi.fn(() => ({
                     single: mockSingle,
                 })),
@@ -265,4 +265,119 @@ describe('transactionStore - Optimistic Updates & Reliability', () => {
             expect(supabase.from).not.toHaveBeenCalled();
         });
     });
+
+    describe('deduplication & cache clearing', () => {
+        it('deduplicates when server record is already present when addExpense completes', async () => {
+            const serverId = 'real-db-exp-duplicate-test';
+            mockSingle.mockResolvedValueOnce({
+                data: {
+                    id: serverId,
+                    date: '2026-09-09',
+                    amount: 100,
+                    description: 'Grocery run',
+                    category: 'Магазини (Храна/Вода)',
+                    is_work_expense: false,
+                    is_with_kami: false,
+                    is_with_others: false,
+                },
+                error: null,
+            });
+
+            // Simulate race condition: fetchTransactions or another event inserted serverId while addExpense was pending
+            useFinancialStore.setState({
+                expenseEntries: [
+                    {
+                        id: serverId,
+                        date: '2026-09-09',
+                        amount: 100,
+                        description: 'Grocery run',
+                        category: 'Магазини (Храна/Вода)',
+                        isWorkExpense: false,
+                        isWithKami: false,
+                        isWithOthers: false,
+                    },
+                ],
+            });
+
+            await useFinancialStore.getState().addExpense({
+                date: '2026-09-09',
+                amount: 100,
+                description: 'Grocery run',
+                category: 'Магазини (Храна/Вода)',
+                isWorkExpense: false,
+                isWithKami: false,
+                isWithOthers: false,
+            });
+
+            // Must NOT have 2 copies of serverId
+            const expenses = useFinancialStore.getState().expenseEntries;
+            expect(expenses).toHaveLength(1);
+            expect(expenses[0].id).toBe(serverId);
+            expect(expenses.filter((e) => e.id === serverId)).toHaveLength(1);
+        });
+
+        it('deduplicates when server record is already present when addIncome completes', async () => {
+            const serverId = 'real-db-inc-duplicate-test';
+            mockSingle.mockResolvedValueOnce({
+                data: {
+                    id: serverId,
+                    date: '2026-09-09',
+                    amount: 500,
+                    description: 'Salary',
+                    is_work_income: true,
+                    is_with_kami: false,
+                },
+                error: null,
+            });
+
+            useFinancialStore.setState({
+                incomeEntries: [
+                    {
+                        id: serverId,
+                        date: '2026-09-09',
+                        amount: 500,
+                        description: 'Salary',
+                        isWorkIncome: true,
+                        isWithKami: false,
+                    },
+                ],
+            });
+
+            await useFinancialStore.getState().addIncome({
+                date: '2026-09-09',
+                amount: 500,
+                description: 'Salary',
+                isWorkIncome: true,
+                isWithKami: false,
+            });
+
+            const income = useFinancialStore.getState().incomeEntries;
+            expect(income).toHaveLength(1);
+            expect(income[0].id).toBe(serverId);
+        });
+
+        it('clearStoreCache resets transactions, loaded years, and lastFetchedAt', () => {
+            useFinancialStore.setState({
+                incomeEntries: [
+                    { id: 'inc-1', date: '2026-09-09', amount: 100, description: 'Test', isWorkIncome: false, isWithKami: false },
+                ],
+                expenseEntries: [
+                    { id: 'exp-1', date: '2026-09-09', amount: 50, description: 'Test', category: 'Други', isWorkExpense: false, isWithKami: false, isWithOthers: false },
+                ],
+                loadedYears: [2025, 2026],
+                lastFetchedAt: Date.now(),
+                userId: 'user-123',
+            });
+
+            useFinancialStore.getState().clearStoreCache();
+
+            const state = useFinancialStore.getState();
+            expect(state.incomeEntries).toEqual([]);
+            expect(state.expenseEntries).toEqual([]);
+            expect(state.loadedYears).toEqual([]);
+            expect(state.lastFetchedAt).toBeNull();
+            expect(state.userId).toBeNull();
+        });
+    });
 });
+

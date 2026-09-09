@@ -8,12 +8,11 @@ import {
     Tooltip,
     ResponsiveContainer,
 } from 'recharts';
-import { PieChart as PieIcon, BarChart3, Calendar } from 'lucide-react';
+import { PieChart as PieIcon, Calendar } from 'lucide-react';
 import { useFinancialData } from '@/hooks/useFinancialData';
 import { useFinancialStore } from '@/store/transactionStore';
 import { CHART_COLORS, getCurrencySymbol, NUMBER_LOCALE, CURRENCY_FORMAT_OPTIONS, CATEGORY_BG_MAP } from '@/lib/constants';
 import { getMonthName } from '@/lib/dateUtils';
-import { CategoryDataPoint } from '@/types';
 
 const formatTooltipValue = (value: number, date?: string): string =>
     `${getCurrencySymbol(date)}${value.toLocaleString(NUMBER_LOCALE, CURRENCY_FORMAT_OPTIONS)}`;

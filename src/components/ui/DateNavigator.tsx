@@ -126,13 +126,19 @@ export const DateNavigator = (): React.ReactElement => {
     const popoverRef = useRef<HTMLDivElement>(null);
     const triggerRef = useRef<HTMLButtonElement>(null);
 
+    const closeCalendar = useCallback((): void => {
+        setCalendarOpen(false);
+        setManualDate('');
+        setManualError('');
+    }, []);
+
     // Reset view to selected date's month when opening
     const openCalendar = useCallback((): void => {
         const d = new Date(`${selectedDate}T00:00:00`);
         setViewMonth(d.getMonth());
         setViewYear(d.getFullYear());
         setCalendarOpen(true);
-    }, [selectedDate]);
+    }, [selectedDate, setViewMonth, setViewYear]);
 
     // Close on click outside
     useEffect(() => {
@@ -145,33 +151,25 @@ export const DateNavigator = (): React.ReactElement => {
                 triggerRef.current &&
                 !triggerRef.current.contains(e.target as Node)
             ) {
-                setCalendarOpen(false);
+                closeCalendar();
             }
         };
 
         document.addEventListener('mousedown', handleClickOutside);
         return () => document.removeEventListener('mousedown', handleClickOutside);
-    }, [calendarOpen]);
+    }, [calendarOpen, closeCalendar]);
 
     // Close on Escape key
     useEffect(() => {
         if (!calendarOpen) return;
 
         const handleEsc = (e: KeyboardEvent): void => {
-            if (e.key === 'Escape') setCalendarOpen(false);
+            if (e.key === 'Escape') closeCalendar();
         };
 
         document.addEventListener('keydown', handleEsc);
         return () => document.removeEventListener('keydown', handleEsc);
-    }, [calendarOpen]);
-
-    // Clear manual input state when closing
-    useEffect(() => {
-        if (!calendarOpen) {
-            setManualDate('');
-            setManualError('');
-        }
-    }, [calendarOpen]);
+    }, [calendarOpen, closeCalendar]);
 
     // ── Arrow navigation ────────────────────────────────────────────────────
 
@@ -227,12 +225,12 @@ export const DateNavigator = (): React.ReactElement => {
     const handleDayClick = (day: CalendarDay): void => {
         if (!day.isSelectable) return;
         setSelectedDate(day.date);
-        setCalendarOpen(false);
+        closeCalendar();
     };
 
     const handleTodayClick = (): void => {
         setSelectedDate(todayString());
-        setCalendarOpen(false);
+        closeCalendar();
     };
 
     const handleManualSubmit = (): void => {
@@ -274,7 +272,7 @@ export const DateNavigator = (): React.ReactElement => {
         }
 
         setSelectedDate(iso);
-        setCalendarOpen(false);
+        closeCalendar();
     };
 
     // ── Derived state ───────────────────────────────────────────────────────
@@ -314,7 +312,7 @@ export const DateNavigator = (): React.ReactElement => {
             {/* Date label – clickable to open calendar */}
             <button
                 ref={triggerRef}
-                onClick={() => (calendarOpen ? setCalendarOpen(false) : openCalendar())}
+                onClick={() => (calendarOpen ? closeCalendar() : openCalendar())}
                 className="flex items-center gap-2 text-gray-700 hover:text-gray-900 transition-colors cursor-pointer group"
                 aria-label="Отвори календар"
                 aria-expanded={calendarOpen}

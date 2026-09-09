@@ -7,7 +7,6 @@ import { z } from 'zod';
 import { Lock, Loader2, KeyRound, CheckCircle } from 'lucide-react';
 import { useAuth } from '@/components/auth/AuthProvider';
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
 
 const updatePasswordSchema = z.object({
     password: z.string().min(6, 'Password must be at least 6 characters'),

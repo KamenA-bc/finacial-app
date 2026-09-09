@@ -94,8 +94,6 @@ function getClientMetadata(): Record<string, string> {
 
 // ── Core Logger ──────────────────────────────────────────────────────────────
 
-const IS_PRODUCTION = process.env.NODE_ENV === 'production';
-
 /**
  * Log an error with structured context. Fire-and-forget — never throws.
  *

@@ -75,6 +75,7 @@ export interface FinancialStore {
   deleteIncome: (id: string) => Promise<void>;
   deleteExpense: (id: string) => Promise<void>;
   setSelectedDate: (date: string) => void;
+  clearStoreCache: () => void;
 }
 
 /** Recharts-compatible data point for the category pie chart. */

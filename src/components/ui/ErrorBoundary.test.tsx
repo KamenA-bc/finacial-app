@@ -78,7 +78,7 @@ describe('ErrorBoundary', () => {
             return <div>Recovered Content</div>;
         };
 
-        const { rerender } = render(
+        render(
             <ErrorBoundary>
                 <DynamicComponent />
             </ErrorBoundary>

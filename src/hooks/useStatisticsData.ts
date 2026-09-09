@@ -7,7 +7,6 @@
 
 import { useMemo } from 'react';
 import { useFinancialStore } from '@/store/transactionStore';
-import { ExpenseEntry, IncomeEntry } from '@/types';
 import { getMonthRange, getMonthName } from '@/lib/dateUtils';
 import { EXPENSE_CATEGORIES, CATEGORY_BG_MAP } from '@/lib/constants';
 
@@ -230,14 +229,10 @@ export const useStatisticsData = (year: number): StatisticsData => {
         yearExpense.forEach((e) => allDates.add(e.date));
         const activeDays = allDates.size;
 
-        // Kami spending: use the dedicated isWithKami boolean flag
-        const kamiExpenses = sumAmount(
+        // Kami spending: strictly calculated from expenses with isWithKami flag
+        const kamiSpending = sumAmount(
             yearExpense.filter((e) => e.isWithKami)
         );
-        const kamiIncome = sumAmount(
-            yearIncome.filter((e) => e.isWithKami)
-        );
-        const kamiSpending = kamiExpenses + kamiIncome;
 
         return {
             totalIncome,

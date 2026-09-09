@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import {
@@ -67,13 +67,15 @@ export const QuickTransactionForm = (): React.ReactElement => {
     const storeError = useFinancialStore((s) => s.error);
     const showToast = useToastStore((s) => s.showToast);
 
+    const [isSubmittingForm, setIsSubmittingForm] = useState(false);
+
     // ── Expense Form Setup ────────────────────────────────────────────────────
     const {
         register: registerExpense,
         handleSubmit: handleSubmitExpense,
         reset: resetExpense,
         setValue: setExpenseValue,
-        watch: watchExpense,
+        control: expenseControl,
         formState: { errors: expenseErrors, isSubmitting: isExpenseSubmitting },
     } = useForm<ExpenseFormValues>({
         resolver: zodResolver(expenseSchema),
@@ -86,29 +88,36 @@ export const QuickTransactionForm = (): React.ReactElement => {
         },
     });
 
-    const isWorkExpense = watchExpense('isWorkExpense');
-    const isWithKami = watchExpense('isWithKami');
-    const isWithOthers = watchExpense('isWithOthers');
+    const isWorkExpense = useWatch({ control: expenseControl, name: 'isWorkExpense' }) ?? false;
+    const isWithKami = useWatch({ control: expenseControl, name: 'isWithKami' }) ?? false;
+    const isWithOthers = useWatch({ control: expenseControl, name: 'isWithOthers' }) ?? false;
 
     const onExpenseSubmit = async (data: ExpenseFormValues): Promise<void> => {
-        resetExpense({
-            category: EXPENSE_CATEGORIES[0],
-            description: '',
-            isWorkExpense: false,
-            isWithKami: false,
-            isWithOthers: false,
-        });
-        showToast('Разходът е добавен успешно');
+        if (isSubmittingForm) return;
+        setIsSubmittingForm(true);
 
-        await addExpense({
-            date: selectedDate,
-            amount: data.amount,
-            description: data.description,
-            category: data.category,
-            isWorkExpense: data.isWorkExpense,
-            isWithKami: data.isWithKami,
-            isWithOthers: data.isWithOthers,
-        });
+        try {
+            showToast('Разходът е добавен успешно');
+            await addExpense({
+                date: selectedDate,
+                amount: data.amount,
+                description: data.description,
+                category: data.category,
+                isWorkExpense: data.isWorkExpense,
+                isWithKami: data.isWithKami,
+                isWithOthers: data.isWithOthers,
+            });
+
+            resetExpense({
+                category: EXPENSE_CATEGORIES[0],
+                description: '',
+                isWorkExpense: false,
+                isWithKami: false,
+                isWithOthers: false,
+            });
+        } finally {
+            setIsSubmittingForm(false);
+        }
     };
 
     // ── Income Form Setup ─────────────────────────────────────────────────────
@@ -117,7 +126,7 @@ export const QuickTransactionForm = (): React.ReactElement => {
         handleSubmit: handleSubmitIncome,
         reset: resetIncome,
         setValue: setIncomeValue,
-        watch: watchIncome,
+        control: incomeControl,
         formState: { errors: incomeErrors, isSubmitting: isIncomeSubmitting },
     } = useForm<IncomeFormValues>({
         resolver: zodResolver(incomeSchema),
@@ -127,22 +136,29 @@ export const QuickTransactionForm = (): React.ReactElement => {
         },
     });
 
-    const isWorkIncome = watchIncome('isWorkIncome');
+    const isWorkIncome = useWatch({ control: incomeControl, name: 'isWorkIncome' }) ?? false;
 
     const onIncomeSubmit = async (data: IncomeFormValues): Promise<void> => {
-        resetIncome({
-            description: '',
-            isWorkIncome: false,
-        });
-        showToast('Приходът е добавен успешно');
+        if (isSubmittingForm) return;
+        setIsSubmittingForm(true);
 
-        await addIncome({
-            date: selectedDate,
-            amount: data.amount,
-            description: data.description || '',
-            isWorkIncome: data.isWorkIncome,
-            isWithKami: false,
-        });
+        try {
+            showToast('Приходът е добавен успешно');
+            await addIncome({
+                date: selectedDate,
+                amount: data.amount,
+                description: data.description || '',
+                isWorkIncome: data.isWorkIncome,
+                isWithKami: false,
+            });
+
+            resetIncome({
+                description: '',
+                isWorkIncome: false,
+            });
+        } finally {
+            setIsSubmittingForm(false);
+        }
     };
 
     const currency = getCurrencySymbol(selectedDate);
@@ -321,11 +337,11 @@ export const QuickTransactionForm = (): React.ReactElement => {
                     {/* Submit Button */}
                     <button
                         type="submit"
-                        disabled={isExpenseSubmitting}
+                        disabled={isExpenseSubmitting || isSubmittingForm}
                         className="mt-1 flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-rose-500 text-white text-xs font-semibold hover:bg-rose-600 active:scale-[0.99] disabled:opacity-60 shadow-xs transition-all cursor-pointer"
                     >
                         <PlusCircle size={15} />
-                        <span>Добави разход</span>
+                        <span>{isSubmittingForm ? 'Запазване…' : 'Добави разход'}</span>
                     </button>
                 </form>
             )}
@@ -413,11 +429,11 @@ export const QuickTransactionForm = (): React.ReactElement => {
                     {/* Submit Button */}
                     <button
                         type="submit"
-                        disabled={isIncomeSubmitting}
+                        disabled={isIncomeSubmitting || isSubmittingForm}
                         className="mt-1 flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-emerald-600 text-white text-xs font-semibold hover:bg-emerald-700 active:scale-[0.99] disabled:opacity-60 shadow-xs transition-all cursor-pointer"
                     >
                         <PlusCircle size={15} />
-                        <span>Добави приход</span>
+                        <span>{isSubmittingForm ? 'Запазване…' : 'Добави приход'}</span>
                     </button>
                 </form>
             )}

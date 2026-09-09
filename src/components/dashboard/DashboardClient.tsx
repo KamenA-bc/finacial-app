@@ -10,7 +10,6 @@ import { ExportDropdown } from '@/components/ui/ExportDropdown';
 import { useFinancialData } from '@/hooks/useFinancialData';
 import { useAuth } from '@/components/auth/AuthProvider';
 import { useFinancialStore } from '@/store/transactionStore';
-import { Loader2 } from 'lucide-react';
 import { ErrorBoundary } from '@/components/ui/ErrorBoundary';
 import { DashboardSkeleton } from '@/components/dashboard/DashboardSkeleton';
 import { getMonthName, getCalendarMonthRange } from '@/lib/dateUtils';
@@ -67,17 +66,17 @@ export function DashboardClient(): React.ReactElement {
     setMounted(true);
   }, []);
 
-  useEffect(() => {
-    if (user) {
-      setUserId(user.id);
-      fetchTransactions(user.id);
-    }
-  }, [user, setUserId, fetchTransactions]);
-
   const currentYear = selectedDate && selectedDate.length >= 4
     ? parseInt(selectedDate.slice(0, 4), 10)
     : new Date().getFullYear();
   const isYearReady = loadedYears.includes(currentYear);
+
+  useEffect(() => {
+    if (user) {
+      setUserId(user.id);
+      fetchTransactions(user.id, currentYear);
+    }
+  }, [user, currentYear, setUserId, fetchTransactions]);
 
   const {
     dailyProfit,

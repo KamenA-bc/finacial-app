@@ -137,10 +137,34 @@ export const useFinancialStore = create<FinancialStore>()(
             }));
 
             set((state) => {
-                const incomeMap = new Map(state.incomeEntries.map((e) => [e.id, e]));
+                const incomeMap = new Map<string, IncomeEntry>();
+                state.incomeEntries.forEach((e) => {
+                    if (e.id.startsWith('temp_')) {
+                        const matchingServer = newIncomeEntries.some(
+                            (s) => s.date === e.date && s.amount === e.amount && s.description === e.description
+                        );
+                        if (!matchingServer) {
+                            incomeMap.set(e.id, e);
+                        }
+                    } else {
+                        incomeMap.set(e.id, e);
+                    }
+                });
                 newIncomeEntries.forEach((e) => incomeMap.set(e.id, e));
 
-                const expenseMap = new Map(state.expenseEntries.map((e) => [e.id, e]));
+                const expenseMap = new Map<string, ExpenseEntry>();
+                state.expenseEntries.forEach((e) => {
+                    if (e.id.startsWith('temp_')) {
+                        const matchingServer = newExpenseEntries.some(
+                            (s) => s.date === e.date && s.amount === e.amount && s.description === e.description && s.category === e.category
+                        );
+                        if (!matchingServer) {
+                            expenseMap.set(e.id, e);
+                        }
+                    } else {
+                        expenseMap.set(e.id, e);
+                    }
+                });
                 newExpenseEntries.forEach((e) => expenseMap.set(e.id, e));
 
                 const updatedLoadedYears = state.loadedYears.includes(year)
@@ -214,9 +238,22 @@ export const useFinancialStore = create<FinancialStore>()(
             };
 
             // 2. Seamlessly swap temporary ID with persistent database ID
-            set((state) => ({
-                incomeEntries: state.incomeEntries.map((e) => (e.id === tempId ? mapped : e)),
-            }));
+            set((state) => {
+                const exists = state.incomeEntries.some((e) => e.id === mapped.id);
+                const updated = exists
+                    ? state.incomeEntries.filter((e) => e.id !== tempId)
+                    : state.incomeEntries.map((e) => (e.id === tempId ? mapped : e));
+
+                const seen = new Set<string>();
+                const deduped: IncomeEntry[] = [];
+                for (const e of updated) {
+                    if (!seen.has(e.id)) {
+                        seen.add(e.id);
+                        deduped.push(e);
+                    }
+                }
+                return { incomeEntries: deduped.sort((a, b) => a.date.localeCompare(b.date)) };
+            });
         } catch (err) {
             const message = extractErrorMessage(err);
             logError('addIncome', err, { userId });
@@ -285,9 +322,22 @@ export const useFinancialStore = create<FinancialStore>()(
             };
 
             // 2. Seamlessly swap temporary ID with persistent database ID
-            set((state) => ({
-                expenseEntries: state.expenseEntries.map((e) => (e.id === tempId ? mapped : e)),
-            }));
+            set((state) => {
+                const exists = state.expenseEntries.some((e) => e.id === mapped.id);
+                const updated = exists
+                    ? state.expenseEntries.filter((e) => e.id !== tempId)
+                    : state.expenseEntries.map((e) => (e.id === tempId ? mapped : e));
+
+                const seen = new Set<string>();
+                const deduped: ExpenseEntry[] = [];
+                for (const e of updated) {
+                    if (!seen.has(e.id)) {
+                        seen.add(e.id);
+                        deduped.push(e);
+                    }
+                }
+                return { expenseEntries: deduped.sort((a, b) => a.date.localeCompare(b.date)) };
+            });
         } catch (err) {
             const message = extractErrorMessage(err);
             logError('addExpense', err, { userId });
@@ -368,14 +418,39 @@ export const useFinancialStore = create<FinancialStore>()(
     setSelectedDate: (date: string): void => {
         set({ selectedDate: date });
     },
+
+    clearStoreCache: (): void => {
+        if (typeof window !== 'undefined') {
+            try {
+                localStorage.removeItem('finance-tracker-store-cache');
+            } catch {
+                // Ignore storage removal errors
+            }
+        }
+        set({
+            incomeEntries: [],
+            expenseEntries: [],
+            loadedYears: [],
+            userId: null,
+            isLoading: false,
+            error: null,
+            lastFetchedAt: null,
+        });
+    },
 }),
         {
             name: 'finance-tracker-store-cache',
             partialize: (state) => ({
-                incomeEntries: state.incomeEntries,
-                expenseEntries: state.expenseEntries,
+                incomeEntries: state.incomeEntries.filter((e) => !e.id.startsWith('temp_')),
+                expenseEntries: state.expenseEntries.filter((e) => !e.id.startsWith('temp_')),
                 loadedYears: state.loadedYears,
             }),
+            onRehydrateStorage: () => (state) => {
+                if (state) {
+                    state.incomeEntries = (state.incomeEntries || []).filter((e) => !e.id.startsWith('temp_'));
+                    state.expenseEntries = (state.expenseEntries || []).filter((e) => !e.id.startsWith('temp_'));
+                }
+            },
         }
     )
 );

@@ -8,6 +8,7 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabase';
 import type { User } from '@supabase/supabase-js';
 import { extractErrorMessage } from '@/lib/errorLogger';
+import { useFinancialStore } from '@/store/transactionStore';
 
 interface AuthContextValue {
     user: User | null;
@@ -27,27 +28,31 @@ export const useAuth = (): AuthContextValue => {
     return ctx;
 };
 
+function getInitialMockUser(): User | null {
+    if (process.env.NODE_ENV !== 'production' && typeof document !== 'undefined' && document.cookie.includes('e2e-test-auth=true')) {
+        return {
+            id: '00000000-0000-0000-0000-000000000001',
+            app_metadata: {},
+            user_metadata: { name: 'E2E Tester' },
+            aud: 'authenticated',
+            created_at: new Date().toISOString(),
+            email: 'test@financetracker.local',
+        } as User;
+    }
+    return null;
+}
+
 export const AuthProvider = ({
     children,
 }: {
     children: React.ReactNode;
 }): React.ReactElement => {
-    const [user, setUser] = useState<User | null>(null);
-    const [loading, setLoading] = useState(true);
+    const [user, setUser] = useState<User | null>(getInitialMockUser);
+    const [loading, setLoading] = useState(() => getInitialMockUser() === null);
 
     useEffect(() => {
         // E2E test session in development/testing environments
-        if (process.env.NODE_ENV !== 'production' && typeof document !== 'undefined' && document.cookie.includes('e2e-test-auth=true')) {
-            const mockUser = {
-                id: '00000000-0000-0000-0000-000000000001',
-                app_metadata: {},
-                user_metadata: { name: 'E2E Tester' },
-                aud: 'authenticated',
-                created_at: new Date().toISOString(),
-                email: 'test@financetracker.local',
-            } as User;
-            setUser(mockUser);
-            setLoading(false);
+        if (getInitialMockUser() !== null) {
             return;
         }
 
@@ -114,6 +119,11 @@ export const AuthProvider = ({
     };
 
     const signOut = async (): Promise<void> => {
+        try {
+            useFinancialStore.getState().clearStoreCache();
+        } catch {
+            // Ignore state clear error
+        }
         await supabase.auth.signOut();
         // Force a page reload/redirect to clear state and trigger middleware
         window.location.href = '/login';
