@@ -12,7 +12,7 @@ const EXIT_ANIMATION_MS = 260;
  * Appears seamlessly from the top, and dismisses smoothly to the bottom.
  */
 export const StatusNotification = (): React.ReactElement | null => {
-    const { isOpen, message, id, hideToast } = useToastStore();
+    const { isOpen, message, variant, id, hideToast } = useToastStore();
     const [isExiting, setIsExiting] = useState(false);
     const timersRef = useRef<NodeJS.Timeout[]>([]);
 
@@ -31,7 +31,7 @@ export const StatusNotification = (): React.ReactElement | null => {
         setIsExiting(false);
         clearActiveTimers();
 
-        // 1. Start exit animation after the 2s timer line drains
+        // 1. Start exit animation after the 3s timer line drains
         const exitTimer = setTimeout(() => {
             setIsExiting(true);
         }, TOAST_DURATION_MS);
@@ -62,26 +62,32 @@ export const StatusNotification = (): React.ReactElement | null => {
         return null;
     }
 
+    const isError = variant === 'error';
+    const containerClasses = isError
+        ? 'bg-rose-50/95 text-rose-900 border-rose-200/90 hover:bg-rose-100/90 shadow-rose-950/5'
+        : 'bg-emerald-50/95 text-emerald-900 border-emerald-200/90 hover:bg-emerald-100/90 shadow-emerald-950/5';
+    const timerLineClasses = isError ? 'bg-rose-500' : 'bg-emerald-500';
+
     return (
         <aside
             role="status"
             aria-live="polite"
             onClick={handleDismiss}
             title="Кликнете за затваряне"
-            className={`fixed top-16 right-3 sm:top-18 sm:right-6 md:right-8 z-50 flex flex-col bg-emerald-50/95 backdrop-blur-md text-emerald-900 shadow-md shadow-emerald-950/5 border border-emerald-200/90 rounded-lg sm:rounded-xl overflow-hidden cursor-pointer hover:bg-emerald-100/90 transition-colors select-none min-w-[170px] sm:min-w-[200px] ${
+            className={`fixed top-16 right-3 sm:top-18 sm:right-6 md:right-8 z-50 flex flex-col backdrop-blur-md shadow-md border rounded-lg sm:rounded-xl overflow-hidden cursor-pointer transition-colors select-none min-w-[170px] sm:min-w-[200px] ${containerClasses} ${
                 isExiting ? 'animate-toast-out' : 'animate-toast-in'
             }`}
         >
             <div className="px-4 py-2 sm:px-5 sm:py-2.5 flex items-center justify-center">
-                <span className="text-xs sm:text-sm font-medium tracking-wide text-emerald-900">
+                <span className="text-xs sm:text-sm font-medium tracking-wide">
                     {message}
                 </span>
             </div>
 
-            {/* Emerald 2s shrinking progress timer line */}
+            {/* Shrinking progress timer line */}
             <div
                 key={id}
-                className="h-[2px] sm:h-[2.5px] w-full bg-emerald-500 animate-drain"
+                className={`h-[2px] sm:h-[2.5px] w-full animate-drain ${timerLineClasses}`}
                 aria-hidden="true"
             />
         </aside>

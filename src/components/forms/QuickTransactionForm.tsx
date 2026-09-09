@@ -91,6 +91,15 @@ export const QuickTransactionForm = (): React.ReactElement => {
     const isWithOthers = watchExpense('isWithOthers');
 
     const onExpenseSubmit = async (data: ExpenseFormValues): Promise<void> => {
+        resetExpense({
+            category: EXPENSE_CATEGORIES[0],
+            description: '',
+            isWorkExpense: false,
+            isWithKami: false,
+            isWithOthers: false,
+        });
+        showToast('Разходът е добавен успешно');
+
         await addExpense({
             date: selectedDate,
             amount: data.amount,
@@ -100,18 +109,6 @@ export const QuickTransactionForm = (): React.ReactElement => {
             isWithKami: data.isWithKami,
             isWithOthers: data.isWithOthers,
         });
-
-        const currentError = useFinancialStore.getState().error;
-        if (!currentError) {
-            showToast('Разходът е добавен успешно');
-            resetExpense({
-                category: EXPENSE_CATEGORIES[0],
-                description: '',
-                isWorkExpense: false,
-                isWithKami: false,
-                isWithOthers: false,
-            });
-        }
     };
 
     // ── Income Form Setup ─────────────────────────────────────────────────────
@@ -133,6 +130,12 @@ export const QuickTransactionForm = (): React.ReactElement => {
     const isWorkIncome = watchIncome('isWorkIncome');
 
     const onIncomeSubmit = async (data: IncomeFormValues): Promise<void> => {
+        resetIncome({
+            description: '',
+            isWorkIncome: false,
+        });
+        showToast('Приходът е добавен успешно');
+
         await addIncome({
             date: selectedDate,
             amount: data.amount,
@@ -140,15 +143,6 @@ export const QuickTransactionForm = (): React.ReactElement => {
             isWorkIncome: data.isWorkIncome,
             isWithKami: false,
         });
-
-        const currentError = useFinancialStore.getState().error;
-        if (!currentError) {
-            showToast('Приходът е добавен успешно');
-            resetIncome({
-                description: '',
-                isWorkIncome: false,
-            });
-        }
     };
 
     const currency = getCurrencySymbol(selectedDate);

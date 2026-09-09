@@ -23,6 +23,13 @@ import { withJwtRetry } from '@/lib/supabaseRetry';
  */
 const FETCH_DEDUP_MS = 10_000;
 
+function generateTempId(prefix: string): string {
+    if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+        return `${prefix}_${crypto.randomUUID()}`;
+    }
+    return `${prefix}_${Date.now()}_${Math.random().toString(36).slice(2, 9)}`;
+}
+
 export const useFinancialStore = create<FinancialStore>()((set, get) => ({
     incomeEntries: [],
     expenseEntries: [],
@@ -103,12 +110,34 @@ export const useFinancialStore = create<FinancialStore>()((set, get) => ({
         const userId = get().userId;
         if (!userId) return;
 
-        set({ error: null });
+        const tempId = generateTempId('temp_inc');
+        const optimisticEntry: IncomeEntry = {
+            id: tempId,
+            date: entry.date,
+            amount: entry.amount,
+            description: entry.description,
+            isWorkIncome: entry.isWorkIncome,
+            isWithKami: entry.isWithKami,
+        };
+
+        // 1. Optimistically insert into local state immediately (0ms UI latency)
+        set((state) => ({
+            incomeEntries: [...state.incomeEntries, optimisticEntry],
+            error: null,
+        }));
+
         try {
             const { data } = await withJwtRetry(async () => {
                 const res = await supabase
                     .from('income_entries')
-                    .insert({ user_id: userId, date: entry.date, amount: entry.amount, description: entry.description, is_work_income: entry.isWorkIncome, is_with_kami: entry.isWithKami })
+                    .insert({
+                        user_id: userId,
+                        date: entry.date,
+                        amount: entry.amount,
+                        description: entry.description,
+                        is_work_income: entry.isWorkIncome,
+                        is_with_kami: entry.isWithKami,
+                    })
                     .select('id, date, amount, description, is_work_income, is_with_kami')
                     .single();
 
@@ -125,13 +154,18 @@ export const useFinancialStore = create<FinancialStore>()((set, get) => ({
                 isWithKami: ((data as Record<string, unknown>).is_with_kami as boolean) ?? false,
             };
 
+            // 2. Seamlessly swap temporary ID with persistent database ID
             set((state) => ({
-                incomeEntries: [...state.incomeEntries, mapped],
+                incomeEntries: state.incomeEntries.map((e) => (e.id === tempId ? mapped : e)),
             }));
         } catch (err) {
             const message = extractErrorMessage(err);
-            logError('addIncome', err, { userId: get().userId });
-            set({ error: message });
+            logError('addIncome', err, { userId });
+            // 3. Roll back optimistic entry on failure
+            set((state) => ({
+                incomeEntries: state.incomeEntries.filter((e) => e.id !== tempId),
+                error: message,
+            }));
         }
     },
 
@@ -139,7 +173,24 @@ export const useFinancialStore = create<FinancialStore>()((set, get) => ({
         const userId = get().userId;
         if (!userId) return;
 
-        set({ error: null });
+        const tempId = generateTempId('temp_exp');
+        const optimisticEntry: ExpenseEntry = {
+            id: tempId,
+            date: entry.date,
+            amount: entry.amount,
+            description: entry.description,
+            category: entry.category,
+            isWorkExpense: entry.isWorkExpense,
+            isWithKami: entry.isWithKami,
+            isWithOthers: entry.isWithOthers,
+        };
+
+        // 1. Optimistically insert into local state immediately (0ms UI latency)
+        set((state) => ({
+            expenseEntries: [...state.expenseEntries, optimisticEntry],
+            error: null,
+        }));
+
         try {
             const { data } = await withJwtRetry(async () => {
                 const res = await supabase
@@ -166,24 +217,38 @@ export const useFinancialStore = create<FinancialStore>()((set, get) => ({
                 date: (data as Record<string, unknown>).date as string,
                 amount: (data as Record<string, unknown>).amount as number,
                 description: (data as Record<string, unknown>).description as string,
-                category: (data as Record<string, unknown>).category as string as ExpenseEntry['category'],
+                category: (data as Record<string, unknown>).category as ExpenseEntry['category'],
                 isWorkExpense: ((data as Record<string, unknown>).is_work_expense as boolean) ?? false,
                 isWithKami: ((data as Record<string, unknown>).is_with_kami as boolean) ?? false,
                 isWithOthers: ((data as Record<string, unknown>).is_with_others as boolean) ?? false,
             };
 
+            // 2. Seamlessly swap temporary ID with persistent database ID
             set((state) => ({
-                expenseEntries: [...state.expenseEntries, mapped],
+                expenseEntries: state.expenseEntries.map((e) => (e.id === tempId ? mapped : e)),
             }));
         } catch (err) {
             const message = extractErrorMessage(err);
-            logError('addExpense', err, { userId: get().userId });
-            set({ error: message });
+            logError('addExpense', err, { userId });
+            // 3. Roll back optimistic entry on failure
+            set((state) => ({
+                expenseEntries: state.expenseEntries.filter((e) => e.id !== tempId),
+                error: message,
+            }));
         }
     },
 
     deleteIncome: async (id: string): Promise<void> => {
-        set({ error: null });
+        const previousEntries = get().incomeEntries;
+        const target = previousEntries.find((e) => e.id === id);
+        if (!target) return;
+
+        // 1. Optimistically remove immediately from local state
+        set((state) => ({
+            incomeEntries: state.incomeEntries.filter((e) => e.id !== id),
+            error: null,
+        }));
+
         try {
             await withJwtRetry(async () => {
                 const { error } = await supabase
@@ -193,19 +258,28 @@ export const useFinancialStore = create<FinancialStore>()((set, get) => ({
 
                 if (error) throw error;
             }, 'deleteIncome');
-
-            set((state) => ({
-                incomeEntries: state.incomeEntries.filter((e) => e.id !== id),
-            }));
         } catch (err) {
             const message = extractErrorMessage(err);
             logError('deleteIncome', err, { entryId: id });
-            set({ error: message });
+            // 2. Roll back state on failure
+            set({
+                incomeEntries: previousEntries,
+                error: message,
+            });
         }
     },
 
     deleteExpense: async (id: string): Promise<void> => {
-        set({ error: null });
+        const previousEntries = get().expenseEntries;
+        const target = previousEntries.find((e) => e.id === id);
+        if (!target) return;
+
+        // 1. Optimistically remove immediately from local state
+        set((state) => ({
+            expenseEntries: state.expenseEntries.filter((e) => e.id !== id),
+            error: null,
+        }));
+
         try {
             await withJwtRetry(async () => {
                 const { error } = await supabase
@@ -215,14 +289,14 @@ export const useFinancialStore = create<FinancialStore>()((set, get) => ({
 
                 if (error) throw error;
             }, 'deleteExpense');
-
-            set((state) => ({
-                expenseEntries: state.expenseEntries.filter((e) => e.id !== id),
-            }));
         } catch (err) {
             const message = extractErrorMessage(err);
             logError('deleteExpense', err, { entryId: id });
-            set({ error: message });
+            // 2. Roll back state on failure
+            set({
+                expenseEntries: previousEntries,
+                error: message,
+            });
         }
     },
 
