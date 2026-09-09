@@ -22,6 +22,7 @@ export default function HistoryPage(): React.ReactElement {
     const fetchTransactions = useFinancialStore((s) => s.fetchTransactions);
     const setUserId = useFinancialStore((s) => s.setUserId);
     const isLoading = useFinancialStore((s) => s.isLoading);
+    const loadedYears = useFinancialStore((s) => s.loadedYears);
 
     useEffect(() => {
         if (user) {
@@ -30,9 +31,10 @@ export default function HistoryPage(): React.ReactElement {
         }
     }, [user, year, setUserId, fetchTransactions]);
 
+    const isYearReady = loadedYears.includes(year);
     const yearData = useHistoryData(year);
 
-    if (authLoading || isLoading) {
+    if (authLoading || (!isYearReady && isLoading)) {
         return (
             <DashboardLayout>
                 <div className="flex items-center justify-center py-20">

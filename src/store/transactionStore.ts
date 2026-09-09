@@ -30,6 +30,22 @@ function generateTempId(prefix: string): string {
     return `${prefix}_${Date.now()}_${Math.random().toString(36).slice(2, 9)}`;
 }
 
+const isMockTestUser = (id: string | null | undefined): boolean =>
+    id === 'e2e-test-user-id' || id === '00000000-0000-0000-0000-000000000001';
+
+function resolveTargetYear(targetYear?: number, selectedDate?: string): number {
+    if (typeof targetYear === 'number' && Number.isInteger(targetYear) && targetYear >= 2000 && targetYear <= 2100) {
+        return targetYear;
+    }
+    if (selectedDate && typeof selectedDate === 'string' && selectedDate.length >= 4) {
+        const parsed = parseInt(selectedDate.slice(0, 4), 10);
+        if (Number.isInteger(parsed) && parsed >= 2000 && parsed <= 2100) {
+            return parsed;
+        }
+    }
+    return new Date().getFullYear();
+}
+
 export const useFinancialStore = create<FinancialStore>()((set, get) => ({
     incomeEntries: [],
     expenseEntries: [],
@@ -46,7 +62,18 @@ export const useFinancialStore = create<FinancialStore>()((set, get) => ({
 
     fetchTransactions: async (userId: string, targetYear?: number) => {
         const { lastFetchedAt, userId: currentUserId, loadedYears, selectedDate } = get();
-        const year = targetYear ?? (selectedDate ? new Date(`${selectedDate}T00:00:00`).getFullYear() : new Date().getFullYear());
+        const year = resolveTargetYear(targetYear, selectedDate);
+
+        // ── Mock Test User Guard: skip real DB query in E2E mock sessions ──
+        if (!userId || isMockTestUser(userId)) {
+            set((state) => ({
+                userId,
+                loadedYears: state.loadedYears.includes(year) ? state.loadedYears : [...state.loadedYears, year],
+                isLoading: false,
+                lastFetchedAt: Date.now(),
+            }));
+            return;
+        }
 
         // ── Deduplication guard: skip if year is already loaded and was fetched recently ──
         const isYearLoaded = loadedYears.includes(year);
@@ -54,7 +81,10 @@ export const useFinancialStore = create<FinancialStore>()((set, get) => ({
             return;
         }
 
-        set({ isLoading: true, error: null });
+        // Only set full-screen loader if the target year is not yet cached in memory
+        if (!isYearLoaded) {
+            set({ isLoading: true, error: null });
+        }
         try {
             const startDate = `${year}-01-01`;
             const endDate = `${year}-12-31`;
@@ -150,6 +180,8 @@ export const useFinancialStore = create<FinancialStore>()((set, get) => ({
             error: null,
         }));
 
+        if (isMockTestUser(userId)) return;
+
         try {
             const { data } = await withJwtRetry(async () => {
                 const res = await supabase
@@ -215,6 +247,8 @@ export const useFinancialStore = create<FinancialStore>()((set, get) => ({
             error: null,
         }));
 
+        if (isMockTestUser(userId)) return;
+
         try {
             const { data } = await withJwtRetry(async () => {
                 const res = await supabase
@@ -273,6 +307,8 @@ export const useFinancialStore = create<FinancialStore>()((set, get) => ({
             error: null,
         }));
 
+        if (id.startsWith('temp_')) return;
+
         try {
             await withJwtRetry(async () => {
                 const { error } = await supabase
@@ -303,6 +339,8 @@ export const useFinancialStore = create<FinancialStore>()((set, get) => ({
             expenseEntries: state.expenseEntries.filter((e) => e.id !== id),
             error: null,
         }));
+
+        if (id.startsWith('temp_')) return;
 
         try {
             await withJwtRetry(async () => {

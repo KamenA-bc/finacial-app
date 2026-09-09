@@ -39,7 +39,7 @@ export const AuthProvider = ({
         // E2E test session in development/testing environments
         if (process.env.NODE_ENV !== 'production' && typeof document !== 'undefined' && document.cookie.includes('e2e-test-auth=true')) {
             const mockUser = {
-                id: 'e2e-test-user-id',
+                id: '00000000-0000-0000-0000-000000000001',
                 app_metadata: {},
                 user_metadata: { name: 'E2E Tester' },
                 aud: 'authenticated',

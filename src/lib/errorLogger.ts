@@ -119,12 +119,9 @@ export function logError(
     };
 
     // Always log to console for dev visibility
-    if (!IS_PRODUCTION) {
-        console.error(`[ErrorLogger] ${entry.action}:`, entry.message, entry.metadata);
-        return;
-    }
+    console.error(`[ErrorLogger] ${entry.action}:`, entry.message, entry.metadata);
 
-    // In production: persist to Supabase, fire-and-forget
+    // Persist to Supabase, fire-and-forget
     persistToSupabase(entry).catch((persistErr) => {
         // Last resort: if DB write fails, at least console.error so
         // Vercel runtime logs capture it.
@@ -150,6 +147,19 @@ export async function persistToSupabase(entry: ErrorLogEntry): Promise<void> {
             if (error) throw error;
         }, 'persistToSupabase');
     } catch (persistErr) {
+        // Fallback: in browser environments, post to /api/log-error server endpoint
+        if (typeof window !== 'undefined' && typeof fetch === 'function') {
+            try {
+                await fetch('/api/log-error', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(entry),
+                });
+                return;
+            } catch {
+                // Suppress API fallback error
+            }
+        }
         // Don't throw — this is a best-effort logging mechanism.
         // Log to console so Vercel runtime logs still capture it.
         console.error('[ErrorLogger] Supabase insert failed:', persistErr);

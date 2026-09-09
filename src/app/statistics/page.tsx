@@ -39,6 +39,7 @@ export default function StatisticsPage(): React.ReactElement {
     const fetchTransactions = useFinancialStore((s) => s.fetchTransactions);
     const setUserId = useFinancialStore((s) => s.setUserId);
     const isLoading = useFinancialStore((s) => s.isLoading);
+    const loadedYears = useFinancialStore((s) => s.loadedYears);
     const incomeEntries = useFinancialStore((s) => s.incomeEntries);
     const expenseEntries = useFinancialStore((s) => s.expenseEntries);
 
@@ -49,9 +50,10 @@ export default function StatisticsPage(): React.ReactElement {
         }
     }, [user, year, setUserId, fetchTransactions]);
 
+    const isYearReady = loadedYears.includes(year);
     const stats = useStatisticsData(year);
 
-    if (authLoading || isLoading) {
+    if (authLoading || (!isYearReady && isLoading)) {
         return (
             <DashboardLayout>
                 <div className="flex items-center justify-center py-20">

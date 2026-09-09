@@ -57,11 +57,17 @@ export async function proxy(request: NextRequest): Promise<NextResponse> {
     // Redirect unauthenticated users to login
     if (!user) {
         const loginUrl = new URL('/login', request.url);
-        return NextResponse.redirect(loginUrl);
+        const redirectResponse = NextResponse.redirect(loginUrl);
+        response.cookies.getAll().forEach((c) => {
+            redirectResponse.cookies.set(c.name, c.value, c);
+        });
+        return redirectResponse;
     }
 
     return response;
 }
+
+export default proxy;
 
 export const config = {
     matcher: [

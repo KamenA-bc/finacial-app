@@ -25,9 +25,9 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     }
 
     // 3. Ping Supabase via native fetch – no SDK package required.
-    //    A lightweight REST call to the health endpoint registers activity.
+    //    A lightweight REST call registers active database activity.
     try {
-        const res = await fetch(`${SUPABASE_URL}/rest/v1/?limit=1`, {
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/income_entries?select=id&limit=1`, {
             headers: {
                 apikey: SUPABASE_ANON_KEY,
                 Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
