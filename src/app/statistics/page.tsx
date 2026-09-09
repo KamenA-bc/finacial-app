@@ -17,6 +17,7 @@ import { FunFacts } from '@/components/statistics/FunFacts';
 import { useStatisticsData } from '@/hooks/useStatisticsData';
 import { useAuth } from '@/components/auth/AuthProvider';
 import { useFinancialStore } from '@/store/transactionStore';
+import { ErrorBoundary } from '@/components/ui/ErrorBoundary';
 
 const MonthlyTrendsChart = dynamic(
   () => import('@/components/statistics/MonthlyTrendsChart').then((m) => m.MonthlyTrendsChart),
@@ -107,11 +108,13 @@ export default function StatisticsPage(): React.ReactElement {
                 />
 
                 {/* Section 3: Monthly Trends Chart */}
-                <MonthlyTrendsChart
-                    year={year}
-                    data={stats.monthlyTrends}
-                    hasData={stats.hasData}
-                />
+                <ErrorBoundary fallbackTitle="Неуспешно зареждане на годишната графика" actionName="StatisticsMonthlyTrendsChart">
+                    <MonthlyTrendsChart
+                        year={year}
+                        data={stats.monthlyTrends}
+                        hasData={stats.hasData}
+                    />
+                </ErrorBoundary>
 
                 {/* Section 4 + 5: Spending Habits & Income Breakdown */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">

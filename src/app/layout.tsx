@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import { AuthProvider } from '@/components/auth/AuthProvider';
+import { SpeedInsights } from '@vercel/speed-insights/next';
+import { WebVitals } from '@/components/telemetry/WebVitals';
 
 const inter = Inter({
   subsets: ['cyrillic', 'latin'],
@@ -24,6 +26,8 @@ export default function RootLayout({
     <html lang="bg" className={inter.variable}>
       <body className="antialiased font-sans">
         <AuthProvider>{children}</AuthProvider>
+        <WebVitals />
+        <SpeedInsights />
       </body>
     </html>
   );

@@ -18,6 +18,7 @@ import { useFinancialData } from '@/hooks/useFinancialData';
 import { useAuth } from '@/components/auth/AuthProvider';
 import { useFinancialStore } from '@/store/transactionStore';
 import { Loader2 } from 'lucide-react';
+import { ErrorBoundary } from '@/components/ui/ErrorBoundary';
 
 const CategoryChart = dynamic(
   () => import('@/components/charts/CategoryChart').then((mod) => mod.CategoryChart),
@@ -176,7 +177,9 @@ export default function DashboardPage(): React.ReactElement {
         {/* RIGHT: Chart + Transaction list (3/5 width on desktop) */}
         <div className="lg:col-span-3 flex flex-col gap-4">
           <SectionCard title="Анализ на разходите">
-            <CategoryChart />
+            <ErrorBoundary fallbackTitle="Неуспешно зареждане на графиката" actionName="DashboardCategoryChart">
+              <CategoryChart />
+            </ErrorBoundary>
           </SectionCard>
           <SectionCard title="Днешни транзакции">
             <TransactionList />
