@@ -10,7 +10,7 @@ import type { NextRequest } from 'next/server';
 /** Routes that do not require authentication. */
 const PUBLIC_ROUTES = ['/login', '/register', '/forgot-password', '/update-password'];
 
-export async function middleware(request: NextRequest): Promise<NextResponse> {
+export async function proxy(request: NextRequest): Promise<NextResponse> {
     const { pathname } = request.nextUrl;
 
     // Allow public routes without auth check
