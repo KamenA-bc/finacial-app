@@ -38,8 +38,8 @@ export const useFinancialStore = create<FinancialStore>()((set, get) => ({
 
     fetchTransactions: async (userId: string) => {
         // ── Deduplication guard ──────────────────────────────────────────
-        const { lastFetchedAt } = get();
-        if (lastFetchedAt && Date.now() - lastFetchedAt < FETCH_DEDUP_MS) {
+        const { lastFetchedAt, userId: currentUserId } = get();
+        if (currentUserId === userId && lastFetchedAt && Date.now() - lastFetchedAt < FETCH_DEDUP_MS) {
             return;
         }
 
@@ -49,12 +49,12 @@ export const useFinancialStore = create<FinancialStore>()((set, get) => ({
                 const results = await Promise.all([
                     supabase
                         .from('income_entries')
-                        .select('*')
+                        .select('id, date, amount, description, is_work_income, is_with_kami')
                         .eq('user_id', userId)
                         .order('date', { ascending: true }),
                     supabase
                         .from('expense_entries')
-                        .select('*')
+                        .select('id, date, amount, description, category, is_work_expense, is_with_kami, is_with_others')
                         .eq('user_id', userId)
                         .order('date', { ascending: true }),
                 ]);
