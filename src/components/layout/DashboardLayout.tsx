@@ -28,15 +28,15 @@ export const DashboardLayout = ({
     ];
 
     return (
-        <div className="min-h-screen" style={{ backgroundColor: '#faf9f7' }}>
+        <div className="min-h-screen bg-[#faf9f7]">
             {/* Header */}
-            <header className="sticky top-0 z-10 bg-white/80 backdrop-blur-sm border-b border-gray-100">
+            <header className="sticky top-0 z-10 bg-white/85 backdrop-blur-md border-b border-stone-200/70 shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
                 <div className="max-w-5xl mx-auto px-3 sm:px-6 h-14 flex items-center gap-2">
                     {/* Logo */}
-                    <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-gray-900 flex-shrink-0">
+                    <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-stone-900 shadow-xs flex-shrink-0">
                         <Wallet size={14} className="text-white" />
                     </div>
-                    <span className="font-semibold text-gray-900 tracking-tight hidden sm:block">
+                    <span className="font-semibold text-stone-900 tracking-tight hidden sm:block">
                         Finance Tracker
                     </span>
 
@@ -48,10 +48,10 @@ export const DashboardLayout = ({
                                 <Link
                                     key={link.href}
                                     href={link.href}
-                                    className={`flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1.5 rounded-md text-[11px] sm:text-xs font-medium transition-colors ${
+                                    className={`flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg text-[11px] sm:text-xs font-semibold transition-all ${
                                         isActive
-                                            ? 'bg-gray-100 text-gray-900'
-                                            : 'text-gray-400 hover:text-gray-700 hover:bg-gray-50'
+                                            ? 'bg-stone-100 text-stone-900 shadow-2xs ring-1 ring-black/5'
+                                            : 'text-stone-500 hover:text-stone-900 hover:bg-stone-50'
                                     }`}
                                 >
                                     {link.icon}
@@ -64,13 +64,13 @@ export const DashboardLayout = ({
                     {/* Right: user + sign out */}
                     <div className="ml-auto flex items-center gap-3 flex-shrink-0">
                         {user && (
-                            <span className="text-xs text-gray-400 hidden sm:block truncate max-w-[160px]">
+                            <span className="text-xs text-stone-500 hidden sm:block truncate max-w-[180px]">
                                 {user.email}
                             </span>
                         )}
                         <button
                             onClick={signOut}
-                            className="flex items-center gap-1.5 px-2 py-1.5 rounded-md text-xs text-gray-400 hover:text-gray-700 hover:bg-gray-50 transition-colors"
+                            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium text-stone-500 hover:text-stone-900 hover:bg-stone-100/60 transition-colors cursor-pointer"
                             aria-label="Изход"
                         >
                             <LogOut size={13} />

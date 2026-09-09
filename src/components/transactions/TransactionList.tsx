@@ -137,30 +137,30 @@ const ExpenseRow = ({ expense, onDelete }: ExpenseRowProps): React.ReactElement 
     );
 
     return (
-        <div className={`flex items-center gap-3 py-2.5 px-2 -mx-2 rounded-lg border-b border-gray-50 last:border-0 ${rowBg}`}>
+        <div className={`group flex items-center gap-3 py-2.5 px-2.5 -mx-1 rounded-xl border-b border-stone-100 last:border-0 hover:bg-stone-50/90 transition-all ${rowBg}`}>
             <div
-                className={`flex items-center justify-center w-7 h-7 rounded-full flex-shrink-0 ${CATEGORY_COLORS[expense.category]}`}
+                className={`flex items-center justify-center w-7 h-7 rounded-lg flex-shrink-0 ${CATEGORY_COLORS[expense.category]}`}
             >
                 {CATEGORY_ICONS[expense.category]}
             </div>
             <div className="flex-1 min-w-0">
-                <p className="text-sm text-gray-700 font-medium truncate">
+                <p className="text-sm text-stone-800 font-medium truncate">
                     {expense.description}
                 </p>
                 <div className="flex flex-wrap items-center gap-1.5 mt-0.5">
-                    <p className="text-xs text-gray-400 whitespace-nowrap">{CATEGORY_BG_MAP[expense.category] ?? expense.category}</p>
+                    <p className="text-xs text-stone-500 whitespace-nowrap">{CATEGORY_BG_MAP[expense.category] ?? expense.category}</p>
                     {expense.isWorkExpense && (
-                        <span className="whitespace-nowrap text-[10px] font-semibold text-amber-600 bg-amber-50 border border-amber-200 px-1.5 py-0.5 rounded-full leading-none">
+                        <span className="whitespace-nowrap text-[10px] font-medium text-amber-700 bg-amber-50 border border-amber-200/80 px-1.5 py-0.2 rounded-md leading-tight">
                             Работни
                         </span>
                     )}
                     {expense.isWithKami && (
-                        <span className="whitespace-nowrap text-[10px] font-semibold text-pink-600 bg-pink-50 border border-pink-200 px-1.5 py-0.5 rounded-full leading-none">
+                        <span className="whitespace-nowrap text-[10px] font-medium text-pink-700 bg-pink-50 border border-pink-200/80 px-1.5 py-0.2 rounded-md leading-tight">
                             Kami ❤️
                         </span>
                     )}
                     {expense.isWithOthers && (
-                        <span className="whitespace-nowrap text-[10px] font-semibold text-green-600 bg-green-50 border border-green-200 px-1.5 py-0.5 rounded-full leading-none">
+                        <span className="whitespace-nowrap text-[10px] font-medium text-emerald-700 bg-emerald-50 border border-emerald-200/80 px-1.5 py-0.2 rounded-md leading-tight">
                             С Други
                         </span>
                     )}
@@ -172,7 +172,7 @@ const ExpenseRow = ({ expense, onDelete }: ExpenseRowProps): React.ReactElement 
             <button
                 onClick={() => onDelete(expense.id)}
                 aria-label={`Delete expense: ${expense.description}`}
-                className="ml-1 flex-shrink-0 p-1 rounded text-gray-300 hover:text-rose-400 hover:bg-rose-50 transition-colors"
+                className="ml-1 flex-shrink-0 p-1.5 rounded-lg text-stone-300 opacity-60 group-hover:opacity-100 hover:text-rose-500 hover:bg-rose-50 transition-all cursor-pointer"
             >
                 <Trash2 size={13} />
             </button>
@@ -188,21 +188,21 @@ interface IncomeRowProps {
 const IncomeRow = ({ income, onDelete }: IncomeRowProps): React.ReactElement => {
     const isWork = income.isWorkIncome;
     const amountColor = isWork ? 'text-blue-600' : 'text-emerald-600';
-    const iconClass = isWork ? 'bg-blue-50 text-blue-500' : 'bg-emerald-50 text-emerald-500';
+    const iconClass = isWork ? 'bg-blue-50 text-blue-600' : 'bg-emerald-50 text-emerald-600';
 
     return (
-        <div className="flex items-center gap-3 py-2.5 border-b border-gray-50 last:border-0">
-            <div className={`flex items-center justify-center w-7 h-7 rounded-full flex-shrink-0 ${iconClass}`}>
+        <div className="group flex items-center gap-3 py-2.5 px-2.5 -mx-1 rounded-xl border-b border-stone-100 last:border-0 hover:bg-stone-50/90 transition-all">
+            <div className={`flex items-center justify-center w-7 h-7 rounded-lg flex-shrink-0 ${iconClass}`}>
                 {isWork ? <Briefcase size={14} /> : <TrendingUp size={14} />}
             </div>
             <div className="flex-1 min-w-0">
-                <p className="text-sm text-gray-700 font-medium truncate">
+                <p className="text-sm text-stone-800 font-medium truncate">
                     {income.description || 'Приход'}
                 </p>
                 <div className="flex flex-wrap items-center gap-1.5 mt-0.5">
-                    <p className="text-xs text-gray-400 whitespace-nowrap">Спечелени пари</p>
+                    <p className="text-xs text-stone-500 whitespace-nowrap">Спечелени пари</p>
                     {isWork && (
-                        <span className="whitespace-nowrap text-[10px] font-semibold text-blue-600 bg-blue-50 border border-blue-200 px-1.5 py-0.5 rounded-full leading-none">
+                        <span className="whitespace-nowrap text-[10px] font-medium text-blue-700 bg-blue-50 border border-blue-200/80 px-1.5 py-0.2 rounded-md leading-tight">
                             Работен
                         </span>
                     )}
@@ -214,7 +214,7 @@ const IncomeRow = ({ income, onDelete }: IncomeRowProps): React.ReactElement => 
             <button
                 onClick={() => onDelete(income.id)}
                 aria-label={`Delete income of ${formatAmount(income.amount, income.date)}`}
-                className="ml-1 flex-shrink-0 p-1 rounded text-gray-300 hover:text-rose-400 hover:bg-rose-50 transition-colors"
+                className="ml-1 flex-shrink-0 p-1.5 rounded-lg text-stone-300 opacity-60 group-hover:opacity-100 hover:text-rose-500 hover:bg-rose-50 transition-all cursor-pointer"
             >
                 <Trash2 size={13} />
             </button>
@@ -275,9 +275,13 @@ export const TransactionList = (): React.ReactElement => {
 
     if (!hasEntries) {
         return (
-            <p className="text-sm text-gray-300 text-center py-6">
-                Няма транзакции за този ден
-            </p>
+            <div className="flex flex-col items-center justify-center py-8 text-center">
+                <div className="w-10 h-10 rounded-full bg-stone-100 flex items-center justify-center text-stone-400 mb-2">
+                    <Receipt size={18} />
+                </div>
+                <p className="text-xs font-semibold text-stone-600">Няма транзакции за този ден</p>
+                <p className="text-[11px] text-stone-400 mt-0.5">Всички добавени приходи и разходи ще се появят тук</p>
+            </div>
         );
     }
 
@@ -299,29 +303,41 @@ export const TransactionList = (): React.ReactElement => {
             )}
 
             {/* Segmented Control */}
-            <div className="flex p-0.5 bg-gray-100/80 rounded-md mb-3">
+            <div className="flex p-1 bg-stone-100 rounded-xl mb-3">
                 <button
                     onClick={() => setFilterMode('all')}
-                    className={`flex-1 text-[11px] font-medium py-1 rounded transition-all ${filterMode === 'all' ? 'bg-white text-gray-800 shadow-sm ring-1 ring-black/5' : 'text-gray-500 hover:text-gray-700 hover:bg-gray-200/50'}`}
+                    className={`flex-1 text-[11px] font-semibold py-1.5 rounded-lg transition-all cursor-pointer ${
+                        filterMode === 'all'
+                            ? 'bg-white text-stone-900 shadow-xs ring-1 ring-black/5'
+                            : 'text-stone-500 hover:text-stone-800'
+                    }`}
                 >
                     Всички
                 </button>
                 <button
                     onClick={() => setFilterMode('income')}
-                    className={`flex-1 text-[11px] font-medium py-1 rounded transition-all ${filterMode === 'income' ? 'bg-white text-gray-800 shadow-sm ring-1 ring-black/5' : 'text-gray-500 hover:text-gray-700 hover:bg-gray-200/50'}`}
+                    className={`flex-1 text-[11px] font-semibold py-1.5 rounded-lg transition-all cursor-pointer ${
+                        filterMode === 'income'
+                            ? 'bg-white text-emerald-700 shadow-xs ring-1 ring-black/5'
+                            : 'text-stone-500 hover:text-stone-800'
+                    }`}
                 >
                     Приходи
                 </button>
                 <button
                     onClick={() => setFilterMode('expenses')}
-                    className={`flex-1 text-[11px] font-medium py-1 rounded transition-all ${filterMode === 'expenses' ? 'bg-white text-gray-800 shadow-sm ring-1 ring-black/5' : 'text-gray-500 hover:text-gray-700 hover:bg-gray-200/50'}`}
+                    className={`flex-1 text-[11px] font-semibold py-1.5 rounded-lg transition-all cursor-pointer ${
+                        filterMode === 'expenses'
+                            ? 'bg-white text-rose-700 shadow-xs ring-1 ring-black/5'
+                            : 'text-stone-500 hover:text-stone-800'
+                    }`}
                 >
                     Разходи
                 </button>
             </div>
 
             {hasFilteredEntries ? (
-                <>
+                <div className="flex flex-col">
                     {[...filteredIncome].reverse().map((income) => (
                         <IncomeRow
                             key={income.id}
@@ -336,11 +352,11 @@ export const TransactionList = (): React.ReactElement => {
                             onDelete={requestDeleteExpense}
                         />
                     ))}
-                </>
+                </div>
             ) : (
-                <p className="text-xs text-gray-300 text-center py-4">
-                    Няма {filterMode === 'income' ? 'приходи' : filterMode === 'expenses' ? 'разходи' : 'транзакции'}.
-                </p>
+                <div className="py-6 text-center text-xs text-stone-400">
+                    Няма намерени {filterMode === 'income' ? 'приходи' : 'разходи'} за този ден.
+                </div>
             )}
         </div>
     );

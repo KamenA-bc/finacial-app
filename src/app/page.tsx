@@ -10,8 +10,7 @@ import React, { useEffect } from 'react';
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import { DateNavigator } from '@/components/ui/DateNavigator';
 import { StatDisplay } from '@/components/ui/StatDisplay';
-import { IncomeForm } from '@/components/forms/IncomeForm';
-import { ExpenseForm } from '@/components/forms/ExpenseForm';
+import { QuickTransactionForm } from '@/components/forms/QuickTransactionForm';
 import { CategoryChart } from '@/components/charts/CategoryChart';
 import { TransactionList } from '@/components/transactions/TransactionList';
 import { ExportDropdown } from '@/components/ui/ExportDropdown';
@@ -22,17 +21,19 @@ import { Loader2 } from 'lucide-react';
 import { getMonthName, getCalendarMonthRange } from '@/lib/dateUtils';
 import { NUMBER_LOCALE, CURRENCY_FORMAT_OPTIONS, getCurrencySymbol } from '@/lib/constants';
 
-/** Thin section card wrapper – clean white with gentle shadow. */
+/** Elevated section card wrapper with soft border and subtle depth. */
 const SectionCard = ({
   title,
   children,
+  className = '',
 }: {
   title?: string;
   children: React.ReactNode;
+  className?: string;
 }): React.ReactElement => (
-  <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-5">
+  <div className={`bg-white rounded-2xl border border-stone-200/70 shadow-[0_1px_3px_rgba(0,0,0,0.03),0_1px_2px_rgba(0,0,0,0.02)] p-4 sm:p-5 ${className}`}>
     {title && (
-      <h2 className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-4">
+      <h2 className="text-[11px] font-bold uppercase tracking-wider text-stone-500 mb-3.5">
         {title}
       </h2>
     )}
@@ -42,7 +43,7 @@ const SectionCard = ({
 
 /** Divider between stat displays. */
 const StatDivider = (): React.ReactElement => (
-  <div className="w-px bg-gray-100 self-stretch hidden sm:block" />
+  <div className="w-px bg-stone-200/60 self-stretch hidden sm:block" />
 );
 
 export default function DashboardPage(): React.ReactElement {
@@ -77,7 +78,7 @@ export default function DashboardPage(): React.ReactElement {
     return (
       <DashboardLayout>
         <div className="flex items-center justify-center py-20">
-          <Loader2 size={24} className="animate-spin text-gray-300" />
+          <Loader2 size={24} className="animate-spin text-stone-300" />
         </div>
       </DashboardLayout>
     );
@@ -97,7 +98,7 @@ export default function DashboardPage(): React.ReactElement {
 
       {/* ── Profit Counters ──────────────────────────────────────────── */}
       <SectionCard>
-        <div className="flex flex-col sm:flex-row sm:items-center gap-6 sm:gap-0 sm:divide-x sm:divide-gray-100">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-6 sm:gap-0 sm:divide-x sm:divide-stone-100">
           {/* Daily */}
           <div className="sm:pr-8 flex-1">
             <StatDisplay
@@ -106,16 +107,16 @@ export default function DashboardPage(): React.ReactElement {
               period="За избрания ден"
               date={selectedDate}
             />
-            <div className="mt-3 flex gap-4 text-xs text-gray-400">
-              <span>
+            <div className="mt-3.5 flex flex-wrap items-center gap-2.5 text-xs text-stone-500">
+              <span className="inline-flex items-center gap-1 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200/60">
                 Приход:{' '}
-                <span className="text-emerald-600 font-medium">
+                <span className="text-emerald-700 font-semibold tabular-nums">
                   {getCurrencySymbol(selectedDate)}{dailyIncome.toLocaleString(NUMBER_LOCALE, CURRENCY_FORMAT_OPTIONS)}
                 </span>
               </span>
-              <span>
+              <span className="inline-flex items-center gap-1 bg-rose-50 px-2 py-0.5 rounded-md border border-rose-200/60">
                 Разход:{' '}
-                <span className="text-rose-400 font-medium">
+                <span className="text-rose-700 font-semibold tabular-nums">
                   {getCurrencySymbol(selectedDate)}{dailyExpenses.toLocaleString(NUMBER_LOCALE, CURRENCY_FORMAT_OPTIONS)}
                 </span>
               </span>
@@ -132,16 +133,16 @@ export default function DashboardPage(): React.ReactElement {
               period={monthLabel}
               date={selectedDate}
             />
-            <div className="mt-3 flex gap-4 text-xs text-gray-400">
-              <span>
+            <div className="mt-3.5 flex flex-wrap items-center gap-2.5 text-xs text-stone-500">
+              <span className="inline-flex items-center gap-1 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200/60">
                 Приход:{' '}
-                <span className="text-emerald-600 font-medium">
+                <span className="text-emerald-700 font-semibold tabular-nums">
                   {getCurrencySymbol(selectedDate)}{monthlyIncome.toLocaleString(NUMBER_LOCALE, CURRENCY_FORMAT_OPTIONS)}
                 </span>
               </span>
-              <span>
+              <span className="inline-flex items-center gap-1 bg-rose-50 px-2 py-0.5 rounded-md border border-rose-200/60">
                 Разход:{' '}
-                <span className="text-rose-400 font-medium">
+                <span className="text-rose-700 font-semibold tabular-nums">
                   {getCurrencySymbol(selectedDate)}{monthlyExpenses.toLocaleString(NUMBER_LOCALE, CURRENCY_FORMAT_OPTIONS)}
                 </span>
               </span>
@@ -150,15 +151,12 @@ export default function DashboardPage(): React.ReactElement {
         </div>
       </SectionCard>
 
-      {/* ── Main Grid: Forms + Chart/List ────────────────────────────── */}
+      {/* ── Main Grid: Unified Form + Chart/List ─────────────────────── */}
       <div className="mt-4 grid grid-cols-1 lg:grid-cols-5 gap-4">
-        {/* LEFT: Input forms (2/5 width on desktop) */}
+        {/* LEFT: Quick Transaction Logger (2/5 width on desktop) */}
         <div className="lg:col-span-2 flex flex-col gap-4">
-          <SectionCard>
-            <IncomeForm />
-          </SectionCard>
-          <SectionCard>
-            <ExpenseForm />
+          <SectionCard title="Бързо въвеждане">
+            <QuickTransactionForm />
           </SectionCard>
         </div>
 

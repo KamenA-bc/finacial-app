@@ -33,19 +33,26 @@ export const StatDisplay = ({
     date,
 }: StatDisplayProps): React.ReactElement => {
     const isPositive = value >= 0;
-    const valueClass = isPositive ? 'text-emerald-600' : 'text-rose-500';
+    const valueClass = isPositive ? 'text-emerald-700' : 'text-rose-600';
     const sign = isPositive ? '+' : '−';
 
     return (
-        <div className="flex flex-col gap-0.5">
-            <p className="text-xs font-semibold uppercase tracking-widest text-gray-400">
-                {label}
-            </p>
-            <p className={`text-3xl font-bold tabular-nums ${valueClass}`}>
+        <div className="flex flex-col gap-1">
+            <div className="flex items-center gap-2">
+                <span
+                    className={`inline-block w-2 h-2 rounded-full ${
+                        isPositive ? 'bg-emerald-500 ring-2 ring-emerald-100' : 'bg-rose-500 ring-2 ring-rose-100'
+                    }`}
+                />
+                <p className="text-[11px] font-bold uppercase tracking-wider text-stone-500">
+                    {label}
+                </p>
+            </div>
+            <p className={`text-3xl font-extrabold tracking-tight tabular-nums ${valueClass}`}>
                 {sign}
                 {formatCurrency(value, date)}
             </p>
-            <p className="text-xs text-gray-400">{period}</p>
+            <p className="text-xs text-stone-500 font-medium">{period}</p>
         </div>
     );
 };

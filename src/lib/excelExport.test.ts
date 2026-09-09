@@ -2,7 +2,7 @@
  * Unit tests for Excel (.xlsx) export module.
  */
 
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import ExcelJS from 'exceljs';
 import { buildWorkbook, getMonthlyTransactions } from '@/lib/excelExport';
 import type { IncomeEntry, ExpenseEntry } from '@/types';
