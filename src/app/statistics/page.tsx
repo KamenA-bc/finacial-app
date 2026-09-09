@@ -6,17 +6,29 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import dynamic from 'next/dynamic';
 import { ChevronLeft, ChevronRight, Loader2 } from 'lucide-react';
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import { OverviewCards } from '@/components/statistics/OverviewCards';
 import { RecordHighlights } from '@/components/statistics/RecordHighlights';
-import { MonthlyTrendsChart } from '@/components/statistics/MonthlyTrendsChart';
 import { SpendingHabits } from '@/components/statistics/SpendingHabits';
 import { IncomeBreakdown } from '@/components/statistics/IncomeBreakdown';
 import { FunFacts } from '@/components/statistics/FunFacts';
 import { useStatisticsData } from '@/hooks/useStatisticsData';
 import { useAuth } from '@/components/auth/AuthProvider';
 import { useFinancialStore } from '@/store/transactionStore';
+
+const MonthlyTrendsChart = dynamic(
+  () => import('@/components/statistics/MonthlyTrendsChart').then((m) => m.MonthlyTrendsChart),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="bg-white rounded-xl shadow-sm border border-stone-100 p-5 min-h-[340px] flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-stone-200 border-t-emerald-500 rounded-full animate-spin" />
+      </div>
+    ),
+  }
+);
 
 export default function StatisticsPage(): React.ReactElement {
     const currentYear = new Date().getFullYear();

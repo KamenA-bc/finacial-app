@@ -7,17 +7,30 @@
 'use client';
 
 import React, { useEffect } from 'react';
+import dynamic from 'next/dynamic';
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import { DateNavigator } from '@/components/ui/DateNavigator';
 import { StatDisplay } from '@/components/ui/StatDisplay';
 import { QuickTransactionForm } from '@/components/forms/QuickTransactionForm';
-import { CategoryChart } from '@/components/charts/CategoryChart';
 import { TransactionList } from '@/components/transactions/TransactionList';
 import { ExportDropdown } from '@/components/ui/ExportDropdown';
 import { useFinancialData } from '@/hooks/useFinancialData';
 import { useAuth } from '@/components/auth/AuthProvider';
 import { useFinancialStore } from '@/store/transactionStore';
 import { Loader2 } from 'lucide-react';
+
+const CategoryChart = dynamic(
+  () => import('@/components/charts/CategoryChart').then((mod) => mod.CategoryChart),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="min-h-[260px] flex flex-col items-center justify-center gap-2 text-stone-300">
+        <div className="w-8 h-8 border-2 border-stone-200 border-t-emerald-500 rounded-full animate-spin" />
+        <span className="text-[11px] text-stone-400 font-medium">Зареждане на графика...</span>
+      </div>
+    ),
+  }
+);
 import { getMonthName, getCalendarMonthRange } from '@/lib/dateUtils';
 import { NUMBER_LOCALE, CURRENCY_FORMAT_OPTIONS, getCurrencySymbol } from '@/lib/constants';
 

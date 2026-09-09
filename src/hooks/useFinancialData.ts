@@ -7,7 +7,7 @@
 import { useMemo } from 'react';
 import { useFinancialStore } from '@/store/transactionStore';
 import { CategoryDataPoint, ExpenseEntry, IncomeEntry } from '@/types';
-import { EXPENSE_CATEGORIES, MONTH_NAMES_BG } from '@/lib/constants';
+import { EXPENSE_CATEGORIES } from '@/lib/constants';
 import { getCalendarMonthRange, getCalendarYearRange } from '@/lib/dateUtils';
 
 interface FinancialData {
@@ -29,6 +29,22 @@ interface FinancialData {
 
 const sumAmount = (entries: Array<{ amount: number }>): number =>
     entries.reduce((acc, e) => acc + e.amount, 0);
+
+/** Helper to aggregate category totals in a single O(N) pass */
+const buildCategoryBreakdown = (entries: ExpenseEntry[]): CategoryDataPoint[] => {
+    const totals = new Map<string, number>();
+    for (const e of entries) {
+        totals.set(e.category, (totals.get(e.category) ?? 0) + e.amount);
+    }
+    const result: CategoryDataPoint[] = [];
+    for (const cat of EXPENSE_CATEGORIES) {
+        const val = totals.get(cat);
+        if (val && val > 0) {
+            result.push({ name: cat, value: val });
+        }
+    }
+    return result;
+};
 
 export const useFinancialData = (): FinancialData => {
     const incomeEntries = useFinancialStore((s) => s.incomeEntries);
@@ -63,30 +79,16 @@ export const useFinancialData = (): FinancialData => {
         const monthlyExpenses = sumAmount(monthlyExpenseEntries);
         const monthlyProfit = monthlyIncome - monthlyExpenses;
 
-        // ── CATEGORY BREAKDOWN (MONTHLY) ──────────────────────────────────────────
-        const monthlyCategoryBreakdown: CategoryDataPoint[] = EXPENSE_CATEGORIES.map(
-            (cat) => ({
-                name: cat,
-                value: sumAmount(
-                    monthlyExpenseEntries.filter((e) => e.category === cat)
-                ),
-            })
-        ).filter((point) => point.value > 0);
+        // ── Category Breakdown (Monthly) ──────────────────────────────────────
+        const monthlyCategoryBreakdown = buildCategoryBreakdown(monthlyExpenseEntries);
 
-        // ── CATEGORY BREAKDOWN (YEARLY) ──────────────────────────────────────────
+        // ── Category Breakdown (Yearly) ───────────────────────────────────────
         const { start: yearStart, end: yearEnd } = getCalendarYearRange(selectedDate);
         const yearlyExpenseEntries = expenseEntries.filter(
             (e) => e.date >= yearStart && e.date <= yearEnd
         );
 
-        const yearlyCategoryBreakdown: CategoryDataPoint[] = EXPENSE_CATEGORIES.map(
-            (cat) => ({
-                name: cat,
-                value: sumAmount(
-                    yearlyExpenseEntries.filter((e) => e.category === cat)
-                ),
-            })
-        ).filter((point) => point.value > 0);
+        const yearlyCategoryBreakdown = buildCategoryBreakdown(yearlyExpenseEntries);
 
         return {
             dailyIncomeEntries,
