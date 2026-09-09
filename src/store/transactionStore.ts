@@ -38,31 +38,42 @@ export const useFinancialStore = create<FinancialStore>()((set, get) => ({
     isLoading: false,
     error: null,
     lastFetchedAt: null,
+    loadedYears: [],
 
     setUserId: (userId: string | null): void => {
         set({ userId });
     },
 
-    fetchTransactions: async (userId: string) => {
-        // ── Deduplication guard ──────────────────────────────────────────
-        const { lastFetchedAt, userId: currentUserId } = get();
-        if (currentUserId === userId && lastFetchedAt && Date.now() - lastFetchedAt < FETCH_DEDUP_MS) {
+    fetchTransactions: async (userId: string, targetYear?: number) => {
+        const { lastFetchedAt, userId: currentUserId, loadedYears, selectedDate } = get();
+        const year = targetYear ?? (selectedDate ? new Date(`${selectedDate}T00:00:00`).getFullYear() : new Date().getFullYear());
+
+        // ── Deduplication guard: skip if year is already loaded and was fetched recently ──
+        const isYearLoaded = loadedYears.includes(year);
+        if (currentUserId === userId && isYearLoaded && lastFetchedAt && Date.now() - lastFetchedAt < FETCH_DEDUP_MS) {
             return;
         }
 
         set({ isLoading: true, error: null });
         try {
+            const startDate = `${year}-01-01`;
+            const endDate = `${year}-12-31`;
+
             const [incomeRes, expenseRes] = await withJwtRetry(async () => {
                 const results = await Promise.all([
                     supabase
                         .from('income_entries')
                         .select('id, date, amount, description, is_work_income, is_with_kami')
                         .eq('user_id', userId)
+                        .gte('date', startDate)
+                        .lte('date', endDate)
                         .order('date', { ascending: true }),
                     supabase
                         .from('expense_entries')
                         .select('id, date, amount, description, category, is_work_expense, is_with_kami, is_with_others')
                         .eq('user_id', userId)
+                        .gte('date', startDate)
+                        .lte('date', endDate)
                         .order('date', { ascending: true }),
                 ]);
 
@@ -72,7 +83,7 @@ export const useFinancialStore = create<FinancialStore>()((set, get) => ({
                 return results;
             }, 'fetchTransactions');
 
-            const incomeEntries: IncomeEntry[] = (incomeRes.data ?? []).map((row) => ({
+            const newIncomeEntries: IncomeEntry[] = (incomeRes.data ?? []).map((row) => ({
                 id: row.id,
                 date: row.date,
                 amount: Number(row.amount),
@@ -81,7 +92,7 @@ export const useFinancialStore = create<FinancialStore>()((set, get) => ({
                 isWithKami: Boolean(row.is_with_kami),
             }));
 
-            const expenseEntries: ExpenseEntry[] = (expenseRes.data ?? []).map((row) => ({
+            const newExpenseEntries: ExpenseEntry[] = (expenseRes.data ?? []).map((row) => ({
                 id: row.id,
                 date: row.date,
                 amount: Number(row.amount),
@@ -92,16 +103,29 @@ export const useFinancialStore = create<FinancialStore>()((set, get) => ({
                 isWithOthers: Boolean(row.is_with_others),
             }));
 
-            set({
-                incomeEntries,
-                expenseEntries,
-                userId,
-                isLoading: false,
-                lastFetchedAt: Date.now(),
+            set((state) => {
+                const incomeMap = new Map(state.incomeEntries.map((e) => [e.id, e]));
+                newIncomeEntries.forEach((e) => incomeMap.set(e.id, e));
+
+                const expenseMap = new Map(state.expenseEntries.map((e) => [e.id, e]));
+                newExpenseEntries.forEach((e) => expenseMap.set(e.id, e));
+
+                const updatedLoadedYears = state.loadedYears.includes(year)
+                    ? state.loadedYears
+                    : [...state.loadedYears, year];
+
+                return {
+                    incomeEntries: Array.from(incomeMap.values()).sort((a, b) => a.date.localeCompare(b.date)),
+                    expenseEntries: Array.from(expenseMap.values()).sort((a, b) => a.date.localeCompare(b.date)),
+                    loadedYears: updatedLoadedYears,
+                    userId,
+                    isLoading: false,
+                    lastFetchedAt: Date.now(),
+                };
             });
         } catch (err) {
             const message = extractErrorMessage(err);
-            logError('fetchTransactions', err, { userId });
+            logError('fetchTransactions', err, { userId, year });
             set({ error: message, isLoading: false });
         }
     },

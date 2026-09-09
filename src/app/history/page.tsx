@@ -26,9 +26,9 @@ export default function HistoryPage(): React.ReactElement {
     useEffect(() => {
         if (user) {
             setUserId(user.id);
-            fetchTransactions(user.id);
+            fetchTransactions(user.id, year);
         }
-    }, [user, setUserId, fetchTransactions]);
+    }, [user, year, setUserId, fetchTransactions]);
 
     const yearData = useHistoryData(year);
 

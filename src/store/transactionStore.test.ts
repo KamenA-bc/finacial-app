@@ -16,13 +16,18 @@ vi.mock('@/lib/errorLogger', () => ({
 // Mock Supabase client
 const mockDelete = vi.fn();
 const mockSingle = vi.fn();
+const mockOrder = vi.fn(() => Promise.resolve({ data: [], error: null }));
+const mockLte = vi.fn(() => ({ order: mockOrder }));
+const mockGte = vi.fn(() => ({ lte: mockLte }));
 
 vi.mock('@/lib/supabase', () => ({
     supabase: {
         from: vi.fn((table: string) => ({
             select: vi.fn((cols: string) => ({
                 eq: vi.fn((col: string, val: string) => ({
-                    order: vi.fn(() => Promise.resolve({ data: [], error: null })),
+                    gte: mockGte,
+                    lte: mockLte,
+                    order: mockOrder,
                 })),
             })),
             insert: vi.fn((payload: unknown) => ({
@@ -229,16 +234,32 @@ describe('transactionStore - Optimistic Updates & Reliability', () => {
         });
     });
 
-    describe('fetchTransactions deduplication', () => {
-        it('deduplicates calls made within the FETCH_DEDUP_MS window', async () => {
+    describe('fetchTransactions date scoping and caching', () => {
+        it('queries for specific year date range and records year in loadedYears', async () => {
+            useFinancialStore.setState({
+                userId: 'user-xyz',
+                loadedYears: [],
+                lastFetchedAt: null,
+            });
+
+            await useFinancialStore.getState().fetchTransactions('user-xyz', 2026);
+
+            expect(mockGte).toHaveBeenCalledWith('date', '2026-01-01');
+            expect(mockLte).toHaveBeenCalledWith('date', '2026-12-31');
+            expect(useFinancialStore.getState().loadedYears).toContain(2026);
+        });
+
+        it('deduplicates calls made within the FETCH_DEDUP_MS window for already loaded year', async () => {
             const recent = Date.now() - 2000; // 2 seconds ago (< 10s)
             useFinancialStore.setState({
                 userId: 'user-xyz',
+                loadedYears: [2026],
                 lastFetchedAt: recent,
                 isLoading: false,
+                selectedDate: '2026-05-10',
             });
 
-            await useFinancialStore.getState().fetchTransactions('user-xyz');
+            await useFinancialStore.getState().fetchTransactions('user-xyz', 2026);
 
             // Should have been skipped
             expect(supabase.from).not.toHaveBeenCalled();

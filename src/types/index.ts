@@ -66,8 +66,10 @@ export interface FinancialStore {
   error: string | null;
   /** Epoch ms of the last successful fetchTransactions — used to deduplicate fetches across pages. */
   lastFetchedAt: number | null;
+  /** List of calendar years currently cached in memory. */
+  loadedYears: number[];
   setUserId: (userId: string | null) => void;
-  fetchTransactions: (userId: string) => Promise<void>;
+  fetchTransactions: (userId: string, targetYear?: number) => Promise<void>;
   addIncome: (entry: Omit<IncomeEntry, 'id'>) => Promise<void>;
   addExpense: (entry: Omit<ExpenseEntry, 'id'>) => Promise<void>;
   deleteIncome: (id: string) => Promise<void>;

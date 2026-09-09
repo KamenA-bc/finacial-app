@@ -45,9 +45,9 @@ export default function StatisticsPage(): React.ReactElement {
     useEffect(() => {
         if (user) {
             setUserId(user.id);
-            fetchTransactions(user.id);
+            fetchTransactions(user.id, year);
         }
-    }, [user, setUserId, fetchTransactions]);
+    }, [user, year, setUserId, fetchTransactions]);
 
     const stats = useStatisticsData(year);
 
