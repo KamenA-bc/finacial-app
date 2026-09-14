@@ -4,6 +4,19 @@ All notable changes to the Finance Tracker project will be documented in this fi
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [2026-09-14]
+
+### Added
+- **HistorySkeleton component** (`src/components/history/HistorySkeleton.tsx`) — Zero-overhead, GPU-accelerated skeleton UI matching the Year Selector, AnnualSummary card, and MonthCard list.
+- **StatisticsSkeleton component** (`src/components/statistics/StatisticsSkeleton.tsx`) — Comprehensive skeleton matching KPI cards, Record Highlights, Monthly Trends Chart, Spending Habits, and Fun Facts.
+- **Next.js App Router streaming fallbacks** (`src/app/loading.tsx`, `src/app/history/loading.tsx`, `src/app/statistics/loading.tsx`) — Instant server-rendered skeleton streaming across page transitions.
+- **Unit test suites for Skeletons** (`HistorySkeleton.test.tsx`, `StatisticsSkeleton.test.tsx`) — Ensuring accessibility compliance (`aria-busy="true"`) and structural integrity.
+
+### Changed
+- `src/app/history/page.tsx` — Replaced generic centered spinner (`Loader2`) with `HistorySkeleton`.
+- `src/app/statistics/page.tsx` — Replaced generic centered spinner (`Loader2`) with `StatisticsSkeleton` and upgraded `MonthlyTrendsChart` dynamic import fallback to a tailored bar chart skeleton.
+- `src/components/dashboard/DashboardClient.tsx` — Upgraded `CategoryChart` dynamic import fallback from spinner to donut chart skeleton matching the rest of the dashboard.
+
 ---
 
 ## [2026-04-08]

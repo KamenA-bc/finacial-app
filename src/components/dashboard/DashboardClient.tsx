@@ -20,9 +20,11 @@ const CategoryChart = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="min-h-[260px] flex flex-col items-center justify-center gap-2 text-stone-300">
-        <div className="w-8 h-8 border-2 border-stone-200 border-t-emerald-500 rounded-full animate-spin" />
-        <span className="text-[11px] text-stone-400 font-medium">Зареждане на графика...</span>
+      <div className="min-h-[260px] flex flex-col items-center justify-center select-none" aria-busy="true">
+        <div className="w-36 h-36 rounded-full border-[10px] border-stone-100 animate-pulse flex items-center justify-center">
+          <div className="w-16 h-3 rounded bg-stone-100" />
+        </div>
+        <div className="w-28 h-3 rounded bg-stone-100 animate-pulse mt-4" />
       </div>
     ),
   }

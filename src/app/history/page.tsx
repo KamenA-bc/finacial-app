@@ -5,10 +5,11 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, Loader2 } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import { AnnualSummary } from '@/components/history/AnnualSummary';
 import { MonthCard } from '@/components/history/MonthCard';
+import { HistorySkeleton } from '@/components/history/HistorySkeleton';
 import { useHistoryData } from '@/hooks/useHistoryData';
 import { useAuth } from '@/components/auth/AuthProvider';
 import { useFinancialStore } from '@/store/transactionStore';
@@ -37,9 +38,7 @@ export default function HistoryPage(): React.ReactElement {
     if (authLoading || (!isYearReady && isLoading)) {
         return (
             <DashboardLayout>
-                <div className="flex items-center justify-center py-20">
-                    <Loader2 size={24} className="animate-spin text-gray-300" />
-                </div>
+                <HistorySkeleton />
             </DashboardLayout>
         );
     }
