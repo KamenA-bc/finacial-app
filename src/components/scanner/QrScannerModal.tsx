@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef, useState, useCallback } from 'react';
-import { Camera, Image as ImageIcon, X, AlertCircle, UploadCloud, FileText } from 'lucide-react';
+import { Camera, CameraOff, Image as ImageIcon, X, AlertCircle, UploadCloud, FileText } from 'lucide-react';
 import { ParsedReceiptQr } from '@/lib/qrParser';
 import { detectQrFromSource, isSecureCameraContext } from '@/lib/qrDetector';
 
@@ -12,6 +12,7 @@ interface QrScannerModalProps {
 }
 
 type ScannerTab = 'camera' | 'upload';
+type CameraState = 'initializing' | 'active' | 'error';
 
 export const QrScannerModal: React.FC<QrScannerModalProps> = ({
     isOpen,
@@ -24,9 +25,10 @@ export const QrScannerModal: React.FC<QrScannerModalProps> = ({
     const fileInputRef = useRef<HTMLInputElement | null>(null);
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
     const isScanningRef = useRef(false);
+    const cameraTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
     const [activeTab, setActiveTab] = useState<ScannerTab>('camera');
-    const [cameraActive, setCameraActive] = useState(false);
+    const [cameraState, setCameraState] = useState<CameraState>('initializing');
     const [cameraError, setCameraError] = useState<string | null>(null);
     const [inlineError, setInlineError] = useState<string | null>(null);
     const [isProcessingImage, setIsProcessingImage] = useState(false);
@@ -35,6 +37,10 @@ export const QrScannerModal: React.FC<QrScannerModalProps> = ({
     // Stop camera video stream and scan loop
     const stopCamera = useCallback(() => {
         isScanningRef.current = false;
+        if (cameraTimeoutRef.current) {
+            clearTimeout(cameraTimeoutRef.current);
+            cameraTimeoutRef.current = null;
+        }
         if (animationFrameRef.current) {
             cancelAnimationFrame(animationFrameRef.current);
             animationFrameRef.current = null;
@@ -52,7 +58,7 @@ export const QrScannerModal: React.FC<QrScannerModalProps> = ({
             canvasRef.current.height = 0;
             canvasRef.current = null;
         }
-        setCameraActive(false);
+        setCameraState('initializing');
     }, []);
 
     const handleParsedResult = useCallback(
@@ -90,20 +96,39 @@ export const QrScannerModal: React.FC<QrScannerModalProps> = ({
         animationFrameRef.current = requestAnimationFrame(scanVideoFrame);
     }, [handleParsedResult]);
 
-    // Start camera stream with multi-tier fallback for mobile devices
+    // Start camera stream with multi-tier fallback and 6-second timeout
     const startCamera = useCallback(async () => {
         setCameraError(null);
         setInlineError(null);
+        setCameraState('initializing');
+
+        if (cameraTimeoutRef.current) {
+            clearTimeout(cameraTimeoutRef.current);
+        }
+
+        // 6-second timeout: if camera hardware fails or user stalls on permission prompt
+        cameraTimeoutRef.current = setTimeout(() => {
+            setCameraError('Връзката с камерата отне твърде много време или не беше открита.');
+            setCameraState('error');
+            if (streamRef.current) {
+                streamRef.current.getTracks().forEach((track) => track.stop());
+                streamRef.current = null;
+            }
+        }, 6000);
 
         if (!isSecureCameraContext()) {
+            if (cameraTimeoutRef.current) clearTimeout(cameraTimeoutRef.current);
             setCameraError(
                 'Браузърът изисква защитена връзка (HTTPS) за достъп до камерата от телефон. Отворете сайта през HTTPS или качете снимка от таба „Качване на файл“.'
             );
+            setCameraState('error');
             return;
         }
 
         if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+            if (cameraTimeoutRef.current) clearTimeout(cameraTimeoutRef.current);
             setCameraError('Камерата не се поддържа от този браузър.');
+            setCameraState('error');
             return;
         }
 
@@ -132,13 +157,14 @@ export const QrScannerModal: React.FC<QrScannerModalProps> = ({
                         audio: false,
                     });
                 } catch (err) {
+                    if (cameraTimeoutRef.current) clearTimeout(cameraTimeoutRef.current);
                     const error = err as Error;
                     if (error.name === 'NotAllowedError' || error.name === 'PermissionDeniedError') {
                         setCameraError('Достъпът до камерата е отказан.');
                     } else {
                         setCameraError('Не беше намерена камера на това устройство.');
                     }
-                    setCameraActive(false);
+                    setCameraState('error');
                     return;
                 }
             }
@@ -156,11 +182,16 @@ export const QrScannerModal: React.FC<QrScannerModalProps> = ({
         const onPlay = async () => {
             try {
                 await video.play();
-                setCameraActive(true);
+                if (cameraTimeoutRef.current) {
+                    clearTimeout(cameraTimeoutRef.current);
+                    cameraTimeoutRef.current = null;
+                }
+                setCameraState('active');
                 animationFrameRef.current = requestAnimationFrame(scanVideoFrame);
             } catch {
+                if (cameraTimeoutRef.current) clearTimeout(cameraTimeoutRef.current);
                 setCameraError('Грешка при възпроизвеждане на видеото от камерата.');
-                setCameraActive(false);
+                setCameraState('error');
             }
         };
 
@@ -361,20 +392,20 @@ export const QrScannerModal: React.FC<QrScannerModalProps> = ({
                 <div className="p-4">
                     {/* CAMERA TAB */}
                     {activeTab === 'camera' && (
-                        <div className="relative aspect-square w-full bg-stone-950 rounded-xl overflow-hidden flex items-center justify-center border border-stone-800">
+                        <div className="relative aspect-square w-full bg-stone-950 rounded-xl overflow-hidden border border-stone-800">
                             {/* Live Video Feed */}
                             <video
                                 ref={videoRef}
                                 autoPlay
                                 playsInline
                                 muted
-                                className={`w-full h-full object-cover transition-opacity duration-200 ${
-                                    cameraActive ? 'opacity-100' : 'opacity-0'
+                                className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${
+                                    cameraState === 'active' ? 'opacity-100' : 'opacity-0 pointer-events-none'
                                 }`}
                             />
 
                             {/* Viewfinder Overlay with Optical Framing */}
-                            {cameraActive && (
+                            {cameraState === 'active' && (
                                 <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
                                     <div className="relative w-48 h-48 sm:w-56 sm:h-56 rounded-xl border border-white/20 shadow-[0_0_0_9999px_rgba(0,0,0,0.4)]">
                                         {/* Optical Corners */}
@@ -389,29 +420,50 @@ export const QrScannerModal: React.FC<QrScannerModalProps> = ({
                                 </div>
                             )}
 
-                            {/* Camera starting or fallback prompt */}
-                            {!cameraActive && (
-                                <div className="p-6 text-center text-stone-400 flex flex-col items-center justify-center gap-2.5 h-full">
-                                    <div className="w-10 h-10 rounded-xl bg-stone-900 flex items-center justify-center text-stone-500 border border-stone-800">
-                                        <Camera size={18} />
+                            {/* Camera Seeking / Initializing Animation */}
+                            {cameraState === 'initializing' && (
+                                <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center z-10 bg-stone-950/95 animate-in fade-in duration-200">
+                                    <div className="relative mb-3.5 flex items-center justify-center">
+                                        <div className="w-12 h-12 rounded-2xl bg-stone-900 border border-stone-800 flex items-center justify-center text-emerald-400 shadow-inner">
+                                            <Camera size={20} className="animate-pulse" />
+                                        </div>
+                                        <div className="absolute -inset-1 rounded-2xl border-2 border-emerald-500/30 animate-ping pointer-events-none" />
                                     </div>
-                                    <div>
-                                        <p className="text-xs font-medium text-stone-200 mb-1">
-                                            {cameraError || 'Стартиране на камерата...'}
-                                        </p>
-                                        <p className="text-[11px] text-stone-400 max-w-[240px] leading-relaxed">
-                                            Можете да сканирате от телефон с камера или да качите снимка от таба „Качване на файл“.
-                                        </p>
+                                    <p className="text-xs font-semibold text-stone-200 mb-1">Свързване с камерата...</p>
+                                    <p className="text-[11px] text-stone-400 max-w-[220px] leading-relaxed">
+                                        Ако браузърът поиска разрешение, натиснете „Разреши“
+                                    </p>
+                                </div>
+                            )}
+
+                            {/* Camera Error / Not Found Fallback */}
+                            {cameraState === 'error' && (
+                                <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center z-10 bg-stone-950 animate-in fade-in duration-200">
+                                    <div className="w-12 h-12 rounded-2xl bg-stone-900 border border-stone-800 flex items-center justify-center text-stone-400 mb-3 shadow-inner">
+                                        <CameraOff size={20} className="text-rose-400/80" />
                                     </div>
-                                    {cameraError && (
+                                    <p className="text-xs font-semibold text-stone-200 mb-1">
+                                        {cameraError || 'Камерата не беше открита'}
+                                    </p>
+                                    <p className="text-[11px] text-stone-400 max-w-[240px] leading-relaxed mb-3.5">
+                                        Можете да опитате отново или да качите снимка на касовия бон от таба „Качване на файл“.
+                                    </p>
+                                    <div className="flex gap-2">
                                         <button
                                             type="button"
                                             onClick={startCamera}
-                                            className="mt-1 text-xs font-medium text-stone-300 hover:text-white px-3 py-1.5 rounded-lg bg-stone-800 hover:bg-stone-750 border border-stone-700 transition-colors cursor-pointer"
+                                            className="text-xs font-medium text-stone-200 bg-stone-800 hover:bg-stone-750 border border-stone-700 px-3 py-1.5 rounded-lg transition-colors cursor-pointer"
                                         >
                                             Опитай отново
                                         </button>
-                                    )}
+                                        <button
+                                            type="button"
+                                            onClick={() => handleSwitchTab('upload')}
+                                            className="text-xs font-medium text-emerald-400 bg-emerald-950/40 hover:bg-emerald-950/70 border border-emerald-800/60 px-3 py-1.5 rounded-lg transition-colors cursor-pointer"
+                                        >
+                                            Качи снимка
+                                        </button>
+                                    </div>
                                 </div>
                             )}
                         </div>
