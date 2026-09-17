@@ -2,8 +2,8 @@
 
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { Camera, Image as ImageIcon, X, AlertCircle, UploadCloud, FileText } from 'lucide-react';
-import jsQR from 'jsqr';
-import { parseReceiptQr, ParsedReceiptQr } from '@/lib/qrParser';
+import { ParsedReceiptQr } from '@/lib/qrParser';
+import { detectQrFromSource, isSecureCameraContext } from '@/lib/qrDetector';
 
 interface QrScannerModalProps {
     isOpen: boolean;
@@ -23,6 +23,7 @@ export const QrScannerModal: React.FC<QrScannerModalProps> = ({
     const animationFrameRef = useRef<number | null>(null);
     const fileInputRef = useRef<HTMLInputElement | null>(null);
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
+    const isScanningRef = useRef(false);
 
     const [activeTab, setActiveTab] = useState<ScannerTab>('camera');
     const [cameraActive, setCameraActive] = useState(false);
@@ -33,6 +34,7 @@ export const QrScannerModal: React.FC<QrScannerModalProps> = ({
 
     // Stop camera video stream and scan loop
     const stopCamera = useCallback(() => {
+        isScanningRef.current = false;
         if (animationFrameRef.current) {
             cancelAnimationFrame(animationFrameRef.current);
             animationFrameRef.current = null;
@@ -42,6 +44,7 @@ export const QrScannerModal: React.FC<QrScannerModalProps> = ({
             streamRef.current = null;
         }
         if (videoRef.current) {
+            videoRef.current.onloadedmetadata = null;
             videoRef.current.srcObject = null;
         }
         if (canvasRef.current) {
@@ -61,79 +64,112 @@ export const QrScannerModal: React.FC<QrScannerModalProps> = ({
     );
 
     // Continuous frame scanning loop on video stream
-    const scanVideoFrame = useCallback(() => {
+    const scanVideoFrame = useCallback(async () => {
         const video = videoRef.current;
         if (!video || video.readyState < video.HAVE_CURRENT_DATA) {
             animationFrameRef.current = requestAnimationFrame(scanVideoFrame);
             return;
         }
 
-        try {
-            if (!canvasRef.current) {
-                canvasRef.current = document.createElement('canvas');
-            }
-            const canvas = canvasRef.current;
-            if (canvas.width !== video.videoWidth) canvas.width = video.videoWidth;
-            if (canvas.height !== video.videoHeight) canvas.height = video.videoHeight;
-            const ctx = canvas.getContext('2d', { willReadFrequently: true });
-
-            if (ctx && canvas.width > 0 && canvas.height > 0) {
-                ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-                const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-                const code = jsQR(imageData.data, imageData.width, imageData.height, {
-                    inversionAttempts: 'dontInvert',
-                });
-
-                if (code && code.data) {
-                    const parsed = parseReceiptQr(code.data);
-                    if (parsed) {
-                        handleParsedResult(parsed);
-                        return;
-                    }
+        if (!isScanningRef.current) {
+            isScanningRef.current = true;
+            try {
+                const parsed = await detectQrFromSource(video, canvasRef.current || undefined);
+                if (parsed) {
+                    handleParsedResult(parsed);
+                    isScanningRef.current = false;
+                    return;
                 }
+            } catch {
+                // Ignore per-frame detector error and continue scanning
+            } finally {
+                isScanningRef.current = false;
             }
-        } catch {
-            // Ignore frame-level errors and continue scanning
         }
 
         animationFrameRef.current = requestAnimationFrame(scanVideoFrame);
     }, [handleParsedResult]);
 
-    // Start camera stream
+    // Start camera stream with multi-tier fallback for mobile devices
     const startCamera = useCallback(async () => {
         setCameraError(null);
         setInlineError(null);
 
-        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-            setCameraError('Камерата не се поддържа от това устройство.');
+        if (!isSecureCameraContext()) {
+            setCameraError(
+                'Браузърът изисква защитена връзка (HTTPS) за достъп до камерата от телефон. Отворете сайта през HTTPS или качете снимка от таба „Качване на файл“.'
+            );
             return;
         }
 
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+            setCameraError('Камерата не се поддържа от този браузър.');
+            return;
+        }
+
+        let stream: MediaStream | null = null;
         try {
-            const stream = await navigator.mediaDevices.getUserMedia({
+            // Tier 1: Ideal back camera with 720p/1080p
+            stream = await navigator.mediaDevices.getUserMedia({
                 video: {
                     facingMode: { ideal: 'environment' },
                     width: { ideal: 1280 },
-                    height: { ideal: 720 },
                 },
                 audio: false,
             });
+        } catch {
+            try {
+                // Tier 2: Basic environment facingMode
+                stream = await navigator.mediaDevices.getUserMedia({
+                    video: { facingMode: 'environment' },
+                    audio: false,
+                });
+            } catch {
+                try {
+                    // Tier 3: Any available camera stream
+                    stream = await navigator.mediaDevices.getUserMedia({
+                        video: true,
+                        audio: false,
+                    });
+                } catch (err) {
+                    const error = err as Error;
+                    if (error.name === 'NotAllowedError' || error.name === 'PermissionDeniedError') {
+                        setCameraError('Достъпът до камерата е отказан.');
+                    } else {
+                        setCameraError('Не беше намерена камера на това устройство.');
+                    }
+                    setCameraActive(false);
+                    return;
+                }
+            }
+        }
 
-            streamRef.current = stream;
-            if (videoRef.current) {
-                videoRef.current.srcObject = stream;
-                await videoRef.current.play();
+        streamRef.current = stream;
+        const video = videoRef.current;
+        if (!video) return;
+
+        video.srcObject = stream;
+        video.setAttribute('playsinline', 'true');
+        video.setAttribute('webkit-playsinline', 'true');
+        video.muted = true;
+
+        const onPlay = async () => {
+            try {
+                await video.play();
                 setCameraActive(true);
                 animationFrameRef.current = requestAnimationFrame(scanVideoFrame);
+            } catch {
+                setCameraError('Грешка при възпроизвеждане на видеото от камерата.');
+                setCameraActive(false);
             }
-        } catch (err) {
-            const error = err as Error;
-            if (error.name === 'NotAllowedError' || error.name === 'PermissionDeniedError') {
-                setCameraError('Достъпът до камерата е отказан.');
-            } else {
-                setCameraError('Не беше намерена камера на това устройство.');
-            }
-            setCameraActive(false);
+        };
+
+        if (video.readyState >= video.HAVE_METADATA) {
+            await onPlay();
+        } else {
+            video.onloadedmetadata = () => {
+                void onPlay();
+            };
         }
     }, [scanVideoFrame]);
 
@@ -151,35 +187,14 @@ export const QrScannerModal: React.FC<QrScannerModalProps> = ({
             const reader = new FileReader();
             reader.onload = () => {
                 const img = new Image();
-                img.onload = () => {
+                img.onload = async () => {
                     try {
-                        const canvas = document.createElement('canvas');
-                        canvas.width = img.width;
-                        canvas.height = img.height;
-                        const ctx = canvas.getContext('2d', { willReadFrequently: true });
-
-                        if (!ctx) {
-                            setInlineError('Възникна проблем при обработката на изображението.');
-                            setIsProcessingImage(false);
-                            return;
-                        }
-
-                        ctx.drawImage(img, 0, 0);
-                        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-                        const code = jsQR(imageData.data, imageData.width, imageData.height);
-
-                        if (code && code.data) {
-                            const parsed = parseReceiptQr(code.data);
-                            if (parsed) {
-                                handleParsedResult(parsed);
-                                setIsProcessingImage(false);
-                                return;
-                            } else {
-                                setInlineError('Откритият QR код не съдържа валидни данни за касова бележка.');
-                            }
+                        const parsed = await detectQrFromSource(img, canvasRef.current || undefined);
+                        if (parsed) {
+                            handleParsedResult(parsed);
                         } else {
                             setInlineError(
-                                'Не беше открит QR код на снимката. Моля, уверете се, че кодът е ясен и опитайте отново.'
+                                'Не беше открит валиден QR код за касова бележка. Моля, уверете се, че кодът е ясен и опитайте отново.'
                             );
                         }
                     } catch {
@@ -350,9 +365,12 @@ export const QrScannerModal: React.FC<QrScannerModalProps> = ({
                             {/* Live Video Feed */}
                             <video
                                 ref={videoRef}
+                                autoPlay
                                 playsInline
                                 muted
-                                className={`w-full h-full object-cover ${cameraActive ? 'block' : 'hidden'}`}
+                                className={`w-full h-full object-cover transition-opacity duration-200 ${
+                                    cameraActive ? 'opacity-100' : 'opacity-0'
+                                }`}
                             />
 
                             {/* Viewfinder Overlay with Optical Framing */}
