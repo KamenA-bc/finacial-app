@@ -92,4 +92,26 @@ input[type='number'] {
   animation: toastSlideOutBottom 260ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
+/* Scanner viewfinder animated scanline */
+@keyframes scanline {
+  0% {
+    top: 6%;
+    opacity: 0.2;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    top: 92%;
+    opacity: 0.2;
+  }
+}
+
+.animate-scanline {
+  animation: scanline 2.2s ease-in-out infinite alternate;
+}
+
 

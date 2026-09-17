@@ -12,6 +12,7 @@ import {
     Heart,
     UsersRound,
     AlertCircle,
+    QrCode,
 } from 'lucide-react';
 import { useFinancialStore } from '@/store/transactionStore';
 import { useToastStore } from '@/store/toastStore';
@@ -21,6 +22,8 @@ import {
     getCurrencySymbol,
 } from '@/lib/constants';
 import { ExpenseCategory } from '@/types';
+import { QrScannerModal } from '@/components/scanner/QrScannerModal';
+import { ParsedReceiptQr } from '@/lib/qrParser';
 
 // ── Validation Schemas ────────────────────────────────────────────────────────
 
@@ -64,10 +67,22 @@ export const QuickTransactionForm = (): React.ReactElement => {
     const addExpense = useFinancialStore((s) => s.addExpense);
     const addIncome = useFinancialStore((s) => s.addIncome);
     const selectedDate = useFinancialStore((s) => s.selectedDate);
+    const setSelectedDate = useFinancialStore((s) => s.setSelectedDate);
     const storeError = useFinancialStore((s) => s.error);
     const showToast = useToastStore((s) => s.showToast);
 
     const [isSubmittingForm, setIsSubmittingForm] = useState(false);
+    const [isQrScannerOpen, setIsQrScannerOpen] = useState(false);
+
+    const handleScanSuccess = (parsed: ParsedReceiptQr) => {
+        setIsQrScannerOpen(false);
+        setActiveTab('expense');
+        setExpenseValue('amount', parsed.amount, { shouldValidate: true, shouldDirty: true });
+        setSelectedDate(parsed.date);
+
+        const currencyWord = parsed.date < '2026-01-01' ? 'лв.' : 'евро';
+        showToast(`Заредена сума: ${parsed.amount.toFixed(2)} ${currencyWord}`);
+    };
 
     // ── Expense Form Setup ────────────────────────────────────────────────────
     const {
@@ -212,8 +227,8 @@ export const QuickTransactionForm = (): React.ReactElement => {
                             >
                                 Сума
                             </label>
-                            <div className="relative">
-                                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-stone-400 text-xs font-medium select-none">
+                            <div className="relative flex items-center">
+                                <span className="absolute left-3 text-stone-400 text-xs font-medium select-none pointer-events-none">
                                     {currency}
                                 </span>
                                 <input
@@ -223,8 +238,17 @@ export const QuickTransactionForm = (): React.ReactElement => {
                                     min="0"
                                     placeholder="0.00"
                                     {...registerExpense('amount', { valueAsNumber: true })}
-                                    className={`${inputBaseClass} ${currency.length > 1 ? 'pl-9' : 'pl-7'} focus:border-rose-400 focus:ring-2 focus:ring-rose-100 font-semibold tabular-nums`}
+                                    className={`${inputBaseClass} ${currency.length > 1 ? 'pl-9' : 'pl-7'} pr-9 focus:border-rose-400 focus:ring-2 focus:ring-rose-100 font-semibold tabular-nums`}
                                 />
+                                <button
+                                    type="button"
+                                    onClick={() => setIsQrScannerOpen(true)}
+                                    className="absolute right-1.5 p-1 rounded-md text-stone-400 hover:text-emerald-600 hover:bg-emerald-50 dark:hover:bg-stone-800/80 transition-all cursor-pointer"
+                                    title="Сканирай касов бон"
+                                    aria-label="Сканирай касов бон с QR код"
+                                >
+                                    <QrCode size={16} />
+                                </button>
                             </div>
                             {expenseErrors.amount && (
                                 <p className="text-[11px] text-rose-500 font-medium">
@@ -446,6 +470,13 @@ export const QuickTransactionForm = (): React.ReactElement => {
                     </span>
                 </div>
             )}
+
+            {/* Receipt QR Scanner Modal */}
+            <QrScannerModal
+                isOpen={isQrScannerOpen}
+                onClose={() => setIsQrScannerOpen(false)}
+                onScanSuccess={handleScanSuccess}
+            />
         </div>
     );
 };
