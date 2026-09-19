@@ -1,0 +1,7 @@
+# Graphify ignore rules: exclude external skills, build artifacts, and test fixtures
+.agents/
+.next/
+node_modules/
+certificates/
+test-results/
+graphify-out/

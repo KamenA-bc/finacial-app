@@ -65,7 +65,16 @@ To ensure zero unintended edits and 100% predictable execution, your behavior op
 
 ## 0.2 OPERATIONAL EXECUTION TIERS
 
-To balance rock-solid architectural safety with high-velocity developer ergonomics, tasks are classified into two deterministic execution tiers:
+To balance rock-solid architectural safety with high-velocity developer ergonomics, tasks are classified into three deterministic execution tiers:
+
+0. **Tier 0: Advisory Mode (Consultation, Q&A, Audits & Reconnaissance)**
+   - **Eligible Scope:**
+     - Pure read-only queries, architectural assessments, design reviews, or codebase explanations.
+     - Suggestions, dependency evaluations, and troubleshooting advice where zero code files are modified.
+   - **Protocol:**
+     - Operates strictly within `State 1 (Reconnaissance)`.
+     - Bypasses State 2 formal plan artifact generation, approval gating, and validation runs.
+     - Emits answers directly with source citations. If advice leads to implementation, transition explicitly to Tier 1 or Tier 2.
 
 1. **Tier 1: Express Mode (Micro-Patches & Trivial Tweaks)**
    - **Eligible Scope:**
@@ -90,6 +99,21 @@ To balance rock-solid architectural safety with high-velocity developer ergonomi
 
 ---
 
+## 0.3 HIGH-IMPACT PROJECT GOTCHAS & GUARDRAILS
+
+1. **Supabase Clock-Skew & PGRST303 Resilience:**
+   - Always wrap client-side Supabase database mutations/queries in `withJwtRetry` (`@/lib/supabaseRetry`) to gracefully handle transient "JWT Issued at future" errors caused by client device clock skew.
+2. **Cyrillic Excel Export Integrity:**
+   - Always prepend the UTF-8 Byte Order Mark (`\uFEFF`) to CSV exports (`@/lib/csvExport`) to ensure seamless Cyrillic text decoding in desktop Microsoft Excel.
+3. **App Router Client Boundaries & Skeletons:**
+   - Dynamic imports for Recharts (`CategoryChart`, `MonthlyTrendsChart`) and camera/barcode detection modules must declare `{ ssr: false }` and provide a tailored skeleton fallback matching component dimensions to eliminate visual layout shifts.
+4. **Timezone-Safe Calendar Anchoring:**
+   - Always use `toISODateString(new Date())` from `@/lib/dateUtils` rather than raw UTC `.toISOString().slice(0, 10)` to preserve local calendar date alignment in Bulgarian locale (`bg-BG`).
+5. **Database Schema & Declarative Migration Protocol:**
+   - Whenever altering data types, tables, or columns (`src/types/index.ts`, `src/store/transactionStore.ts`), write an incremental declarative `.sql` migration file in `supabase/migrations/` (`YYYYMMDDHHMMSS_<name>.sql`) with explicit constraints, composite indexes on `(user_id, date)`, and strict RLS policies (`auth.uid() = user_id`). Never leave database schema changes unversioned.
+
+---
+
 ## 1. DYNAMIC SKILL ORCHESTRATION (5 MACRO PILLARS)
 
 Rather than scattering attention across dozens of loose skills, select and activate skills clustered by the 5 primary operational pillars:
@@ -97,8 +121,8 @@ Rather than scattering attention across dozens of loose skills, select and activ
 | Pillar & Domain | Core Skills | Activation Triggers |
 | :--- | :--- | :--- |
 | **1. Discovery & Specs** | `spec-driven-development`, `interview-me`, `graphify`, `documentation-and-adrs` | Unclear requirements, complex multi-file logic, repo reconnaissance (`graphify-out/GRAPH_REPORT.md`), ADRs. |
-| **2. Architecture & React Core** | `vercel-react-best-practices`, `api-and-interface-design` | Server vs. Client component boundaries, Zustand store actions, Supabase type contracts, bundle and re-render optimization. |
-| **3. UI Craft & Design Engineering** | `emil-design-eng`, `web-design-guidelines`, `frontend-ui-engineering` | Layouts, tactile feedback, micro-animations, financial data ergonomics (`tabular-nums`), anti-slop visual hierarchy. |
+| **2. Architecture & React Core** | `vercel-react-best-practices`, `api-and-interface-design`, `supabase-postgres-best-practices` | Server vs. Client component boundaries, Zustand store actions, Supabase schema & type contracts, RLS policies, bundle/re-render optimization. |
+| **3. UI Craft & Design Engineering** | `emil-design-eng`, `web-design-guidelines`, `frontend-ui-engineering`, `tailwind-4-docs` | Layouts, tactile feedback, micro-animations, Tailwind v4 `@theme` tokens, financial data ergonomics (`tabular-nums`), anti-slop visual hierarchy. |
 | **4. Testing & Hardening** | `test-driven-development`, `browser-testing-with-devtools`, `security-and-hardening`, `code-review-and-quality` | Vitest unit/integration tests, DevTools runtime inspection, input sanitization, RLS policies, pre-merge review. |
 | **5. Performance & Lifecycle** | `performance-optimization`, `debugging-and-error-recovery`, `git-workflow-and-versioning` | Core Web Vitals profiling, root-cause crash recovery, atomic git commits, semver releases. |
 
