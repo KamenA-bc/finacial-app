@@ -29467,7 +29467,7 @@
       "node_kind": "heading",
       "norm_label": "[2026-04-08]",
       "source_file": "CHANGELOG.md",
-      "source_location": "L43"
+      "source_location": "L44"
     },
     {
       "id": "changelog_2026_09_14",
@@ -29479,7 +29479,7 @@
       "node_kind": "heading",
       "norm_label": "[2026-09-14]",
       "source_file": "CHANGELOG.md",
-      "source_location": "L28"
+      "source_location": "L29"
     },
     {
       "id": "changelog_2026_09_19",
@@ -29506,7 +29506,7 @@
       "source_location": "L22"
     },
     {
-      "id": "changelog_added_30",
+      "id": "changelog_added_31",
       "label": "Added",
       "_origin": "ast",
       "community": 138,
@@ -29515,10 +29515,10 @@
       "node_kind": "heading",
       "norm_label": "added",
       "source_file": "CHANGELOG.md",
-      "source_location": "L30"
+      "source_location": "L31"
     },
     {
-      "id": "changelog_added_45",
+      "id": "changelog_added_46",
       "label": "Added",
       "_origin": "ast",
       "community": 138,
@@ -29527,10 +29527,10 @@
       "node_kind": "heading",
       "norm_label": "added",
       "source_file": "CHANGELOG.md",
-      "source_location": "L45"
+      "source_location": "L46"
     },
     {
-      "id": "changelog_added_72",
+      "id": "changelog_added_73",
       "label": "Added",
       "_origin": "ast",
       "community": 138,
@@ -29539,7 +29539,7 @@
       "node_kind": "heading",
       "norm_label": "added",
       "source_file": "CHANGELOG.md",
-      "source_location": "L72"
+      "source_location": "L73"
     },
     {
       "id": "changelog_changed",
@@ -29551,10 +29551,10 @@
       "node_kind": "heading",
       "norm_label": "changed",
       "source_file": "CHANGELOG.md",
-      "source_location": "L36"
+      "source_location": "L37"
     },
     {
-      "id": "changelog_changed_51",
+      "id": "changelog_changed_52",
       "label": "Changed",
       "_origin": "ast",
       "community": 138,
@@ -29563,10 +29563,10 @@
       "node_kind": "heading",
       "norm_label": "changed",
       "source_file": "CHANGELOG.md",
-      "source_location": "L51"
+      "source_location": "L52"
     },
     {
-      "id": "changelog_changed_78",
+      "id": "changelog_changed_79",
       "label": "Changed",
       "_origin": "ast",
       "community": 138,
@@ -29575,7 +29575,7 @@
       "node_kind": "heading",
       "norm_label": "changed",
       "source_file": "CHANGELOG.md",
-      "source_location": "L78"
+      "source_location": "L79"
     },
     {
       "id": "changelog_changelog",
@@ -29599,7 +29599,7 @@
       "node_kind": "heading",
       "norm_label": "docs",
       "source_file": "CHANGELOG.md",
-      "source_location": "L64"
+      "source_location": "L65"
     },
     {
       "id": "changelog_fixed",
@@ -29614,7 +29614,7 @@
       "source_location": "L9"
     },
     {
-      "id": "changelog_fixed_60",
+      "id": "changelog_fixed_61",
       "label": "Fixed",
       "_origin": "ast",
       "community": 138,
@@ -29623,7 +29623,7 @@
       "node_kind": "heading",
       "norm_label": "fixed",
       "source_file": "CHANGELOG.md",
-      "source_location": "L60"
+      "source_location": "L61"
     },
     {
       "id": "changelog_unreleased",
@@ -29635,7 +29635,7 @@
       "node_kind": "heading",
       "norm_label": "[unreleased]",
       "source_file": "CHANGELOG.md",
-      "source_location": "L70"
+      "source_location": "L71"
     },
     {
       "id": "agents",
@@ -144060,35 +144060,35 @@
     },
     {
       "source": "changelog_2026_04_08",
-      "target": "changelog_added_45",
+      "target": "changelog_added_46",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "CHANGELOG.md",
-      "source_location": "L45",
+      "source_location": "L46",
       "weight": 1.0
     },
     {
       "source": "changelog_2026_04_08",
-      "target": "changelog_changed_51",
+      "target": "changelog_changed_52",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "CHANGELOG.md",
-      "source_location": "L51",
+      "source_location": "L52",
       "weight": 1.0
     },
     {
       "source": "changelog_2026_04_08",
-      "target": "changelog_fixed_60",
+      "target": "changelog_fixed_61",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "CHANGELOG.md",
-      "source_location": "L60",
+      "source_location": "L61",
       "weight": 1.0
     },
     {
@@ -144099,18 +144099,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "CHANGELOG.md",
-      "source_location": "L64",
+      "source_location": "L65",
       "weight": 1.0
     },
     {
       "source": "changelog_2026_09_14",
-      "target": "changelog_added_30",
+      "target": "changelog_added_31",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "CHANGELOG.md",
-      "source_location": "L30",
+      "source_location": "L31",
       "weight": 1.0
     },
     {
@@ -144121,7 +144121,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "CHANGELOG.md",
-      "source_location": "L36",
+      "source_location": "L37",
       "weight": 1.0
     },
     {
@@ -144154,7 +144154,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "CHANGELOG.md",
-      "source_location": "L28",
+      "source_location": "L29",
       "weight": 1.0
     },
     {
@@ -144165,7 +144165,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "CHANGELOG.md",
-      "source_location": "L43",
+      "source_location": "L44",
       "weight": 1.0
     },
     {
@@ -144187,29 +144187,29 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "CHANGELOG.md",
-      "source_location": "L70",
+      "source_location": "L71",
       "weight": 1.0
     },
     {
       "source": "changelog_unreleased",
-      "target": "changelog_added_72",
+      "target": "changelog_added_73",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "CHANGELOG.md",
-      "source_location": "L72",
+      "source_location": "L73",
       "weight": 1.0
     },
     {
       "source": "changelog_unreleased",
-      "target": "changelog_changed_78",
+      "target": "changelog_changed_79",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "CHANGELOG.md",
-      "source_location": "L78",
+      "source_location": "L79",
       "weight": 1.0
     },
     {
@@ -162401,5 +162401,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "0b5d26b8ebb9cc74cc9a6061a4aa360630e8afd7"
+  "built_at_commit": "8cd1ea645ab519e45fde957d39cb29c7eb49d95a"
 }

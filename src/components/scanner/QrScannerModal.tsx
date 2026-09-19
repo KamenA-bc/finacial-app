@@ -376,10 +376,10 @@ export const QrScannerModal: React.FC<QrScannerModalProps> = ({
 
                     <button
                         onClick={onClose}
-                        className="p-1.5 rounded-full text-stone-400 hover:text-stone-100 hover:bg-stone-800 transition-colors cursor-pointer"
+                        className="w-8 h-8 rounded-full flex items-center justify-center text-stone-400 hover:text-stone-100 hover:bg-stone-800 transition-colors cursor-pointer active:scale-[0.95] focus-visible:ring-2 focus-visible:ring-emerald-500/60 focus-visible:outline-none"
                         aria-label="Затвори"
                     >
-                        <X size={17} />
+                        <X size={18} />
                     </button>
                 </div>
 
@@ -437,13 +437,13 @@ export const QrScannerModal: React.FC<QrScannerModalProps> = ({
 
                             {/* Floating Gallery Quick Action Button over Camera */}
                             {cameraState === 'active' && !scanConfirmed && (
-                                <div className="absolute inset-x-0 bottom-3.5 flex items-center justify-center pointer-events-none z-10">
+                                <div className="absolute inset-x-0 bottom-4 flex items-center justify-center pointer-events-none z-10">
                                     <button
                                         type="button"
                                         onClick={() => fileInputRef.current?.click()}
-                                        className="pointer-events-auto inline-flex items-center gap-2 px-4 py-2 rounded-full bg-stone-900/85 hover:bg-stone-900 text-stone-100 border border-white/15 backdrop-blur-md shadow-lg text-xs font-medium active:scale-[0.97] transition-all cursor-pointer focus-visible:ring-2 focus-visible:ring-emerald-500/60 focus-visible:outline-none"
+                                        className="pointer-events-auto inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-stone-900/90 hover:bg-stone-900 text-stone-100 border border-white/20 backdrop-blur-md shadow-xl text-xs font-medium active:scale-[0.97] transition-all cursor-pointer focus-visible:ring-2 focus-visible:ring-emerald-500/60 focus-visible:outline-none"
                                     >
-                                        <ImageIcon size={14} className="text-emerald-400" />
+                                        <ImageIcon size={15} className="text-emerald-400" />
                                         <span>Избери от галерия</span>
                                     </button>
                                 </div>
@@ -598,26 +598,6 @@ export const QrScannerModal: React.FC<QrScannerModalProps> = ({
                             <span className="leading-snug text-[11px]">{inlineError}</span>
                         </div>
                     )}
-                </div>
-
-                {/* Footer */}
-                <div className="px-4 py-3 border-t border-stone-800/80 bg-stone-900/60 flex items-center justify-between gap-2">
-                    <button
-                        type="button"
-                        onClick={() => fileInputRef.current?.click()}
-                        className="flex-1 py-2 px-3 rounded-xl bg-stone-800 hover:bg-stone-750 text-stone-200 border border-stone-700/80 text-xs font-medium flex items-center justify-center gap-1.5 active:scale-[0.98] transition-all cursor-pointer"
-                    >
-                        <ImageIcon size={13} className="text-emerald-400" />
-                        <span>Избери от галерия</span>
-                    </button>
-
-                    <button
-                        type="button"
-                        onClick={onClose}
-                        className="py-2 px-3.5 rounded-xl text-stone-400 hover:text-stone-200 hover:bg-stone-800/60 text-xs font-medium active:scale-[0.98] transition-all cursor-pointer"
-                    >
-                        Затвори
-                    </button>
                 </div>
             </div>
         </div>

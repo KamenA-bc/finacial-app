@@ -1050,10 +1050,10 @@
     "semantic_hash": "53570db2fb8055f6f66d511b31870a2f"
   },
   "src/components/scanner/QrScannerModal.tsx": {
-    "mtime": 1789833720.0591345,
-    "seen": 1789834802.425352,
-    "ast_hash": "28b071b52bf4986acd7c514cf84ab33f",
-    "semantic_hash": "28b071b52bf4986acd7c514cf84ab33f"
+    "mtime": 1789837006.9254448,
+    "seen": 1789837112.8195503,
+    "ast_hash": "c83e57924d0a71e5ac7e0a431ab34c97",
+    "semantic_hash": ""
   },
   "src/components/statistics/StatisticsSkeleton.test.tsx": {
     "mtime": 1789413284.3803875,
@@ -2388,9 +2388,9 @@
     "semantic_hash": ""
   },
   "CHANGELOG.md": {
-    "mtime": 1789833807.4370024,
-    "seen": 1789834826.2677805,
-    "ast_hash": "6d5f48dbdb75b54c324749536335cff6",
+    "mtime": 1789837093.4382048,
+    "seen": 1789837112.819936,
+    "ast_hash": "3053e7434272a18aacdf0e352567c1d5",
     "semantic_hash": ""
   },
   "README.md": {
