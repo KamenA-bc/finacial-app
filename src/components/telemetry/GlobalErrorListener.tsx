@@ -20,7 +20,14 @@ export function GlobalErrorListener(): null {
             // Guard against cyclic recursion if the log-error endpoint or logger fails
             const filename = event.filename || '';
             const msg = event.message || '';
-            if (filename.includes('/api/log-error') || msg.includes('/api/log-error')) {
+            if (
+                filename.includes('/api/log-error') ||
+                msg.includes('/api/log-error') ||
+                filename.startsWith('chrome-extension://') ||
+                filename.startsWith('moz-extension://') ||
+                filename.startsWith('safari-extension://') ||
+                msg.includes('ResizeObserver loop')
+            ) {
                 return;
             }
 
@@ -38,9 +45,30 @@ export function GlobalErrorListener(): null {
 
         const handleUnhandledRejection = (event: PromiseRejectionEvent): void => {
             const reason = event.reason;
-            const msg = typeof reason === 'string' ? reason : reason?.message || '';
 
+            // 1. Ignore empty rejections (reason === undefined | null) which provide no diagnostics
+            if (reason === undefined || reason === null) {
+                return;
+            }
+
+            const msg = typeof reason === 'string' ? reason : reason?.message || '';
+            const stack =
+                typeof reason === 'object' && reason !== null && 'stack' in reason
+                    ? String((reason as { stack: unknown }).stack || '')
+                    : '';
+
+            // 2. Guard against cyclic recursion from telemetry logging
             if (msg.includes('/api/log-error')) {
+                return;
+            }
+
+            // 3. Filter out browser extension noise and benign DOM notifications
+            if (
+                stack.includes('chrome-extension://') ||
+                stack.includes('moz-extension://') ||
+                stack.includes('safari-extension://') ||
+                msg.includes('ResizeObserver loop')
+            ) {
                 return;
             }
 

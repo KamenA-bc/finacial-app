@@ -163,4 +163,25 @@ describe('AuthProvider – Multi-Level Error Logging & Security', () => {
             'warning'
         );
     });
+
+    it('catches and logs initial getSession rejection gracefully', async () => {
+        vi.mocked(supabase.auth.getSession).mockRejectedValueOnce(new Error('Storage access denied'));
+
+        const wrapper = ({ children }: { children: React.ReactNode }) => (
+            <AuthProvider>{children}</AuthProvider>
+        );
+
+        let hookResult: { current: ReturnType<typeof useAuth> } = undefined!;
+        await act(async () => {
+            hookResult = renderHook(() => useAuth(), { wrapper }).result;
+        });
+
+        expect(hookResult.current.loading).toBe(false);
+        expect(logError).toHaveBeenCalledWith(
+            'AuthProvider:getSession',
+            expect.any(Error),
+            {},
+            'warning'
+        );
+    });
 });

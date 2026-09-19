@@ -85,6 +85,56 @@ describe('GlobalErrorListener – Level 1 Browser Window Interceptors', () => {
         unmount();
     });
 
+    it('ignores unhandled rejections with undefined or null reason', () => {
+        const { unmount } = render(<GlobalErrorListener />);
+
+        // Undefined reason (e.g. void Promise.reject())
+        const undefinedEvent = new PromiseRejectionEvent('unhandledrejection', {
+            promise: Promise.resolve(),
+            reason: undefined,
+        });
+        window.dispatchEvent(undefinedEvent);
+        expect(logError).not.toHaveBeenCalled();
+
+        // Null reason
+        const nullEvent = new PromiseRejectionEvent('unhandledrejection', {
+            promise: Promise.resolve(),
+            reason: null,
+        });
+        window.dispatchEvent(nullEvent);
+        expect(logError).not.toHaveBeenCalled();
+
+        unmount();
+    });
+
+    it('ignores unhandled rejections originating from browser extensions', () => {
+        const { unmount } = render(<GlobalErrorListener />);
+
+        const extensionError = new Error('Extension worker port disconnected');
+        extensionError.stack = 'Error: at chrome-extension://abcdefghijklmnop/content.js:10:15';
+
+        const extensionEvent = new PromiseRejectionEvent('unhandledrejection', {
+            promise: Promise.resolve(),
+            reason: extensionError,
+        });
+        window.dispatchEvent(extensionEvent);
+        expect(logError).not.toHaveBeenCalled();
+
+        unmount();
+    });
+
+    it('ignores benign ResizeObserver loop errors', () => {
+        const { unmount } = render(<GlobalErrorListener />);
+
+        const resizeEvent = new ErrorEvent('error', {
+            message: 'ResizeObserver loop completed with undelivered notifications.',
+        });
+        window.dispatchEvent(resizeEvent);
+        expect(logError).not.toHaveBeenCalled();
+
+        unmount();
+    });
+
     it('cleans up event listeners when unmounted', () => {
         const removeSpy = vi.spyOn(window, 'removeEventListener');
         const { unmount } = render(<GlobalErrorListener />);

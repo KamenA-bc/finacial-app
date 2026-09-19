@@ -53,10 +53,16 @@ export const AuthProvider = ({
 
     useEffect(() => {
         // Fetch active session on mount
-        supabase.auth.getSession().then(({ data: { session } }) => {
-            setUser(session?.user ?? null);
-            setLoading(false);
-        });
+        supabase.auth
+            .getSession()
+            .then(({ data: { session } }) => {
+                setUser(session?.user ?? null);
+                setLoading(false);
+            })
+            .catch((err) => {
+                logError('AuthProvider:getSession', err, {}, 'warning');
+                setLoading(false);
+            });
 
         // Listen for auth state changes (login, logout, token refresh)
         const {

@@ -92,4 +92,32 @@ describe('ErrorBoundary', () => {
 
         expect(screen.getByText('Recovered Content')).toBeInTheDocument();
     });
+
+    it('handles ChunkLoadError and offers reload button that triggers window.location.reload', () => {
+        const reloadMock = vi.fn();
+        Object.defineProperty(window, 'location', {
+            configurable: true,
+            writable: true,
+            value: { reload: reloadMock },
+        });
+
+        const ChunkFailingComponent = () => {
+            const err = new Error('Failed to load chunk /_next/static/chunks/test.js from module');
+            err.name = 'ChunkLoadError';
+            throw err;
+        };
+
+        render(
+            <ErrorBoundary>
+                <ChunkFailingComponent />
+            </ErrorBoundary>
+        );
+
+        expect(screen.getByRole('alert')).toBeInTheDocument();
+        expect(screen.getByText('Налична е нова версия на приложението')).toBeInTheDocument();
+        expect(screen.getByText('Обнови страницата')).toBeInTheDocument();
+
+        fireEvent.click(screen.getByText('Обнови страницата'));
+        expect(reloadMock).toHaveBeenCalledTimes(1);
+    });
 });

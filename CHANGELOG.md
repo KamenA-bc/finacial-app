@@ -14,9 +14,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - **Barcode Fall-Through Glitch (`src/lib/qrDetector.ts`)**: Replaced single-item check with an iteration loop over all candidate detections from native `BarcodeDetector.detect()`, preventing invalid non-QR or unparsable barcodes from blocking valid receipt QR codes.
 - **UTF-8 BOM in CSV Export (`src/lib/csvExport.ts`)**: Prepended UTF-8 Byte Order Mark (`\uFEFF`) to CSV exports to ensure seamless Cyrillic text decoding in desktop Microsoft Excel.
 - **Playwright Strict Mode Locator (`e2e/dashboard.spec.ts`)**: Replaced ambiguous `page.locator('header')` query with `page.getByRole('banner')` to eliminate strict mode locator violations during SSR streaming hydration.
+- **Telemetry Noise & Extension Suppression (`GlobalErrorListener.tsx`)**: Filtered out unhandled rejections with empty/undefined reasons and ignored third-party browser extension origins (`chrome-extension://`) and benign DOM engine notices (`ResizeObserver loop`).
+- **Stale Chunk Auto-Recovery (`ErrorBoundary.tsx`)**: Detected dynamic bundle chunk load errors (`ChunkLoadError`, `Failed to load chunk`) and rendered an update recovery banner with an interactive page reload button.
+- **Auth Session Error Handling (`AuthProvider.tsx`)**: Added explicit `.catch()` handler to initial `supabase.auth.getSession()` to prevent unhandled promise rejections on storage/auth failures.
 
 ### Added
-- **Unit & Integration Tests**: Added regression tests for UTF-8 CSV BOM export (`csvExport.test.ts`), multi-barcode fallback detection (`qrDetector.test.ts`), and user-switch cache flush / remote deletion sync (`transactionStore.test.ts`).
+- **Unit & Integration Tests**: Added regression tests for UTF-8 CSV BOM export (`csvExport.test.ts`), multi-barcode fallback detection (`qrDetector.test.ts`), user-switch cache flush / remote deletion sync (`transactionStore.test.ts`), telemetry extension/undefined noise filtering (`GlobalErrorListener.test.tsx`), chunk load error reload (`ErrorBoundary.test.tsx`), and auth getSession catch (`AuthProvider.test.tsx`).
 - **E2E Test**: Added authenticated user redirect test on `/login` in `e2e/auth.spec.ts`.
 
 ---
