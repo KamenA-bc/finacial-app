@@ -10,7 +10,9 @@
     "lint": "eslint",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "graph:update": "python -m graphify update .",
+    "validate": "npm run lint && npx tsc --noEmit && npm run test"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
