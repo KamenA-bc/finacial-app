@@ -15,7 +15,7 @@ test.describe('Dashboard Page E2E', () => {
     test('renders dashboard header and main title', async ({ page }) => {
         await expect(page).toHaveTitle(/Finance Tracker/i);
         // Header brand
-        await expect(page.locator('header')).toBeVisible();
+        await expect(page.getByRole('banner')).toBeVisible();
     });
 
     test('displays stat cards for daily and monthly profit', async ({ page }) => {

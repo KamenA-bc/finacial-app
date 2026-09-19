@@ -117,6 +117,35 @@ describe('qrDetector', () => {
             expect(result?.date).toBe('2026-09-17');
             expect(mockDetect).toHaveBeenCalledWith(mockVideo);
         });
+
+        it('iterates through multiple barcodes if the first is unparseable', async () => {
+            const mockDetect = vi.fn().mockResolvedValue([
+                {
+                    rawValue: '3800000100018', // Product EAN-13 barcode
+                    format: 'ean_13',
+                },
+                {
+                    rawValue: 'BG11122233*5544*2026-09-19*11:20:00*99.90', // Valid NRA QR
+                    format: 'qr_code',
+                },
+            ]);
+
+            class MockDetector {
+                detect = mockDetect;
+            }
+
+            window.BarcodeDetector = MockDetector as unknown as typeof window.BarcodeDetector;
+
+            const mockVideo = {
+                videoWidth: 1280,
+                videoHeight: 720,
+            } as unknown as HTMLVideoElement;
+
+            const result = await detectQrFromSource(mockVideo);
+            expect(result).not.toBeNull();
+            expect(result?.amount).toBe(99.9);
+            expect(result?.date).toBe('2026-09-19');
+        });
     });
 
     describe('detectQrFromSource with jsQR fallback', () => {

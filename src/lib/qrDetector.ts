@@ -70,9 +70,11 @@ export async function detectQrFromSource(
     if (nativeDetector) {
         try {
             const barcodes = await nativeDetector.detect(source);
-            if (barcodes.length > 0 && barcodes[0].rawValue) {
-                const parsed = parseReceiptQr(barcodes[0].rawValue);
-                if (parsed) return parsed;
+            for (const barcode of barcodes) {
+                if (barcode.rawValue) {
+                    const parsed = parseReceiptQr(barcode.rawValue);
+                    if (parsed) return parsed;
+                }
             }
         } catch {
             // Fall through to jsQR fallback if native detection fails on a frame

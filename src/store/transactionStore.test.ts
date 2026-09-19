@@ -16,7 +16,7 @@ vi.mock('@/lib/errorLogger', () => ({
 // Mock Supabase client
 const mockDelete = vi.fn();
 const mockSingle = vi.fn();
-const mockOrder = vi.fn(() => Promise.resolve({ data: [], error: null }));
+const mockOrder = vi.fn(() => Promise.resolve({ data: [] as Record<string, unknown>[], error: null }));
 const mockLte = vi.fn(() => ({ order: mockOrder }));
 const mockGte = vi.fn(() => ({ lte: mockLte }));
 
@@ -465,6 +465,138 @@ describe('transactionStore - Optimistic Updates & Reliability', () => {
                 expect.objectContaining({ entryId: 'non-existent-uuid' }),
                 'warning'
             );
+        });
+    });
+
+    describe('Cross-User Cache Isolation & Remote Deletion Sync', () => {
+        it('flushes store state when setUserId is called with a different user ID', () => {
+            useFinancialStore.setState({
+                userId: 'user-a',
+                incomeEntries: [{
+                    id: 'inc-a',
+                    date: '2026-05-10',
+                    amount: 1000,
+                    description: 'Salary A',
+                    isWorkIncome: true,
+                    isWithKami: false,
+                }],
+                expenseEntries: [{
+                    id: 'exp-a',
+                    date: '2026-05-11',
+                    amount: 50,
+                    description: 'Groceries A',
+                    category: 'Магазини (Храна/Вода)',
+                    isWorkExpense: false,
+                    isWithKami: false,
+                    isWithOthers: false,
+                }],
+                loadedYears: [2026],
+                lastFetchedAt: Date.now(),
+            });
+
+            useFinancialStore.getState().setUserId('user-b');
+
+            const state = useFinancialStore.getState();
+            expect(state.userId).toBe('user-b');
+            expect(state.incomeEntries).toHaveLength(0);
+            expect(state.expenseEntries).toHaveLength(0);
+            expect(state.loadedYears).toHaveLength(0);
+            expect(state.lastFetchedAt).toBeNull();
+        });
+
+        it('purges remotely deleted entries for the fetched year while keeping other years intact', async () => {
+            // Setup store with an entry from 2025 and an entry from 2026
+            useFinancialStore.setState({
+                userId: 'test-user-123',
+                incomeEntries: [
+                    {
+                        id: 'inc-2025',
+                        date: '2025-12-15',
+                        amount: 300,
+                        description: 'Old Income',
+                        isWorkIncome: false,
+                        isWithKami: false,
+                    },
+                    {
+                        id: 'inc-2026-deleted-on-server',
+                        date: '2026-04-10',
+                        amount: 500,
+                        description: 'Deleted on server',
+                        isWorkIncome: true,
+                        isWithKami: false,
+                    },
+                ],
+                expenseEntries: [
+                    {
+                        id: 'exp-2025',
+                        date: '2025-11-20',
+                        amount: 100,
+                        description: 'Old Expense',
+                        category: 'Други',
+                        isWorkExpense: false,
+                        isWithKami: false,
+                        isWithOthers: false,
+                    },
+                    {
+                        id: 'exp-2026-deleted-on-server',
+                        date: '2026-04-12',
+                        amount: 70,
+                        description: 'Deleted Expense',
+                        category: 'Eating out',
+                        isWorkExpense: false,
+                        isWithKami: false,
+                        isWithOthers: false,
+                    },
+                ],
+                loadedYears: [2025],
+                lastFetchedAt: null,
+            });
+
+            // Server returns only a brand-new 2026 transaction (the previously cached 2026 ones were deleted remotely)
+            mockOrder.mockResolvedValueOnce({
+                data: [
+                    {
+                        id: 'inc-2026-new',
+                        date: '2026-04-15',
+                        amount: 600,
+                        description: 'Active Income',
+                        is_work_income: true,
+                        is_with_kami: false,
+                    },
+                ],
+                error: null,
+            });
+            mockOrder.mockResolvedValueOnce({
+                data: [
+                    {
+                        id: 'exp-2026-new',
+                        date: '2026-04-16',
+                        amount: 80,
+                        description: 'Active Expense',
+                        category: 'Shopping',
+                        is_work_expense: false,
+                        is_with_kami: false,
+                        is_with_others: false,
+                    },
+                ],
+                error: null,
+            });
+
+            await useFinancialStore.getState().fetchTransactions('test-user-123', 2026);
+
+            const state = useFinancialStore.getState();
+
+            // 2025 entries must be preserved
+            expect(state.incomeEntries.some((e) => e.id === 'inc-2025')).toBe(true);
+            expect(state.expenseEntries.some((e) => e.id === 'exp-2025')).toBe(true);
+
+            // New 2026 entries must be present
+            expect(state.incomeEntries.some((e) => e.id === 'inc-2026-new')).toBe(true);
+            expect(state.expenseEntries.some((e) => e.id === 'exp-2026-new')).toBe(true);
+
+            // Remotely deleted 2026 entries must be purged
+            expect(state.incomeEntries.some((e) => e.id === 'inc-2026-deleted-on-server')).toBe(false);
+            expect(state.expenseEntries.some((e) => e.id === 'exp-2026-deleted-on-server')).toBe(false);
         });
     });
 });

@@ -8,36 +8,45 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 /** Routes that do not require authentication. */
-const PUBLIC_ROUTES = ['/login', '/register', '/forgot-password', '/update-password'];
+const AUTH_ROUTES = ['/login', '/register'];
+const RECOVERY_ROUTES = ['/forgot-password', '/update-password'];
 
 export async function proxy(request: NextRequest): Promise<NextResponse> {
     const { pathname } = request.nextUrl;
 
-    // Allow public routes without auth check
-    if (PUBLIC_ROUTES.some((route) => pathname.startsWith(route))) {
+    // 1. Password reset/recovery routes are always public
+    if (RECOVERY_ROUTES.some((route) => pathname.startsWith(route))) {
         return NextResponse.next();
     }
 
-    // Allow automated testing with e2e-test-auth cookie in non-production environments
-    if (process.env.NODE_ENV !== 'production' && request.cookies.get('e2e-test-auth')?.value === 'true') {
-        return NextResponse.next();
-    }
-
-    // ── Performance Fast-Path ──────────────────────────────────────────────
-    // 1. If request has no Supabase auth token cookies, redirect to /login immediately in 0ms
-    //    instead of waiting 600-1000ms for an external Supabase Auth network call to fail.
     const allCookies = request.cookies.getAll();
     const hasAuthCookie = allCookies.some((c) =>
         c.name.startsWith('sb-') && c.name.includes('-auth-token')
     );
 
-    if (!hasAuthCookie) {
+    const isAuthRoute = AUTH_ROUTES.some((route) => pathname.startsWith(route));
+
+    // Allow automated testing with e2e-test-auth cookie in non-production environments
+    if (process.env.NODE_ENV !== 'production' && request.cookies.get('e2e-test-auth')?.value === 'true') {
+        if (isAuthRoute) {
+            return NextResponse.redirect(new URL('/', request.url));
+        }
+        return NextResponse.next();
+    }
+
+    // ── Performance Fast-Path ──────────────────────────────────────────────
+    // A. Unauthenticated visitor accessing /login or /register -> allow in 0ms
+    if (isAuthRoute && !hasAuthCookie) {
+        return NextResponse.next();
+    }
+
+    // B. Unauthenticated visitor accessing protected route without cookies -> redirect to /login in 0ms
+    if (!isAuthRoute && !hasAuthCookie) {
         const loginUrl = new URL('/login', request.url);
         return NextResponse.redirect(loginUrl);
     }
 
-    // 2. Next.js link prefetch optimization:
-    //    When user hovers or viewport sees a link, Next.js sends a background prefetch request.
+    // C. Next.js link prefetch optimization on protected routes:
     //    Bypass blocking getUser() call on prefetches to prevent network congestion on mobile.
     const isPrefetch =
         request.headers.get('x-purpose') === 'prefetch' ||
@@ -76,6 +85,14 @@ export async function proxy(request: NextRequest): Promise<NextResponse> {
     const {
         data: { user },
     } = await supabase.auth.getUser();
+
+    // If authenticated user visits /login or /register, redirect to dashboard
+    if (isAuthRoute) {
+        if (user) {
+            return NextResponse.redirect(new URL('/', request.url));
+        }
+        return response;
+    }
 
     // Redirect unauthenticated users to login
     if (!user) {

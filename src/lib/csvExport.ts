@@ -6,7 +6,7 @@
  */
 
 import { IncomeEntry, ExpenseEntry } from '@/types';
-import { daysAgoString } from '@/lib/dateUtils';
+import { daysAgoString, todayString } from '@/lib/dateUtils';
 import { MAX_EXPORT_DAYS, CATEGORY_BG_MAP } from '@/lib/constants';
 
 /** A normalised row used inside the CSV builder. */
@@ -85,10 +85,11 @@ export const exportToCsv = (
     ];
 
     const csvContent = lines.join('\n');
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    // Prepend UTF-8 BOM (\uFEFF) so Microsoft Excel natively detects UTF-8 encoding
+    const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
 
-    const today = new Date().toISOString().slice(0, 10);
+    const today = todayString();
     const link = document.createElement('a');
     link.href = url;
     link.download = `finance-export-${today}.csv`;

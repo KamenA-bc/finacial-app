@@ -63,11 +63,37 @@ export const useFinancialStore = create<FinancialStore>()(
     loadedYears: [],
 
     setUserId: (userId: string | null): void => {
+        const currentUserId = get().userId;
+        if (currentUserId !== null && userId !== null && currentUserId !== userId) {
+            // User switched -> immediately flush prior user data to prevent cross-user leakage
+            set({
+                userId,
+                incomeEntries: [],
+                expenseEntries: [],
+                loadedYears: [],
+                lastFetchedAt: null,
+                error: null,
+            });
+            return;
+        }
         set({ userId });
     },
 
     fetchTransactions: async (userId: string, targetYear?: number) => {
         const { lastFetchedAt, userId: currentUserId, loadedYears, selectedDate } = get();
+
+        // ── Cross-User Cache Guard ───────────────────────────────────────────
+        if (currentUserId !== null && currentUserId !== userId) {
+            set({
+                userId,
+                incomeEntries: [],
+                expenseEntries: [],
+                loadedYears: [],
+                lastFetchedAt: null,
+                error: null,
+            });
+        }
+
         const year = resolveTargetYear(targetYear, selectedDate);
 
         // ── In-Flight Deduplication Guard ────────────────────────────────────
@@ -150,6 +176,7 @@ export const useFinancialStore = create<FinancialStore>()(
                 }));
 
                 set((state) => {
+                    const yearPrefix = `${year}-`;
                     const incomeMap = new Map<string, IncomeEntry>();
                     state.incomeEntries.forEach((e) => {
                         if (e.id.startsWith('temp_')) {
@@ -159,7 +186,8 @@ export const useFinancialStore = create<FinancialStore>()(
                             if (!matchingServer) {
                                 incomeMap.set(e.id, e);
                             }
-                        } else {
+                        } else if (!e.date.startsWith(yearPrefix)) {
+                            // Only retain persistent entries from OTHER years (Supabase is authoritative for `year`)
                             incomeMap.set(e.id, e);
                         }
                     });
@@ -174,7 +202,8 @@ export const useFinancialStore = create<FinancialStore>()(
                             if (!matchingServer) {
                                 expenseMap.set(e.id, e);
                             }
-                        } else {
+                        } else if (!e.date.startsWith(yearPrefix)) {
+                            // Only retain persistent entries from OTHER years (Supabase is authoritative for `year`)
                             expenseMap.set(e.id, e);
                         }
                     });
@@ -495,6 +524,7 @@ export const useFinancialStore = create<FinancialStore>()(
         {
             name: 'finance-tracker-store-cache',
             partialize: (state) => ({
+                userId: state.userId,
                 incomeEntries: state.incomeEntries.filter((e) => !e.id.startsWith('temp_')),
                 expenseEntries: state.expenseEntries.filter((e) => !e.id.startsWith('temp_')),
                 loadedYears: state.loadedYears,

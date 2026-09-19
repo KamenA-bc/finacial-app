@@ -112,7 +112,6 @@ export const QuickTransactionForm = (): React.ReactElement => {
         setIsSubmittingForm(true);
 
         try {
-            showToast('Разходът е добавен успешно');
             await addExpense({
                 date: selectedDate,
                 amount: data.amount,
@@ -123,6 +122,13 @@ export const QuickTransactionForm = (): React.ReactElement => {
                 isWithOthers: data.isWithOthers,
             });
 
+            const currentError = useFinancialStore.getState().error;
+            if (currentError) {
+                showToast(currentError, 'error');
+                return;
+            }
+
+            showToast('Разходът е добавен успешно');
             resetExpense({
                 category: EXPENSE_CATEGORIES[0],
                 description: '',
@@ -158,7 +164,6 @@ export const QuickTransactionForm = (): React.ReactElement => {
         setIsSubmittingForm(true);
 
         try {
-            showToast('Приходът е добавен успешно');
             await addIncome({
                 date: selectedDate,
                 amount: data.amount,
@@ -167,6 +172,13 @@ export const QuickTransactionForm = (): React.ReactElement => {
                 isWithKami: false,
             });
 
+            const currentError = useFinancialStore.getState().error;
+            if (currentError) {
+                showToast(currentError, 'error');
+                return;
+            }
+
+            showToast('Приходът е добавен успешно');
             resetIncome({
                 description: '',
                 isWorkIncome: false,

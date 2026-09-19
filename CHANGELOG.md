@@ -4,6 +4,23 @@ All notable changes to the Finance Tracker project will be documented in this fi
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [2026-09-19]
+
+### Fixed
+- **Auth Route Redirection (`src/proxy.ts`)**: Redirect authenticated users visiting `/login` or `/register` to `/` while preserving fast unauthenticated pass-through (`0ms` bypass) and ensuring password recovery routes (`/forgot-password`, `/update-password`) remain accessible.
+- **Premature Optimistic Toast (`QuickTransactionForm.tsx`)**: Transaction submission now awaits Supabase persistence before triggering a success toast; on network or database errors, an error toast is surfaced and user input is preserved for retry.
+- **Cross-User Cache Leak (`src/store/transactionStore.ts`)**: Persisted state now stores `userId` in local storage; `setUserId` and `fetchTransactions` immediately wipe cached records when switching accounts to prevent data bleed across users.
+- **Multi-Device Remote Deletion Sync (`src/store/transactionStore.ts`)**: Remote deletions in Supabase are now purged locally on data sync by treating remote entries for the queried year as authoritative while safely preserving transactions from non-queried years.
+- **Barcode Fall-Through Glitch (`src/lib/qrDetector.ts`)**: Replaced single-item check with an iteration loop over all candidate detections from native `BarcodeDetector.detect()`, preventing invalid non-QR or unparsable barcodes from blocking valid receipt QR codes.
+- **UTF-8 BOM in CSV Export (`src/lib/csvExport.ts`)**: Prepended UTF-8 Byte Order Mark (`\uFEFF`) to CSV exports to ensure seamless Cyrillic text decoding in desktop Microsoft Excel.
+- **Playwright Strict Mode Locator (`e2e/dashboard.spec.ts`)**: Replaced ambiguous `page.locator('header')` query with `page.getByRole('banner')` to eliminate strict mode locator violations during SSR streaming hydration.
+
+### Added
+- **Unit & Integration Tests**: Added regression tests for UTF-8 CSV BOM export (`csvExport.test.ts`), multi-barcode fallback detection (`qrDetector.test.ts`), and user-switch cache flush / remote deletion sync (`transactionStore.test.ts`).
+- **E2E Test**: Added authenticated user redirect test on `/login` in `e2e/auth.spec.ts`.
+
+---
+
 ## [2026-09-14]
 
 ### Added

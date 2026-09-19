@@ -38,4 +38,16 @@ test.describe('Authentication & Route Protection E2E', () => {
         await forgotLink.click();
         await expect(page).toHaveURL(/\/forgot-password/);
     });
+
+    test('redirects authenticated user away from /login to /', async ({ context, page }) => {
+        await context.addCookies([
+            {
+                name: 'e2e-test-auth',
+                value: 'true',
+                url: 'http://localhost:3000',
+            },
+        ]);
+        await page.goto('/login');
+        await expect(page).toHaveURL('http://localhost:3000/');
+    });
 });

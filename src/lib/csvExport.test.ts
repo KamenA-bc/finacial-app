@@ -56,6 +56,11 @@ const makeExpense = (overrides: Partial<ExpenseEntry> = {}): ExpenseEntry => ({
 import { exportToCsv } from '@/lib/csvExport';
 
 describe('CSV export – isWithOthers column', () => {
+    it('prepends UTF-8 BOM (\\uFEFF) for Excel compatibility', () => {
+        exportToCsv([], [makeExpense()]);
+        expect(capturedCsvContent.startsWith('\uFEFF')).toBe(true);
+    });
+
     it('includes "С Други" header in CSV', () => {
         exportToCsv([], [makeExpense()]);
         const headerLine = capturedCsvContent.split('\n')[0];
