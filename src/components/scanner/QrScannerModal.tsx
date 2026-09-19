@@ -441,7 +441,7 @@ export const QrScannerModal: React.FC<QrScannerModalProps> = ({
                                     <button
                                         type="button"
                                         onClick={() => fileInputRef.current?.click()}
-                                        className="pointer-events-auto inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-stone-900/90 hover:bg-stone-900 text-stone-100 border border-white/20 backdrop-blur-md shadow-xl text-xs font-medium active:scale-[0.97] transition-all cursor-pointer focus-visible:ring-2 focus-visible:ring-emerald-500/60 focus-visible:outline-none"
+                                        className="pointer-events-auto inline-flex items-center gap-2.5 px-5 py-3 rounded-full bg-stone-900/75 hover:bg-stone-900/85 text-stone-100 border border-white/20 backdrop-blur-md shadow-xl text-xs font-medium active:scale-[0.97] transition-all cursor-pointer focus-visible:ring-2 focus-visible:ring-emerald-500/60 focus-visible:outline-none"
                                     >
                                         <ImageIcon size={15} className="text-emerald-400" />
                                         <span>Избери от галерия</span>
