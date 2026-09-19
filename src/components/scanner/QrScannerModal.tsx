@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef, useState, useCallback } from 'react';
-import { Camera, CameraOff, Image as ImageIcon, X, AlertCircle, UploadCloud, FileText } from 'lucide-react';
+import { Camera, CameraOff, Image as ImageIcon, X, AlertCircle, FileText, Check } from 'lucide-react';
 import { ParsedReceiptQr } from '@/lib/qrParser';
 import { detectQrFromSource, isSecureCameraContext } from '@/lib/qrDetector';
 
@@ -13,6 +13,14 @@ interface QrScannerModalProps {
 
 type ScannerTab = 'camera' | 'upload';
 type CameraState = 'initializing' | 'active' | 'error';
+
+const isMobileDevice = (): boolean => {
+    if (typeof window === 'undefined') return false;
+    return (
+        window.innerWidth < 640 ||
+        /Android|iPhone|iPad|iPod|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+    );
+};
 
 export const QrScannerModal: React.FC<QrScannerModalProps> = ({
     isOpen,
@@ -33,6 +41,8 @@ export const QrScannerModal: React.FC<QrScannerModalProps> = ({
     const [inlineError, setInlineError] = useState<string | null>(null);
     const [isProcessingImage, setIsProcessingImage] = useState(false);
     const [isDragOver, setIsDragOver] = useState(false);
+    const [scanConfirmed, setScanConfirmed] = useState(false);
+    const [isMobile, setIsMobile] = useState(false);
 
     // Stop camera video stream and scan loop
     const stopCamera = useCallback(() => {
@@ -63,8 +73,12 @@ export const QrScannerModal: React.FC<QrScannerModalProps> = ({
 
     const handleParsedResult = useCallback(
         (parsed: ParsedReceiptQr) => {
-            stopCamera();
-            onScanSuccess(parsed);
+            setScanConfirmed(true);
+            setTimeout(() => {
+                stopCamera();
+                onScanSuccess(parsed);
+                setScanConfirmed(false);
+            }, 250);
         },
         [onScanSuccess, stopCamera]
     );
@@ -252,29 +266,25 @@ export const QrScannerModal: React.FC<QrScannerModalProps> = ({
     // Lifecycle
     useEffect(() => {
         if (isOpen) {
-            setActiveTab('camera');
-            startCamera();
+            const mobile = isMobileDevice();
+            setIsMobile(mobile);
+            if (mobile) {
+                setActiveTab('camera');
+                startCamera();
+            } else {
+                setActiveTab('upload');
+            }
         } else {
             stopCamera();
             setInlineError(null);
             setCameraError(null);
             setIsDragOver(false);
+            setScanConfirmed(false);
         }
         return () => {
             stopCamera();
         };
     }, [isOpen, startCamera, stopCamera]);
-
-    // Handle tab toggle
-    const handleSwitchTab = (tab: ScannerTab) => {
-        setActiveTab(tab);
-        setInlineError(null);
-        if (tab === 'camera') {
-            startCamera();
-        } else {
-            stopCamera();
-        }
-    };
 
     // Keyboard controls: ESC to close, Ctrl+V to paste screenshot
     useEffect(() => {
@@ -344,6 +354,19 @@ export const QrScannerModal: React.FC<QrScannerModalProps> = ({
 
             {/* Modal Dialog Card */}
             <div className="relative bg-stone-900 border border-stone-800 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.7)] text-stone-100 rounded-2xl w-full max-w-sm sm:max-w-md overflow-hidden flex flex-col z-10 transition-all">
+                {/* Global persistent file input */}
+                <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) processImageFile(file);
+                        e.target.value = '';
+                    }}
+                />
+
                 {/* Header */}
                 <div className="flex items-center justify-between px-4 py-3.5 border-b border-stone-800/80 bg-stone-900/60">
                     <div>
@@ -360,37 +383,9 @@ export const QrScannerModal: React.FC<QrScannerModalProps> = ({
                     </button>
                 </div>
 
-                {/* Sub-Header: Segmented Switcher (Camera vs File) */}
-                <div className="px-4 pt-3 pb-1 flex gap-1 bg-stone-900">
-                    <button
-                        type="button"
-                        onClick={() => handleSwitchTab('camera')}
-                        className={`flex-1 py-1.5 px-3 rounded-lg text-xs font-medium flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
-                            activeTab === 'camera'
-                                ? 'bg-stone-800 text-emerald-400 shadow-xs'
-                                : 'text-stone-400 hover:text-stone-200 hover:bg-stone-800/40'
-                        }`}
-                    >
-                        <Camera size={13} />
-                        <span>Камера</span>
-                    </button>
-                    <button
-                        type="button"
-                        onClick={() => handleSwitchTab('upload')}
-                        className={`flex-1 py-1.5 px-3 rounded-lg text-xs font-medium flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
-                            activeTab === 'upload'
-                                ? 'bg-stone-800 text-emerald-400 shadow-xs'
-                                : 'text-stone-400 hover:text-stone-200 hover:bg-stone-800/40'
-                        }`}
-                    >
-                        <UploadCloud size={13} />
-                        <span>Качване на файл</span>
-                    </button>
-                </div>
-
                 {/* Main View Area */}
                 <div className="p-4">
-                    {/* CAMERA TAB */}
+                    {/* CAMERA MODE */}
                     {activeTab === 'camera' && (
                         <div className="relative aspect-square w-full bg-stone-950 rounded-xl overflow-hidden border border-stone-800">
                             {/* Live Video Feed */}
@@ -407,16 +402,50 @@ export const QrScannerModal: React.FC<QrScannerModalProps> = ({
                             {/* Viewfinder Overlay with Optical Framing */}
                             {cameraState === 'active' && (
                                 <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
-                                    <div className="relative w-48 h-48 sm:w-56 sm:h-56 rounded-xl border border-white/20 shadow-[0_0_0_9999px_rgba(0,0,0,0.4)]">
+                                    <div
+                                        className={`relative w-48 h-48 sm:w-56 sm:h-56 rounded-xl border transition-all duration-200 ${
+                                            scanConfirmed
+                                                ? 'border-emerald-400 shadow-[0_0_20px_rgba(52,211,153,0.9)] bg-emerald-950/20'
+                                                : 'border-white/20 shadow-[0_0_0_9999px_rgba(0,0,0,0.4)]'
+                                        }`}
+                                    >
                                         {/* Optical Corners */}
-                                        <div className="absolute -top-0.5 -left-0.5 w-5 h-5 border-t-2 border-l-2 border-emerald-400 rounded-tl-md" />
-                                        <div className="absolute -top-0.5 -right-0.5 w-5 h-5 border-t-2 border-r-2 border-emerald-400 rounded-tr-md" />
-                                        <div className="absolute -bottom-0.5 -left-0.5 w-5 h-5 border-b-2 border-l-2 border-emerald-400 rounded-bl-md" />
-                                        <div className="absolute -bottom-0.5 -right-0.5 w-5 h-5 border-b-2 border-r-2 border-emerald-400 rounded-br-md" />
+                                        <div className={`absolute -top-0.5 -left-0.5 w-5 h-5 border-t-2 border-l-2 rounded-tl-md transition-colors ${scanConfirmed ? 'border-emerald-300' : 'border-emerald-400'}`} />
+                                        <div className={`absolute -top-0.5 -right-0.5 w-5 h-5 border-t-2 border-r-2 rounded-tr-md transition-colors ${scanConfirmed ? 'border-emerald-300' : 'border-emerald-400'}`} />
+                                        <div className={`absolute -bottom-0.5 -left-0.5 w-5 h-5 border-b-2 border-l-2 rounded-bl-md transition-colors ${scanConfirmed ? 'border-emerald-300' : 'border-emerald-400'}`} />
+                                        <div className={`absolute -bottom-0.5 -right-0.5 w-5 h-5 border-b-2 border-r-2 rounded-br-md transition-colors ${scanConfirmed ? 'border-emerald-300' : 'border-emerald-400'}`} />
 
                                         {/* Scan line */}
-                                        <div className="absolute inset-x-2 h-0.5 bg-gradient-to-r from-transparent via-emerald-400 to-transparent shadow-[0_0_8px_rgba(52,211,153,0.8)] animate-scanline" />
+                                        {!scanConfirmed && (
+                                            <div className="absolute inset-x-2 h-0.5 bg-gradient-to-r from-transparent via-emerald-400 to-transparent shadow-[0_0_8px_rgba(52,211,153,0.8)] animate-scanline" />
+                                        )}
+
+                                        {/* Scan Success Confirmation Pulse */}
+                                        {scanConfirmed && (
+                                            <div className="absolute inset-0 flex flex-col items-center justify-center animate-in fade-in zoom-in-95 duration-150">
+                                                <div className="w-12 h-12 rounded-full bg-emerald-500 text-stone-950 flex items-center justify-center shadow-lg shadow-emerald-500/50">
+                                                    <Check size={26} className="stroke-[3]" />
+                                                </div>
+                                                <span className="text-xs font-bold text-emerald-300 mt-2 tracking-wide drop-shadow-md">
+                                                    Разчетено!
+                                                </span>
+                                            </div>
+                                        )}
                                     </div>
+                                </div>
+                            )}
+
+                            {/* Floating Gallery Quick Action Button over Camera */}
+                            {cameraState === 'active' && !scanConfirmed && (
+                                <div className="absolute inset-x-0 bottom-3.5 flex items-center justify-center pointer-events-none z-10">
+                                    <button
+                                        type="button"
+                                        onClick={() => fileInputRef.current?.click()}
+                                        className="pointer-events-auto inline-flex items-center gap-2 px-4 py-2 rounded-full bg-stone-900/85 hover:bg-stone-900 text-stone-100 border border-white/15 backdrop-blur-md shadow-lg text-xs font-medium active:scale-[0.97] transition-all cursor-pointer focus-visible:ring-2 focus-visible:ring-emerald-500/60 focus-visible:outline-none"
+                                    >
+                                        <ImageIcon size={14} className="text-emerald-400" />
+                                        <span>Избери от галерия</span>
+                                    </button>
                                 </div>
                             )}
 
@@ -446,22 +475,22 @@ export const QrScannerModal: React.FC<QrScannerModalProps> = ({
                                         {cameraError || 'Камерата не беше открита'}
                                     </p>
                                     <p className="text-[11px] text-stone-400 max-w-[240px] leading-relaxed mb-3.5">
-                                        Можете да опитате отново или да качите снимка на касовия бон от таба „Качване на файл“.
+                                        Можете да опитате отново или да изберете снимка на касовия бон от галерията.
                                     </p>
                                     <div className="flex gap-2">
                                         <button
                                             type="button"
                                             onClick={startCamera}
-                                            className="text-xs font-medium text-stone-200 bg-stone-800 hover:bg-stone-750 border border-stone-700 px-3 py-1.5 rounded-lg transition-colors cursor-pointer"
+                                            className="text-xs font-medium text-stone-200 bg-stone-800 hover:bg-stone-750 border border-stone-700 px-3 py-1.5 rounded-lg active:scale-[0.97] transition-all cursor-pointer"
                                         >
                                             Опитай отново
                                         </button>
                                         <button
                                             type="button"
-                                            onClick={() => handleSwitchTab('upload')}
-                                            className="text-xs font-medium text-emerald-400 bg-emerald-950/40 hover:bg-emerald-950/70 border border-emerald-800/60 px-3 py-1.5 rounded-lg transition-colors cursor-pointer"
+                                            onClick={() => fileInputRef.current?.click()}
+                                            className="text-xs font-medium text-emerald-400 bg-emerald-950/40 hover:bg-emerald-950/70 border border-emerald-800/60 px-3 py-1.5 rounded-lg active:scale-[0.97] transition-all cursor-pointer"
                                         >
-                                            Качи снимка
+                                            Избери от галерия
                                         </button>
                                     </div>
                                 </div>
@@ -469,49 +498,89 @@ export const QrScannerModal: React.FC<QrScannerModalProps> = ({
                         </div>
                     )}
 
-                    {/* UPLOAD DROPZONE TAB (Desktop & Gallery) */}
+                    {/* UPLOAD / FILE PICKER MODE */}
                     {activeTab === 'upload' && (
-                        <div
-                            onDragOver={handleDragOver}
-                            onDragLeave={handleDragLeave}
-                            onDrop={handleDrop}
-                            onClick={() => fileInputRef.current?.click()}
-                            className={`relative aspect-square w-full rounded-xl overflow-hidden flex flex-col items-center justify-center text-center p-6 border transition-all cursor-pointer ${
-                                isDragOver
-                                    ? 'border-emerald-500/80 bg-stone-950 text-emerald-300'
-                                    : 'border-stone-800 bg-stone-950 hover:border-stone-700 text-stone-300'
-                            }`}
-                        >
-                            <input
-                                ref={fileInputRef}
-                                type="file"
-                                accept="image/*"
-                                className="hidden"
-                                onChange={(e) => {
-                                    const file = e.target.files?.[0];
-                                    if (file) processImageFile(file);
-                                    e.target.value = '';
-                                }}
-                            />
+                        <>
+                            {isMobile ? (
+                                /* Mobile-tailored gallery picker card (no drag-and-drop confusion) */
+                                <div className="relative aspect-square w-full rounded-xl overflow-hidden flex flex-col items-center justify-center text-center p-6 border border-stone-800 bg-stone-950">
+                                    <div className="w-12 h-12 rounded-2xl bg-stone-900 flex items-center justify-center text-emerald-400 border border-stone-800 mb-3 shadow-inner">
+                                        <ImageIcon size={22} />
+                                    </div>
+                                    <p className="text-xs font-semibold text-stone-200 mb-1">
+                                        {cameraError ? 'Камерата не е достъпна' : 'Снимка на касов бон'}
+                                    </p>
+                                    <p className="text-[11px] text-stone-400 max-w-[240px] leading-relaxed mb-4">
+                                        {cameraError || 'Изберете снимка на касова бележка от галерията на телефона'}
+                                    </p>
+                                    <div className="flex flex-col gap-2 w-full max-w-[220px]">
+                                        <button
+                                            type="button"
+                                            onClick={() => fileInputRef.current?.click()}
+                                            className="w-full py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-medium text-xs flex items-center justify-center gap-2 active:scale-[0.97] transition-all shadow-md cursor-pointer"
+                                        >
+                                            <ImageIcon size={15} />
+                                            <span>Отвори галерията</span>
+                                        </button>
+                                        {cameraError && (
+                                            <button
+                                                type="button"
+                                                onClick={() => {
+                                                    setActiveTab('camera');
+                                                    startCamera();
+                                                }}
+                                                className="w-full py-2 px-4 rounded-xl bg-stone-800 hover:bg-stone-750 text-stone-300 text-xs font-medium border border-stone-700 active:scale-[0.97] transition-all cursor-pointer"
+                                            >
+                                                Опитай отново с камера
+                                            </button>
+                                        )}
+                                    </div>
+                                </div>
+                            ) : (
+                                /* Desktop Drag & Drop dropzone with Ctrl+V and webcam toggle */
+                                <div
+                                    onDragOver={handleDragOver}
+                                    onDragLeave={handleDragLeave}
+                                    onDrop={handleDrop}
+                                    onClick={() => fileInputRef.current?.click()}
+                                    className={`relative aspect-square w-full rounded-xl overflow-hidden flex flex-col items-center justify-center text-center p-6 border transition-all cursor-pointer ${
+                                        isDragOver
+                                            ? 'border-emerald-500/80 bg-stone-950 text-emerald-300'
+                                            : 'border-stone-800 bg-stone-950 hover:border-stone-700 text-stone-300'
+                                    }`}
+                                >
+                                    <div className="w-10 h-10 rounded-xl bg-stone-900 flex items-center justify-center text-stone-400 border border-stone-800 mb-2.5">
+                                        <FileText size={18} />
+                                    </div>
 
-                            <div className="w-10 h-10 rounded-xl bg-stone-900 flex items-center justify-center text-stone-500 border border-stone-800 mb-2.5">
-                                <FileText size={18} />
-                            </div>
+                                    <div>
+                                        <p className="text-xs font-medium text-stone-200 mb-1">
+                                            Изберете снимка на касова бележка
+                                        </p>
+                                        <p className="text-[11px] text-stone-400 max-w-[240px] leading-relaxed mb-3">
+                                            Кликнете тук или провлачете файл от компютъра
+                                        </p>
+                                    </div>
 
-                            <div>
-                                <p className="text-xs font-medium text-stone-200 mb-1">
-                                    Изберете снимка на касова бележка
-                                </p>
-                                <p className="text-[11px] text-stone-400 max-w-[240px] leading-relaxed mb-3">
-                                    Кликнете тук или провлачете файл от компютъра
-                                </p>
-                            </div>
+                                    <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-stone-800 hover:bg-stone-750 border border-stone-700 text-xs font-medium text-stone-300 transition-colors mb-3">
+                                        <span>Поддържа се и поставяне с</span>
+                                        <kbd className="font-mono text-stone-200 bg-stone-700/80 px-1.5 py-0.5 rounded text-[10px]">Ctrl+V</kbd>
+                                    </div>
 
-                            <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-stone-800 hover:bg-stone-750 border border-stone-700 text-xs font-medium text-stone-300 transition-colors">
-                                <span>Поддържа се и поставяне с</span>
-                                <kbd className="font-mono text-stone-200 bg-stone-700/80 px-1.5 py-0.5 rounded text-[10px]">Ctrl+V</kbd>
-                            </div>
-                        </div>
+                                    <button
+                                        type="button"
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            setActiveTab('camera');
+                                            startCamera();
+                                        }}
+                                        className="text-[11px] text-stone-400 hover:text-emerald-400 underline underline-offset-2 transition-colors cursor-pointer"
+                                    >
+                                        Или сканирайте с уебкамера
+                                    </button>
+                                </div>
+                            )}
+                        </>
                     )}
 
                     {/* Loading Overlay during processing */}
@@ -536,16 +605,16 @@ export const QrScannerModal: React.FC<QrScannerModalProps> = ({
                     <button
                         type="button"
                         onClick={() => fileInputRef.current?.click()}
-                        className="flex-1 py-2 px-3 rounded-xl bg-stone-800 hover:bg-stone-750 text-stone-200 border border-stone-700/80 text-xs font-medium flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                        className="flex-1 py-2 px-3 rounded-xl bg-stone-800 hover:bg-stone-750 text-stone-200 border border-stone-700/80 text-xs font-medium flex items-center justify-center gap-1.5 active:scale-[0.98] transition-all cursor-pointer"
                     >
-                        <ImageIcon size={13} className="text-stone-400" />
+                        <ImageIcon size={13} className="text-emerald-400" />
                         <span>Избери от галерия</span>
                     </button>
 
                     <button
                         type="button"
                         onClick={onClose}
-                        className="py-2 px-3.5 rounded-xl text-stone-400 hover:text-stone-200 hover:bg-stone-800/60 text-xs font-medium transition-colors cursor-pointer"
+                        className="py-2 px-3.5 rounded-xl text-stone-400 hover:text-stone-200 hover:bg-stone-800/60 text-xs font-medium active:scale-[0.98] transition-all cursor-pointer"
                     >
                         Затвори
                     </button>
