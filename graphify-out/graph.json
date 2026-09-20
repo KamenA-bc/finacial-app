@@ -4,71 +4,6 @@
   "graph": {},
   "nodes": [
     {
-      "id": "src_components_charts_categorychart_customtooltipprops",
-      "label": "CustomTooltipProps",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "DashboardClient.tsx",
-      "file_type": "code",
-      "norm_label": "customtooltipprops",
-      "source_file": "src/components/charts/CategoryChart.tsx",
-      "source_location": "L20"
-    },
-    {
-      "id": "src_components_charts_categorychart_tabtype",
-      "label": "TabType",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "DashboardClient.tsx",
-      "file_type": "code",
-      "norm_label": "tabtype",
-      "source_file": "src/components/charts/CategoryChart.tsx",
-      "source_location": "L41"
-    },
-    {
-      "id": "src_components_statistics_monthlytrendschart_customtooltipprops",
-      "label": "CustomTooltipProps",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "MonthlyTrendsChart.tsx",
-      "file_type": "code",
-      "norm_label": "customtooltipprops",
-      "source_file": "src/components/statistics/MonthlyTrendsChart.tsx",
-      "source_location": "L49"
-    },
-    {
-      "id": "src_components_statistics_monthlytrendschart_monthlytrendpoint",
-      "label": "MonthlyTrendPoint",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "MonthlyTrendsChart.tsx",
-      "file_type": "code",
-      "norm_label": "monthlytrendpoint",
-      "source_file": "src/components/statistics/MonthlyTrendsChart.tsx",
-      "source_location": "L30"
-    },
-    {
-      "id": "src_components_statistics_monthlytrendschart_monthlytrendschartprops",
-      "label": "MonthlyTrendsChartProps",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "MonthlyTrendsChart.tsx",
-      "file_type": "code",
-      "norm_label": "monthlytrendschartprops",
-      "source_file": "src/components/statistics/MonthlyTrendsChart.tsx",
-      "source_location": "L37"
-    },
-    {
       "id": "src_lib_telemetry_metricrating",
       "label": "MetricRating",
       "_callable": true,
@@ -101,7 +36,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 13,
-      "community_name": "errorLogger.ts",
+      "community_name": "lucide-react",
       "file_type": "code",
       "norm_label": "errorprops",
       "source_file": "src/app/error.tsx",
@@ -114,7 +49,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 13,
-      "community_name": "errorLogger.ts",
+      "community_name": "lucide-react",
       "file_type": "code",
       "norm_label": "forgotpasswordvalues",
       "source_file": "src/app/forgot-password/page.tsx",
@@ -127,7 +62,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 13,
-      "community_name": "errorLogger.ts",
+      "community_name": "lucide-react",
       "file_type": "code",
       "norm_label": "globalerrorprops",
       "source_file": "src/app/global-error.tsx",
@@ -140,7 +75,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 13,
-      "community_name": "errorLogger.ts",
+      "community_name": "lucide-react",
       "file_type": "code",
       "norm_label": "loginformvalues",
       "source_file": "src/app/login/page.tsx",
@@ -153,7 +88,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 13,
-      "community_name": "errorLogger.ts",
+      "community_name": "lucide-react",
       "file_type": "code",
       "norm_label": "registerformvalues",
       "source_file": "src/app/register/page.tsx",
@@ -166,7 +101,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 13,
-      "community_name": "errorLogger.ts",
+      "community_name": "lucide-react",
       "file_type": "code",
       "norm_label": "updatepasswordvalues",
       "source_file": "src/app/update-password/page.tsx",
@@ -179,7 +114,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 13,
-      "community_name": "errorLogger.ts",
+      "community_name": "lucide-react",
       "file_type": "code",
       "norm_label": "authcontextvalue",
       "source_file": "src/components/auth/AuthProvider.tsx",
@@ -192,7 +127,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 13,
-      "community_name": "errorLogger.ts",
+      "community_name": "lucide-react",
       "file_type": "code",
       "norm_label": "authproviderprops",
       "source_file": "src/components/auth/AuthProvider.tsx",
@@ -205,7 +140,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 13,
-      "community_name": "errorLogger.ts",
+      "community_name": "lucide-react",
       "file_type": "code",
       "norm_label": "errorlogentry",
       "source_file": "src/lib/errorLogger.ts",
@@ -218,7 +153,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 13,
-      "community_name": "errorLogger.ts",
+      "community_name": "lucide-react",
       "file_type": "code",
       "norm_label": "errorseverity",
       "source_file": "src/lib/errorLogger.ts",
@@ -236,6 +171,19 @@
       "norm_label": "dashboardlayoutprops",
       "source_file": "src/components/layout/DashboardLayout.tsx",
       "source_location": "L10"
+    },
+    {
+      "id": "src_components_ui_errorboundary_errorboundary",
+      "label": "ErrorBoundary",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 22,
+      "community_name": "react",
+      "file_type": "code",
+      "norm_label": "errorboundary",
+      "source_file": "src/components/ui/ErrorBoundary.tsx",
+      "source_location": "L25"
     },
     {
       "id": "src_components_ui_errorboundary_props",
@@ -264,6 +212,32 @@
       "source_location": "L14"
     },
     {
+      "id": "src_store_toaststore_toaststate",
+      "label": "ToastState",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 22,
+      "community_name": "react",
+      "file_type": "code",
+      "norm_label": "toaststate",
+      "source_file": "src/store/toastStore.ts",
+      "source_location": "L5"
+    },
+    {
+      "id": "src_store_toaststore_toastvariant",
+      "label": "ToastVariant",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 22,
+      "community_name": "react",
+      "file_type": "code",
+      "norm_label": "toastvariant",
+      "source_file": "src/store/toastStore.ts",
+      "source_location": "L3"
+    },
+    {
       "id": "src_components_history_monthcard_monthcardprops",
       "label": "MonthCardProps",
       "_callable": true,
@@ -275,6 +249,19 @@
       "norm_label": "monthcardprops",
       "source_file": "src/components/history/MonthCard.tsx",
       "source_location": "L16"
+    },
+    {
+      "id": "src_components_transactions_edittransactionmodal_edittransactionmodalprops",
+      "label": "EditTransactionModalProps",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 24,
+      "community_name": "transactionStore.ts",
+      "file_type": "code",
+      "norm_label": "edittransactionmodalprops",
+      "source_file": "src/components/transactions/EditTransactionModal.tsx",
+      "source_location": "L24"
     },
     {
       "id": "src_hooks_usefinancialdata_financialdata",
@@ -404,7 +391,20 @@
       "file_type": "code",
       "norm_label": "categorydatapoint",
       "source_file": "src/types/index.ts",
-      "source_location": "L82"
+      "source_location": "L90"
+    },
+    {
+      "id": "src_types_index_expensecategory",
+      "label": "ExpenseCategory",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 24,
+      "community_name": "transactionStore.ts",
+      "file_type": "code",
+      "norm_label": "expensecategory",
+      "source_file": "src/types/index.ts",
+      "source_location": "L8"
     },
     {
       "id": "src_types_index_expenseentry",
@@ -430,7 +430,7 @@
       "file_type": "code",
       "norm_label": "financialstore",
       "source_file": "src/types/index.ts",
-      "source_location": "L56"
+      "source_location": "L62"
     },
     {
       "id": "src_types_index_incomeentry",
@@ -457,6 +457,32 @@
       "norm_label": "transactiontype",
       "source_file": "src/types/index.ts",
       "source_location": "L24"
+    },
+    {
+      "id": "src_types_index_updateexpenseinput",
+      "label": "UpdateExpenseInput",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 24,
+      "community_name": "transactionStore.ts",
+      "file_type": "code",
+      "norm_label": "updateexpenseinput",
+      "source_file": "src/types/index.ts",
+      "source_location": "L59"
+    },
+    {
+      "id": "src_types_index_updateincomeinput",
+      "label": "UpdateIncomeInput",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 24,
+      "community_name": "transactionStore.ts",
+      "file_type": "code",
+      "norm_label": "updateincomeinput",
+      "source_file": "src/types/index.ts",
+      "source_location": "L56"
     },
     {
       "id": "src_lib_pdfexport_drawcontext",
@@ -496,19 +522,6 @@
       "norm_label": "mockcall",
       "source_file": "src/lib/pdfExport.test.ts",
       "source_location": "L16"
-    },
-    {
-      "id": "src_components_ui_errorboundary_errorboundary",
-      "label": "ErrorBoundary",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "ErrorBoundary",
-      "file_type": "code",
-      "norm_label": "errorboundary",
-      "source_file": "src/components/ui/ErrorBoundary.tsx",
-      "source_location": "L25"
     },
     {
       "id": "src_components_forms_quicktransactionform_expenseformvalues",
@@ -654,110 +667,6 @@
       "source_location": "L9"
     },
     {
-      "id": "src_store_toaststore_toaststate",
-      "label": "ToastState",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 36,
-      "community_name": "QuickTransactionForm.tsx",
-      "file_type": "code",
-      "norm_label": "toaststate",
-      "source_file": "src/store/toastStore.ts",
-      "source_location": "L5"
-    },
-    {
-      "id": "src_store_toaststore_toastvariant",
-      "label": "ToastVariant",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 36,
-      "community_name": "QuickTransactionForm.tsx",
-      "file_type": "code",
-      "norm_label": "toastvariant",
-      "source_file": "src/store/toastStore.ts",
-      "source_location": "L3"
-    },
-    {
-      "id": "src_types_index_expensecategory",
-      "label": "ExpenseCategory",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 36,
-      "community_name": "QuickTransactionForm.tsx",
-      "file_type": "code",
-      "norm_label": "expensecategory",
-      "source_file": "src/types/index.ts",
-      "source_location": "L8"
-    },
-    {
-      "id": "src_components_statistics_recordhighlights_monthrecord",
-      "label": "MonthRecord",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 5,
-      "community_name": "RecordHighlights.tsx",
-      "file_type": "code",
-      "norm_label": "monthrecord",
-      "source_file": "src/components/statistics/RecordHighlights.tsx",
-      "source_location": "L15"
-    },
-    {
-      "id": "src_components_statistics_recordhighlights_recordcardprops",
-      "label": "RecordCardProps",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 5,
-      "community_name": "RecordHighlights.tsx",
-      "file_type": "code",
-      "norm_label": "recordcardprops",
-      "source_file": "src/components/statistics/RecordHighlights.tsx",
-      "source_location": "L34"
-    },
-    {
-      "id": "src_components_statistics_recordhighlights_recordhighlightsprops",
-      "label": "RecordHighlightsProps",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 5,
-      "community_name": "RecordHighlights.tsx",
-      "file_type": "code",
-      "norm_label": "recordhighlightsprops",
-      "source_file": "src/components/statistics/RecordHighlights.tsx",
-      "source_location": "L20"
-    },
-    {
-      "id": "src_components_statistics_spendinghabits_categoryrankentry",
-      "label": "CategoryRankEntry",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 7,
-      "community_name": "SpendingHabits.tsx",
-      "file_type": "code",
-      "norm_label": "categoryrankentry",
-      "source_file": "src/components/statistics/SpendingHabits.tsx",
-      "source_location": "L16"
-    },
-    {
-      "id": "src_components_statistics_spendinghabits_spendinghabitsprops",
-      "label": "SpendingHabitsProps",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 7,
-      "community_name": "SpendingHabits.tsx",
-      "file_type": "code",
-      "norm_label": "spendinghabitsprops",
-      "source_file": "src/components/statistics/SpendingHabits.tsx",
-      "source_location": "L22"
-    },
-    {
       "id": "src_components_transactions_transactionlist_deletedialogprops",
       "label": "DeleteDialogProps",
       "_callable": true,
@@ -768,7 +677,7 @@
       "file_type": "code",
       "norm_label": "deletedialogprops",
       "source_file": "src/components/transactions/TransactionList.tsx",
-      "source_location": "L76"
+      "source_location": "L78"
     },
     {
       "id": "src_components_transactions_transactionlist_expenserowprops",
@@ -781,7 +690,7 @@
       "file_type": "code",
       "norm_label": "expenserowprops",
       "source_file": "src/components/transactions/TransactionList.tsx",
-      "source_location": "L127"
+      "source_location": "L129"
     },
     {
       "id": "src_components_transactions_transactionlist_filtermode",
@@ -794,7 +703,7 @@
       "file_type": "code",
       "norm_label": "filtermode",
       "source_file": "src/components/transactions/TransactionList.tsx",
-      "source_location": "L227"
+      "source_location": "L245"
     },
     {
       "id": "src_components_transactions_transactionlist_incomerowprops",
@@ -807,7 +716,7 @@
       "file_type": "code",
       "norm_label": "incomerowprops",
       "source_file": "src/components/transactions/TransactionList.tsx",
-      "source_location": "L183"
+      "source_location": "L193"
     },
     {
       "id": "src_components_transactions_transactionlist_pendingdelete",
@@ -820,7 +729,7 @@
       "file_type": "code",
       "norm_label": "pendingdelete",
       "source_file": "src/components/transactions/TransactionList.tsx",
-      "source_location": "L229"
+      "source_location": "L247"
     },
     {
       "id": "src_lib_expenserowcolors_expenserowcolors",
@@ -836,13 +745,39 @@
       "source_location": "L21"
     },
     {
+      "id": "src_components_charts_categorychart_customtooltipprops",
+      "label": "CustomTooltipProps",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "DashboardClient.tsx",
+      "file_type": "code",
+      "norm_label": "customtooltipprops",
+      "source_file": "src/components/charts/CategoryChart.tsx",
+      "source_location": "L20"
+    },
+    {
+      "id": "src_components_charts_categorychart_tabtype",
+      "label": "TabType",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "DashboardClient.tsx",
+      "file_type": "code",
+      "norm_label": "tabtype",
+      "source_file": "src/components/charts/CategoryChart.tsx",
+      "source_location": "L41"
+    },
+    {
       "id": "src_components_history_annualsummary_annualsummaryprops",
       "label": "AnnualSummaryProps",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
       "community": 8,
-      "community_name": "getCurrencySymbol",
+      "community_name": "DashboardClient.tsx",
       "file_type": "code",
       "norm_label": "annualsummaryprops",
       "source_file": "src/components/history/AnnualSummary.tsx",
@@ -855,7 +790,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 8,
-      "community_name": "getCurrencySymbol",
+      "community_name": "DashboardClient.tsx",
       "file_type": "code",
       "norm_label": "incomebreakdownprops",
       "source_file": "src/components/statistics/IncomeBreakdown.tsx",
@@ -868,11 +803,50 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 8,
-      "community_name": "getCurrencySymbol",
+      "community_name": "DashboardClient.tsx",
       "file_type": "code",
       "norm_label": "splitbarprops",
       "source_file": "src/components/statistics/IncomeBreakdown.tsx",
       "source_location": "L29"
+    },
+    {
+      "id": "src_components_statistics_monthlytrendschart_customtooltipprops",
+      "label": "CustomTooltipProps",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "DashboardClient.tsx",
+      "file_type": "code",
+      "norm_label": "customtooltipprops",
+      "source_file": "src/components/statistics/MonthlyTrendsChart.tsx",
+      "source_location": "L49"
+    },
+    {
+      "id": "src_components_statistics_monthlytrendschart_monthlytrendpoint",
+      "label": "MonthlyTrendPoint",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "DashboardClient.tsx",
+      "file_type": "code",
+      "norm_label": "monthlytrendpoint",
+      "source_file": "src/components/statistics/MonthlyTrendsChart.tsx",
+      "source_location": "L30"
+    },
+    {
+      "id": "src_components_statistics_monthlytrendschart_monthlytrendschartprops",
+      "label": "MonthlyTrendsChartProps",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "DashboardClient.tsx",
+      "file_type": "code",
+      "norm_label": "monthlytrendschartprops",
+      "source_file": "src/components/statistics/MonthlyTrendsChart.tsx",
+      "source_location": "L37"
     },
     {
       "id": "src_components_statistics_overviewcards_overviewcardsprops",
@@ -881,11 +855,76 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 8,
-      "community_name": "getCurrencySymbol",
+      "community_name": "DashboardClient.tsx",
       "file_type": "code",
       "norm_label": "overviewcardsprops",
       "source_file": "src/components/statistics/OverviewCards.tsx",
       "source_location": "L16"
+    },
+    {
+      "id": "src_components_statistics_recordhighlights_monthrecord",
+      "label": "MonthRecord",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "DashboardClient.tsx",
+      "file_type": "code",
+      "norm_label": "monthrecord",
+      "source_file": "src/components/statistics/RecordHighlights.tsx",
+      "source_location": "L15"
+    },
+    {
+      "id": "src_components_statistics_recordhighlights_recordcardprops",
+      "label": "RecordCardProps",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "DashboardClient.tsx",
+      "file_type": "code",
+      "norm_label": "recordcardprops",
+      "source_file": "src/components/statistics/RecordHighlights.tsx",
+      "source_location": "L34"
+    },
+    {
+      "id": "src_components_statistics_recordhighlights_recordhighlightsprops",
+      "label": "RecordHighlightsProps",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "DashboardClient.tsx",
+      "file_type": "code",
+      "norm_label": "recordhighlightsprops",
+      "source_file": "src/components/statistics/RecordHighlights.tsx",
+      "source_location": "L20"
+    },
+    {
+      "id": "src_components_statistics_spendinghabits_categoryrankentry",
+      "label": "CategoryRankEntry",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "DashboardClient.tsx",
+      "file_type": "code",
+      "norm_label": "categoryrankentry",
+      "source_file": "src/components/statistics/SpendingHabits.tsx",
+      "source_location": "L16"
+    },
+    {
+      "id": "src_components_statistics_spendinghabits_spendinghabitsprops",
+      "label": "SpendingHabitsProps",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "DashboardClient.tsx",
+      "file_type": "code",
+      "norm_label": "spendinghabitsprops",
+      "source_file": "src/components/statistics/SpendingHabits.tsx",
+      "source_location": "L22"
     },
     {
       "id": "src_components_ui_statdisplay_statdisplayprops",
@@ -894,7 +933,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 8,
-      "community_name": "getCurrencySymbol",
+      "community_name": "DashboardClient.tsx",
       "file_type": "code",
       "norm_label": "statdisplayprops",
       "source_file": "src/components/ui/StatDisplay.tsx",
@@ -1005,196 +1044,16 @@
       "source_location": "L35"
     },
     {
-      "id": "src_components_charts_categorychart_categorychart",
-      "label": "CategoryChart()",
+      "id": "src_app_api_log_error_route_post",
+      "label": "POST()",
       "_callable": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "DashboardClient.tsx",
+      "community_name": "route.test.ts",
       "file_type": "code",
-      "norm_label": "categorychart()",
-      "source_file": "src/components/charts/CategoryChart.tsx",
-      "source_location": "L44"
-    },
-    {
-      "id": "src_components_charts_categorychart_customtooltip",
-      "label": "CustomTooltip()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "DashboardClient.tsx",
-      "file_type": "code",
-      "norm_label": "customtooltip()",
-      "source_file": "src/components/charts/CategoryChart.tsx",
-      "source_location": "L26"
-    },
-    {
-      "id": "src_components_charts_categorychart_formattooltipvalue",
-      "label": "formatTooltipValue()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "DashboardClient.tsx",
-      "file_type": "code",
-      "norm_label": "formattooltipvalue()",
-      "source_file": "src/components/charts/CategoryChart.tsx",
-      "source_location": "L17"
-    },
-    {
-      "id": "src_components_dashboard_dashboardclient_dashboardclient",
-      "label": "DashboardClient()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "DashboardClient.tsx",
-      "file_type": "code",
-      "norm_label": "dashboardclient()",
-      "source_file": "src/components/dashboard/DashboardClient.tsx",
-      "source_location": "L58"
-    },
-    {
-      "id": "src_components_dashboard_dashboardclient_sectioncard",
-      "label": "SectionCard()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "DashboardClient.tsx",
-      "file_type": "code",
-      "norm_label": "sectioncard()",
-      "source_file": "src/components/dashboard/DashboardClient.tsx",
-      "source_location": "L34"
-    },
-    {
-      "id": "src_components_dashboard_dashboardclient_statdivider",
-      "label": "StatDivider()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "DashboardClient.tsx",
-      "file_type": "code",
-      "norm_label": "statdivider()",
-      "source_file": "src/components/dashboard/DashboardClient.tsx",
-      "source_location": "L54"
-    },
-    {
-      "id": "src_components_transactions_transactionlist_transactionlist",
-      "label": "TransactionList()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "DashboardClient.tsx",
-      "file_type": "code",
-      "norm_label": "transactionlist()",
-      "source_file": "src/components/transactions/TransactionList.tsx",
-      "source_location": "L237"
-    },
-    {
-      "id": "src_hooks_usefinancialdata_buildcategorybreakdown",
-      "label": "buildCategoryBreakdown()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "DashboardClient.tsx",
-      "file_type": "code",
-      "norm_label": "buildcategorybreakdown()",
-      "source_file": "src/hooks/useFinancialData.ts",
-      "source_location": "L34"
-    },
-    {
-      "id": "src_hooks_usefinancialdata_sumamount",
-      "label": "sumAmount()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "DashboardClient.tsx",
-      "file_type": "code",
-      "norm_label": "sumamount()",
-      "source_file": "src/hooks/useFinancialData.ts",
-      "source_location": "L30"
-    },
-    {
-      "id": "src_hooks_usefinancialdata_usefinancialdata",
-      "label": "useFinancialData()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "DashboardClient.tsx",
-      "file_type": "code",
-      "norm_label": "usefinancialdata()",
-      "source_file": "src/hooks/useFinancialData.ts",
-      "source_location": "L49"
-    },
-    {
-      "id": "src_lib_dateutils_getcalendarmonthrange",
-      "label": "getCalendarMonthRange()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "DashboardClient.tsx",
-      "file_type": "code",
-      "norm_label": "getcalendarmonthrange()",
-      "source_file": "src/lib/dateUtils.ts",
-      "source_location": "L83"
-    },
-    {
-      "id": "src_lib_dateutils_getmonthname",
-      "label": "getMonthName()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "DashboardClient.tsx",
-      "file_type": "code",
-      "norm_label": "getmonthname()",
-      "source_file": "src/lib/dateUtils.ts",
-      "source_location": "L58"
-    },
-    {
-      "id": "src_components_statistics_monthlytrendschart_chartcontent",
-      "label": "ChartContent()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "MonthlyTrendsChart.tsx",
-      "file_type": "code",
-      "norm_label": "chartcontent()",
-      "source_file": "src/components/statistics/MonthlyTrendsChart.tsx",
-      "source_location": "L90"
-    },
-    {
-      "id": "src_components_statistics_monthlytrendschart_customtooltip",
-      "label": "CustomTooltip()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "MonthlyTrendsChart.tsx",
-      "file_type": "code",
-      "norm_label": "customtooltip()",
-      "source_file": "src/components/statistics/MonthlyTrendsChart.tsx",
-      "source_location": "L62"
-    },
-    {
-      "id": "src_components_statistics_monthlytrendschart_formatvalue",
-      "label": "formatValue()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "MonthlyTrendsChart.tsx",
-      "file_type": "code",
-      "norm_label": "formatvalue()",
-      "source_file": "src/components/statistics/MonthlyTrendsChart.tsx",
-      "source_location": "L43"
-    },
-    {
-      "id": "src_components_statistics_monthlytrendschart_monthlytrendschart",
-      "label": "MonthlyTrendsChart()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "MonthlyTrendsChart.tsx",
-      "file_type": "code",
-      "norm_label": "monthlytrendschart()",
-      "source_file": "src/components/statistics/MonthlyTrendsChart.tsx",
-      "source_location": "L154"
+      "norm_label": "post()",
+      "source_file": "src/app/api/log-error/route.ts",
+      "source_location": "L8"
     },
     {
       "id": "src_components_telemetry_webvitals_webvitals",
@@ -1245,24 +1104,12 @@
       "source_location": "L68"
     },
     {
-      "id": "src_app_api_log_error_route_post",
-      "label": "POST()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 13,
-      "community_name": "errorLogger.ts",
-      "file_type": "code",
-      "norm_label": "post()",
-      "source_file": "src/app/api/log-error/route.ts",
-      "source_location": "L8"
-    },
-    {
       "id": "src_app_error_errorpage",
       "label": "ErrorPage()",
       "_callable": true,
       "_origin": "ast",
       "community": 13,
-      "community_name": "errorLogger.ts",
+      "community_name": "lucide-react",
       "file_type": "code",
       "norm_label": "errorpage()",
       "source_file": "src/app/error.tsx",
@@ -1274,7 +1121,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 13,
-      "community_name": "errorLogger.ts",
+      "community_name": "lucide-react",
       "file_type": "code",
       "norm_label": "forgotpasswordpage()",
       "source_file": "src/app/forgot-password/page.tsx",
@@ -1286,7 +1133,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 13,
-      "community_name": "errorLogger.ts",
+      "community_name": "lucide-react",
       "file_type": "code",
       "norm_label": "globalerror()",
       "source_file": "src/app/global-error.tsx",
@@ -1298,7 +1145,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 13,
-      "community_name": "errorLogger.ts",
+      "community_name": "lucide-react",
       "file_type": "code",
       "norm_label": "rootlayout()",
       "source_file": "src/app/layout.tsx",
@@ -1310,7 +1157,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 13,
-      "community_name": "errorLogger.ts",
+      "community_name": "lucide-react",
       "file_type": "code",
       "norm_label": "loginpage()",
       "source_file": "src/app/login/page.tsx",
@@ -1322,7 +1169,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 13,
-      "community_name": "errorLogger.ts",
+      "community_name": "lucide-react",
       "file_type": "code",
       "norm_label": "registerpage()",
       "source_file": "src/app/register/page.tsx",
@@ -1334,7 +1181,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 13,
-      "community_name": "errorLogger.ts",
+      "community_name": "lucide-react",
       "file_type": "code",
       "norm_label": "updatepasswordpage()",
       "source_file": "src/app/update-password/page.tsx",
@@ -1346,11 +1193,23 @@
       "_callable": true,
       "_origin": "ast",
       "community": 13,
-      "community_name": "errorLogger.ts",
+      "community_name": "lucide-react",
       "file_type": "code",
       "norm_label": "authprovider()",
       "source_file": "src/components/auth/AuthProvider.tsx",
       "source_location": "L35"
+    },
+    {
+      "id": "src_components_auth_authprovider_useauth",
+      "label": "useAuth()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 13,
+      "community_name": "lucide-react",
+      "file_type": "code",
+      "norm_label": "useauth()",
+      "source_file": "src/components/auth/AuthProvider.tsx",
+      "source_location": "L25"
     },
     {
       "id": "src_components_telemetry_globalerrorlistener_globalerrorlistener",
@@ -1358,7 +1217,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 13,
-      "community_name": "errorLogger.ts",
+      "community_name": "lucide-react",
       "file_type": "code",
       "norm_label": "globalerrorlistener()",
       "source_file": "src/components/telemetry/GlobalErrorListener.tsx",
@@ -1370,7 +1229,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 13,
-      "community_name": "errorLogger.ts",
+      "community_name": "lucide-react",
       "file_type": "code",
       "norm_label": "extracterrormessage()",
       "source_file": "src/lib/errorLogger.ts",
@@ -1382,7 +1241,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 13,
-      "community_name": "errorLogger.ts",
+      "community_name": "lucide-react",
       "file_type": "code",
       "norm_label": "extracterrorstack()",
       "source_file": "src/lib/errorLogger.ts",
@@ -1394,7 +1253,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 13,
-      "community_name": "errorLogger.ts",
+      "community_name": "lucide-react",
       "file_type": "code",
       "norm_label": "getclientmetadata()",
       "source_file": "src/lib/errorLogger.ts",
@@ -1406,7 +1265,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 13,
-      "community_name": "errorLogger.ts",
+      "community_name": "lucide-react",
       "file_type": "code",
       "norm_label": "logerror()",
       "source_file": "src/lib/errorLogger.ts",
@@ -1418,7 +1277,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 13,
-      "community_name": "errorLogger.ts",
+      "community_name": "lucide-react",
       "file_type": "code",
       "norm_label": "persisttosupabase()",
       "source_file": "src/lib/errorLogger.ts",
@@ -1430,7 +1289,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 13,
-      "community_name": "errorLogger.ts",
+      "community_name": "lucide-react",
       "file_type": "code",
       "norm_label": "getsupabaseclient()",
       "source_file": "src/lib/supabase.ts",
@@ -1442,7 +1301,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 13,
-      "community_name": "errorLogger.ts",
+      "community_name": "lucide-react",
       "file_type": "code",
       "norm_label": "getbackoffdelay()",
       "source_file": "src/lib/supabaseRetry.ts",
@@ -1454,7 +1313,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 13,
-      "community_name": "errorLogger.ts",
+      "community_name": "lucide-react",
       "file_type": "code",
       "norm_label": "isjwtfutureerror()",
       "source_file": "src/lib/supabaseRetry.ts",
@@ -1466,7 +1325,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 13,
-      "community_name": "errorLogger.ts",
+      "community_name": "lucide-react",
       "file_type": "code",
       "norm_label": "withjwtretry()",
       "source_file": "src/lib/supabaseRetry.ts",
@@ -1521,6 +1380,30 @@
       "source_location": "L9"
     },
     {
+      "id": "src_app_loading_rootloading",
+      "label": "RootLoading()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 22,
+      "community_name": "react",
+      "file_type": "code",
+      "norm_label": "rootloading()",
+      "source_file": "src/app/loading.tsx",
+      "source_location": "L9"
+    },
+    {
+      "id": "src_app_page_dashboardpage",
+      "label": "DashboardPage()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 22,
+      "community_name": "react",
+      "file_type": "code",
+      "norm_label": "dashboardpage()",
+      "source_file": "src/app/page.tsx",
+      "source_location": "L17"
+    },
+    {
       "id": "src_app_statistics_loading_statisticsloading",
       "label": "StatisticsLoading()",
       "_callable": true,
@@ -1533,16 +1416,28 @@
       "source_location": "L9"
     },
     {
-      "id": "src_components_auth_authprovider_useauth",
-      "label": "useAuth()",
+      "id": "src_components_dashboard_dashboardskeleton_dashboardskeleton",
+      "label": "DashboardSkeleton()",
       "_callable": true,
       "_origin": "ast",
       "community": 22,
       "community_name": "react",
       "file_type": "code",
-      "norm_label": "useauth()",
-      "source_file": "src/components/auth/AuthProvider.tsx",
-      "source_location": "L25"
+      "norm_label": "dashboardskeleton()",
+      "source_file": "src/components/dashboard/DashboardSkeleton.tsx",
+      "source_location": "L8"
+    },
+    {
+      "id": "src_components_forms_quicktransactionform_quicktransactionform",
+      "label": "QuickTransactionForm()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 22,
+      "community_name": "react",
+      "file_type": "code",
+      "norm_label": "quicktransactionform()",
+      "source_file": "src/components/forms/QuickTransactionForm.tsx",
+      "source_location": "L64"
     },
     {
       "id": "src_components_history_historyskeleton_historyskeleton",
@@ -1581,6 +1476,90 @@
       "source_location": "L8"
     },
     {
+      "id": "src_components_ui_errorboundary_errorboundary_componentdidcatch",
+      "label": ".componentDidCatch()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 22,
+      "community_name": "react",
+      "file_type": "code",
+      "norm_label": ".componentdidcatch()",
+      "source_file": "src/components/ui/ErrorBoundary.tsx",
+      "source_location": "L35"
+    },
+    {
+      "id": "src_components_ui_errorboundary_errorboundary_constructor",
+      "label": ".constructor()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 22,
+      "community_name": "react",
+      "file_type": "code",
+      "norm_label": ".constructor()",
+      "source_file": "src/components/ui/ErrorBoundary.tsx",
+      "source_location": "L26"
+    },
+    {
+      "id": "src_components_ui_errorboundary_errorboundary_getderivedstatefromerror",
+      "label": ".getDerivedStateFromError()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 22,
+      "community_name": "react",
+      "file_type": "code",
+      "norm_label": ".getderivedstatefromerror()",
+      "source_file": "src/components/ui/ErrorBoundary.tsx",
+      "source_location": "L31"
+    },
+    {
+      "id": "src_components_ui_errorboundary_errorboundary_handlereload",
+      "label": ".handleReload()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 22,
+      "community_name": "react",
+      "file_type": "code",
+      "norm_label": ".handlereload()",
+      "source_file": "src/components/ui/ErrorBoundary.tsx",
+      "source_location": "L48"
+    },
+    {
+      "id": "src_components_ui_errorboundary_errorboundary_handlereset",
+      "label": ".handleReset()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 22,
+      "community_name": "react",
+      "file_type": "code",
+      "norm_label": ".handlereset()",
+      "source_file": "src/components/ui/ErrorBoundary.tsx",
+      "source_location": "L44"
+    },
+    {
+      "id": "src_components_ui_errorboundary_errorboundary_ischunkloaderror",
+      "label": ".isChunkLoadError()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 22,
+      "community_name": "react",
+      "file_type": "code",
+      "norm_label": ".ischunkloaderror()",
+      "source_file": "src/components/ui/ErrorBoundary.tsx",
+      "source_location": "L54"
+    },
+    {
+      "id": "src_components_ui_errorboundary_errorboundary_render",
+      "label": ".render()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 22,
+      "community_name": "react",
+      "file_type": "code",
+      "norm_label": ".render()",
+      "source_file": "src/components/ui/ErrorBoundary.tsx",
+      "source_location": "L67"
+    },
+    {
       "id": "src_components_ui_errorboundary_test_buggycomponent",
       "label": "BuggyComponent()",
       "_callable": true,
@@ -1591,6 +1570,18 @@
       "norm_label": "buggycomponent()",
       "source_file": "src/components/ui/ErrorBoundary.test.tsx",
       "source_location": "L9"
+    },
+    {
+      "id": "src_components_ui_statusnotification_statusnotification",
+      "label": "StatusNotification()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 22,
+      "community_name": "react",
+      "file_type": "code",
+      "norm_label": "statusnotification()",
+      "source_file": "src/components/ui/StatusNotification.tsx",
+      "source_location": "L14"
     },
     {
       "id": "src_app_history_page_historypage",
@@ -1663,6 +1654,18 @@
       "norm_label": "monthcard()",
       "source_file": "src/components/history/MonthCard.tsx",
       "source_location": "L49"
+    },
+    {
+      "id": "src_components_transactions_edittransactionmodal_edittransactionmodal",
+      "label": "EditTransactionModal()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 24,
+      "community_name": "transactionStore.ts",
+      "file_type": "code",
+      "norm_label": "edittransactionmodal()",
+      "source_file": "src/components/transactions/EditTransactionModal.tsx",
+      "source_location": "L33"
     },
     {
       "id": "src_hooks_usehistorydata_sumamount",
@@ -1747,30 +1750,6 @@
       "norm_label": "getmonthrange()",
       "source_file": "src/lib/dateUtils.ts",
       "source_location": "L69"
-    },
-    {
-      "id": "src_lib_excelexport_buildworkbook",
-      "label": "buildWorkbook()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 24,
-      "community_name": "transactionStore.ts",
-      "file_type": "code",
-      "norm_label": "buildworkbook()",
-      "source_file": "src/lib/excelExport.ts",
-      "source_location": "L92"
-    },
-    {
-      "id": "src_lib_excelexport_getmonthlytransactions",
-      "label": "getMonthlyTransactions()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 24,
-      "community_name": "transactionStore.ts",
-      "file_type": "code",
-      "norm_label": "getmonthlytransactions()",
-      "source_file": "src/lib/excelExport.ts",
-      "source_location": "L49"
     },
     {
       "id": "src_store_transactionstore_generatetempid",
@@ -2133,102 +2112,6 @@
       "source_location": "L21"
     },
     {
-      "id": "src_components_ui_errorboundary_errorboundary_componentdidcatch",
-      "label": ".componentDidCatch()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "ErrorBoundary",
-      "file_type": "code",
-      "norm_label": ".componentdidcatch()",
-      "source_file": "src/components/ui/ErrorBoundary.tsx",
-      "source_location": "L35"
-    },
-    {
-      "id": "src_components_ui_errorboundary_errorboundary_constructor",
-      "label": ".constructor()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "ErrorBoundary",
-      "file_type": "code",
-      "norm_label": ".constructor()",
-      "source_file": "src/components/ui/ErrorBoundary.tsx",
-      "source_location": "L26"
-    },
-    {
-      "id": "src_components_ui_errorboundary_errorboundary_getderivedstatefromerror",
-      "label": ".getDerivedStateFromError()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "ErrorBoundary",
-      "file_type": "code",
-      "norm_label": ".getderivedstatefromerror()",
-      "source_file": "src/components/ui/ErrorBoundary.tsx",
-      "source_location": "L31"
-    },
-    {
-      "id": "src_components_ui_errorboundary_errorboundary_handlereload",
-      "label": ".handleReload()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "ErrorBoundary",
-      "file_type": "code",
-      "norm_label": ".handlereload()",
-      "source_file": "src/components/ui/ErrorBoundary.tsx",
-      "source_location": "L48"
-    },
-    {
-      "id": "src_components_ui_errorboundary_errorboundary_handlereset",
-      "label": ".handleReset()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "ErrorBoundary",
-      "file_type": "code",
-      "norm_label": ".handlereset()",
-      "source_file": "src/components/ui/ErrorBoundary.tsx",
-      "source_location": "L44"
-    },
-    {
-      "id": "src_components_ui_errorboundary_errorboundary_ischunkloaderror",
-      "label": ".isChunkLoadError()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "ErrorBoundary",
-      "file_type": "code",
-      "norm_label": ".ischunkloaderror()",
-      "source_file": "src/components/ui/ErrorBoundary.tsx",
-      "source_location": "L54"
-    },
-    {
-      "id": "src_components_ui_errorboundary_errorboundary_render",
-      "label": ".render()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "ErrorBoundary",
-      "file_type": "code",
-      "norm_label": ".render()",
-      "source_file": "src/components/ui/ErrorBoundary.tsx",
-      "source_location": "L67"
-    },
-    {
-      "id": "src_components_forms_quicktransactionform_quicktransactionform",
-      "label": "QuickTransactionForm()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 36,
-      "community_name": "QuickTransactionForm.tsx",
-      "file_type": "code",
-      "norm_label": "quicktransactionform()",
-      "source_file": "src/components/forms/QuickTransactionForm.tsx",
-      "source_location": "L64"
-    },
-    {
       "id": "src_components_scanner_qrscannermodal_ismobiledevice",
       "label": "isMobileDevice()",
       "_callable": true,
@@ -2251,18 +2134,6 @@
       "norm_label": "qrscannermodal()",
       "source_file": "src/components/scanner/QrScannerModal.tsx",
       "source_location": "L25"
-    },
-    {
-      "id": "src_components_ui_statusnotification_statusnotification",
-      "label": "StatusNotification()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 36,
-      "community_name": "QuickTransactionForm.tsx",
-      "file_type": "code",
-      "norm_label": "statusnotification()",
-      "source_file": "src/components/ui/StatusNotification.tsx",
-      "source_location": "L14"
     },
     {
       "id": "src_lib_qrdetector_barcodedetectorinstance_detect",
@@ -2397,102 +2268,6 @@
       "source_location": "L90"
     },
     {
-      "id": "src_app_loading_rootloading",
-      "label": "RootLoading()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "app/page.tsx",
-      "file_type": "code",
-      "norm_label": "rootloading()",
-      "source_file": "src/app/loading.tsx",
-      "source_location": "L9"
-    },
-    {
-      "id": "src_app_page_dashboardpage",
-      "label": "DashboardPage()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "app/page.tsx",
-      "file_type": "code",
-      "norm_label": "dashboardpage()",
-      "source_file": "src/app/page.tsx",
-      "source_location": "L17"
-    },
-    {
-      "id": "src_components_dashboard_dashboardskeleton_dashboardskeleton",
-      "label": "DashboardSkeleton()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "app/page.tsx",
-      "file_type": "code",
-      "norm_label": "dashboardskeleton()",
-      "source_file": "src/components/dashboard/DashboardSkeleton.tsx",
-      "source_location": "L8"
-    },
-    {
-      "id": "src_components_statistics_recordhighlights_fmt",
-      "label": "fmt()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 5,
-      "community_name": "RecordHighlights.tsx",
-      "file_type": "code",
-      "norm_label": "fmt()",
-      "source_file": "src/components/statistics/RecordHighlights.tsx",
-      "source_location": "L28"
-    },
-    {
-      "id": "src_components_statistics_recordhighlights_recordcard",
-      "label": "RecordCard()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 5,
-      "community_name": "RecordHighlights.tsx",
-      "file_type": "code",
-      "norm_label": "recordcard()",
-      "source_file": "src/components/statistics/RecordHighlights.tsx",
-      "source_location": "L43"
-    },
-    {
-      "id": "src_components_statistics_recordhighlights_recordhighlights",
-      "label": "RecordHighlights()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 5,
-      "community_name": "RecordHighlights.tsx",
-      "file_type": "code",
-      "norm_label": "recordhighlights()",
-      "source_file": "src/components/statistics/RecordHighlights.tsx",
-      "source_location": "L73"
-    },
-    {
-      "id": "src_components_statistics_spendinghabits_fmt",
-      "label": "fmt()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 7,
-      "community_name": "SpendingHabits.tsx",
-      "file_type": "code",
-      "norm_label": "fmt()",
-      "source_file": "src/components/statistics/SpendingHabits.tsx",
-      "source_location": "L32"
-    },
-    {
-      "id": "src_components_statistics_spendinghabits_spendinghabits",
-      "label": "SpendingHabits()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 7,
-      "community_name": "SpendingHabits.tsx",
-      "file_type": "code",
-      "norm_label": "spendinghabits()",
-      "source_file": "src/components/statistics/SpendingHabits.tsx",
-      "source_location": "L38"
-    },
-    {
       "id": "src_components_transactions_transactionlist_deletedialog",
       "label": "DeleteDialog()",
       "_callable": true,
@@ -2502,7 +2277,7 @@
       "file_type": "code",
       "norm_label": "deletedialog()",
       "source_file": "src/components/transactions/TransactionList.tsx",
-      "source_location": "L83"
+      "source_location": "L85"
     },
     {
       "id": "src_components_transactions_transactionlist_expenserow",
@@ -2514,7 +2289,7 @@
       "file_type": "code",
       "norm_label": "expenserow()",
       "source_file": "src/components/transactions/TransactionList.tsx",
-      "source_location": "L132"
+      "source_location": "L135"
     },
     {
       "id": "src_components_transactions_transactionlist_formatamount",
@@ -2526,7 +2301,7 @@
       "file_type": "code",
       "norm_label": "formatamount()",
       "source_file": "src/components/transactions/TransactionList.tsx",
-      "source_location": "L68"
+      "source_location": "L70"
     },
     {
       "id": "src_components_transactions_transactionlist_incomerow",
@@ -2538,7 +2313,19 @@
       "file_type": "code",
       "norm_label": "incomerow()",
       "source_file": "src/components/transactions/TransactionList.tsx",
-      "source_location": "L188"
+      "source_location": "L199"
+    },
+    {
+      "id": "src_components_transactions_transactionlist_transactionlist",
+      "label": "TransactionList()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 71,
+      "community_name": "TransactionList.tsx",
+      "file_type": "code",
+      "norm_label": "transactionlist()",
+      "source_file": "src/components/transactions/TransactionList.tsx",
+      "source_location": "L255"
     },
     {
       "id": "src_lib_expenserowcolors_flagkey",
@@ -2565,12 +2352,84 @@
       "source_location": "L39"
     },
     {
+      "id": "src_components_charts_categorychart_categorychart",
+      "label": "CategoryChart()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "DashboardClient.tsx",
+      "file_type": "code",
+      "norm_label": "categorychart()",
+      "source_file": "src/components/charts/CategoryChart.tsx",
+      "source_location": "L44"
+    },
+    {
+      "id": "src_components_charts_categorychart_customtooltip",
+      "label": "CustomTooltip()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "DashboardClient.tsx",
+      "file_type": "code",
+      "norm_label": "customtooltip()",
+      "source_file": "src/components/charts/CategoryChart.tsx",
+      "source_location": "L26"
+    },
+    {
+      "id": "src_components_charts_categorychart_formattooltipvalue",
+      "label": "formatTooltipValue()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "DashboardClient.tsx",
+      "file_type": "code",
+      "norm_label": "formattooltipvalue()",
+      "source_file": "src/components/charts/CategoryChart.tsx",
+      "source_location": "L17"
+    },
+    {
+      "id": "src_components_dashboard_dashboardclient_dashboardclient",
+      "label": "DashboardClient()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "DashboardClient.tsx",
+      "file_type": "code",
+      "norm_label": "dashboardclient()",
+      "source_file": "src/components/dashboard/DashboardClient.tsx",
+      "source_location": "L58"
+    },
+    {
+      "id": "src_components_dashboard_dashboardclient_sectioncard",
+      "label": "SectionCard()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "DashboardClient.tsx",
+      "file_type": "code",
+      "norm_label": "sectioncard()",
+      "source_file": "src/components/dashboard/DashboardClient.tsx",
+      "source_location": "L34"
+    },
+    {
+      "id": "src_components_dashboard_dashboardclient_statdivider",
+      "label": "StatDivider()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "DashboardClient.tsx",
+      "file_type": "code",
+      "norm_label": "statdivider()",
+      "source_file": "src/components/dashboard/DashboardClient.tsx",
+      "source_location": "L54"
+    },
+    {
       "id": "src_components_history_annualsummary_annualsummary",
       "label": "AnnualSummary()",
       "_callable": true,
       "_origin": "ast",
       "community": 8,
-      "community_name": "getCurrencySymbol",
+      "community_name": "DashboardClient.tsx",
       "file_type": "code",
       "norm_label": "annualsummary()",
       "source_file": "src/components/history/AnnualSummary.tsx",
@@ -2582,7 +2441,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 8,
-      "community_name": "getCurrencySymbol",
+      "community_name": "DashboardClient.tsx",
       "file_type": "code",
       "norm_label": "formatcurrency()",
       "source_file": "src/components/history/AnnualSummary.tsx",
@@ -2594,7 +2453,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 8,
-      "community_name": "getCurrencySymbol",
+      "community_name": "DashboardClient.tsx",
       "file_type": "code",
       "norm_label": "fmt()",
       "source_file": "src/components/statistics/IncomeBreakdown.tsx",
@@ -2606,7 +2465,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 8,
-      "community_name": "getCurrencySymbol",
+      "community_name": "DashboardClient.tsx",
       "file_type": "code",
       "norm_label": "incomebreakdown()",
       "source_file": "src/components/statistics/IncomeBreakdown.tsx",
@@ -2618,11 +2477,59 @@
       "_callable": true,
       "_origin": "ast",
       "community": 8,
-      "community_name": "getCurrencySymbol",
+      "community_name": "DashboardClient.tsx",
       "file_type": "code",
       "norm_label": "splitbar()",
       "source_file": "src/components/statistics/IncomeBreakdown.tsx",
       "source_location": "L40"
+    },
+    {
+      "id": "src_components_statistics_monthlytrendschart_chartcontent",
+      "label": "ChartContent()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "DashboardClient.tsx",
+      "file_type": "code",
+      "norm_label": "chartcontent()",
+      "source_file": "src/components/statistics/MonthlyTrendsChart.tsx",
+      "source_location": "L90"
+    },
+    {
+      "id": "src_components_statistics_monthlytrendschart_customtooltip",
+      "label": "CustomTooltip()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "DashboardClient.tsx",
+      "file_type": "code",
+      "norm_label": "customtooltip()",
+      "source_file": "src/components/statistics/MonthlyTrendsChart.tsx",
+      "source_location": "L62"
+    },
+    {
+      "id": "src_components_statistics_monthlytrendschart_formatvalue",
+      "label": "formatValue()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "DashboardClient.tsx",
+      "file_type": "code",
+      "norm_label": "formatvalue()",
+      "source_file": "src/components/statistics/MonthlyTrendsChart.tsx",
+      "source_location": "L43"
+    },
+    {
+      "id": "src_components_statistics_monthlytrendschart_monthlytrendschart",
+      "label": "MonthlyTrendsChart()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "DashboardClient.tsx",
+      "file_type": "code",
+      "norm_label": "monthlytrendschart()",
+      "source_file": "src/components/statistics/MonthlyTrendsChart.tsx",
+      "source_location": "L154"
     },
     {
       "id": "src_components_statistics_overviewcards_fmt",
@@ -2630,7 +2537,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 8,
-      "community_name": "getCurrencySymbol",
+      "community_name": "DashboardClient.tsx",
       "file_type": "code",
       "norm_label": "fmt()",
       "source_file": "src/components/statistics/OverviewCards.tsx",
@@ -2642,11 +2549,71 @@
       "_callable": true,
       "_origin": "ast",
       "community": 8,
-      "community_name": "getCurrencySymbol",
+      "community_name": "DashboardClient.tsx",
       "file_type": "code",
       "norm_label": "overviewcards()",
       "source_file": "src/components/statistics/OverviewCards.tsx",
       "source_location": "L30"
+    },
+    {
+      "id": "src_components_statistics_recordhighlights_fmt",
+      "label": "fmt()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "DashboardClient.tsx",
+      "file_type": "code",
+      "norm_label": "fmt()",
+      "source_file": "src/components/statistics/RecordHighlights.tsx",
+      "source_location": "L28"
+    },
+    {
+      "id": "src_components_statistics_recordhighlights_recordcard",
+      "label": "RecordCard()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "DashboardClient.tsx",
+      "file_type": "code",
+      "norm_label": "recordcard()",
+      "source_file": "src/components/statistics/RecordHighlights.tsx",
+      "source_location": "L43"
+    },
+    {
+      "id": "src_components_statistics_recordhighlights_recordhighlights",
+      "label": "RecordHighlights()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "DashboardClient.tsx",
+      "file_type": "code",
+      "norm_label": "recordhighlights()",
+      "source_file": "src/components/statistics/RecordHighlights.tsx",
+      "source_location": "L73"
+    },
+    {
+      "id": "src_components_statistics_spendinghabits_fmt",
+      "label": "fmt()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "DashboardClient.tsx",
+      "file_type": "code",
+      "norm_label": "fmt()",
+      "source_file": "src/components/statistics/SpendingHabits.tsx",
+      "source_location": "L32"
+    },
+    {
+      "id": "src_components_statistics_spendinghabits_spendinghabits",
+      "label": "SpendingHabits()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "DashboardClient.tsx",
+      "file_type": "code",
+      "norm_label": "spendinghabits()",
+      "source_file": "src/components/statistics/SpendingHabits.tsx",
+      "source_location": "L38"
     },
     {
       "id": "src_components_ui_statdisplay_formatcurrency",
@@ -2654,7 +2621,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 8,
-      "community_name": "getCurrencySymbol",
+      "community_name": "DashboardClient.tsx",
       "file_type": "code",
       "norm_label": "formatcurrency()",
       "source_file": "src/components/ui/StatDisplay.tsx",
@@ -2666,11 +2633,47 @@
       "_callable": true,
       "_origin": "ast",
       "community": 8,
-      "community_name": "getCurrencySymbol",
+      "community_name": "DashboardClient.tsx",
       "file_type": "code",
       "norm_label": "statdisplay()",
       "source_file": "src/components/ui/StatDisplay.tsx",
       "source_location": "L29"
+    },
+    {
+      "id": "src_hooks_usefinancialdata_buildcategorybreakdown",
+      "label": "buildCategoryBreakdown()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "DashboardClient.tsx",
+      "file_type": "code",
+      "norm_label": "buildcategorybreakdown()",
+      "source_file": "src/hooks/useFinancialData.ts",
+      "source_location": "L34"
+    },
+    {
+      "id": "src_hooks_usefinancialdata_sumamount",
+      "label": "sumAmount()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "DashboardClient.tsx",
+      "file_type": "code",
+      "norm_label": "sumamount()",
+      "source_file": "src/hooks/useFinancialData.ts",
+      "source_location": "L30"
+    },
+    {
+      "id": "src_hooks_usefinancialdata_usefinancialdata",
+      "label": "useFinancialData()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "DashboardClient.tsx",
+      "file_type": "code",
+      "norm_label": "usefinancialdata()",
+      "source_file": "src/hooks/useFinancialData.ts",
+      "source_location": "L49"
     },
     {
       "id": "src_lib_constants_getcurrencysymbol",
@@ -2678,11 +2681,47 @@
       "_callable": true,
       "_origin": "ast",
       "community": 8,
-      "community_name": "getCurrencySymbol",
+      "community_name": "DashboardClient.tsx",
       "file_type": "code",
       "norm_label": "getcurrencysymbol()",
       "source_file": "src/lib/constants.ts",
       "source_location": "L70"
+    },
+    {
+      "id": "src_lib_dateutils_getcalendarmonthrange",
+      "label": "getCalendarMonthRange()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "DashboardClient.tsx",
+      "file_type": "code",
+      "norm_label": "getcalendarmonthrange()",
+      "source_file": "src/lib/dateUtils.ts",
+      "source_location": "L83"
+    },
+    {
+      "id": "src_lib_dateutils_getcalendaryearrange",
+      "label": "getCalendarYearRange()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "DashboardClient.tsx",
+      "file_type": "code",
+      "norm_label": "getcalendaryearrange()",
+      "source_file": "src/lib/dateUtils.ts",
+      "source_location": "L94"
+    },
+    {
+      "id": "src_lib_dateutils_getmonthname",
+      "label": "getMonthName()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "DashboardClient.tsx",
+      "file_type": "code",
+      "norm_label": "getmonthname()",
+      "source_file": "src/lib/dateUtils.ts",
+      "source_location": "L58"
     },
     {
       "id": "src_components_statistics_funfacts_factcard",
@@ -2829,18 +2868,6 @@
       "source_location": "L36"
     },
     {
-      "id": "src_lib_dateutils_getcalendaryearrange",
-      "label": "getCalendarYearRange()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 83,
-      "community_name": "constants.ts",
-      "file_type": "code",
-      "norm_label": "getcalendaryearrange()",
-      "source_file": "src/lib/dateUtils.ts",
-      "source_location": "L94"
-    },
-    {
       "id": "src_lib_dateutils_getdaysinmonth",
       "label": "getDaysInMonth()",
       "_callable": true,
@@ -2901,6 +2928,18 @@
       "source_location": "L11"
     },
     {
+      "id": "src_lib_excelexport_buildworkbook",
+      "label": "buildWorkbook()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 83,
+      "community_name": "constants.ts",
+      "file_type": "code",
+      "norm_label": "buildworkbook()",
+      "source_file": "src/lib/excelExport.ts",
+      "source_location": "L92"
+    },
+    {
       "id": "src_lib_excelexport_exporttoexcel",
       "label": "exportToExcel()",
       "_callable": true,
@@ -2913,81 +2952,49 @@
       "source_location": "L303"
     },
     {
-      "id": "src_components_charts_categorychart",
-      "label": "CategoryChart.tsx",
+      "id": "src_lib_excelexport_getmonthlytransactions",
+      "label": "getMonthlyTransactions()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 83,
+      "community_name": "constants.ts",
+      "file_type": "code",
+      "norm_label": "getmonthlytransactions()",
+      "source_file": "src/lib/excelExport.ts",
+      "source_location": "L49"
+    },
+    {
+      "id": "src_app_api_log_error_route",
+      "label": "log-error/route.ts",
       "_origin": "ast",
       "community": 0,
-      "community_name": "DashboardClient.tsx",
+      "community_name": "route.test.ts",
       "file_type": "code",
-      "norm_label": "categorychart.tsx",
-      "source_file": "src/components/charts/CategoryChart.tsx",
+      "norm_label": "log-error/route.ts",
+      "source_file": "src/app/api/log-error/route.ts",
       "source_location": "L1"
     },
     {
-      "id": "src_components_dashboard_dashboardclient",
-      "label": "DashboardClient.tsx",
+      "id": "src_app_api_log_error_route_test",
+      "label": "route.test.ts",
       "_origin": "ast",
       "community": 0,
-      "community_name": "DashboardClient.tsx",
+      "community_name": "route.test.ts",
       "file_type": "code",
-      "norm_label": "dashboardclient.tsx",
-      "source_file": "src/components/dashboard/DashboardClient.tsx",
+      "norm_label": "route.test.ts",
+      "source_file": "src/app/api/log-error/route.test.ts",
       "source_location": "L1"
     },
     {
-      "id": "src_components_dashboard_dashboardclient_categorychart",
-      "label": "CategoryChart",
+      "id": "src_app_api_log_error_route_test_mockinsert",
+      "label": "mockInsert",
       "_origin": "ast",
       "community": 0,
-      "community_name": "DashboardClient.tsx",
+      "community_name": "route.test.ts",
       "file_type": "code",
-      "norm_label": "categorychart",
-      "source_file": "src/components/dashboard/DashboardClient.tsx",
-      "source_location": "L18"
-    },
-    {
-      "id": "ref_recharts",
-      "label": "recharts",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "DashboardClient.tsx",
-      "file_type": "concept",
-      "norm_label": "recharts",
-      "source_file": "package.json",
-      "source_location": "L30"
-    },
-    {
-      "id": "src_app_statistics_page_monthlytrendschart",
-      "label": "MonthlyTrendsChart",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "MonthlyTrendsChart.tsx",
-      "file_type": "code",
-      "norm_label": "monthlytrendschart",
-      "source_file": "src/app/statistics/page.tsx",
-      "source_location": "L23"
-    },
-    {
-      "id": "src_components_statistics_monthlytrendschart",
-      "label": "MonthlyTrendsChart.tsx",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "MonthlyTrendsChart.tsx",
-      "file_type": "code",
-      "norm_label": "monthlytrendschart.tsx",
-      "source_file": "src/components/statistics/MonthlyTrendsChart.tsx",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_components_statistics_monthlytrendschart_label_map",
-      "label": "LABEL_MAP",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "MonthlyTrendsChart.tsx",
-      "file_type": "code",
-      "norm_label": "label_map",
-      "source_file": "src/components/statistics/MonthlyTrendsChart.tsx",
-      "source_location": "L56"
+      "norm_label": "mockinsert",
+      "source_file": "src/app/api/log-error/route.test.ts",
+      "source_location": "L5"
     },
     {
       "id": "src_components_telemetry_webvitals",
@@ -3023,44 +3030,11 @@
       "source_location": "L1"
     },
     {
-      "id": "src_app_api_log_error_route",
-      "label": "log-error/route.ts",
-      "_origin": "ast",
-      "community": 13,
-      "community_name": "errorLogger.ts",
-      "file_type": "code",
-      "norm_label": "log-error/route.ts",
-      "source_file": "src/app/api/log-error/route.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_app_api_log_error_route_test",
-      "label": "route.test.ts",
-      "_origin": "ast",
-      "community": 13,
-      "community_name": "errorLogger.ts",
-      "file_type": "code",
-      "norm_label": "route.test.ts",
-      "source_file": "src/app/api/log-error/route.test.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_app_api_log_error_route_test_mockinsert",
-      "label": "mockInsert",
-      "_origin": "ast",
-      "community": 13,
-      "community_name": "errorLogger.ts",
-      "file_type": "code",
-      "norm_label": "mockinsert",
-      "source_file": "src/app/api/log-error/route.test.ts",
-      "source_location": "L5"
-    },
-    {
       "id": "src_app_error",
       "label": "error.tsx",
       "_origin": "ast",
       "community": 13,
-      "community_name": "errorLogger.ts",
+      "community_name": "lucide-react",
       "file_type": "code",
       "norm_label": "error.tsx",
       "source_file": "src/app/error.tsx",
@@ -3071,7 +3045,7 @@
       "label": "forgot-password/page.tsx",
       "_origin": "ast",
       "community": 13,
-      "community_name": "errorLogger.ts",
+      "community_name": "lucide-react",
       "file_type": "code",
       "norm_label": "forgot-password/page.tsx",
       "source_file": "src/app/forgot-password/page.tsx",
@@ -3082,7 +3056,7 @@
       "label": "forgotPasswordSchema",
       "_origin": "ast",
       "community": 13,
-      "community_name": "errorLogger.ts",
+      "community_name": "lucide-react",
       "file_type": "code",
       "norm_label": "forgotpasswordschema",
       "source_file": "src/app/forgot-password/page.tsx",
@@ -3093,7 +3067,7 @@
       "label": "global-error.tsx",
       "_origin": "ast",
       "community": 13,
-      "community_name": "errorLogger.ts",
+      "community_name": "lucide-react",
       "file_type": "code",
       "norm_label": "global-error.tsx",
       "source_file": "src/app/global-error.tsx",
@@ -3104,7 +3078,7 @@
       "label": "layout.tsx",
       "_origin": "ast",
       "community": 13,
-      "community_name": "errorLogger.ts",
+      "community_name": "lucide-react",
       "file_type": "code",
       "norm_label": "layout.tsx",
       "source_file": "src/app/layout.tsx",
@@ -3115,7 +3089,7 @@
       "label": "inter",
       "_origin": "ast",
       "community": 13,
-      "community_name": "errorLogger.ts",
+      "community_name": "lucide-react",
       "file_type": "code",
       "norm_label": "inter",
       "source_file": "src/app/layout.tsx",
@@ -3126,7 +3100,7 @@
       "label": "metadata",
       "_origin": "ast",
       "community": 13,
-      "community_name": "errorLogger.ts",
+      "community_name": "lucide-react",
       "file_type": "code",
       "norm_label": "metadata",
       "source_file": "src/app/layout.tsx",
@@ -3137,7 +3111,7 @@
       "label": "login/page.tsx",
       "_origin": "ast",
       "community": 13,
-      "community_name": "errorLogger.ts",
+      "community_name": "lucide-react",
       "file_type": "code",
       "norm_label": "login/page.tsx",
       "source_file": "src/app/login/page.tsx",
@@ -3148,7 +3122,7 @@
       "label": "loginSchema",
       "_origin": "ast",
       "community": 13,
-      "community_name": "errorLogger.ts",
+      "community_name": "lucide-react",
       "file_type": "code",
       "norm_label": "loginschema",
       "source_file": "src/app/login/page.tsx",
@@ -3159,7 +3133,7 @@
       "label": "register/page.tsx",
       "_origin": "ast",
       "community": 13,
-      "community_name": "errorLogger.ts",
+      "community_name": "lucide-react",
       "file_type": "code",
       "norm_label": "register/page.tsx",
       "source_file": "src/app/register/page.tsx",
@@ -3170,7 +3144,7 @@
       "label": "registerSchema",
       "_origin": "ast",
       "community": 13,
-      "community_name": "errorLogger.ts",
+      "community_name": "lucide-react",
       "file_type": "code",
       "norm_label": "registerschema",
       "source_file": "src/app/register/page.tsx",
@@ -3181,7 +3155,7 @@
       "label": "update-password/page.tsx",
       "_origin": "ast",
       "community": 13,
-      "community_name": "errorLogger.ts",
+      "community_name": "lucide-react",
       "file_type": "code",
       "norm_label": "update-password/page.tsx",
       "source_file": "src/app/update-password/page.tsx",
@@ -3192,7 +3166,7 @@
       "label": "updatePasswordSchema",
       "_origin": "ast",
       "community": 13,
-      "community_name": "errorLogger.ts",
+      "community_name": "lucide-react",
       "file_type": "code",
       "norm_label": "updatepasswordschema",
       "source_file": "src/app/update-password/page.tsx",
@@ -3203,7 +3177,7 @@
       "label": "AuthProvider.tsx",
       "_origin": "ast",
       "community": 13,
-      "community_name": "errorLogger.ts",
+      "community_name": "lucide-react",
       "file_type": "code",
       "norm_label": "authprovider.tsx",
       "source_file": "src/components/auth/AuthProvider.tsx",
@@ -3214,7 +3188,7 @@
       "label": "AuthContext",
       "_origin": "ast",
       "community": 13,
-      "community_name": "errorLogger.ts",
+      "community_name": "lucide-react",
       "file_type": "code",
       "norm_label": "authcontext",
       "source_file": "src/components/auth/AuthProvider.tsx",
@@ -3225,7 +3199,7 @@
       "label": "AuthProvider.test.tsx",
       "_origin": "ast",
       "community": 13,
-      "community_name": "errorLogger.ts",
+      "community_name": "lucide-react",
       "file_type": "code",
       "norm_label": "authprovider.test.tsx",
       "source_file": "src/components/auth/AuthProvider.test.tsx",
@@ -3236,7 +3210,7 @@
       "label": "GlobalErrorListener.tsx",
       "_origin": "ast",
       "community": 13,
-      "community_name": "errorLogger.ts",
+      "community_name": "lucide-react",
       "file_type": "code",
       "norm_label": "globalerrorlistener.tsx",
       "source_file": "src/components/telemetry/GlobalErrorListener.tsx",
@@ -3247,7 +3221,7 @@
       "label": "GlobalErrorListener.test.tsx",
       "_origin": "ast",
       "community": 13,
-      "community_name": "errorLogger.ts",
+      "community_name": "lucide-react",
       "file_type": "code",
       "norm_label": "globalerrorlistener.test.tsx",
       "source_file": "src/components/telemetry/GlobalErrorListener.test.tsx",
@@ -3258,7 +3232,7 @@
       "label": "errorLogger.ts",
       "_origin": "ast",
       "community": 13,
-      "community_name": "errorLogger.ts",
+      "community_name": "lucide-react",
       "file_type": "code",
       "norm_label": "errorlogger.ts",
       "source_file": "src/lib/errorLogger.ts",
@@ -3269,7 +3243,7 @@
       "label": "errorLogger.test.ts",
       "_origin": "ast",
       "community": 13,
-      "community_name": "errorLogger.ts",
+      "community_name": "lucide-react",
       "file_type": "code",
       "norm_label": "errorlogger.test.ts",
       "source_file": "src/lib/errorLogger.test.ts",
@@ -3280,7 +3254,7 @@
       "label": "mockInsert",
       "_origin": "ast",
       "community": 13,
-      "community_name": "errorLogger.ts",
+      "community_name": "lucide-react",
       "file_type": "code",
       "norm_label": "mockinsert",
       "source_file": "src/lib/errorLogger.test.ts",
@@ -3291,7 +3265,7 @@
       "label": "supabase.ts",
       "_origin": "ast",
       "community": 13,
-      "community_name": "errorLogger.ts",
+      "community_name": "lucide-react",
       "file_type": "code",
       "norm_label": "supabase.ts",
       "source_file": "src/lib/supabase.ts",
@@ -3302,7 +3276,7 @@
       "label": "supabase",
       "_origin": "ast",
       "community": 13,
-      "community_name": "errorLogger.ts",
+      "community_name": "lucide-react",
       "file_type": "code",
       "norm_label": "supabase",
       "source_file": "src/lib/supabase.ts",
@@ -3313,7 +3287,7 @@
       "label": "supabaseRetry.ts",
       "_origin": "ast",
       "community": 13,
-      "community_name": "errorLogger.ts",
+      "community_name": "lucide-react",
       "file_type": "code",
       "norm_label": "supabaseretry.ts",
       "source_file": "src/lib/supabaseRetry.ts",
@@ -3324,7 +3298,7 @@
       "label": "supabaseRetry.test.ts",
       "_origin": "ast",
       "community": 13,
-      "community_name": "errorLogger.ts",
+      "community_name": "lucide-react",
       "file_type": "code",
       "norm_label": "supabaseretry.test.ts",
       "source_file": "src/lib/supabaseRetry.test.ts",
@@ -3335,7 +3309,7 @@
       "label": "transactionStore.test.ts",
       "_origin": "ast",
       "community": 13,
-      "community_name": "errorLogger.ts",
+      "community_name": "lucide-react",
       "file_type": "code",
       "norm_label": "transactionstore.test.ts",
       "source_file": "src/store/transactionStore.test.ts",
@@ -3346,7 +3320,7 @@
       "label": "mockDelete",
       "_origin": "ast",
       "community": 13,
-      "community_name": "errorLogger.ts",
+      "community_name": "lucide-react",
       "file_type": "code",
       "norm_label": "mockdelete",
       "source_file": "src/store/transactionStore.test.ts",
@@ -3357,7 +3331,7 @@
       "label": "mockGte",
       "_origin": "ast",
       "community": 13,
-      "community_name": "errorLogger.ts",
+      "community_name": "lucide-react",
       "file_type": "code",
       "norm_label": "mockgte",
       "source_file": "src/store/transactionStore.test.ts",
@@ -3368,7 +3342,7 @@
       "label": "mockLte",
       "_origin": "ast",
       "community": 13,
-      "community_name": "errorLogger.ts",
+      "community_name": "lucide-react",
       "file_type": "code",
       "norm_label": "mocklte",
       "source_file": "src/store/transactionStore.test.ts",
@@ -3379,7 +3353,7 @@
       "label": "mockOrder",
       "_origin": "ast",
       "community": 13,
-      "community_name": "errorLogger.ts",
+      "community_name": "lucide-react",
       "file_type": "code",
       "norm_label": "mockorder",
       "source_file": "src/store/transactionStore.test.ts",
@@ -3390,18 +3364,51 @@
       "label": "mockSingle",
       "_origin": "ast",
       "community": 13,
-      "community_name": "errorLogger.ts",
+      "community_name": "lucide-react",
       "file_type": "code",
       "norm_label": "mocksingle",
       "source_file": "src/store/transactionStore.test.ts",
       "source_location": "L18"
     },
     {
+      "id": "src_store_transactionstore_test_mockupdate",
+      "label": "mockUpdate",
+      "_origin": "ast",
+      "community": 13,
+      "community_name": "lucide-react",
+      "file_type": "code",
+      "norm_label": "mockupdate",
+      "source_file": "src/store/transactionStore.test.ts",
+      "source_location": "L24"
+    },
+    {
+      "id": "src_store_transactionstore_test_mockupdateeqid",
+      "label": "mockUpdateEqId",
+      "_origin": "ast",
+      "community": 13,
+      "community_name": "lucide-react",
+      "file_type": "code",
+      "norm_label": "mockupdateeqid",
+      "source_file": "src/store/transactionStore.test.ts",
+      "source_location": "L23"
+    },
+    {
+      "id": "src_store_transactionstore_test_mockupdateequser",
+      "label": "mockUpdateEqUser",
+      "_origin": "ast",
+      "community": 13,
+      "community_name": "lucide-react",
+      "file_type": "code",
+      "norm_label": "mockupdateequser",
+      "source_file": "src/store/transactionStore.test.ts",
+      "source_location": "L22"
+    },
+    {
       "id": "ref_lucide_react",
       "label": "lucide-react",
       "_origin": "ast",
       "community": 13,
-      "community_name": "errorLogger.ts",
+      "community_name": "lucide-react",
       "file_type": "concept",
       "norm_label": "lucide-react",
       "source_file": "package.json",
@@ -3412,7 +3419,7 @@
       "label": "react-hook-form",
       "_origin": "ast",
       "community": 13,
-      "community_name": "errorLogger.ts",
+      "community_name": "lucide-react",
       "file_type": "concept",
       "norm_label": "react-hook-form",
       "source_file": "package.json",
@@ -3423,7 +3430,7 @@
       "label": "@supabase/supabase-js",
       "_origin": "ast",
       "community": 13,
-      "community_name": "errorLogger.ts",
+      "community_name": "lucide-react",
       "file_type": "concept",
       "norm_label": "@supabase/supabase-js",
       "source_file": "package.json",
@@ -3434,7 +3441,7 @@
       "label": "zod",
       "_origin": "ast",
       "community": 13,
-      "community_name": "errorLogger.ts",
+      "community_name": "lucide-react",
       "file_type": "concept",
       "norm_label": "zod",
       "source_file": "package.json",
@@ -4500,6 +4507,39 @@
       "source_location": "L1"
     },
     {
+      "id": "src_app_loading",
+      "label": "app/loading.tsx",
+      "_origin": "ast",
+      "community": 22,
+      "community_name": "react",
+      "file_type": "code",
+      "norm_label": "app/loading.tsx",
+      "source_file": "src/app/loading.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_app_page",
+      "label": "app/page.tsx",
+      "_origin": "ast",
+      "community": 22,
+      "community_name": "react",
+      "file_type": "code",
+      "norm_label": "app/page.tsx",
+      "source_file": "src/app/page.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_app_page_metadata",
+      "label": "metadata",
+      "_origin": "ast",
+      "community": 22,
+      "community_name": "react",
+      "file_type": "code",
+      "norm_label": "metadata",
+      "source_file": "src/app/page.tsx",
+      "source_location": "L7"
+    },
+    {
       "id": "src_app_statistics_loading",
       "label": "statistics/loading.tsx",
       "_origin": "ast",
@@ -4519,6 +4559,17 @@
       "file_type": "code",
       "norm_label": "statistics/page.tsx",
       "source_file": "src/app/statistics/page.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_components_dashboard_dashboardskeleton",
+      "label": "DashboardSkeleton.tsx",
+      "_origin": "ast",
+      "community": 22,
+      "community_name": "react",
+      "file_type": "code",
+      "norm_label": "dashboardskeleton.tsx",
+      "source_file": "src/components/dashboard/DashboardSkeleton.tsx",
       "source_location": "L1"
     },
     {
@@ -4599,6 +4650,50 @@
       "source_location": "L1"
     },
     {
+      "id": "src_components_ui_statusnotification",
+      "label": "StatusNotification.tsx",
+      "_origin": "ast",
+      "community": 22,
+      "community_name": "react",
+      "file_type": "code",
+      "norm_label": "statusnotification.tsx",
+      "source_file": "src/components/ui/StatusNotification.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_components_ui_statusnotification_test",
+      "label": "StatusNotification.test.tsx",
+      "_origin": "ast",
+      "community": 22,
+      "community_name": "react",
+      "file_type": "code",
+      "norm_label": "statusnotification.test.tsx",
+      "source_file": "src/components/ui/StatusNotification.test.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_store_toaststore",
+      "label": "toastStore.ts",
+      "_origin": "ast",
+      "community": 22,
+      "community_name": "react",
+      "file_type": "code",
+      "norm_label": "toaststore.ts",
+      "source_file": "src/store/toastStore.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_store_toaststore_usetoaststore",
+      "label": "useToastStore",
+      "_origin": "ast",
+      "community": 22,
+      "community_name": "react",
+      "file_type": "code",
+      "norm_label": "usetoaststore",
+      "source_file": "src/store/toastStore.ts",
+      "source_location": "L20"
+    },
+    {
       "id": "ref_react",
       "label": "react",
       "_origin": "ast",
@@ -4619,6 +4714,17 @@
       "norm_label": "@testing-library/jest-dom",
       "source_file": "package.json",
       "source_location": "L37"
+    },
+    {
+      "id": "ref_zustand",
+      "label": "zustand",
+      "_origin": "ast",
+      "community": 22,
+      "community_name": "react",
+      "file_type": "concept",
+      "norm_label": "zustand",
+      "source_file": "package.json",
+      "source_location": "L32"
     },
     {
       "id": "src_app_history_page",
@@ -4643,14 +4749,25 @@
       "source_location": "L1"
     },
     {
-      "id": "src_hooks_usefinancialdata",
-      "label": "useFinancialData.ts",
+      "id": "src_components_transactions_edittransactionmodal",
+      "label": "EditTransactionModal.tsx",
       "_origin": "ast",
       "community": 24,
       "community_name": "transactionStore.ts",
       "file_type": "code",
-      "norm_label": "usefinancialdata.ts",
-      "source_file": "src/hooks/useFinancialData.ts",
+      "norm_label": "edittransactionmodal.tsx",
+      "source_file": "src/components/transactions/EditTransactionModal.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_components_transactions_edittransactionmodal_test",
+      "label": "EditTransactionModal.test.tsx",
+      "_origin": "ast",
+      "community": 24,
+      "community_name": "transactionStore.ts",
+      "file_type": "code",
+      "norm_label": "edittransactionmodal.test.tsx",
+      "source_file": "src/components/transactions/EditTransactionModal.test.tsx",
       "source_location": "L1"
     },
     {
@@ -5021,28 +5138,6 @@
       "source_location": "L1"
     },
     {
-      "id": "src_components_ui_statusnotification",
-      "label": "StatusNotification.tsx",
-      "_origin": "ast",
-      "community": 36,
-      "community_name": "QuickTransactionForm.tsx",
-      "file_type": "code",
-      "norm_label": "statusnotification.tsx",
-      "source_file": "src/components/ui/StatusNotification.tsx",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_components_ui_statusnotification_test",
-      "label": "StatusNotification.test.tsx",
-      "_origin": "ast",
-      "community": 36,
-      "community_name": "QuickTransactionForm.tsx",
-      "file_type": "code",
-      "norm_label": "statusnotification.test.tsx",
-      "source_file": "src/components/ui/StatusNotification.test.tsx",
-      "source_location": "L1"
-    },
-    {
       "id": "src_lib_qrdetector",
       "label": "qrDetector.ts",
       "_origin": "ast",
@@ -5087,28 +5182,6 @@
       "source_location": "L1"
     },
     {
-      "id": "src_store_toaststore",
-      "label": "toastStore.ts",
-      "_origin": "ast",
-      "community": 36,
-      "community_name": "QuickTransactionForm.tsx",
-      "file_type": "code",
-      "norm_label": "toaststore.ts",
-      "source_file": "src/store/toastStore.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_store_toaststore_usetoaststore",
-      "label": "useToastStore",
-      "_origin": "ast",
-      "community": 36,
-      "community_name": "QuickTransactionForm.tsx",
-      "file_type": "code",
-      "norm_label": "usetoaststore",
-      "source_file": "src/store/toastStore.ts",
-      "source_location": "L20"
-    },
-    {
       "id": "ref_jsqr",
       "label": "jsqr",
       "_origin": "ast",
@@ -5118,17 +5191,6 @@
       "norm_label": "jsqr",
       "source_file": "package.json",
       "source_location": "L24"
-    },
-    {
-      "id": "ref_zustand",
-      "label": "zustand",
-      "_origin": "ast",
-      "community": 36,
-      "community_name": "QuickTransactionForm.tsx",
-      "file_type": "concept",
-      "norm_label": "zustand",
-      "source_file": "package.json",
-      "source_location": "L32"
     },
     {
       "id": "package_scripts",
@@ -5250,50 +5312,6 @@
       "norm_label": "validate",
       "source_file": "package.json",
       "source_location": "L15"
-    },
-    {
-      "id": "src_app_loading",
-      "label": "app/loading.tsx",
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "app/page.tsx",
-      "file_type": "code",
-      "norm_label": "app/loading.tsx",
-      "source_file": "src/app/loading.tsx",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_app_page",
-      "label": "app/page.tsx",
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "app/page.tsx",
-      "file_type": "code",
-      "norm_label": "app/page.tsx",
-      "source_file": "src/app/page.tsx",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_app_page_metadata",
-      "label": "metadata",
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "app/page.tsx",
-      "file_type": "code",
-      "norm_label": "metadata",
-      "source_file": "src/app/page.tsx",
-      "source_location": "L7"
-    },
-    {
-      "id": "src_components_dashboard_dashboardskeleton",
-      "label": "DashboardSkeleton.tsx",
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "app/page.tsx",
-      "file_type": "code",
-      "norm_label": "dashboardskeleton.tsx",
-      "source_file": "src/components/dashboard/DashboardSkeleton.tsx",
-      "source_location": "L1"
     },
     {
       "id": "package",
@@ -5481,17 +5499,6 @@
       "norm_label": "@vercel/speed-insights",
       "source_file": "package.json",
       "source_location": "L21"
-    },
-    {
-      "id": "src_components_statistics_recordhighlights",
-      "label": "RecordHighlights.tsx",
-      "_origin": "ast",
-      "community": 5,
-      "community_name": "RecordHighlights.tsx",
-      "file_type": "code",
-      "norm_label": "recordhighlights.tsx",
-      "source_file": "src/components/statistics/RecordHighlights.tsx",
-      "source_location": "L1"
     },
     {
       "id": "e2e_auth_spec",
@@ -5769,28 +5776,6 @@
       "source_location": "L25"
     },
     {
-      "id": "src_components_statistics_spendinghabits",
-      "label": "SpendingHabits.tsx",
-      "_origin": "ast",
-      "community": 7,
-      "community_name": "SpendingHabits.tsx",
-      "file_type": "code",
-      "norm_label": "spendinghabits.tsx",
-      "source_file": "src/components/statistics/SpendingHabits.tsx",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_lib_constants_chart_colors",
-      "label": "CHART_COLORS",
-      "_origin": "ast",
-      "community": 7,
-      "community_name": "SpendingHabits.tsx",
-      "file_type": "code",
-      "norm_label": "chart_colors",
-      "source_file": "src/lib/constants.ts",
-      "source_location": "L47"
-    },
-    {
       "id": "src_components_transactions_transactionlist",
       "label": "TransactionList.tsx",
       "_origin": "ast",
@@ -5810,7 +5795,7 @@
       "file_type": "code",
       "norm_label": "category_colors",
       "source_file": "src/components/transactions/TransactionList.tsx",
-      "source_location": "L52"
+      "source_location": "L54"
     },
     {
       "id": "src_components_transactions_transactionlist_category_icons",
@@ -5821,7 +5806,7 @@
       "file_type": "code",
       "norm_label": "category_icons",
       "source_file": "src/components/transactions/TransactionList.tsx",
-      "source_location": "L36"
+      "source_location": "L38"
     },
     {
       "id": "src_lib_expenserowcolors",
@@ -5857,11 +5842,55 @@
       "source_location": "L12"
     },
     {
+      "id": "src_app_statistics_page_monthlytrendschart",
+      "label": "MonthlyTrendsChart",
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "DashboardClient.tsx",
+      "file_type": "code",
+      "norm_label": "monthlytrendschart",
+      "source_file": "src/app/statistics/page.tsx",
+      "source_location": "L23"
+    },
+    {
+      "id": "src_components_charts_categorychart",
+      "label": "CategoryChart.tsx",
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "DashboardClient.tsx",
+      "file_type": "code",
+      "norm_label": "categorychart.tsx",
+      "source_file": "src/components/charts/CategoryChart.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_components_dashboard_dashboardclient",
+      "label": "DashboardClient.tsx",
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "DashboardClient.tsx",
+      "file_type": "code",
+      "norm_label": "dashboardclient.tsx",
+      "source_file": "src/components/dashboard/DashboardClient.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_components_dashboard_dashboardclient_categorychart",
+      "label": "CategoryChart",
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "DashboardClient.tsx",
+      "file_type": "code",
+      "norm_label": "categorychart",
+      "source_file": "src/components/dashboard/DashboardClient.tsx",
+      "source_location": "L18"
+    },
+    {
       "id": "src_components_history_annualsummary",
       "label": "AnnualSummary.tsx",
       "_origin": "ast",
       "community": 8,
-      "community_name": "getCurrencySymbol",
+      "community_name": "DashboardClient.tsx",
       "file_type": "code",
       "norm_label": "annualsummary.tsx",
       "source_file": "src/components/history/AnnualSummary.tsx",
@@ -5872,21 +5901,65 @@
       "label": "IncomeBreakdown.tsx",
       "_origin": "ast",
       "community": 8,
-      "community_name": "getCurrencySymbol",
+      "community_name": "DashboardClient.tsx",
       "file_type": "code",
       "norm_label": "incomebreakdown.tsx",
       "source_file": "src/components/statistics/IncomeBreakdown.tsx",
       "source_location": "L1"
     },
     {
+      "id": "src_components_statistics_monthlytrendschart",
+      "label": "MonthlyTrendsChart.tsx",
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "DashboardClient.tsx",
+      "file_type": "code",
+      "norm_label": "monthlytrendschart.tsx",
+      "source_file": "src/components/statistics/MonthlyTrendsChart.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_components_statistics_monthlytrendschart_label_map",
+      "label": "LABEL_MAP",
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "DashboardClient.tsx",
+      "file_type": "code",
+      "norm_label": "label_map",
+      "source_file": "src/components/statistics/MonthlyTrendsChart.tsx",
+      "source_location": "L56"
+    },
+    {
       "id": "src_components_statistics_overviewcards",
       "label": "OverviewCards.tsx",
       "_origin": "ast",
       "community": 8,
-      "community_name": "getCurrencySymbol",
+      "community_name": "DashboardClient.tsx",
       "file_type": "code",
       "norm_label": "overviewcards.tsx",
       "source_file": "src/components/statistics/OverviewCards.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_components_statistics_recordhighlights",
+      "label": "RecordHighlights.tsx",
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "DashboardClient.tsx",
+      "file_type": "code",
+      "norm_label": "recordhighlights.tsx",
+      "source_file": "src/components/statistics/RecordHighlights.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_components_statistics_spendinghabits",
+      "label": "SpendingHabits.tsx",
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "DashboardClient.tsx",
+      "file_type": "code",
+      "norm_label": "spendinghabits.tsx",
+      "source_file": "src/components/statistics/SpendingHabits.tsx",
       "source_location": "L1"
     },
     {
@@ -5894,18 +5967,40 @@
       "label": "StatDisplay.tsx",
       "_origin": "ast",
       "community": 8,
-      "community_name": "getCurrencySymbol",
+      "community_name": "DashboardClient.tsx",
       "file_type": "code",
       "norm_label": "statdisplay.tsx",
       "source_file": "src/components/ui/StatDisplay.tsx",
       "source_location": "L1"
     },
     {
+      "id": "src_hooks_usefinancialdata",
+      "label": "useFinancialData.ts",
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "DashboardClient.tsx",
+      "file_type": "code",
+      "norm_label": "usefinancialdata.ts",
+      "source_file": "src/hooks/useFinancialData.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_lib_constants_chart_colors",
+      "label": "CHART_COLORS",
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "DashboardClient.tsx",
+      "file_type": "code",
+      "norm_label": "chart_colors",
+      "source_file": "src/lib/constants.ts",
+      "source_location": "L47"
+    },
+    {
       "id": "src_lib_constants_currency_format_options",
       "label": "CURRENCY_FORMAT_OPTIONS",
       "_origin": "ast",
       "community": 8,
-      "community_name": "getCurrencySymbol",
+      "community_name": "DashboardClient.tsx",
       "file_type": "code",
       "norm_label": "currency_format_options",
       "source_file": "src/lib/constants.ts",
@@ -5916,11 +6011,22 @@
       "label": "NUMBER_LOCALE",
       "_origin": "ast",
       "community": 8,
-      "community_name": "getCurrencySymbol",
+      "community_name": "DashboardClient.tsx",
       "file_type": "code",
       "norm_label": "number_locale",
       "source_file": "src/lib/constants.ts",
       "source_location": "L77"
+    },
+    {
+      "id": "ref_recharts",
+      "label": "recharts",
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "DashboardClient.tsx",
+      "file_type": "concept",
+      "norm_label": "recharts",
+      "source_file": "package.json",
+      "source_location": "L30"
     },
     {
       "id": "exceljs",
@@ -6838,6 +6944,42 @@
       "weight": 1.0
     },
     {
+      "source": "src_components_transactions_edittransactionmodal_edittransactionmodal",
+      "target": "src_store_transactionstore_usefinancialstore",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "src/components/transactions/EditTransactionModal.tsx",
+      "source_location": "L38",
+      "weight": 1.0
+    },
+    {
+      "source": "src_components_transactions_edittransactionmodal_edittransactionmodal",
+      "target": "src_store_toaststore_usetoaststore",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "src/components/transactions/EditTransactionModal.tsx",
+      "source_location": "L40",
+      "weight": 1.0
+    },
+    {
+      "source": "src_components_transactions_edittransactionmodal_edittransactionmodal",
+      "target": "src_lib_constants_getcurrencysymbol",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "src/components/transactions/EditTransactionModal.tsx",
+      "source_location": "L87",
+      "weight": 1.0
+    },
+    {
       "source": "src_components_transactions_transactionlist_expenserow",
       "target": "src_lib_expenserowcolors_getexpenserowcolors",
       "relation": "calls",
@@ -6846,7 +6988,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/components/transactions/TransactionList.tsx",
-      "source_location": "L133",
+      "source_location": "L136",
       "weight": 1.0
     },
     {
@@ -6858,7 +7000,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/components/transactions/TransactionList.tsx",
-      "source_location": "L170",
+      "source_location": "L173",
       "weight": 1.0
     },
     {
@@ -6870,7 +7012,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/components/transactions/TransactionList.tsx",
-      "source_location": "L69",
+      "source_location": "L71",
       "weight": 1.0
     },
     {
@@ -6882,7 +7024,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/components/transactions/TransactionList.tsx",
-      "source_location": "L212",
+      "source_location": "L223",
       "weight": 1.0
     },
     {
@@ -6894,7 +7036,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/components/transactions/TransactionList.tsx",
-      "source_location": "L238",
+      "source_location": "L256",
       "weight": 1.0
     },
     {
@@ -6906,7 +7048,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/components/transactions/TransactionList.tsx",
-      "source_location": "L239",
+      "source_location": "L257",
       "weight": 1.0
     },
     {
@@ -6918,7 +7060,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/components/transactions/TransactionList.tsx",
-      "source_location": "L251",
+      "source_location": "L274",
       "weight": 1.0
     },
     {
@@ -8674,6 +8816,30 @@
       "weight": 1.0
     },
     {
+      "source": "src_components_transactions_edittransactionmodal_edittransactionmodalprops",
+      "target": "src_types_index_expenseentry",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "field",
+      "source_file": "src/components/transactions/EditTransactionModal.tsx",
+      "source_location": "L27",
+      "weight": 1.0
+    },
+    {
+      "source": "src_components_transactions_edittransactionmodal_edittransactionmodalprops",
+      "target": "src_types_index_incomeentry",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "field",
+      "source_file": "src/components/transactions/EditTransactionModal.tsx",
+      "source_location": "L27",
+      "weight": 1.0
+    },
+    {
       "source": "src_components_transactions_transactionlist_expenserowprops",
       "target": "src_types_index_expenseentry",
       "relation": "references",
@@ -8682,7 +8848,7 @@
       "confidence_score": 1.0,
       "context": "field",
       "source_file": "src/components/transactions/TransactionList.tsx",
-      "source_location": "L128",
+      "source_location": "L130",
       "weight": 1.0
     },
     {
@@ -8694,7 +8860,7 @@
       "confidence_score": 1.0,
       "context": "field",
       "source_file": "src/components/transactions/TransactionList.tsx",
-      "source_location": "L184",
+      "source_location": "L194",
       "weight": 1.0
     },
     {
@@ -10576,44 +10742,164 @@
       "weight": 1.0
     },
     {
-      "source": "src_components_transactions_transactionlist",
+      "source": "src_components_transactions_edittransactionmodal",
       "target": "src_types_index_expensecategory",
       "relation": "imports",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "context": "import",
-      "source_file": "src/components/transactions/TransactionList.tsx",
-      "source_location": "L23",
+      "source_file": "src/components/transactions/EditTransactionModal.tsx",
+      "source_location": "L15",
       "weight": 1.0
     },
     {
-      "source": "src_components_transactions_transactionlist",
+      "source": "src_components_transactions_edittransactionmodal",
       "target": "src_types_index_expenseentry",
       "relation": "imports",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "context": "import",
-      "source_file": "src/components/transactions/TransactionList.tsx",
-      "source_location": "L23",
+      "source_file": "src/components/transactions/EditTransactionModal.tsx",
+      "source_location": "L15",
       "weight": 1.0
     },
     {
-      "source": "src_components_transactions_transactionlist",
+      "source": "src_components_transactions_edittransactionmodal",
       "target": "src_types_index_incomeentry",
       "relation": "imports",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "context": "import",
-      "source_file": "src/components/transactions/TransactionList.tsx",
-      "source_location": "L23",
+      "source_file": "src/components/transactions/EditTransactionModal.tsx",
+      "source_location": "L15",
+      "weight": 1.0
+    },
+    {
+      "source": "src_components_transactions_edittransactionmodal",
+      "target": "src_store_transactionstore_usefinancialstore",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/components/transactions/EditTransactionModal.tsx",
+      "source_location": "L16",
+      "weight": 1.0
+    },
+    {
+      "source": "src_components_transactions_edittransactionmodal",
+      "target": "src_store_toaststore_usetoaststore",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/components/transactions/EditTransactionModal.tsx",
+      "source_location": "L17",
+      "weight": 1.0
+    },
+    {
+      "source": "src_components_transactions_edittransactionmodal",
+      "target": "src_lib_constants_category_bg_map",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/components/transactions/EditTransactionModal.tsx",
+      "source_location": "L18",
+      "weight": 1.0
+    },
+    {
+      "source": "src_components_transactions_edittransactionmodal",
+      "target": "src_lib_constants_expense_categories",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/components/transactions/EditTransactionModal.tsx",
+      "source_location": "L18",
+      "weight": 1.0
+    },
+    {
+      "source": "src_components_transactions_edittransactionmodal",
+      "target": "src_lib_constants_getcurrencysymbol",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/components/transactions/EditTransactionModal.tsx",
+      "source_location": "L18",
+      "weight": 1.0
+    },
+    {
+      "source": "src_components_transactions_edittransactionmodal_test",
+      "target": "src_components_transactions_edittransactionmodal_edittransactionmodal",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/components/transactions/EditTransactionModal.test.tsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "src_components_transactions_edittransactionmodal_test",
+      "target": "src_store_transactionstore_usefinancialstore",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/components/transactions/EditTransactionModal.test.tsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "src_components_transactions_edittransactionmodal_test",
+      "target": "src_store_toaststore_usetoaststore",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/components/transactions/EditTransactionModal.test.tsx",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "src_components_transactions_edittransactionmodal_test",
+      "target": "src_types_index_expenseentry",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/components/transactions/EditTransactionModal.test.tsx",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "src_components_transactions_edittransactionmodal_test",
+      "target": "src_types_index_incomeentry",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/components/transactions/EditTransactionModal.test.tsx",
+      "source_location": "L8",
       "weight": 1.0
     },
     {
       "source": "src_components_transactions_transactionlist",
-      "target": "src_hooks_usefinancialdata_usefinancialdata",
+      "target": "src_types_index_expensecategory",
       "relation": "imports",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -10625,7 +10911,31 @@
     },
     {
       "source": "src_components_transactions_transactionlist",
-      "target": "src_store_transactionstore_usefinancialstore",
+      "target": "src_types_index_expenseentry",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/components/transactions/TransactionList.tsx",
+      "source_location": "L24",
+      "weight": 1.0
+    },
+    {
+      "source": "src_components_transactions_transactionlist",
+      "target": "src_types_index_incomeentry",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/components/transactions/TransactionList.tsx",
+      "source_location": "L24",
+      "weight": 1.0
+    },
+    {
+      "source": "src_components_transactions_transactionlist",
+      "target": "src_hooks_usefinancialdata_usefinancialdata",
       "relation": "imports",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -10637,7 +10947,7 @@
     },
     {
       "source": "src_components_transactions_transactionlist",
-      "target": "src_lib_constants_category_bg_map",
+      "target": "src_store_transactionstore_usefinancialstore",
       "relation": "imports",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -10645,6 +10955,18 @@
       "context": "import",
       "source_file": "src/components/transactions/TransactionList.tsx",
       "source_location": "L26",
+      "weight": 1.0
+    },
+    {
+      "source": "src_components_transactions_transactionlist",
+      "target": "src_lib_constants_category_bg_map",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/components/transactions/TransactionList.tsx",
+      "source_location": "L27",
       "weight": 1.0
     },
     {
@@ -10656,7 +10978,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "src/components/transactions/TransactionList.tsx",
-      "source_location": "L26",
+      "source_location": "L27",
       "weight": 1.0
     },
     {
@@ -10668,7 +10990,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "src/components/transactions/TransactionList.tsx",
-      "source_location": "L26",
+      "source_location": "L27",
       "weight": 1.0
     },
     {
@@ -10680,7 +11002,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "src/components/transactions/TransactionList.tsx",
-      "source_location": "L26",
+      "source_location": "L27",
       "weight": 1.0
     },
     {
@@ -10692,7 +11014,19 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "src/components/transactions/TransactionList.tsx",
-      "source_location": "L32",
+      "source_location": "L33",
+      "weight": 1.0
+    },
+    {
+      "source": "src_components_transactions_transactionlist",
+      "target": "src_components_transactions_edittransactionmodal_edittransactionmodal",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/components/transactions/TransactionList.tsx",
+      "source_location": "L34",
       "weight": 1.0
     },
     {
@@ -12018,6 +12352,30 @@
     {
       "source": "src_store_transactionstore",
       "target": "src_types_index_incomeentry",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/store/transactionStore.ts",
+      "source_location": "L14",
+      "weight": 1.0
+    },
+    {
+      "source": "src_store_transactionstore",
+      "target": "src_types_index_updateexpenseinput",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/store/transactionStore.ts",
+      "source_location": "L14",
+      "weight": 1.0
+    },
+    {
+      "source": "src_store_transactionstore",
+      "target": "src_types_index_updateincomeinput",
       "relation": "imports",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -14229,20 +14587,176 @@
       "weight": 1.0
     },
     {
-      "source": "src_components_transactions_transactionlist",
+      "source": "src_components_transactions_edittransactionmodal",
       "target": "src_types_index",
       "relation": "imports_from",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "context": "import",
-      "source_file": "src/components/transactions/TransactionList.tsx",
-      "source_location": "L23",
+      "source_file": "src/components/transactions/EditTransactionModal.tsx",
+      "source_location": "L15",
+      "weight": 1.0
+    },
+    {
+      "source": "src_components_transactions_edittransactionmodal",
+      "target": "src_store_transactionstore",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/components/transactions/EditTransactionModal.tsx",
+      "source_location": "L16",
+      "weight": 1.0
+    },
+    {
+      "source": "src_components_transactions_edittransactionmodal",
+      "target": "src_store_toaststore",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/components/transactions/EditTransactionModal.tsx",
+      "source_location": "L17",
+      "weight": 1.0
+    },
+    {
+      "source": "src_components_transactions_edittransactionmodal",
+      "target": "src_lib_constants",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/components/transactions/EditTransactionModal.tsx",
+      "source_location": "L18",
+      "weight": 1.0
+    },
+    {
+      "source": "src_components_transactions_edittransactionmodal",
+      "target": "ref_react",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/components/transactions/EditTransactionModal.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "src_components_transactions_edittransactionmodal",
+      "target": "ref_lucide_react",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/components/transactions/EditTransactionModal.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "src_components_transactions_edittransactionmodal_test",
+      "target": "ref_react",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/components/transactions/EditTransactionModal.test.tsx",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "src_components_transactions_edittransactionmodal_test",
+      "target": "ref_vitest",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/components/transactions/EditTransactionModal.test.tsx",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "src_components_transactions_edittransactionmodal_test",
+      "target": "ref_testing_library_react",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/components/transactions/EditTransactionModal.test.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "src_components_transactions_edittransactionmodal_test",
+      "target": "ref_testing_library_jest_dom",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/components/transactions/EditTransactionModal.test.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "src_components_transactions_edittransactionmodal_test",
+      "target": "src_components_transactions_edittransactionmodal",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/components/transactions/EditTransactionModal.test.tsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "src_components_transactions_edittransactionmodal_test",
+      "target": "src_store_transactionstore",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/components/transactions/EditTransactionModal.test.tsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "src_components_transactions_edittransactionmodal_test",
+      "target": "src_store_toaststore",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/components/transactions/EditTransactionModal.test.tsx",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "src_components_transactions_edittransactionmodal_test",
+      "target": "src_types_index",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/components/transactions/EditTransactionModal.test.tsx",
+      "source_location": "L8",
       "weight": 1.0
     },
     {
       "source": "src_components_transactions_transactionlist",
-      "target": "src_hooks_usefinancialdata",
+      "target": "src_types_index",
       "relation": "imports_from",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -14254,7 +14768,7 @@
     },
     {
       "source": "src_components_transactions_transactionlist",
-      "target": "src_store_transactionstore",
+      "target": "src_hooks_usefinancialdata",
       "relation": "imports_from",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -14266,7 +14780,7 @@
     },
     {
       "source": "src_components_transactions_transactionlist",
-      "target": "src_lib_constants",
+      "target": "src_store_transactionstore",
       "relation": "imports_from",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -14274,6 +14788,18 @@
       "context": "import",
       "source_file": "src/components/transactions/TransactionList.tsx",
       "source_location": "L26",
+      "weight": 1.0
+    },
+    {
+      "source": "src_components_transactions_transactionlist",
+      "target": "src_lib_constants",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/components/transactions/TransactionList.tsx",
+      "source_location": "L27",
       "weight": 1.0
     },
     {
@@ -14297,7 +14823,19 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "src/components/transactions/TransactionList.tsx",
-      "source_location": "L32",
+      "source_location": "L33",
+      "weight": 1.0
+    },
+    {
+      "source": "src_components_transactions_transactionlist",
+      "target": "src_components_transactions_edittransactionmodal",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/components/transactions/TransactionList.tsx",
+      "source_location": "L34",
       "weight": 1.0
     },
     {
@@ -17941,6 +18479,28 @@
       "weight": 1.0
     },
     {
+      "source": "src_components_transactions_edittransactionmodal",
+      "target": "src_components_transactions_edittransactionmodal_edittransactionmodalprops",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/components/transactions/EditTransactionModal.tsx",
+      "source_location": "L24",
+      "weight": 1.0
+    },
+    {
+      "source": "src_components_transactions_edittransactionmodal",
+      "target": "src_components_transactions_edittransactionmodal_edittransactionmodal",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/components/transactions/EditTransactionModal.tsx",
+      "source_location": "L33",
+      "weight": 1.0
+    },
+    {
       "source": "src_components_transactions_transactionlist",
       "target": "src_components_transactions_transactionlist_expenserowprops",
       "relation": "contains",
@@ -17948,7 +18508,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/transactions/TransactionList.tsx",
-      "source_location": "L127",
+      "source_location": "L129",
       "weight": 1.0
     },
     {
@@ -17959,7 +18519,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/transactions/TransactionList.tsx",
-      "source_location": "L132",
+      "source_location": "L135",
       "weight": 1.0
     },
     {
@@ -17970,7 +18530,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/transactions/TransactionList.tsx",
-      "source_location": "L183",
+      "source_location": "L193",
       "weight": 1.0
     },
     {
@@ -17981,7 +18541,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/transactions/TransactionList.tsx",
-      "source_location": "L188",
+      "source_location": "L199",
       "weight": 1.0
     },
     {
@@ -17992,7 +18552,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/transactions/TransactionList.tsx",
-      "source_location": "L227",
+      "source_location": "L245",
       "weight": 1.0
     },
     {
@@ -18003,7 +18563,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/transactions/TransactionList.tsx",
-      "source_location": "L229",
+      "source_location": "L247",
       "weight": 1.0
     },
     {
@@ -18014,7 +18574,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/transactions/TransactionList.tsx",
-      "source_location": "L237",
+      "source_location": "L255",
       "weight": 1.0
     },
     {
@@ -18025,7 +18585,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/transactions/TransactionList.tsx",
-      "source_location": "L36",
+      "source_location": "L38",
       "weight": 1.0
     },
     {
@@ -18036,7 +18596,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/transactions/TransactionList.tsx",
-      "source_location": "L52",
+      "source_location": "L54",
       "weight": 1.0
     },
     {
@@ -18047,7 +18607,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/transactions/TransactionList.tsx",
-      "source_location": "L68",
+      "source_location": "L70",
       "weight": 1.0
     },
     {
@@ -18058,7 +18618,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/transactions/TransactionList.tsx",
-      "source_location": "L76",
+      "source_location": "L78",
       "weight": 1.0
     },
     {
@@ -18069,7 +18629,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/transactions/TransactionList.tsx",
-      "source_location": "L83",
+      "source_location": "L85",
       "weight": 1.0
     },
     {
@@ -19789,6 +20349,39 @@
       "weight": 1.0
     },
     {
+      "source": "src_store_transactionstore_test",
+      "target": "src_store_transactionstore_test_mockupdateequser",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/store/transactionStore.test.ts",
+      "source_location": "L22",
+      "weight": 1.0
+    },
+    {
+      "source": "src_store_transactionstore_test",
+      "target": "src_store_transactionstore_test_mockupdateeqid",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/store/transactionStore.test.ts",
+      "source_location": "L23",
+      "weight": 1.0
+    },
+    {
+      "source": "src_store_transactionstore_test",
+      "target": "src_store_transactionstore_test_mockupdate",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/store/transactionStore.test.ts",
+      "source_location": "L24",
+      "weight": 1.0
+    },
+    {
       "source": "src_types_index",
       "target": "src_types_index_transactiontype",
       "relation": "contains",
@@ -19823,13 +20416,35 @@
     },
     {
       "source": "src_types_index",
-      "target": "src_types_index_financialstore",
+      "target": "src_types_index_updateincomeinput",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/types/index.ts",
       "source_location": "L56",
+      "weight": 1.0
+    },
+    {
+      "source": "src_types_index",
+      "target": "src_types_index_updateexpenseinput",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/types/index.ts",
+      "source_location": "L59",
+      "weight": 1.0
+    },
+    {
+      "source": "src_types_index",
+      "target": "src_types_index_financialstore",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/types/index.ts",
+      "source_location": "L62",
       "weight": 1.0
     },
     {
@@ -19851,7 +20466,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/types/index.ts",
-      "source_location": "L82",
+      "source_location": "L90",
       "weight": 1.0
     },
     {
@@ -20300,5 +20915,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "6bbaa68014007d5163d66337362445a14c51f7f9"
+  "built_at_commit": "cf4441a72875243d404857c139817bf72e988057"
 }

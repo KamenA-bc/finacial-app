@@ -52,6 +52,12 @@ export interface ExpenseEntry {
   readonly isWithOthers: boolean;
 }
 
+/** Input payload for updating an existing income entry. */
+export type UpdateIncomeInput = Partial<Omit<IncomeEntry, 'id'>>;
+
+/** Input payload for updating an existing expense entry. */
+export type UpdateExpenseInput = Partial<Omit<ExpenseEntry, 'id'>>;
+
 /** Shape of the centralized Zustand store. */
 export interface FinancialStore {
   incomeEntries: IncomeEntry[];
@@ -72,6 +78,8 @@ export interface FinancialStore {
   fetchTransactions: (userId: string, targetYear?: number) => Promise<void>;
   addIncome: (entry: Omit<IncomeEntry, 'id'>) => Promise<void>;
   addExpense: (entry: Omit<ExpenseEntry, 'id'>) => Promise<void>;
+  updateIncome: (id: string, updates: UpdateIncomeInput) => Promise<void>;
+  updateExpense: (id: string, updates: UpdateExpenseInput) => Promise<void>;
   deleteIncome: (id: string) => Promise<void>;
   deleteExpense: (id: string) => Promise<void>;
   setSelectedDate: (date: string) => void;

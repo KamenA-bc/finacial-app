@@ -11,7 +11,7 @@
 
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { FinancialStore, IncomeEntry, ExpenseEntry } from '@/types';
+import { FinancialStore, IncomeEntry, ExpenseEntry, UpdateIncomeInput, UpdateExpenseInput } from '@/types';
 import { toISODateString } from '@/lib/dateUtils';
 import { supabase } from '@/lib/supabase';
 import { logError, extractErrorMessage } from '@/lib/errorLogger';
@@ -413,6 +413,138 @@ export const useFinancialStore = create<FinancialStore>()(
                 expenseEntries: state.expenseEntries.filter((e) => e.id !== tempId),
                 error: message,
             }));
+        }
+    },
+
+    updateIncome: async (id: string, updates: UpdateIncomeInput): Promise<void> => {
+        const userId = get().userId;
+        const previousEntries = get().incomeEntries;
+        const targetIndex = previousEntries.findIndex((e) => e.id === id);
+
+        if (targetIndex === -1) {
+            logError(
+                'updateIncome:notFound',
+                new Error(`Attempted to update income with id ${id} not found in store`),
+                { entryId: id, updates },
+                'warning'
+            );
+            return;
+        }
+
+        const existing = previousEntries[targetIndex];
+        const updatedEntry: IncomeEntry = {
+            ...existing,
+            ...(updates.amount !== undefined && { amount: updates.amount }),
+            ...(updates.date !== undefined && { date: updates.date }),
+            ...(updates.description !== undefined && { description: updates.description }),
+            ...(updates.isWorkIncome !== undefined && { isWorkIncome: updates.isWorkIncome }),
+            ...(updates.isWithKami !== undefined && { isWithKami: updates.isWithKami }),
+        };
+
+        // 1. Optimistically update local state immediately (0ms UI latency)
+        set((state) => {
+            const next = state.incomeEntries.map((e) => (e.id === id ? updatedEntry : e));
+            return {
+                incomeEntries: next.sort((a, b) => a.date.localeCompare(b.date)),
+                error: null,
+            };
+        });
+
+        if (id.startsWith('temp_') || isMockTestUser(userId)) return;
+
+        try {
+            const dbPayload: Record<string, unknown> = {};
+            if (updates.date !== undefined) dbPayload.date = updates.date;
+            if (updates.amount !== undefined) dbPayload.amount = updates.amount;
+            if (updates.description !== undefined) dbPayload.description = updates.description;
+            if (updates.isWorkIncome !== undefined) dbPayload.is_work_income = updates.isWorkIncome;
+            if (updates.isWithKami !== undefined) dbPayload.is_with_kami = updates.isWithKami;
+
+            await withJwtRetry(async () => {
+                const { error } = await supabase
+                    .from('income_entries')
+                    .update(dbPayload)
+                    .eq('id', id)
+                    .eq('user_id', userId);
+
+                if (error) throw error;
+            }, 'updateIncome');
+        } catch (err) {
+            const message = extractErrorMessage(err);
+            logError('updateIncome', err, { entryId: id, updates, userId });
+            // 2. Roll back state on failure
+            set({
+                incomeEntries: previousEntries,
+                error: message,
+            });
+        }
+    },
+
+    updateExpense: async (id: string, updates: UpdateExpenseInput): Promise<void> => {
+        const userId = get().userId;
+        const previousEntries = get().expenseEntries;
+        const targetIndex = previousEntries.findIndex((e) => e.id === id);
+
+        if (targetIndex === -1) {
+            logError(
+                'updateExpense:notFound',
+                new Error(`Attempted to update expense with id ${id} not found in store`),
+                { entryId: id, updates },
+                'warning'
+            );
+            return;
+        }
+
+        const existing = previousEntries[targetIndex];
+        const updatedEntry: ExpenseEntry = {
+            ...existing,
+            ...(updates.amount !== undefined && { amount: updates.amount }),
+            ...(updates.date !== undefined && { date: updates.date }),
+            ...(updates.description !== undefined && { description: updates.description }),
+            ...(updates.category !== undefined && { category: updates.category }),
+            ...(updates.isWorkExpense !== undefined && { isWorkExpense: updates.isWorkExpense }),
+            ...(updates.isWithKami !== undefined && { isWithKami: updates.isWithKami }),
+            ...(updates.isWithOthers !== undefined && { isWithOthers: updates.isWithOthers }),
+        };
+
+        // 1. Optimistically update local state immediately (0ms UI latency)
+        set((state) => {
+            const next = state.expenseEntries.map((e) => (e.id === id ? updatedEntry : e));
+            return {
+                expenseEntries: next.sort((a, b) => a.date.localeCompare(b.date)),
+                error: null,
+            };
+        });
+
+        if (id.startsWith('temp_') || isMockTestUser(userId)) return;
+
+        try {
+            const dbPayload: Record<string, unknown> = {};
+            if (updates.date !== undefined) dbPayload.date = updates.date;
+            if (updates.amount !== undefined) dbPayload.amount = updates.amount;
+            if (updates.description !== undefined) dbPayload.description = updates.description;
+            if (updates.category !== undefined) dbPayload.category = updates.category;
+            if (updates.isWorkExpense !== undefined) dbPayload.is_work_expense = updates.isWorkExpense;
+            if (updates.isWithKami !== undefined) dbPayload.is_with_kami = updates.isWithKami;
+            if (updates.isWithOthers !== undefined) dbPayload.is_with_others = updates.isWithOthers;
+
+            await withJwtRetry(async () => {
+                const { error } = await supabase
+                    .from('expense_entries')
+                    .update(dbPayload)
+                    .eq('id', id)
+                    .eq('user_id', userId);
+
+                if (error) throw error;
+            }, 'updateExpense');
+        } catch (err) {
+            const message = extractErrorMessage(err);
+            logError('updateExpense', err, { entryId: id, updates, userId });
+            // 2. Roll back state on failure
+            set({
+                expenseEntries: previousEntries,
+                error: message,
+            });
         }
     },
 

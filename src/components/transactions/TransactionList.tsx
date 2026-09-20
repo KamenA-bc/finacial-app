@@ -19,6 +19,7 @@ import {
     Gift,
     AlertTriangle,
     X,
+    Pencil,
 } from 'lucide-react';
 import { ExpenseCategory, ExpenseEntry, IncomeEntry } from '@/types';
 import { useFinancialData } from '@/hooks/useFinancialData';
@@ -30,6 +31,7 @@ import {
     CATEGORY_BG_MAP,
 } from '@/lib/constants';
 import { getExpenseRowColors } from '@/lib/expenseRowColors';
+import { EditTransactionModal } from './EditTransactionModal';
 
 // ── Constants ────────────────────────────────────────────────────────────────
 
@@ -126,10 +128,11 @@ const DeleteDialog = ({ description, amount, onConfirm, onCancel }: DeleteDialog
 
 interface ExpenseRowProps {
     expense: ExpenseEntry;
+    onEdit: (expense: ExpenseEntry) => void;
     onDelete: (id: string) => void;
 }
 
-const ExpenseRow = ({ expense, onDelete }: ExpenseRowProps): React.ReactElement => {
+const ExpenseRow = ({ expense, onEdit, onDelete }: ExpenseRowProps): React.ReactElement => {
     const { amountColor, rowBg } = getExpenseRowColors(
         expense.isWorkExpense,
         expense.isWithKami,
@@ -170,9 +173,16 @@ const ExpenseRow = ({ expense, onDelete }: ExpenseRowProps): React.ReactElement 
                 -{formatAmount(expense.amount, expense.date)}
             </span>
             <button
+                onClick={() => onEdit(expense)}
+                aria-label={`Редактирай разход: ${expense.description}`}
+                className="ml-1 flex-shrink-0 p-1.5 rounded-lg text-stone-300 opacity-60 group-hover:opacity-100 hover:text-stone-700 hover:bg-stone-100 active:scale-[0.97] transition-all cursor-pointer"
+            >
+                <Pencil size={13} />
+            </button>
+            <button
                 onClick={() => onDelete(expense.id)}
                 aria-label={`Delete expense: ${expense.description}`}
-                className="ml-1 flex-shrink-0 p-1.5 rounded-lg text-stone-300 opacity-60 group-hover:opacity-100 hover:text-rose-500 hover:bg-rose-50 transition-all cursor-pointer"
+                className="ml-0.5 flex-shrink-0 p-1.5 rounded-lg text-stone-300 opacity-60 group-hover:opacity-100 hover:text-rose-500 hover:bg-rose-50 active:scale-[0.97] transition-all cursor-pointer"
             >
                 <Trash2 size={13} />
             </button>
@@ -182,10 +192,11 @@ const ExpenseRow = ({ expense, onDelete }: ExpenseRowProps): React.ReactElement 
 
 interface IncomeRowProps {
     income: IncomeEntry;
+    onEdit: (income: IncomeEntry) => void;
     onDelete: (id: string) => void;
 }
 
-const IncomeRow = ({ income, onDelete }: IncomeRowProps): React.ReactElement => {
+const IncomeRow = ({ income, onEdit, onDelete }: IncomeRowProps): React.ReactElement => {
     const isWork = income.isWorkIncome;
     const amountColor = isWork ? 'text-blue-600' : 'text-emerald-600';
     const iconClass = isWork ? 'bg-blue-50 text-blue-600' : 'bg-emerald-50 text-emerald-600';
@@ -212,9 +223,16 @@ const IncomeRow = ({ income, onDelete }: IncomeRowProps): React.ReactElement => 
                 +{formatAmount(income.amount, income.date)}
             </span>
             <button
+                onClick={() => onEdit(income)}
+                aria-label={`Редактирай приход: ${income.description || 'Приход'}`}
+                className="ml-1 flex-shrink-0 p-1.5 rounded-lg text-stone-300 opacity-60 group-hover:opacity-100 hover:text-stone-700 hover:bg-stone-100 active:scale-[0.97] transition-all cursor-pointer"
+            >
+                <Pencil size={13} />
+            </button>
+            <button
                 onClick={() => onDelete(income.id)}
                 aria-label={`Delete income of ${formatAmount(income.amount, income.date)}`}
-                className="ml-1 flex-shrink-0 p-1.5 rounded-lg text-stone-300 opacity-60 group-hover:opacity-100 hover:text-rose-500 hover:bg-rose-50 transition-all cursor-pointer"
+                className="ml-0.5 flex-shrink-0 p-1.5 rounded-lg text-stone-300 opacity-60 group-hover:opacity-100 hover:text-rose-500 hover:bg-rose-50 active:scale-[0.97] transition-all cursor-pointer"
             >
                 <Trash2 size={13} />
             </button>
@@ -240,6 +258,11 @@ export const TransactionList = (): React.ReactElement => {
     const deleteExpense = useFinancialStore((s) => s.deleteExpense);
     const [filterMode, setFilterMode] = useState<FilterMode>('all');
     const [pendingDelete, setPendingDelete] = useState<PendingDelete | null>(null);
+    const [editingTransaction, setEditingTransaction] = useState<
+        | { type: 'expense'; entry: ExpenseEntry }
+        | { type: 'income'; entry: IncomeEntry }
+        | null
+    >(null);
 
     const requestDeleteExpense = (id: string): void => {
         const entry = dailyExpenseEntries.find((e) => e.id === id);
@@ -292,6 +315,13 @@ export const TransactionList = (): React.ReactElement => {
 
     return (
         <div className="flex flex-col">
+            {/* Edit Transaction Modal */}
+            <EditTransactionModal
+                isOpen={Boolean(editingTransaction)}
+                transaction={editingTransaction}
+                onClose={() => setEditingTransaction(null)}
+            />
+
             {/* Delete Confirmation Modal */}
             {pendingDelete && (
                 <DeleteDialog
@@ -342,6 +372,7 @@ export const TransactionList = (): React.ReactElement => {
                         <IncomeRow
                             key={income.id}
                             income={income}
+                            onEdit={(inc) => setEditingTransaction({ type: 'income', entry: inc })}
                             onDelete={requestDeleteIncome}
                         />
                     ))}
@@ -349,6 +380,7 @@ export const TransactionList = (): React.ReactElement => {
                         <ExpenseRow
                             key={expense.id}
                             expense={expense}
+                            onEdit={(exp) => setEditingTransaction({ type: 'expense', entry: exp })}
                             onDelete={requestDeleteExpense}
                         />
                     ))}

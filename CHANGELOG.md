@@ -4,6 +4,14 @@ All notable changes to the Finance Tracker project will be documented in this fi
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [2026-09-20]
+
+### Added
+- **In-Place Transaction Editing (`EditTransactionModal.tsx`)**: Added an accessible modal dialog allowing users to edit existing income and expense entries directly without deleting and recreating them. Supports modifying amount, date, description, category, and flag chips (`Работни`, `Kami ❤️`, `С Други`) with dynamic currency indicators (`лв.` vs. `€`) and keyboard accessibility (Escape key).
+- **Zustand Store Actions (`src/store/transactionStore.ts`)**: Implemented `updateIncome` and `updateExpense` with zero-latency optimistic UI updates, automated date-sorted repositioning, snake_case DB payload mapping, Supabase persistence via `withJwtRetry`, and automatic rollback protection on failure.
+- **TransactionList Edit Action (`src/components/transactions/TransactionList.tsx`)**: Added `Pencil` edit button alongside delete action on transaction rows, opening the pre-filled edit modal.
+- **Unit Test Coverage**: Added comprehensive test suites in `src/store/transactionStore.test.ts` (8 new tests for store updates & rollbacks) and `src/components/transactions/EditTransactionModal.test.tsx` (9 tests for pre-filled data, form validation, tag toggling, submission, and cancelation).
+
 ## [2026-09-19]
 
 ### Fixed

@@ -19,6 +19,9 @@ const mockSingle = vi.fn();
 const mockOrder = vi.fn(() => Promise.resolve({ data: [] as Record<string, unknown>[], error: null }));
 const mockLte = vi.fn(() => ({ order: mockOrder }));
 const mockGte = vi.fn(() => ({ lte: mockLte }));
+const mockUpdateEqUser = vi.fn(() => Promise.resolve({ error: null }));
+const mockUpdateEqId = vi.fn(() => ({ eq: mockUpdateEqUser }));
+const mockUpdate = vi.fn(() => ({ eq: mockUpdateEqId }));
 
 vi.mock('@/lib/supabase', () => ({
     supabase: {
@@ -35,6 +38,7 @@ vi.mock('@/lib/supabase', () => ({
                     single: mockSingle,
                 })),
             })),
+            update: mockUpdate,
             delete: vi.fn(() => ({
                 eq: mockDelete,
             })),
@@ -45,6 +49,9 @@ vi.mock('@/lib/supabase', () => ({
 describe('transactionStore - Optimistic Updates & Reliability', () => {
     beforeEach(() => {
         vi.clearAllMocks();
+        mockUpdateEqUser.mockReset().mockResolvedValue({ error: null });
+        mockUpdateEqId.mockReset().mockReturnValue({ eq: mockUpdateEqUser });
+        mockUpdate.mockReset().mockReturnValue({ eq: mockUpdateEqId });
         useFinancialStore.setState({
             incomeEntries: [],
             expenseEntries: [],
@@ -231,6 +238,170 @@ describe('transactionStore - Optimistic Updates & Reliability', () => {
             expect(useFinancialStore.getState().expenseEntries).toHaveLength(1);
             expect(useFinancialStore.getState().expenseEntries[0].id).toBe('exp-1');
             expect(useFinancialStore.getState().error).toBe('Foreign key violation');
+        });
+    });
+
+    describe('updateIncome', () => {
+        it('optimistically updates income in store immediately and persists to Supabase with snake_case payload', async () => {
+            const initialIncome = [
+                { id: 'inc-1', date: '2026-03-09', amount: 100, description: 'Freelance', isWorkIncome: false, isWithKami: false },
+            ];
+            useFinancialStore.setState({ incomeEntries: initialIncome, userId: 'test-user-123' });
+
+            const updatePromise = useFinancialStore.getState().updateIncome('inc-1', {
+                amount: 150,
+                description: 'Freelance Design',
+                isWorkIncome: true,
+                isWithKami: true,
+            });
+
+            // Optimistically updated right away
+            const intermediate = useFinancialStore.getState().incomeEntries;
+            expect(intermediate[0].amount).toBe(150);
+            expect(intermediate[0].description).toBe('Freelance Design');
+            expect(intermediate[0].isWorkIncome).toBe(true);
+            expect(intermediate[0].isWithKami).toBe(true);
+
+            await updatePromise;
+
+            expect(mockUpdate).toHaveBeenCalledWith({
+                amount: 150,
+                description: 'Freelance Design',
+                is_work_income: true,
+                is_with_kami: true,
+            });
+            expect(mockUpdateEqId).toHaveBeenCalledWith('id', 'inc-1');
+            expect(mockUpdateEqUser).toHaveBeenCalledWith('user_id', 'test-user-123');
+            expect(useFinancialStore.getState().error).toBeNull();
+        });
+
+        it('rolls back optimistic update when Supabase update fails', async () => {
+            const initialIncome = [
+                { id: 'inc-1', date: '2026-03-09', amount: 100, description: 'Old Description', isWorkIncome: false, isWithKami: false },
+            ];
+            useFinancialStore.setState({ incomeEntries: initialIncome, userId: 'test-user-123' });
+
+            mockUpdateEqUser.mockRejectedValueOnce(new Error('Network connection dropped'));
+
+            await useFinancialStore.getState().updateIncome('inc-1', {
+                amount: 200,
+                description: 'New Description',
+            });
+
+            // Rolled back
+            const finalEntries = useFinancialStore.getState().incomeEntries;
+            expect(finalEntries[0].amount).toBe(100);
+            expect(finalEntries[0].description).toBe('Old Description');
+            expect(useFinancialStore.getState().error).toBe('Network connection dropped');
+        });
+
+        it('skips Supabase call for temp ID or mock test user', async () => {
+            const tempIncome = [
+                { id: 'temp_inc_123', date: '2026-03-09', amount: 50, description: 'Temp', isWorkIncome: false, isWithKami: false },
+            ];
+            useFinancialStore.setState({ incomeEntries: tempIncome, userId: 'test-user-123' });
+
+            await useFinancialStore.getState().updateIncome('temp_inc_123', { amount: 60 });
+
+            expect(useFinancialStore.getState().incomeEntries[0].amount).toBe(60);
+            expect(mockUpdate).not.toHaveBeenCalled();
+        });
+
+        it('logs warning and does not alter store if entry not found', async () => {
+            useFinancialStore.setState({ incomeEntries: [], userId: 'test-user-123' });
+
+            await useFinancialStore.getState().updateIncome('non-existent-id', { amount: 50 });
+
+            expect(mockUpdate).not.toHaveBeenCalled();
+            expect(useFinancialStore.getState().incomeEntries).toHaveLength(0);
+        });
+    });
+
+    describe('updateExpense', () => {
+        it('optimistically updates expense amount, category, and flags immediately and persists to Supabase', async () => {
+            const initialExpenses = [
+                {
+                    id: 'exp-1',
+                    date: '2026-03-09',
+                    amount: 30,
+                    description: 'Supermarket',
+                    category: 'Магазини (Храна/Вода)' as const,
+                    isWorkExpense: false,
+                    isWithKami: false,
+                    isWithOthers: false,
+                },
+            ];
+            useFinancialStore.setState({ expenseEntries: initialExpenses, userId: 'test-user-123' });
+
+            const updatePromise = useFinancialStore.getState().updateExpense('exp-1', {
+                amount: 45.5,
+                category: 'Eating out',
+                isWorkExpense: true,
+                isWithKami: true,
+                isWithOthers: true,
+                description: 'Lunch meeting',
+            });
+
+            // Immediately reflected in store
+            const intermediate = useFinancialStore.getState().expenseEntries;
+            expect(intermediate[0].amount).toBe(45.5);
+            expect(intermediate[0].category).toBe('Eating out');
+            expect(intermediate[0].isWorkExpense).toBe(true);
+            expect(intermediate[0].isWithKami).toBe(true);
+            expect(intermediate[0].isWithOthers).toBe(true);
+            expect(intermediate[0].description).toBe('Lunch meeting');
+
+            await updatePromise;
+
+            expect(mockUpdate).toHaveBeenCalledWith({
+                amount: 45.5,
+                category: 'Eating out',
+                is_work_expense: true,
+                is_with_kami: true,
+                is_with_others: true,
+                description: 'Lunch meeting',
+            });
+            expect(mockUpdateEqId).toHaveBeenCalledWith('id', 'exp-1');
+            expect(mockUpdateEqUser).toHaveBeenCalledWith('user_id', 'test-user-123');
+            expect(useFinancialStore.getState().error).toBeNull();
+        });
+
+        it('rolls back optimistic expense update when Supabase update fails', async () => {
+            const initialExpenses = [
+                {
+                    id: 'exp-1',
+                    date: '2026-03-09',
+                    amount: 30,
+                    description: 'Supermarket',
+                    category: 'Магазини (Храна/Вода)' as const,
+                    isWorkExpense: false,
+                    isWithKami: false,
+                    isWithOthers: false,
+                },
+            ];
+            useFinancialStore.setState({ expenseEntries: initialExpenses, userId: 'test-user-123' });
+
+            mockUpdateEqUser.mockRejectedValueOnce(new Error('Supabase database error'));
+
+            await useFinancialStore.getState().updateExpense('exp-1', {
+                amount: 99,
+                category: 'Shopping',
+            });
+
+            // Rolled back to initial
+            const finalEntries = useFinancialStore.getState().expenseEntries;
+            expect(finalEntries[0].amount).toBe(30);
+            expect(finalEntries[0].category).toBe('Магазини (Храна/Вода)');
+            expect(useFinancialStore.getState().error).toBe('Supabase database error');
+        });
+
+        it('logs warning and does not alter store if expense not found', async () => {
+            useFinancialStore.setState({ expenseEntries: [], userId: 'test-user-123' });
+
+            await useFinancialStore.getState().updateExpense('non-existent-id', { amount: 50 });
+
+            expect(mockUpdate).not.toHaveBeenCalled();
+            expect(useFinancialStore.getState().expenseEntries).toHaveLength(0);
         });
     });
 
