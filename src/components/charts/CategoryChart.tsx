@@ -69,45 +69,46 @@ export const CategoryChart = (): React.ReactElement => {
     return (
         <div className="flex flex-col h-full">
             {/* Header with Tab Switcher & Label */}
-            <div className="flex flex-col gap-3 mb-4">
-                <div className="flex items-center justify-between">
+            <div className="flex flex-col gap-2.5 mb-3">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                     <div className="flex items-center gap-2">
-                        <PieIcon size={15} className="text-stone-400" />
-                        <span className="text-xs font-semibold text-stone-500 uppercase tracking-widest">
-                            Разпределение на разходите
+                        <PieIcon size={14} className="text-stone-400 flex-shrink-0" />
+                        <span className="text-xs font-semibold text-stone-600">
+                            Разпределение по категории
                         </span>
                     </div>
 
-                    <div className="flex p-0.5 bg-stone-100 rounded-lg border border-stone-200/70">
-                        <button
-                            onClick={() => setActiveTab('monthly')}
-                            className={`px-2.5 py-1 text-[10px] font-bold rounded-md transition-all cursor-pointer ${
-                                activeTab === 'monthly'
-                                    ? 'bg-white text-stone-900 shadow-xs'
-                                    : 'text-stone-500 hover:text-stone-800'
-                            }`}
-                        >
-                            МЕСЕЦ
-                        </button>
-                        <button
-                            onClick={() => setActiveTab('yearly')}
-                            className={`px-2.5 py-1 text-[10px] font-bold rounded-md transition-all cursor-pointer ${
-                                activeTab === 'yearly'
-                                    ? 'bg-white text-stone-900 shadow-xs'
-                                    : 'text-stone-500 hover:text-stone-800'
-                            }`}
-                        >
-                            ГОДИНА
-                        </button>
-                    </div>
-                </div>
+                    <div className="flex items-center justify-between sm:justify-end gap-2 w-full sm:w-auto">
+                        <div className="bg-stone-50 rounded-lg px-2.5 py-1 border border-stone-200/60 flex items-center gap-1.5 flex-shrink-0">
+                            <Calendar size={12} className="text-emerald-600" />
+                            <span className="text-[11px] font-medium text-stone-600">
+                                {timeframeLabel}
+                            </span>
+                        </div>
 
-                {/* Status Label */}
-                <div className="bg-stone-50 rounded-lg px-2.5 py-1.5 border border-stone-100 flex items-center gap-1.5 self-start">
-                    <Calendar size={12} className="text-emerald-600" />
-                    <span className="text-[11px] font-medium text-stone-600">
-                        Период: <span className="text-stone-900 font-semibold">{timeframeLabel}</span>
-                    </span>
+                        <div className="flex p-0.5 bg-stone-100 rounded-lg border border-stone-200/70 flex-shrink-0">
+                            <button
+                                onClick={() => setActiveTab('monthly')}
+                                className={`px-2.5 py-1 text-[10px] font-bold rounded-md transition-all cursor-pointer ${
+                                    activeTab === 'monthly'
+                                        ? 'bg-white text-stone-900 shadow-xs'
+                                        : 'text-stone-500 hover:text-stone-800'
+                                }`}
+                            >
+                                МЕСЕЦ
+                            </button>
+                            <button
+                                onClick={() => setActiveTab('yearly')}
+                                className={`px-2.5 py-1 text-[10px] font-bold rounded-md transition-all cursor-pointer ${
+                                    activeTab === 'yearly'
+                                        ? 'bg-white text-stone-900 shadow-xs'
+                                        : 'text-stone-500 hover:text-stone-800'
+                                }`}
+                            >
+                                ГОДИНА
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
 

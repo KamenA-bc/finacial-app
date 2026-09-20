@@ -140,52 +140,61 @@ const ExpenseRow = ({ expense, onEdit, onDelete }: ExpenseRowProps): React.React
     );
 
     return (
-        <div className={`group flex items-center gap-3 py-2.5 px-2.5 -mx-1 rounded-xl border-b border-stone-100 last:border-0 hover:bg-stone-50/90 transition-all ${rowBg}`}>
-            <div
-                className={`flex items-center justify-center w-7 h-7 rounded-lg flex-shrink-0 ${CATEGORY_COLORS[expense.category]}`}
-            >
-                {CATEGORY_ICONS[expense.category]}
-            </div>
-            <div className="flex-1 min-w-0">
-                <p className="text-sm text-stone-800 font-medium truncate">
-                    {expense.description}
-                </p>
-                <div className="flex flex-wrap items-center gap-1.5 mt-0.5">
-                    <p className="text-xs text-stone-500 whitespace-nowrap">{CATEGORY_BG_MAP[expense.category] ?? expense.category}</p>
-                    {expense.isWorkExpense && (
-                        <span className="whitespace-nowrap text-[10px] font-medium text-amber-700 bg-amber-50 border border-amber-200/80 px-1.5 py-0.2 rounded-md leading-tight">
-                            Работни
-                        </span>
-                    )}
-                    {expense.isWithKami && (
-                        <span className="whitespace-nowrap text-[10px] font-medium text-pink-700 bg-pink-50 border border-pink-200/80 px-1.5 py-0.2 rounded-md leading-tight">
-                            Kami ❤️
-                        </span>
-                    )}
-                    {expense.isWithOthers && (
-                        <span className="whitespace-nowrap text-[10px] font-medium text-emerald-700 bg-emerald-50 border border-emerald-200/80 px-1.5 py-0.2 rounded-md leading-tight">
-                            С Други
-                        </span>
-                    )}
+        <div className={`group flex items-center justify-between gap-3 py-2.5 px-3 -mx-1 rounded-xl border-b border-stone-100 last:border-0 hover:bg-stone-50/90 transition-all ${rowBg}`}>
+            {/* Left: Icon + Text */}
+            <div className="flex items-center gap-2.5 min-w-0 flex-1">
+                <div
+                    className={`flex items-center justify-center w-8 h-8 rounded-lg flex-shrink-0 ${CATEGORY_COLORS[expense.category]}`}
+                >
+                    {CATEGORY_ICONS[expense.category]}
+                </div>
+                <div className="flex-1 min-w-0">
+                    <p className="text-sm text-stone-800 font-medium truncate">
+                        {expense.description}
+                    </p>
+                    <div className="flex flex-wrap items-center gap-1.5 mt-0.5">
+                        <p className="text-xs text-stone-500 whitespace-nowrap">{CATEGORY_BG_MAP[expense.category] ?? expense.category}</p>
+                        {expense.isWorkExpense && (
+                            <span className="whitespace-nowrap text-[10px] font-medium text-amber-700 bg-amber-50 border border-amber-200/80 px-1.5 py-0.2 rounded-md leading-tight">
+                                Работни
+                            </span>
+                        )}
+                        {expense.isWithKami && (
+                            <span className="whitespace-nowrap text-[10px] font-medium text-pink-700 bg-pink-50 border border-pink-200/80 px-1.5 py-0.2 rounded-md leading-tight">
+                                Kami ❤️
+                            </span>
+                        )}
+                        {expense.isWithOthers && (
+                            <span className="whitespace-nowrap text-[10px] font-medium text-emerald-700 bg-emerald-50 border border-emerald-200/80 px-1.5 py-0.2 rounded-md leading-tight">
+                                С Други
+                            </span>
+                        )}
+                    </div>
                 </div>
             </div>
-            <span className={`text-sm font-semibold tabular-nums flex-shrink-0 ${amountColor}`}>
-                -{formatAmount(expense.amount, expense.date)}
-            </span>
-            <button
-                onClick={() => onEdit(expense)}
-                aria-label={`Редактирай разход: ${expense.description}`}
-                className="ml-1 flex-shrink-0 p-1.5 rounded-lg text-stone-300 opacity-60 group-hover:opacity-100 hover:text-stone-700 hover:bg-stone-100 active:scale-[0.97] transition-all cursor-pointer"
-            >
-                <Pencil size={13} />
-            </button>
-            <button
-                onClick={() => onDelete(expense.id)}
-                aria-label={`Delete expense: ${expense.description}`}
-                className="ml-0.5 flex-shrink-0 p-1.5 rounded-lg text-stone-300 opacity-60 group-hover:opacity-100 hover:text-rose-500 hover:bg-rose-50 active:scale-[0.97] transition-all cursor-pointer"
-            >
-                <Trash2 size={13} />
-            </button>
+
+            {/* Right: Amount + Actions */}
+            <div className="flex items-center gap-2 flex-shrink-0">
+                <span className={`text-sm font-semibold tabular-nums text-right ${amountColor}`}>
+                    -{formatAmount(expense.amount, expense.date)}
+                </span>
+                <div className="flex items-center gap-1">
+                    <button
+                        onClick={() => onEdit(expense)}
+                        aria-label={`Редактирай разход: ${expense.description}`}
+                        className="p-1.5 rounded-lg text-stone-600 bg-stone-100 hover:bg-stone-200 hover:text-stone-900 active:scale-[0.95] transition-all cursor-pointer flex items-center justify-center"
+                    >
+                        <Pencil size={13} />
+                    </button>
+                    <button
+                        onClick={() => onDelete(expense.id)}
+                        aria-label={`Delete expense: ${expense.description}`}
+                        className="p-1.5 rounded-lg text-stone-400 hover:text-rose-600 hover:bg-rose-50 active:scale-[0.95] transition-all cursor-pointer flex items-center justify-center"
+                    >
+                        <Trash2 size={13} />
+                    </button>
+                </div>
+            </div>
         </div>
     );
 };
@@ -202,40 +211,49 @@ const IncomeRow = ({ income, onEdit, onDelete }: IncomeRowProps): React.ReactEle
     const iconClass = isWork ? 'bg-blue-50 text-blue-600' : 'bg-emerald-50 text-emerald-600';
 
     return (
-        <div className="group flex items-center gap-3 py-2.5 px-2.5 -mx-1 rounded-xl border-b border-stone-100 last:border-0 hover:bg-stone-50/90 transition-all">
-            <div className={`flex items-center justify-center w-7 h-7 rounded-lg flex-shrink-0 ${iconClass}`}>
-                {isWork ? <Briefcase size={14} /> : <TrendingUp size={14} />}
-            </div>
-            <div className="flex-1 min-w-0">
-                <p className="text-sm text-stone-800 font-medium truncate">
-                    {income.description || 'Приход'}
-                </p>
-                <div className="flex flex-wrap items-center gap-1.5 mt-0.5">
-                    <p className="text-xs text-stone-500 whitespace-nowrap">Спечелени пари</p>
-                    {isWork && (
-                        <span className="whitespace-nowrap text-[10px] font-medium text-blue-700 bg-blue-50 border border-blue-200/80 px-1.5 py-0.2 rounded-md leading-tight">
-                            Работен
-                        </span>
-                    )}
+        <div className="group flex items-center justify-between gap-3 py-2.5 px-3 -mx-1 rounded-xl border-b border-stone-100 last:border-0 hover:bg-stone-50/90 transition-all">
+            {/* Left: Icon + Text */}
+            <div className="flex items-center gap-2.5 min-w-0 flex-1">
+                <div className={`flex items-center justify-center w-8 h-8 rounded-lg flex-shrink-0 ${iconClass}`}>
+                    {isWork ? <Briefcase size={14} /> : <TrendingUp size={14} />}
+                </div>
+                <div className="flex-1 min-w-0">
+                    <p className="text-sm text-stone-800 font-medium truncate">
+                        {income.description || 'Приход'}
+                    </p>
+                    <div className="flex flex-wrap items-center gap-1.5 mt-0.5">
+                        <p className="text-xs text-stone-500 whitespace-nowrap">Спечелени пари</p>
+                        {isWork && (
+                            <span className="whitespace-nowrap text-[10px] font-medium text-blue-700 bg-blue-50 border border-blue-200/80 px-1.5 py-0.2 rounded-md leading-tight">
+                                Работен
+                            </span>
+                        )}
+                    </div>
                 </div>
             </div>
-            <span className={`text-sm font-semibold tabular-nums flex-shrink-0 ${amountColor}`}>
-                +{formatAmount(income.amount, income.date)}
-            </span>
-            <button
-                onClick={() => onEdit(income)}
-                aria-label={`Редактирай приход: ${income.description || 'Приход'}`}
-                className="ml-1 flex-shrink-0 p-1.5 rounded-lg text-stone-300 opacity-60 group-hover:opacity-100 hover:text-stone-700 hover:bg-stone-100 active:scale-[0.97] transition-all cursor-pointer"
-            >
-                <Pencil size={13} />
-            </button>
-            <button
-                onClick={() => onDelete(income.id)}
-                aria-label={`Delete income of ${formatAmount(income.amount, income.date)}`}
-                className="ml-0.5 flex-shrink-0 p-1.5 rounded-lg text-stone-300 opacity-60 group-hover:opacity-100 hover:text-rose-500 hover:bg-rose-50 active:scale-[0.97] transition-all cursor-pointer"
-            >
-                <Trash2 size={13} />
-            </button>
+
+            {/* Right: Amount + Actions */}
+            <div className="flex items-center gap-2 flex-shrink-0">
+                <span className={`text-sm font-semibold tabular-nums text-right ${amountColor}`}>
+                    +{formatAmount(income.amount, income.date)}
+                </span>
+                <div className="flex items-center gap-1">
+                    <button
+                        onClick={() => onEdit(income)}
+                        aria-label={`Редактирай приход: ${income.description || 'Приход'}`}
+                        className="p-1.5 rounded-lg text-stone-600 bg-stone-100 hover:bg-stone-200 hover:text-stone-900 active:scale-[0.95] transition-all cursor-pointer flex items-center justify-center"
+                    >
+                        <Pencil size={13} />
+                    </button>
+                    <button
+                        onClick={() => onDelete(income.id)}
+                        aria-label={`Delete income of ${formatAmount(income.amount, income.date)}`}
+                        className="p-1.5 rounded-lg text-stone-400 hover:text-rose-600 hover:bg-rose-50 active:scale-[0.95] transition-all cursor-pointer flex items-center justify-center"
+                    >
+                        <Trash2 size={13} />
+                    </button>
+                </div>
+            </div>
         </div>
     );
 };

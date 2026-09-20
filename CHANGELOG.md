@@ -12,6 +12,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - **TransactionList Edit Action (`src/components/transactions/TransactionList.tsx`)**: Added `Pencil` edit button alongside delete action on transaction rows, opening the pre-filled edit modal.
 - **Unit Test Coverage**: Added comprehensive test suites in `src/store/transactionStore.test.ts` (8 new tests for store updates & rollbacks) and `src/components/transactions/EditTransactionModal.test.tsx` (9 tests for pre-filled data, form validation, tag toggling, submission, and cancelation).
 
+### Fixed
+- **Mobile Action Button Visibility & Contrast (`TransactionList.tsx`)**: Replaced desktop hover-only `opacity-60 text-stone-300` styling with solid, high-contrast action buttons (`bg-stone-100 text-stone-600` for Edit and `text-rose-500 hover:bg-rose-50` for Delete) with comfortable 36px touch hit boxes and tactile press physics (`active:scale-[0.95]`).
+- **CategoryChart Mobile Text Wrapping (`CategoryChart.tsx`)**: Made header layout responsive (`flex-col sm:flex-row sm:items-center`) to eliminate collision and awkward line wrapping between category title and time period selector on narrow phone viewports.
+- **Transaction Row Alignment (`TransactionList.tsx`)**: Anchored amounts and action buttons in a dedicated right-aligned container to eliminate mid-row floating.
+
 ## [2026-09-19]
 
 ### Fixed
