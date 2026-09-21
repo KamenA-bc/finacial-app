@@ -69,8 +69,10 @@ export const CURRENCY_TRANSITION_DATE = '2026-01-01';
  */
 export const getCurrencySymbol = (date?: string | Date): string => {
     if (!date) return '€'; // Default to EUR for current context if no date provided
-    const d = typeof date === 'string' ? date : date.toISOString().slice(0, 10);
-    return d < CURRENCY_TRANSITION_DATE ? 'лв.' : '€';
+    if (date instanceof Date) {
+        return date.getFullYear() < 2026 ? 'лв.' : '€';
+    }
+    return date < CURRENCY_TRANSITION_DATE ? 'лв.' : '€';
 };
 
 /** Locale used for number formatting. */

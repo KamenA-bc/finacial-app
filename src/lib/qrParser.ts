@@ -20,6 +20,8 @@ export interface ParsedReceiptQr {
     rawText: string;
 }
 
+import { toISODateString } from '@/lib/dateUtils';
+
 const ISO_DATE_REGEX = /^\d{4}-\d{2}-\d{2}$/;
 const TIME_REGEX = /^\d{2}:\d{2}(?::\d{2})?$/;
 
@@ -112,7 +114,7 @@ function parseUrlReceipt(rawText: string): ParsedReceiptQr | null {
         let dateStr = params.get('date') || params.get('data');
         if (!dateStr || !isValidDate(dateStr)) {
             // Default to today's date if URL provides amount but not valid date
-            dateStr = new Date().toISOString().slice(0, 10);
+            dateStr = toISODateString(new Date());
         }
 
         return {

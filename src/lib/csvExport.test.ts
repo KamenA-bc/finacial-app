@@ -6,6 +6,7 @@
 
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import type { IncomeEntry, ExpenseEntry } from '@/types';
+import { toISODateString } from '@/lib/dateUtils';
 
 let capturedCsvContent = '';
 
@@ -29,7 +30,7 @@ afterEach(() => {
     vi.restoreAllMocks();
 });
 
-const today = new Date().toISOString().slice(0, 10);
+const today = toISODateString(new Date());
 
 const makeIncome = (overrides: Partial<IncomeEntry> = {}): IncomeEntry => ({
     id: 'inc-1',

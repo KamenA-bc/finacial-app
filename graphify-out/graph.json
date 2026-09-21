@@ -17,6 +17,84 @@
       "source_location": "L32"
     },
     {
+      "id": "src_components_ui_exportdropdown_exportdropdownprops",
+      "label": "ExportDropdownProps",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "dateUtils.ts",
+      "file_type": "code",
+      "norm_label": "exportdropdownprops",
+      "source_file": "src/components/ui/ExportDropdown.tsx",
+      "source_location": "L28"
+    },
+    {
+      "id": "src_components_ui_exportdropdown_exportformat",
+      "label": "ExportFormat",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "dateUtils.ts",
+      "file_type": "code",
+      "norm_label": "exportformat",
+      "source_file": "src/components/ui/ExportDropdown.tsx",
+      "source_location": "L26"
+    },
+    {
+      "id": "src_hooks_usestatisticsdata_dayrecord",
+      "label": "DayRecord",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "dateUtils.ts",
+      "file_type": "code",
+      "norm_label": "dayrecord",
+      "source_file": "src/hooks/useStatisticsData.ts",
+      "source_location": "L20"
+    },
+    {
+      "id": "src_hooks_usestatisticsdata_monthlytrendpoint",
+      "label": "MonthlyTrendPoint",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "dateUtils.ts",
+      "file_type": "code",
+      "norm_label": "monthlytrendpoint",
+      "source_file": "src/hooks/useStatisticsData.ts",
+      "source_location": "L34"
+    },
+    {
+      "id": "src_hooks_usestatisticsdata_monthrecord",
+      "label": "MonthRecord",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "dateUtils.ts",
+      "file_type": "code",
+      "norm_label": "monthrecord",
+      "source_file": "src/hooks/useStatisticsData.ts",
+      "source_location": "L15"
+    },
+    {
+      "id": "src_hooks_usestatisticsdata_statisticsdata",
+      "label": "StatisticsData",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "dateUtils.ts",
+      "file_type": "code",
+      "norm_label": "statisticsdata",
+      "source_file": "src/hooks/useStatisticsData.ts",
+      "source_location": "L41"
+    },
+    {
       "id": "src_lib_csvexport_csvrow",
       "label": "CsvRow",
       "_callable": true,
@@ -28,6 +106,45 @@
       "norm_label": "csvrow",
       "source_file": "src/lib/csvExport.ts",
       "source_location": "L13"
+    },
+    {
+      "id": "src_lib_excelexport_excelrow",
+      "label": "ExcelRow",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "dateUtils.ts",
+      "file_type": "code",
+      "norm_label": "excelrow",
+      "source_file": "src/lib/excelExport.ts",
+      "source_location": "L35"
+    },
+    {
+      "id": "src_components_history_monthcard_monthcardprops",
+      "label": "MonthCardProps",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 10,
+      "community_name": "MonthCard.tsx",
+      "file_type": "code",
+      "norm_label": "monthcardprops",
+      "source_file": "src/components/history/MonthCard.tsx",
+      "source_location": "L16"
+    },
+    {
+      "id": "src_hooks_usehistorydata_dailysummary",
+      "label": "DailySummary",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 10,
+      "community_name": "MonthCard.tsx",
+      "file_type": "code",
+      "norm_label": "dailysummary",
+      "source_file": "src/hooks/useHistoryData.ts",
+      "source_location": "L14"
     },
     {
       "id": "src_lib_telemetry_metricrating",
@@ -56,6 +173,19 @@
       "source_location": "L10"
     },
     {
+      "id": "src_components_statistics_overviewcards_overviewcardsprops",
+      "label": "OverviewCardsProps",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 11,
+      "community_name": "OverviewCards.tsx",
+      "file_type": "code",
+      "norm_label": "overviewcardsprops",
+      "source_file": "src/components/statistics/OverviewCards.tsx",
+      "source_location": "L22"
+    },
+    {
       "id": "src_app_error_errorprops",
       "label": "ErrorProps",
       "_callable": true,
@@ -69,6 +199,19 @@
       "source_location": "L8"
     },
     {
+      "id": "src_app_forgot_password_page_forgotpasswordvalues",
+      "label": "ForgotPasswordValues",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 13,
+      "community_name": "errorLogger.ts",
+      "file_type": "code",
+      "norm_label": "forgotpasswordvalues",
+      "source_file": "src/app/forgot-password/page.tsx",
+      "source_location": "L16"
+    },
+    {
       "id": "src_app_global_error_globalerrorprops",
       "label": "GlobalErrorProps",
       "_callable": true,
@@ -80,6 +223,45 @@
       "norm_label": "globalerrorprops",
       "source_file": "src/app/global-error.tsx",
       "source_location": "L7"
+    },
+    {
+      "id": "src_app_login_page_loginformvalues",
+      "label": "LoginFormValues",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 13,
+      "community_name": "errorLogger.ts",
+      "file_type": "code",
+      "norm_label": "loginformvalues",
+      "source_file": "src/app/login/page.tsx",
+      "source_location": "L21"
+    },
+    {
+      "id": "src_app_register_page_registerformvalues",
+      "label": "RegisterFormValues",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 13,
+      "community_name": "errorLogger.ts",
+      "file_type": "code",
+      "norm_label": "registerformvalues",
+      "source_file": "src/app/register/page.tsx",
+      "source_location": "L27"
+    },
+    {
+      "id": "src_app_update_password_page_updatepasswordvalues",
+      "label": "UpdatePasswordValues",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 13,
+      "community_name": "errorLogger.ts",
+      "file_type": "code",
+      "norm_label": "updatepasswordvalues",
+      "source_file": "src/app/update-password/page.tsx",
+      "source_location": "L19"
     },
     {
       "id": "src_components_auth_authprovider_authcontextvalue",
@@ -108,45 +290,6 @@
       "source_location": "L31"
     },
     {
-      "id": "src_components_ui_errorboundary_errorboundary",
-      "label": "ErrorBoundary",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 13,
-      "community_name": "errorLogger.ts",
-      "file_type": "code",
-      "norm_label": "errorboundary",
-      "source_file": "src/components/ui/ErrorBoundary.tsx",
-      "source_location": "L25"
-    },
-    {
-      "id": "src_components_ui_errorboundary_props",
-      "label": "Props",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 13,
-      "community_name": "errorLogger.ts",
-      "file_type": "code",
-      "norm_label": "props",
-      "source_file": "src/components/ui/ErrorBoundary.tsx",
-      "source_location": "L7"
-    },
-    {
-      "id": "src_components_ui_errorboundary_state",
-      "label": "State",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 13,
-      "community_name": "errorLogger.ts",
-      "file_type": "code",
-      "norm_label": "state",
-      "source_file": "src/components/ui/ErrorBoundary.tsx",
-      "source_location": "L14"
-    },
-    {
       "id": "src_lib_errorlogger_errorlogentry",
       "label": "ErrorLogEntry",
       "_callable": true,
@@ -173,58 +316,6 @@
       "source_location": "L22"
     },
     {
-      "id": "src_app_forgot_password_page_forgotpasswordvalues",
-      "label": "ForgotPasswordValues",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 22,
-      "community_name": "react",
-      "file_type": "code",
-      "norm_label": "forgotpasswordvalues",
-      "source_file": "src/app/forgot-password/page.tsx",
-      "source_location": "L16"
-    },
-    {
-      "id": "src_app_login_page_loginformvalues",
-      "label": "LoginFormValues",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 22,
-      "community_name": "react",
-      "file_type": "code",
-      "norm_label": "loginformvalues",
-      "source_file": "src/app/login/page.tsx",
-      "source_location": "L21"
-    },
-    {
-      "id": "src_app_register_page_registerformvalues",
-      "label": "RegisterFormValues",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 22,
-      "community_name": "react",
-      "file_type": "code",
-      "norm_label": "registerformvalues",
-      "source_file": "src/app/register/page.tsx",
-      "source_location": "L27"
-    },
-    {
-      "id": "src_app_update_password_page_updatepasswordvalues",
-      "label": "UpdatePasswordValues",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 22,
-      "community_name": "react",
-      "file_type": "code",
-      "norm_label": "updatepasswordvalues",
-      "source_file": "src/app/update-password/page.tsx",
-      "source_location": "L19"
-    },
-    {
       "id": "src_components_layout_dashboardlayout_dashboardlayoutprops",
       "label": "DashboardLayoutProps",
       "_callable": true,
@@ -238,17 +329,69 @@
       "source_location": "L17"
     },
     {
-      "id": "src_components_ui_tooltip_tooltipprops",
-      "label": "TooltipProps",
+      "id": "src_components_ui_errorboundary_errorboundary",
+      "label": "ErrorBoundary",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
       "community": 22,
       "community_name": "react",
       "file_type": "code",
-      "norm_label": "tooltipprops",
-      "source_file": "src/components/ui/Tooltip.tsx",
-      "source_location": "L10"
+      "norm_label": "errorboundary",
+      "source_file": "src/components/ui/ErrorBoundary.tsx",
+      "source_location": "L25"
+    },
+    {
+      "id": "src_components_ui_errorboundary_props",
+      "label": "Props",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 22,
+      "community_name": "react",
+      "file_type": "code",
+      "norm_label": "props",
+      "source_file": "src/components/ui/ErrorBoundary.tsx",
+      "source_location": "L7"
+    },
+    {
+      "id": "src_components_ui_errorboundary_state",
+      "label": "State",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 22,
+      "community_name": "react",
+      "file_type": "code",
+      "norm_label": "state",
+      "source_file": "src/components/ui/ErrorBoundary.tsx",
+      "source_location": "L14"
+    },
+    {
+      "id": "src_store_toaststore_toaststate",
+      "label": "ToastState",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 22,
+      "community_name": "react",
+      "file_type": "code",
+      "norm_label": "toaststate",
+      "source_file": "src/store/toastStore.ts",
+      "source_location": "L5"
+    },
+    {
+      "id": "src_store_toaststore_toastvariant",
+      "label": "ToastVariant",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 22,
+      "community_name": "react",
+      "file_type": "code",
+      "norm_label": "toastvariant",
+      "source_file": "src/store/toastStore.ts",
+      "source_location": "L3"
     },
     {
       "id": "src_components_transactions_edittransactionmodal_edittransactionmodalprops",
@@ -524,6 +667,32 @@
       "source_location": "L16"
     },
     {
+      "id": "src_components_history_annualsummary_annualsummaryprops",
+      "label": "AnnualSummaryProps",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "constants.ts",
+      "file_type": "code",
+      "norm_label": "annualsummaryprops",
+      "source_file": "src/components/history/AnnualSummary.tsx",
+      "source_location": "L15"
+    },
+    {
+      "id": "src_components_ui_statdisplay_statdisplayprops",
+      "label": "StatDisplayProps",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "constants.ts",
+      "file_type": "code",
+      "norm_label": "statdisplayprops",
+      "source_file": "src/components/ui/StatDisplay.tsx",
+      "source_location": "L10"
+    },
+    {
       "id": "src_components_forms_quicktransactionform_expenseformvalues",
       "label": "ExpenseFormValues",
       "_callable": true,
@@ -667,56 +836,69 @@
       "source_location": "L9"
     },
     {
-      "id": "src_store_toaststore_toaststate",
-      "label": "ToastState",
+      "id": "src_components_statistics_spendinghabits_spendinghabitsprops",
+      "label": "SpendingHabitsProps",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "community": 36,
-      "community_name": "QuickTransactionForm.tsx",
+      "community": 4,
+      "community_name": "SpendingHabits.tsx",
       "file_type": "code",
-      "norm_label": "toaststate",
-      "source_file": "src/store/toastStore.ts",
-      "source_location": "L5"
+      "norm_label": "spendinghabitsprops",
+      "source_file": "src/components/statistics/SpendingHabits.tsx",
+      "source_location": "L88"
     },
     {
-      "id": "src_store_toaststore_toastvariant",
-      "label": "ToastVariant",
+      "id": "src_components_ui_tooltip_tooltipprops",
+      "label": "TooltipProps",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "community": 36,
-      "community_name": "QuickTransactionForm.tsx",
+      "community": 4,
+      "community_name": "SpendingHabits.tsx",
       "file_type": "code",
-      "norm_label": "toastvariant",
-      "source_file": "src/store/toastStore.ts",
-      "source_location": "L3"
+      "norm_label": "tooltipprops",
+      "source_file": "src/components/ui/Tooltip.tsx",
+      "source_location": "L10"
     },
     {
-      "id": "src_components_history_annualsummary_annualsummaryprops",
-      "label": "AnnualSummaryProps",
+      "id": "src_hooks_usestatisticsdata_categoryrankentry",
+      "label": "CategoryRankEntry",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "community": 8,
-      "community_name": "constants.ts",
+      "community": 4,
+      "community_name": "SpendingHabits.tsx",
       "file_type": "code",
-      "norm_label": "annualsummaryprops",
-      "source_file": "src/components/history/AnnualSummary.tsx",
+      "norm_label": "categoryrankentry",
+      "source_file": "src/hooks/useStatisticsData.ts",
+      "source_location": "L25"
+    },
+    {
+      "id": "src_components_statistics_incomebreakdown_incomebreakdownprops",
+      "label": "IncomeBreakdownProps",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "statistics/page.tsx",
+      "file_type": "code",
+      "norm_label": "incomebreakdownprops",
+      "source_file": "src/components/statistics/IncomeBreakdown.tsx",
       "source_location": "L15"
     },
     {
-      "id": "src_components_history_monthcard_monthcardprops",
-      "label": "MonthCardProps",
+      "id": "src_components_statistics_incomebreakdown_splitbarprops",
+      "label": "SplitBarProps",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "community": 8,
-      "community_name": "constants.ts",
+      "community": 7,
+      "community_name": "statistics/page.tsx",
       "file_type": "code",
-      "norm_label": "monthcardprops",
-      "source_file": "src/components/history/MonthCard.tsx",
-      "source_location": "L16"
+      "norm_label": "splitbarprops",
+      "source_file": "src/components/statistics/IncomeBreakdown.tsx",
+      "source_location": "L29"
     },
     {
       "id": "src_components_statistics_funfacts_dayrecord",
@@ -725,7 +907,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 8,
-      "community_name": "constants.ts",
+      "community_name": "FunFacts.tsx",
       "file_type": "code",
       "norm_label": "dayrecord",
       "source_file": "src/components/statistics/FunFacts.tsx",
@@ -738,7 +920,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 8,
-      "community_name": "constants.ts",
+      "community_name": "FunFacts.tsx",
       "file_type": "code",
       "norm_label": "factcardprops",
       "source_file": "src/components/statistics/FunFacts.tsx",
@@ -751,50 +933,11 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 8,
-      "community_name": "constants.ts",
+      "community_name": "FunFacts.tsx",
       "file_type": "code",
       "norm_label": "funfactsprops",
       "source_file": "src/components/statistics/FunFacts.tsx",
       "source_location": "L28"
-    },
-    {
-      "id": "src_components_statistics_incomebreakdown_incomebreakdownprops",
-      "label": "IncomeBreakdownProps",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "constants.ts",
-      "file_type": "code",
-      "norm_label": "incomebreakdownprops",
-      "source_file": "src/components/statistics/IncomeBreakdown.tsx",
-      "source_location": "L15"
-    },
-    {
-      "id": "src_components_statistics_incomebreakdown_splitbarprops",
-      "label": "SplitBarProps",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "constants.ts",
-      "file_type": "code",
-      "norm_label": "splitbarprops",
-      "source_file": "src/components/statistics/IncomeBreakdown.tsx",
-      "source_location": "L29"
-    },
-    {
-      "id": "src_components_statistics_overviewcards_overviewcardsprops",
-      "label": "OverviewCardsProps",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "constants.ts",
-      "file_type": "code",
-      "norm_label": "overviewcardsprops",
-      "source_file": "src/components/statistics/OverviewCards.tsx",
-      "source_location": "L22"
     },
     {
       "id": "src_components_statistics_recordhighlights_monthrecord",
@@ -803,7 +946,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 8,
-      "community_name": "constants.ts",
+      "community_name": "FunFacts.tsx",
       "file_type": "code",
       "norm_label": "monthrecord",
       "source_file": "src/components/statistics/RecordHighlights.tsx",
@@ -816,7 +959,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 8,
-      "community_name": "constants.ts",
+      "community_name": "FunFacts.tsx",
       "file_type": "code",
       "norm_label": "recordcardprops",
       "source_file": "src/components/statistics/RecordHighlights.tsx",
@@ -829,24 +972,11 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 8,
-      "community_name": "constants.ts",
+      "community_name": "FunFacts.tsx",
       "file_type": "code",
       "norm_label": "recordhighlightsprops",
       "source_file": "src/components/statistics/RecordHighlights.tsx",
       "source_location": "L26"
-    },
-    {
-      "id": "src_components_statistics_spendinghabits_spendinghabitsprops",
-      "label": "SpendingHabitsProps",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "constants.ts",
-      "file_type": "code",
-      "norm_label": "spendinghabitsprops",
-      "source_file": "src/components/statistics/SpendingHabits.tsx",
-      "source_location": "L88"
     },
     {
       "id": "src_components_ui_appicon_appiconprops",
@@ -855,7 +985,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 8,
-      "community_name": "constants.ts",
+      "community_name": "FunFacts.tsx",
       "file_type": "code",
       "norm_label": "appiconprops",
       "source_file": "src/components/ui/AppIcon.tsx",
@@ -868,76 +998,11 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 8,
-      "community_name": "constants.ts",
+      "community_name": "FunFacts.tsx",
       "file_type": "code",
       "norm_label": "iconsquircleprops",
       "source_file": "src/components/ui/AppIcon.tsx",
       "source_location": "L36"
-    },
-    {
-      "id": "src_components_ui_statdisplay_statdisplayprops",
-      "label": "StatDisplayProps",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "constants.ts",
-      "file_type": "code",
-      "norm_label": "statdisplayprops",
-      "source_file": "src/components/ui/StatDisplay.tsx",
-      "source_location": "L10"
-    },
-    {
-      "id": "src_hooks_usehistorydata_dailysummary",
-      "label": "DailySummary",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "constants.ts",
-      "file_type": "code",
-      "norm_label": "dailysummary",
-      "source_file": "src/hooks/useHistoryData.ts",
-      "source_location": "L14"
-    },
-    {
-      "id": "src_hooks_usestatisticsdata_categoryrankentry",
-      "label": "CategoryRankEntry",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "constants.ts",
-      "file_type": "code",
-      "norm_label": "categoryrankentry",
-      "source_file": "src/hooks/useStatisticsData.ts",
-      "source_location": "L25"
-    },
-    {
-      "id": "src_components_charts_categorychart_customtooltipprops",
-      "label": "CustomTooltipProps",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 83,
-      "community_name": "statistics/page.tsx",
-      "file_type": "code",
-      "norm_label": "customtooltipprops",
-      "source_file": "src/components/charts/CategoryChart.tsx",
-      "source_location": "L20"
-    },
-    {
-      "id": "src_components_charts_categorychart_tabtype",
-      "label": "TabType",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 83,
-      "community_name": "statistics/page.tsx",
-      "file_type": "code",
-      "norm_label": "tabtype",
-      "source_file": "src/components/charts/CategoryChart.tsx",
-      "source_location": "L41"
     },
     {
       "id": "src_components_statistics_monthlytrendschart_customtooltipprops",
@@ -946,7 +1011,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 83,
-      "community_name": "statistics/page.tsx",
+      "community_name": "MonthlyTrendsChart.tsx",
       "file_type": "code",
       "norm_label": "customtooltipprops",
       "source_file": "src/components/statistics/MonthlyTrendsChart.tsx",
@@ -959,7 +1024,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 83,
-      "community_name": "statistics/page.tsx",
+      "community_name": "MonthlyTrendsChart.tsx",
       "file_type": "code",
       "norm_label": "monthlytrendpoint",
       "source_file": "src/components/statistics/MonthlyTrendsChart.tsx",
@@ -972,102 +1037,37 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 83,
-      "community_name": "statistics/page.tsx",
+      "community_name": "MonthlyTrendsChart.tsx",
       "file_type": "code",
       "norm_label": "monthlytrendschartprops",
       "source_file": "src/components/statistics/MonthlyTrendsChart.tsx",
       "source_location": "L37"
     },
     {
-      "id": "src_components_ui_exportdropdown_exportdropdownprops",
-      "label": "ExportDropdownProps",
+      "id": "src_components_charts_categorychart_customtooltipprops",
+      "label": "CustomTooltipProps",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "community": 83,
-      "community_name": "statistics/page.tsx",
+      "community": 9,
+      "community_name": "CategoryChart.tsx",
       "file_type": "code",
-      "norm_label": "exportdropdownprops",
-      "source_file": "src/components/ui/ExportDropdown.tsx",
-      "source_location": "L28"
-    },
-    {
-      "id": "src_components_ui_exportdropdown_exportformat",
-      "label": "ExportFormat",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 83,
-      "community_name": "statistics/page.tsx",
-      "file_type": "code",
-      "norm_label": "exportformat",
-      "source_file": "src/components/ui/ExportDropdown.tsx",
-      "source_location": "L26"
-    },
-    {
-      "id": "src_hooks_usestatisticsdata_dayrecord",
-      "label": "DayRecord",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 83,
-      "community_name": "statistics/page.tsx",
-      "file_type": "code",
-      "norm_label": "dayrecord",
-      "source_file": "src/hooks/useStatisticsData.ts",
+      "norm_label": "customtooltipprops",
+      "source_file": "src/components/charts/CategoryChart.tsx",
       "source_location": "L20"
     },
     {
-      "id": "src_hooks_usestatisticsdata_monthlytrendpoint",
-      "label": "MonthlyTrendPoint",
+      "id": "src_components_charts_categorychart_tabtype",
+      "label": "TabType",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "community": 83,
-      "community_name": "statistics/page.tsx",
+      "community": 9,
+      "community_name": "CategoryChart.tsx",
       "file_type": "code",
-      "norm_label": "monthlytrendpoint",
-      "source_file": "src/hooks/useStatisticsData.ts",
-      "source_location": "L34"
-    },
-    {
-      "id": "src_hooks_usestatisticsdata_monthrecord",
-      "label": "MonthRecord",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 83,
-      "community_name": "statistics/page.tsx",
-      "file_type": "code",
-      "norm_label": "monthrecord",
-      "source_file": "src/hooks/useStatisticsData.ts",
-      "source_location": "L15"
-    },
-    {
-      "id": "src_hooks_usestatisticsdata_statisticsdata",
-      "label": "StatisticsData",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 83,
-      "community_name": "statistics/page.tsx",
-      "file_type": "code",
-      "norm_label": "statisticsdata",
-      "source_file": "src/hooks/useStatisticsData.ts",
+      "norm_label": "tabtype",
+      "source_file": "src/components/charts/CategoryChart.tsx",
       "source_location": "L41"
-    },
-    {
-      "id": "src_lib_excelexport_excelrow",
-      "label": "ExcelRow",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 83,
-      "community_name": "statistics/page.tsx",
-      "file_type": "code",
-      "norm_label": "excelrow",
-      "source_file": "src/lib/excelExport.ts",
-      "source_location": "L35"
     },
     {
       "id": "src_components_ui_datenavigator_buildcalendargrid",
@@ -1092,6 +1092,42 @@
       "norm_label": "datenavigator()",
       "source_file": "src/components/ui/DateNavigator.tsx",
       "source_location": "L113"
+    },
+    {
+      "id": "src_components_ui_exportdropdown_exportdropdown",
+      "label": "ExportDropdown()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "dateUtils.ts",
+      "file_type": "code",
+      "norm_label": "exportdropdown()",
+      "source_file": "src/components/ui/ExportDropdown.tsx",
+      "source_location": "L33"
+    },
+    {
+      "id": "src_hooks_usestatisticsdata_sumamount",
+      "label": "sumAmount()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "dateUtils.ts",
+      "file_type": "code",
+      "norm_label": "sumamount()",
+      "source_file": "src/hooks/useStatisticsData.ts",
+      "source_location": "L86"
+    },
+    {
+      "id": "src_hooks_usestatisticsdata_usestatisticsdata",
+      "label": "useStatisticsData()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "dateUtils.ts",
+      "file_type": "code",
+      "norm_label": "usestatisticsdata()",
+      "source_file": "src/hooks/useStatisticsData.ts",
+      "source_location": "L91"
     },
     {
       "id": "src_lib_csvexport_escapecell",
@@ -1139,7 +1175,7 @@
       "file_type": "code",
       "norm_label": "makeexpense()",
       "source_file": "src/lib/csvExport.test.ts",
-      "source_location": "L44"
+      "source_location": "L45"
     },
     {
       "id": "src_lib_csvexport_test_makeincome",
@@ -1151,7 +1187,7 @@
       "file_type": "code",
       "norm_label": "makeincome()",
       "source_file": "src/lib/csvExport.test.ts",
-      "source_location": "L34"
+      "source_location": "L35"
     },
     {
       "id": "src_lib_dateutils_adddays",
@@ -1202,6 +1238,30 @@
       "source_location": "L61"
     },
     {
+      "id": "src_lib_dateutils_getmonthname",
+      "label": "getMonthName()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "dateUtils.ts",
+      "file_type": "code",
+      "norm_label": "getmonthname()",
+      "source_file": "src/lib/dateUtils.ts",
+      "source_location": "L58"
+    },
+    {
+      "id": "src_lib_dateutils_getmonthrange",
+      "label": "getMonthRange()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "dateUtils.ts",
+      "file_type": "code",
+      "norm_label": "getmonthrange()",
+      "source_file": "src/lib/dateUtils.ts",
+      "source_location": "L69"
+    },
+    {
       "id": "src_lib_dateutils_isatpastlimit",
       "label": "isAtPastLimit()",
       "_callable": true,
@@ -1248,6 +1308,90 @@
       "norm_label": "toisodatestring()",
       "source_file": "src/lib/dateUtils.ts",
       "source_location": "L11"
+    },
+    {
+      "id": "src_lib_excelexport_buildworkbook",
+      "label": "buildWorkbook()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "dateUtils.ts",
+      "file_type": "code",
+      "norm_label": "buildworkbook()",
+      "source_file": "src/lib/excelExport.ts",
+      "source_location": "L92"
+    },
+    {
+      "id": "src_lib_excelexport_exporttoexcel",
+      "label": "exportToExcel()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "dateUtils.ts",
+      "file_type": "code",
+      "norm_label": "exporttoexcel()",
+      "source_file": "src/lib/excelExport.ts",
+      "source_location": "L303"
+    },
+    {
+      "id": "src_lib_excelexport_getmonthlytransactions",
+      "label": "getMonthlyTransactions()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "dateUtils.ts",
+      "file_type": "code",
+      "norm_label": "getmonthlytransactions()",
+      "source_file": "src/lib/excelExport.ts",
+      "source_location": "L49"
+    },
+    {
+      "id": "src_components_history_monthcard_dailyrow",
+      "label": "DailyRow()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 10,
+      "community_name": "MonthCard.tsx",
+      "file_type": "code",
+      "norm_label": "dailyrow()",
+      "source_file": "src/components/history/MonthCard.tsx",
+      "source_location": "L29"
+    },
+    {
+      "id": "src_components_history_monthcard_fmt",
+      "label": "fmt()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 10,
+      "community_name": "MonthCard.tsx",
+      "file_type": "code",
+      "norm_label": "fmt()",
+      "source_file": "src/components/history/MonthCard.tsx",
+      "source_location": "L21"
+    },
+    {
+      "id": "src_components_history_monthcard_formatdaydate",
+      "label": "formatDayDate()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 10,
+      "community_name": "MonthCard.tsx",
+      "file_type": "code",
+      "norm_label": "formatdaydate()",
+      "source_file": "src/components/history/MonthCard.tsx",
+      "source_location": "L24"
+    },
+    {
+      "id": "src_components_history_monthcard_monthcard",
+      "label": "MonthCard()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 10,
+      "community_name": "MonthCard.tsx",
+      "file_type": "code",
+      "norm_label": "monthcard()",
+      "source_file": "src/components/history/MonthCard.tsx",
+      "source_location": "L49"
     },
     {
       "id": "src_components_telemetry_webvitals_webvitals",
@@ -1298,6 +1442,30 @@
       "source_location": "L68"
     },
     {
+      "id": "src_components_statistics_overviewcards_fmt",
+      "label": "fmt()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 11,
+      "community_name": "OverviewCards.tsx",
+      "file_type": "code",
+      "norm_label": "fmt()",
+      "source_file": "src/components/statistics/OverviewCards.tsx",
+      "source_location": "L30"
+    },
+    {
+      "id": "src_components_statistics_overviewcards_overviewcards",
+      "label": "OverviewCards()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 11,
+      "community_name": "OverviewCards.tsx",
+      "file_type": "code",
+      "norm_label": "overviewcards()",
+      "source_file": "src/components/statistics/OverviewCards.tsx",
+      "source_location": "L36"
+    },
+    {
       "id": "src_app_api_log_error_route_post",
       "label": "POST()",
       "_callable": true,
@@ -1320,6 +1488,18 @@
       "norm_label": "errorpage()",
       "source_file": "src/app/error.tsx",
       "source_location": "L17"
+    },
+    {
+      "id": "src_app_forgot_password_page_forgotpasswordpage",
+      "label": "ForgotPasswordPage()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 13,
+      "community_name": "errorLogger.ts",
+      "file_type": "code",
+      "norm_label": "forgotpasswordpage()",
+      "source_file": "src/app/forgot-password/page.tsx",
+      "source_location": "L18"
     },
     {
       "id": "src_app_global_error_globalerror",
@@ -1346,6 +1526,54 @@
       "source_location": "L21"
     },
     {
+      "id": "src_app_login_page_loginpage",
+      "label": "LoginPage()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 13,
+      "community_name": "errorLogger.ts",
+      "file_type": "code",
+      "norm_label": "loginpage()",
+      "source_file": "src/app/login/page.tsx",
+      "source_location": "L23"
+    },
+    {
+      "id": "src_app_register_page_registerpage",
+      "label": "RegisterPage()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 13,
+      "community_name": "errorLogger.ts",
+      "file_type": "code",
+      "norm_label": "registerpage()",
+      "source_file": "src/app/register/page.tsx",
+      "source_location": "L29"
+    },
+    {
+      "id": "src_app_statistics_page_statisticspage",
+      "label": "StatisticsPage()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 13,
+      "community_name": "errorLogger.ts",
+      "file_type": "code",
+      "norm_label": "statisticspage()",
+      "source_file": "src/app/statistics/page.tsx",
+      "source_location": "L61"
+    },
+    {
+      "id": "src_app_update_password_page_updatepasswordpage",
+      "label": "UpdatePasswordPage()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 13,
+      "community_name": "errorLogger.ts",
+      "file_type": "code",
+      "norm_label": "updatepasswordpage()",
+      "source_file": "src/app/update-password/page.tsx",
+      "source_location": "L21"
+    },
+    {
       "id": "src_components_auth_authprovider_authprovider",
       "label": "AuthProvider()",
       "_callable": true,
@@ -1358,6 +1586,18 @@
       "source_location": "L35"
     },
     {
+      "id": "src_components_auth_authprovider_useauth",
+      "label": "useAuth()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 13,
+      "community_name": "errorLogger.ts",
+      "file_type": "code",
+      "norm_label": "useauth()",
+      "source_file": "src/components/auth/AuthProvider.tsx",
+      "source_location": "L25"
+    },
+    {
       "id": "src_components_telemetry_globalerrorlistener_globalerrorlistener",
       "label": "GlobalErrorListener()",
       "_callable": true,
@@ -1368,102 +1608,6 @@
       "norm_label": "globalerrorlistener()",
       "source_file": "src/components/telemetry/GlobalErrorListener.tsx",
       "source_location": "L15"
-    },
-    {
-      "id": "src_components_ui_errorboundary_errorboundary_componentdidcatch",
-      "label": ".componentDidCatch()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 13,
-      "community_name": "errorLogger.ts",
-      "file_type": "code",
-      "norm_label": ".componentdidcatch()",
-      "source_file": "src/components/ui/ErrorBoundary.tsx",
-      "source_location": "L35"
-    },
-    {
-      "id": "src_components_ui_errorboundary_errorboundary_constructor",
-      "label": ".constructor()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 13,
-      "community_name": "errorLogger.ts",
-      "file_type": "code",
-      "norm_label": ".constructor()",
-      "source_file": "src/components/ui/ErrorBoundary.tsx",
-      "source_location": "L26"
-    },
-    {
-      "id": "src_components_ui_errorboundary_errorboundary_getderivedstatefromerror",
-      "label": ".getDerivedStateFromError()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 13,
-      "community_name": "errorLogger.ts",
-      "file_type": "code",
-      "norm_label": ".getderivedstatefromerror()",
-      "source_file": "src/components/ui/ErrorBoundary.tsx",
-      "source_location": "L31"
-    },
-    {
-      "id": "src_components_ui_errorboundary_errorboundary_handlereload",
-      "label": ".handleReload()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 13,
-      "community_name": "errorLogger.ts",
-      "file_type": "code",
-      "norm_label": ".handlereload()",
-      "source_file": "src/components/ui/ErrorBoundary.tsx",
-      "source_location": "L48"
-    },
-    {
-      "id": "src_components_ui_errorboundary_errorboundary_handlereset",
-      "label": ".handleReset()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 13,
-      "community_name": "errorLogger.ts",
-      "file_type": "code",
-      "norm_label": ".handlereset()",
-      "source_file": "src/components/ui/ErrorBoundary.tsx",
-      "source_location": "L44"
-    },
-    {
-      "id": "src_components_ui_errorboundary_errorboundary_ischunkloaderror",
-      "label": ".isChunkLoadError()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 13,
-      "community_name": "errorLogger.ts",
-      "file_type": "code",
-      "norm_label": ".ischunkloaderror()",
-      "source_file": "src/components/ui/ErrorBoundary.tsx",
-      "source_location": "L54"
-    },
-    {
-      "id": "src_components_ui_errorboundary_errorboundary_render",
-      "label": ".render()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 13,
-      "community_name": "errorLogger.ts",
-      "file_type": "code",
-      "norm_label": ".render()",
-      "source_file": "src/components/ui/ErrorBoundary.tsx",
-      "source_location": "L67"
-    },
-    {
-      "id": "src_components_ui_errorboundary_test_buggycomponent",
-      "label": "BuggyComponent()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 13,
-      "community_name": "errorLogger.ts",
-      "file_type": "code",
-      "norm_label": "buggycomponent()",
-      "source_file": "src/components/ui/ErrorBoundary.test.tsx",
-      "source_location": "L9"
     },
     {
       "id": "src_lib_errorlogger_extracterrormessage",
@@ -1610,18 +1754,6 @@
       "source_location": "L14"
     },
     {
-      "id": "src_app_forgot_password_page_forgotpasswordpage",
-      "label": "ForgotPasswordPage()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 22,
-      "community_name": "react",
-      "file_type": "code",
-      "norm_label": "forgotpasswordpage()",
-      "source_file": "src/app/forgot-password/page.tsx",
-      "source_location": "L18"
-    },
-    {
       "id": "src_app_history_loading_historyloading",
       "label": "HistoryLoading()",
       "_callable": true,
@@ -1632,18 +1764,6 @@
       "norm_label": "historyloading()",
       "source_file": "src/app/history/loading.tsx",
       "source_location": "L9"
-    },
-    {
-      "id": "src_app_history_page_historypage",
-      "label": "HistoryPage()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 22,
-      "community_name": "react",
-      "file_type": "code",
-      "norm_label": "historypage()",
-      "source_file": "src/app/history/page.tsx",
-      "source_location": "L17"
     },
     {
       "id": "src_app_loading_rootloading",
@@ -1658,18 +1778,6 @@
       "source_location": "L9"
     },
     {
-      "id": "src_app_login_page_loginpage",
-      "label": "LoginPage()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 22,
-      "community_name": "react",
-      "file_type": "code",
-      "norm_label": "loginpage()",
-      "source_file": "src/app/login/page.tsx",
-      "source_location": "L23"
-    },
-    {
       "id": "src_app_page_dashboardpage",
       "label": "DashboardPage()",
       "_callable": true,
@@ -1680,18 +1788,6 @@
       "norm_label": "dashboardpage()",
       "source_file": "src/app/page.tsx",
       "source_location": "L17"
-    },
-    {
-      "id": "src_app_register_page_registerpage",
-      "label": "RegisterPage()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 22,
-      "community_name": "react",
-      "file_type": "code",
-      "norm_label": "registerpage()",
-      "source_file": "src/app/register/page.tsx",
-      "source_location": "L29"
     },
     {
       "id": "src_app_statistics_loading_statisticsloading",
@@ -1706,66 +1802,6 @@
       "source_location": "L9"
     },
     {
-      "id": "src_app_update_password_page_updatepasswordpage",
-      "label": "UpdatePasswordPage()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 22,
-      "community_name": "react",
-      "file_type": "code",
-      "norm_label": "updatepasswordpage()",
-      "source_file": "src/app/update-password/page.tsx",
-      "source_location": "L21"
-    },
-    {
-      "id": "src_components_auth_authprovider_useauth",
-      "label": "useAuth()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 22,
-      "community_name": "react",
-      "file_type": "code",
-      "norm_label": "useauth()",
-      "source_file": "src/components/auth/AuthProvider.tsx",
-      "source_location": "L25"
-    },
-    {
-      "id": "src_components_dashboard_dashboardclient_dashboardclient",
-      "label": "DashboardClient()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 22,
-      "community_name": "react",
-      "file_type": "code",
-      "norm_label": "dashboardclient()",
-      "source_file": "src/components/dashboard/DashboardClient.tsx",
-      "source_location": "L58"
-    },
-    {
-      "id": "src_components_dashboard_dashboardclient_sectioncard",
-      "label": "SectionCard()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 22,
-      "community_name": "react",
-      "file_type": "code",
-      "norm_label": "sectioncard()",
-      "source_file": "src/components/dashboard/DashboardClient.tsx",
-      "source_location": "L34"
-    },
-    {
-      "id": "src_components_dashboard_dashboardclient_statdivider",
-      "label": "StatDivider()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 22,
-      "community_name": "react",
-      "file_type": "code",
-      "norm_label": "statdivider()",
-      "source_file": "src/components/dashboard/DashboardClient.tsx",
-      "source_location": "L54"
-    },
-    {
       "id": "src_components_dashboard_dashboardskeleton_dashboardskeleton",
       "label": "DashboardSkeleton()",
       "_callable": true,
@@ -1776,6 +1812,18 @@
       "norm_label": "dashboardskeleton()",
       "source_file": "src/components/dashboard/DashboardSkeleton.tsx",
       "source_location": "L8"
+    },
+    {
+      "id": "src_components_forms_quicktransactionform_quicktransactionform",
+      "label": "QuickTransactionForm()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 22,
+      "community_name": "react",
+      "file_type": "code",
+      "norm_label": "quicktransactionform()",
+      "source_file": "src/components/forms/QuickTransactionForm.tsx",
+      "source_location": "L65"
     },
     {
       "id": "src_components_history_historyskeleton_historyskeleton",
@@ -1814,28 +1862,160 @@
       "source_location": "L8"
     },
     {
-      "id": "src_components_ui_tooltip_tooltip",
-      "label": "Tooltip()",
+      "id": "src_components_ui_errorboundary_errorboundary_componentdidcatch",
+      "label": ".componentDidCatch()",
       "_callable": true,
       "_origin": "ast",
       "community": 22,
       "community_name": "react",
       "file_type": "code",
-      "norm_label": "tooltip()",
-      "source_file": "src/components/ui/Tooltip.tsx",
-      "source_location": "L20"
+      "norm_label": ".componentdidcatch()",
+      "source_file": "src/components/ui/ErrorBoundary.tsx",
+      "source_location": "L35"
     },
     {
-      "id": "src_lib_dateutils_getcalendarmonthrange",
-      "label": "getCalendarMonthRange()",
+      "id": "src_components_ui_errorboundary_errorboundary_constructor",
+      "label": ".constructor()",
       "_callable": true,
       "_origin": "ast",
       "community": 22,
       "community_name": "react",
       "file_type": "code",
-      "norm_label": "getcalendarmonthrange()",
-      "source_file": "src/lib/dateUtils.ts",
-      "source_location": "L83"
+      "norm_label": ".constructor()",
+      "source_file": "src/components/ui/ErrorBoundary.tsx",
+      "source_location": "L26"
+    },
+    {
+      "id": "src_components_ui_errorboundary_errorboundary_getderivedstatefromerror",
+      "label": ".getDerivedStateFromError()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 22,
+      "community_name": "react",
+      "file_type": "code",
+      "norm_label": ".getderivedstatefromerror()",
+      "source_file": "src/components/ui/ErrorBoundary.tsx",
+      "source_location": "L31"
+    },
+    {
+      "id": "src_components_ui_errorboundary_errorboundary_handlereload",
+      "label": ".handleReload()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 22,
+      "community_name": "react",
+      "file_type": "code",
+      "norm_label": ".handlereload()",
+      "source_file": "src/components/ui/ErrorBoundary.tsx",
+      "source_location": "L48"
+    },
+    {
+      "id": "src_components_ui_errorboundary_errorboundary_handlereset",
+      "label": ".handleReset()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 22,
+      "community_name": "react",
+      "file_type": "code",
+      "norm_label": ".handlereset()",
+      "source_file": "src/components/ui/ErrorBoundary.tsx",
+      "source_location": "L44"
+    },
+    {
+      "id": "src_components_ui_errorboundary_errorboundary_ischunkloaderror",
+      "label": ".isChunkLoadError()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 22,
+      "community_name": "react",
+      "file_type": "code",
+      "norm_label": ".ischunkloaderror()",
+      "source_file": "src/components/ui/ErrorBoundary.tsx",
+      "source_location": "L54"
+    },
+    {
+      "id": "src_components_ui_errorboundary_errorboundary_render",
+      "label": ".render()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 22,
+      "community_name": "react",
+      "file_type": "code",
+      "norm_label": ".render()",
+      "source_file": "src/components/ui/ErrorBoundary.tsx",
+      "source_location": "L67"
+    },
+    {
+      "id": "src_components_ui_errorboundary_test_buggycomponent",
+      "label": "BuggyComponent()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 22,
+      "community_name": "react",
+      "file_type": "code",
+      "norm_label": "buggycomponent()",
+      "source_file": "src/components/ui/ErrorBoundary.test.tsx",
+      "source_location": "L9"
+    },
+    {
+      "id": "src_components_ui_statusnotification_statusnotification",
+      "label": "StatusNotification()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 22,
+      "community_name": "react",
+      "file_type": "code",
+      "norm_label": "statusnotification()",
+      "source_file": "src/components/ui/StatusNotification.tsx",
+      "source_location": "L14"
+    },
+    {
+      "id": "src_app_history_page_historypage",
+      "label": "HistoryPage()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 24,
+      "community_name": "transactionStore.ts",
+      "file_type": "code",
+      "norm_label": "historypage()",
+      "source_file": "src/app/history/page.tsx",
+      "source_location": "L17"
+    },
+    {
+      "id": "src_components_dashboard_dashboardclient_dashboardclient",
+      "label": "DashboardClient()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 24,
+      "community_name": "transactionStore.ts",
+      "file_type": "code",
+      "norm_label": "dashboardclient()",
+      "source_file": "src/components/dashboard/DashboardClient.tsx",
+      "source_location": "L58"
+    },
+    {
+      "id": "src_components_dashboard_dashboardclient_sectioncard",
+      "label": "SectionCard()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 24,
+      "community_name": "transactionStore.ts",
+      "file_type": "code",
+      "norm_label": "sectioncard()",
+      "source_file": "src/components/dashboard/DashboardClient.tsx",
+      "source_location": "L34"
+    },
+    {
+      "id": "src_components_dashboard_dashboardclient_statdivider",
+      "label": "StatDivider()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 24,
+      "community_name": "transactionStore.ts",
+      "file_type": "code",
+      "norm_label": "statdivider()",
+      "source_file": "src/components/dashboard/DashboardClient.tsx",
+      "source_location": "L54"
     },
     {
       "id": "src_components_transactions_edittransactionmodal_edittransactionmodal",
@@ -1968,6 +2148,18 @@
       "norm_label": "usehistorydata()",
       "source_file": "src/hooks/useHistoryData.ts",
       "source_location": "L49"
+    },
+    {
+      "id": "src_lib_dateutils_getcalendarmonthrange",
+      "label": "getCalendarMonthRange()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 24,
+      "community_name": "transactionStore.ts",
+      "file_type": "code",
+      "norm_label": "getcalendarmonthrange()",
+      "source_file": "src/lib/dateUtils.ts",
+      "source_location": "L83"
     },
     {
       "id": "src_lib_dateutils_getcalendaryearrange",
@@ -2366,16 +2558,64 @@
       "source_location": "L21"
     },
     {
-      "id": "src_components_forms_quicktransactionform_quicktransactionform",
-      "label": "QuickTransactionForm()",
+      "id": "src_components_history_annualsummary_annualsummary",
+      "label": "AnnualSummary()",
       "_callable": true,
       "_origin": "ast",
-      "community": 36,
-      "community_name": "QuickTransactionForm.tsx",
+      "community": 3,
+      "community_name": "constants.ts",
       "file_type": "code",
-      "norm_label": "quicktransactionform()",
-      "source_file": "src/components/forms/QuickTransactionForm.tsx",
-      "source_location": "L65"
+      "norm_label": "annualsummary()",
+      "source_file": "src/components/history/AnnualSummary.tsx",
+      "source_location": "L28"
+    },
+    {
+      "id": "src_components_history_annualsummary_formatcurrency",
+      "label": "formatCurrency()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "constants.ts",
+      "file_type": "code",
+      "norm_label": "formatcurrency()",
+      "source_file": "src/components/history/AnnualSummary.tsx",
+      "source_location": "L22"
+    },
+    {
+      "id": "src_components_ui_statdisplay_formatcurrency",
+      "label": "formatCurrency()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "constants.ts",
+      "file_type": "code",
+      "norm_label": "formatcurrency()",
+      "source_file": "src/components/ui/StatDisplay.tsx",
+      "source_location": "L19"
+    },
+    {
+      "id": "src_components_ui_statdisplay_statdisplay",
+      "label": "StatDisplay()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "constants.ts",
+      "file_type": "code",
+      "norm_label": "statdisplay()",
+      "source_file": "src/components/ui/StatDisplay.tsx",
+      "source_location": "L29"
+    },
+    {
+      "id": "src_lib_constants_getcurrencysymbol",
+      "label": "getCurrencySymbol()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "constants.ts",
+      "file_type": "code",
+      "norm_label": "getcurrencysymbol()",
+      "source_file": "src/lib/constants.ts",
+      "source_location": "L70"
     },
     {
       "id": "src_components_scanner_qrscannermodal_ismobiledevice",
@@ -2400,18 +2640,6 @@
       "norm_label": "qrscannermodal()",
       "source_file": "src/components/scanner/QrScannerModal.tsx",
       "source_location": "L25"
-    },
-    {
-      "id": "src_components_ui_statusnotification_statusnotification",
-      "label": "StatusNotification()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 36,
-      "community_name": "QuickTransactionForm.tsx",
-      "file_type": "code",
-      "norm_label": "statusnotification()",
-      "source_file": "src/components/ui/StatusNotification.tsx",
-      "source_location": "L14"
     },
     {
       "id": "src_lib_qrdetector_barcodedetectorinstance_detect",
@@ -2495,7 +2723,7 @@
       "file_type": "code",
       "norm_label": "isvaliddate()",
       "source_file": "src/lib/qrParser.ts",
-      "source_location": "L29"
+      "source_location": "L31"
     },
     {
       "id": "src_lib_qrparser_parseamount",
@@ -2507,7 +2735,7 @@
       "file_type": "code",
       "norm_label": "parseamount()",
       "source_file": "src/lib/qrParser.ts",
-      "source_location": "L47"
+      "source_location": "L49"
     },
     {
       "id": "src_lib_qrparser_parsebulgarianfiscalqr",
@@ -2519,7 +2747,7 @@
       "file_type": "code",
       "norm_label": "parsebulgarianfiscalqr()",
       "source_file": "src/lib/qrParser.ts",
-      "source_location": "L59"
+      "source_location": "L61"
     },
     {
       "id": "src_lib_qrparser_parsereceiptqr",
@@ -2531,7 +2759,7 @@
       "file_type": "code",
       "norm_label": "parsereceiptqr()",
       "source_file": "src/lib/qrParser.ts",
-      "source_location": "L131"
+      "source_location": "L133"
     },
     {
       "id": "src_lib_qrparser_parseurlreceipt",
@@ -2543,79 +2771,79 @@
       "file_type": "code",
       "norm_label": "parseurlreceipt()",
       "source_file": "src/lib/qrParser.ts",
-      "source_location": "L90"
+      "source_location": "L92"
     },
     {
-      "id": "src_components_history_annualsummary_annualsummary",
-      "label": "AnnualSummary()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "constants.ts",
-      "file_type": "code",
-      "norm_label": "annualsummary()",
-      "source_file": "src/components/history/AnnualSummary.tsx",
-      "source_location": "L28"
-    },
-    {
-      "id": "src_components_history_annualsummary_formatcurrency",
-      "label": "formatCurrency()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "constants.ts",
-      "file_type": "code",
-      "norm_label": "formatcurrency()",
-      "source_file": "src/components/history/AnnualSummary.tsx",
-      "source_location": "L22"
-    },
-    {
-      "id": "src_components_history_monthcard_dailyrow",
-      "label": "DailyRow()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "constants.ts",
-      "file_type": "code",
-      "norm_label": "dailyrow()",
-      "source_file": "src/components/history/MonthCard.tsx",
-      "source_location": "L29"
-    },
-    {
-      "id": "src_components_history_monthcard_fmt",
+      "id": "src_components_statistics_spendinghabits_fmt",
       "label": "fmt()",
       "_callable": true,
       "_origin": "ast",
-      "community": 8,
-      "community_name": "constants.ts",
+      "community": 4,
+      "community_name": "SpendingHabits.tsx",
       "file_type": "code",
       "norm_label": "fmt()",
-      "source_file": "src/components/history/MonthCard.tsx",
-      "source_location": "L21"
+      "source_file": "src/components/statistics/SpendingHabits.tsx",
+      "source_location": "L101"
     },
     {
-      "id": "src_components_history_monthcard_formatdaydate",
-      "label": "formatDayDate()",
+      "id": "src_components_statistics_spendinghabits_spendinghabits",
+      "label": "SpendingHabits()",
       "_callable": true,
       "_origin": "ast",
-      "community": 8,
-      "community_name": "constants.ts",
+      "community": 4,
+      "community_name": "SpendingHabits.tsx",
       "file_type": "code",
-      "norm_label": "formatdaydate()",
-      "source_file": "src/components/history/MonthCard.tsx",
-      "source_location": "L24"
+      "norm_label": "spendinghabits()",
+      "source_file": "src/components/statistics/SpendingHabits.tsx",
+      "source_location": "L107"
     },
     {
-      "id": "src_components_history_monthcard_monthcard",
-      "label": "MonthCard()",
+      "id": "src_components_ui_tooltip_tooltip",
+      "label": "Tooltip()",
       "_callable": true,
       "_origin": "ast",
-      "community": 8,
-      "community_name": "constants.ts",
+      "community": 4,
+      "community_name": "SpendingHabits.tsx",
       "file_type": "code",
-      "norm_label": "monthcard()",
-      "source_file": "src/components/history/MonthCard.tsx",
-      "source_location": "L49"
+      "norm_label": "tooltip()",
+      "source_file": "src/components/ui/Tooltip.tsx",
+      "source_location": "L20"
+    },
+    {
+      "id": "src_components_statistics_incomebreakdown_fmt",
+      "label": "fmt()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "statistics/page.tsx",
+      "file_type": "code",
+      "norm_label": "fmt()",
+      "source_file": "src/components/statistics/IncomeBreakdown.tsx",
+      "source_location": "L23"
+    },
+    {
+      "id": "src_components_statistics_incomebreakdown_incomebreakdown",
+      "label": "IncomeBreakdown()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "statistics/page.tsx",
+      "file_type": "code",
+      "norm_label": "incomebreakdown()",
+      "source_file": "src/components/statistics/IncomeBreakdown.tsx",
+      "source_location": "L113"
+    },
+    {
+      "id": "src_components_statistics_incomebreakdown_splitbar",
+      "label": "SplitBar()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "statistics/page.tsx",
+      "file_type": "code",
+      "norm_label": "splitbar()",
+      "source_file": "src/components/statistics/IncomeBreakdown.tsx",
+      "source_location": "L40"
     },
     {
       "id": "src_components_statistics_funfacts_factcard",
@@ -2623,7 +2851,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 8,
-      "community_name": "constants.ts",
+      "community_name": "FunFacts.tsx",
       "file_type": "code",
       "norm_label": "factcard()",
       "source_file": "src/components/statistics/FunFacts.tsx",
@@ -2635,7 +2863,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 8,
-      "community_name": "constants.ts",
+      "community_name": "FunFacts.tsx",
       "file_type": "code",
       "norm_label": "fmt()",
       "source_file": "src/components/statistics/FunFacts.tsx",
@@ -2647,59 +2875,11 @@
       "_callable": true,
       "_origin": "ast",
       "community": 8,
-      "community_name": "constants.ts",
+      "community_name": "FunFacts.tsx",
       "file_type": "code",
       "norm_label": "funfacts()",
       "source_file": "src/components/statistics/FunFacts.tsx",
       "source_location": "L76"
-    },
-    {
-      "id": "src_components_statistics_incomebreakdown_fmt",
-      "label": "fmt()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "constants.ts",
-      "file_type": "code",
-      "norm_label": "fmt()",
-      "source_file": "src/components/statistics/IncomeBreakdown.tsx",
-      "source_location": "L23"
-    },
-    {
-      "id": "src_components_statistics_incomebreakdown_splitbar",
-      "label": "SplitBar()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "constants.ts",
-      "file_type": "code",
-      "norm_label": "splitbar()",
-      "source_file": "src/components/statistics/IncomeBreakdown.tsx",
-      "source_location": "L40"
-    },
-    {
-      "id": "src_components_statistics_overviewcards_fmt",
-      "label": "fmt()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "constants.ts",
-      "file_type": "code",
-      "norm_label": "fmt()",
-      "source_file": "src/components/statistics/OverviewCards.tsx",
-      "source_location": "L30"
-    },
-    {
-      "id": "src_components_statistics_overviewcards_overviewcards",
-      "label": "OverviewCards()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "constants.ts",
-      "file_type": "code",
-      "norm_label": "overviewcards()",
-      "source_file": "src/components/statistics/OverviewCards.tsx",
-      "source_location": "L36"
     },
     {
       "id": "src_components_statistics_recordhighlights_fmt",
@@ -2707,7 +2887,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 8,
-      "community_name": "constants.ts",
+      "community_name": "FunFacts.tsx",
       "file_type": "code",
       "norm_label": "fmt()",
       "source_file": "src/components/statistics/RecordHighlights.tsx",
@@ -2719,7 +2899,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 8,
-      "community_name": "constants.ts",
+      "community_name": "FunFacts.tsx",
       "file_type": "code",
       "norm_label": "recordcard()",
       "source_file": "src/components/statistics/RecordHighlights.tsx",
@@ -2731,35 +2911,11 @@
       "_callable": true,
       "_origin": "ast",
       "community": 8,
-      "community_name": "constants.ts",
+      "community_name": "FunFacts.tsx",
       "file_type": "code",
       "norm_label": "recordhighlights()",
       "source_file": "src/components/statistics/RecordHighlights.tsx",
       "source_location": "L79"
-    },
-    {
-      "id": "src_components_statistics_spendinghabits_fmt",
-      "label": "fmt()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "constants.ts",
-      "file_type": "code",
-      "norm_label": "fmt()",
-      "source_file": "src/components/statistics/SpendingHabits.tsx",
-      "source_location": "L101"
-    },
-    {
-      "id": "src_components_statistics_spendinghabits_spendinghabits",
-      "label": "SpendingHabits()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "constants.ts",
-      "file_type": "code",
-      "norm_label": "spendinghabits()",
-      "source_file": "src/components/statistics/SpendingHabits.tsx",
-      "source_location": "L107"
     },
     {
       "id": "src_components_ui_appicon_appicon",
@@ -2767,7 +2923,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 8,
-      "community_name": "constants.ts",
+      "community_name": "FunFacts.tsx",
       "file_type": "code",
       "norm_label": "appicon()",
       "source_file": "src/components/ui/AppIcon.tsx",
@@ -2779,107 +2935,11 @@
       "_callable": true,
       "_origin": "ast",
       "community": 8,
-      "community_name": "constants.ts",
+      "community_name": "FunFacts.tsx",
       "file_type": "code",
       "norm_label": "iconsquircle()",
       "source_file": "src/components/ui/AppIcon.tsx",
       "source_location": "L47"
-    },
-    {
-      "id": "src_components_ui_statdisplay_formatcurrency",
-      "label": "formatCurrency()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "constants.ts",
-      "file_type": "code",
-      "norm_label": "formatcurrency()",
-      "source_file": "src/components/ui/StatDisplay.tsx",
-      "source_location": "L19"
-    },
-    {
-      "id": "src_components_ui_statdisplay_statdisplay",
-      "label": "StatDisplay()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "constants.ts",
-      "file_type": "code",
-      "norm_label": "statdisplay()",
-      "source_file": "src/components/ui/StatDisplay.tsx",
-      "source_location": "L29"
-    },
-    {
-      "id": "src_lib_constants_getcurrencysymbol",
-      "label": "getCurrencySymbol()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "constants.ts",
-      "file_type": "code",
-      "norm_label": "getcurrencysymbol()",
-      "source_file": "src/lib/constants.ts",
-      "source_location": "L70"
-    },
-    {
-      "id": "src_app_statistics_page_statisticspage",
-      "label": "StatisticsPage()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 83,
-      "community_name": "statistics/page.tsx",
-      "file_type": "code",
-      "norm_label": "statisticspage()",
-      "source_file": "src/app/statistics/page.tsx",
-      "source_location": "L61"
-    },
-    {
-      "id": "src_components_charts_categorychart_categorychart",
-      "label": "CategoryChart()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 83,
-      "community_name": "statistics/page.tsx",
-      "file_type": "code",
-      "norm_label": "categorychart()",
-      "source_file": "src/components/charts/CategoryChart.tsx",
-      "source_location": "L44"
-    },
-    {
-      "id": "src_components_charts_categorychart_customtooltip",
-      "label": "CustomTooltip()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 83,
-      "community_name": "statistics/page.tsx",
-      "file_type": "code",
-      "norm_label": "customtooltip()",
-      "source_file": "src/components/charts/CategoryChart.tsx",
-      "source_location": "L26"
-    },
-    {
-      "id": "src_components_charts_categorychart_formattooltipvalue",
-      "label": "formatTooltipValue()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 83,
-      "community_name": "statistics/page.tsx",
-      "file_type": "code",
-      "norm_label": "formattooltipvalue()",
-      "source_file": "src/components/charts/CategoryChart.tsx",
-      "source_location": "L17"
-    },
-    {
-      "id": "src_components_statistics_incomebreakdown_incomebreakdown",
-      "label": "IncomeBreakdown()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 83,
-      "community_name": "statistics/page.tsx",
-      "file_type": "code",
-      "norm_label": "incomebreakdown()",
-      "source_file": "src/components/statistics/IncomeBreakdown.tsx",
-      "source_location": "L113"
     },
     {
       "id": "src_components_statistics_monthlytrendschart_chartcontent",
@@ -2887,7 +2947,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 83,
-      "community_name": "statistics/page.tsx",
+      "community_name": "MonthlyTrendsChart.tsx",
       "file_type": "code",
       "norm_label": "chartcontent()",
       "source_file": "src/components/statistics/MonthlyTrendsChart.tsx",
@@ -2899,7 +2959,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 83,
-      "community_name": "statistics/page.tsx",
+      "community_name": "MonthlyTrendsChart.tsx",
       "file_type": "code",
       "norm_label": "customtooltip()",
       "source_file": "src/components/statistics/MonthlyTrendsChart.tsx",
@@ -2911,7 +2971,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 83,
-      "community_name": "statistics/page.tsx",
+      "community_name": "MonthlyTrendsChart.tsx",
       "file_type": "code",
       "norm_label": "formatvalue()",
       "source_file": "src/components/statistics/MonthlyTrendsChart.tsx",
@@ -2923,107 +2983,58 @@
       "_callable": true,
       "_origin": "ast",
       "community": 83,
-      "community_name": "statistics/page.tsx",
+      "community_name": "MonthlyTrendsChart.tsx",
       "file_type": "code",
       "norm_label": "monthlytrendschart()",
       "source_file": "src/components/statistics/MonthlyTrendsChart.tsx",
       "source_location": "L154"
     },
     {
-      "id": "src_components_ui_exportdropdown_exportdropdown",
-      "label": "ExportDropdown()",
+      "id": "src_components_charts_categorychart_categorychart",
+      "label": "CategoryChart()",
       "_callable": true,
       "_origin": "ast",
-      "community": 83,
-      "community_name": "statistics/page.tsx",
+      "community": 9,
+      "community_name": "CategoryChart.tsx",
       "file_type": "code",
-      "norm_label": "exportdropdown()",
-      "source_file": "src/components/ui/ExportDropdown.tsx",
-      "source_location": "L33"
+      "norm_label": "categorychart()",
+      "source_file": "src/components/charts/CategoryChart.tsx",
+      "source_location": "L44"
     },
     {
-      "id": "src_hooks_usestatisticsdata_sumamount",
-      "label": "sumAmount()",
+      "id": "src_components_charts_categorychart_customtooltip",
+      "label": "CustomTooltip()",
       "_callable": true,
       "_origin": "ast",
-      "community": 83,
-      "community_name": "statistics/page.tsx",
+      "community": 9,
+      "community_name": "CategoryChart.tsx",
       "file_type": "code",
-      "norm_label": "sumamount()",
-      "source_file": "src/hooks/useStatisticsData.ts",
-      "source_location": "L86"
+      "norm_label": "customtooltip()",
+      "source_file": "src/components/charts/CategoryChart.tsx",
+      "source_location": "L26"
     },
     {
-      "id": "src_hooks_usestatisticsdata_usestatisticsdata",
-      "label": "useStatisticsData()",
+      "id": "src_components_charts_categorychart_formattooltipvalue",
+      "label": "formatTooltipValue()",
       "_callable": true,
       "_origin": "ast",
-      "community": 83,
-      "community_name": "statistics/page.tsx",
+      "community": 9,
+      "community_name": "CategoryChart.tsx",
       "file_type": "code",
-      "norm_label": "usestatisticsdata()",
-      "source_file": "src/hooks/useStatisticsData.ts",
-      "source_location": "L91"
+      "norm_label": "formattooltipvalue()",
+      "source_file": "src/components/charts/CategoryChart.tsx",
+      "source_location": "L17"
     },
     {
-      "id": "src_lib_dateutils_getmonthname",
-      "label": "getMonthName()",
-      "_callable": true,
+      "id": "exceljs",
+      "label": "exceljs",
       "_origin": "ast",
-      "community": 83,
-      "community_name": "statistics/page.tsx",
+      "community": 0,
+      "community_name": "dateUtils.ts",
+      "confidence": "EXTRACTED",
       "file_type": "code",
-      "norm_label": "getmonthname()",
-      "source_file": "src/lib/dateUtils.ts",
-      "source_location": "L58"
-    },
-    {
-      "id": "src_lib_dateutils_getmonthrange",
-      "label": "getMonthRange()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 83,
-      "community_name": "statistics/page.tsx",
-      "file_type": "code",
-      "norm_label": "getmonthrange()",
-      "source_file": "src/lib/dateUtils.ts",
-      "source_location": "L69"
-    },
-    {
-      "id": "src_lib_excelexport_buildworkbook",
-      "label": "buildWorkbook()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 83,
-      "community_name": "statistics/page.tsx",
-      "file_type": "code",
-      "norm_label": "buildworkbook()",
-      "source_file": "src/lib/excelExport.ts",
-      "source_location": "L92"
-    },
-    {
-      "id": "src_lib_excelexport_exporttoexcel",
-      "label": "exportToExcel()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 83,
-      "community_name": "statistics/page.tsx",
-      "file_type": "code",
-      "norm_label": "exporttoexcel()",
-      "source_file": "src/lib/excelExport.ts",
-      "source_location": "L303"
-    },
-    {
-      "id": "src_lib_excelexport_getmonthlytransactions",
-      "label": "getMonthlyTransactions()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 83,
-      "community_name": "statistics/page.tsx",
-      "file_type": "code",
-      "norm_label": "getmonthlytransactions()",
-      "source_file": "src/lib/excelExport.ts",
-      "source_location": "L49"
+      "norm_label": "exceljs",
+      "source_file": "exceljs"
     },
     {
       "id": "src_components_ui_datenavigator",
@@ -3059,6 +3070,50 @@
       "source_location": "L23"
     },
     {
+      "id": "src_components_ui_exportdropdown",
+      "label": "ExportDropdown.tsx",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "dateUtils.ts",
+      "file_type": "code",
+      "norm_label": "exportdropdown.tsx",
+      "source_file": "src/components/ui/ExportDropdown.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_components_ui_exportdropdown_test",
+      "label": "ExportDropdown.test.tsx",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "dateUtils.ts",
+      "file_type": "code",
+      "norm_label": "exportdropdown.test.tsx",
+      "source_file": "src/components/ui/ExportDropdown.test.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_hooks_usestatisticsdata",
+      "label": "useStatisticsData.ts",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "dateUtils.ts",
+      "file_type": "code",
+      "norm_label": "usestatisticsdata.ts",
+      "source_file": "src/hooks/useStatisticsData.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_lib_constants_category_bg_map",
+      "label": "CATEGORY_BG_MAP",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "dateUtils.ts",
+      "file_type": "code",
+      "norm_label": "category_bg_map",
+      "source_file": "src/lib/constants.ts",
+      "source_location": "L27"
+    },
+    {
       "id": "src_lib_constants_max_export_days",
       "label": "MAX_EXPORT_DAYS",
       "_origin": "ast",
@@ -3079,6 +3134,17 @@
       "norm_label": "max_past_days",
       "source_file": "src/lib/constants.ts",
       "source_location": "L7"
+    },
+    {
+      "id": "src_lib_constants_month_names_bg",
+      "label": "MONTH_NAMES_BG",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "dateUtils.ts",
+      "file_type": "code",
+      "norm_label": "month_names_bg",
+      "source_file": "src/lib/constants.ts",
+      "source_location": "L88"
     },
     {
       "id": "src_lib_csvexport",
@@ -3122,7 +3188,7 @@
       "file_type": "code",
       "norm_label": "today",
       "source_file": "src/lib/csvExport.test.ts",
-      "source_location": "L32"
+      "source_location": "L33"
     },
     {
       "id": "src_lib_dateutils",
@@ -3134,6 +3200,50 @@
       "norm_label": "dateutils.ts",
       "source_file": "src/lib/dateUtils.ts",
       "source_location": "L1"
+    },
+    {
+      "id": "src_lib_excelexport",
+      "label": "excelExport.ts",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "dateUtils.ts",
+      "file_type": "code",
+      "norm_label": "excelexport.ts",
+      "source_file": "src/lib/excelExport.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_lib_excelexport_columns_headers",
+      "label": "COLUMNS_HEADERS",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "dateUtils.ts",
+      "file_type": "code",
+      "norm_label": "columns_headers",
+      "source_file": "src/lib/excelExport.ts",
+      "source_location": "L44"
+    },
+    {
+      "id": "src_lib_excelexport_excel_colors",
+      "label": "EXCEL_COLORS",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "dateUtils.ts",
+      "file_type": "code",
+      "norm_label": "excel_colors",
+      "source_file": "src/lib/excelExport.ts",
+      "source_location": "L22"
+    },
+    {
+      "id": "ref_exceljs",
+      "label": "exceljs",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "dateUtils.ts",
+      "file_type": "concept",
+      "norm_label": "exceljs",
+      "source_file": "package.json",
+      "source_location": "L24"
     },
     {
       "id": "next_config",
@@ -3169,6 +3279,28 @@
       "source_location": "L28"
     },
     {
+      "id": "src_components_history_monthcard",
+      "label": "MonthCard.tsx",
+      "_origin": "ast",
+      "community": 10,
+      "community_name": "MonthCard.tsx",
+      "file_type": "code",
+      "norm_label": "monthcard.tsx",
+      "source_file": "src/components/history/MonthCard.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_lib_constants_number_locale",
+      "label": "NUMBER_LOCALE",
+      "_origin": "ast",
+      "community": 10,
+      "community_name": "MonthCard.tsx",
+      "file_type": "code",
+      "norm_label": "number_locale",
+      "source_file": "src/lib/constants.ts",
+      "source_location": "L79"
+    },
+    {
       "id": "src_components_telemetry_webvitals",
       "label": "WebVitals.tsx",
       "_origin": "ast",
@@ -3200,6 +3332,28 @@
       "norm_label": "telemetry.test.ts",
       "source_file": "src/lib/telemetry.test.ts",
       "source_location": "L1"
+    },
+    {
+      "id": "src_components_statistics_overviewcards",
+      "label": "OverviewCards.tsx",
+      "_origin": "ast",
+      "community": 11,
+      "community_name": "OverviewCards.tsx",
+      "file_type": "code",
+      "norm_label": "overviewcards.tsx",
+      "source_file": "src/components/statistics/OverviewCards.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "ref_hugeicons_core_free_icons",
+      "label": "@hugeicons/core-free-icons",
+      "_origin": "ast",
+      "community": 11,
+      "community_name": "OverviewCards.tsx",
+      "file_type": "concept",
+      "norm_label": "@hugeicons/core-free-icons",
+      "source_file": "package.json",
+      "source_location": "L19"
     },
     {
       "id": "src_app_api_log_error_route",
@@ -3246,6 +3400,28 @@
       "source_location": "L1"
     },
     {
+      "id": "src_app_forgot_password_page",
+      "label": "forgot-password/page.tsx",
+      "_origin": "ast",
+      "community": 13,
+      "community_name": "errorLogger.ts",
+      "file_type": "code",
+      "norm_label": "forgot-password/page.tsx",
+      "source_file": "src/app/forgot-password/page.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_app_forgot_password_page_forgotpasswordschema",
+      "label": "forgotPasswordSchema",
+      "_origin": "ast",
+      "community": 13,
+      "community_name": "errorLogger.ts",
+      "file_type": "code",
+      "norm_label": "forgotpasswordschema",
+      "source_file": "src/app/forgot-password/page.tsx",
+      "source_location": "L12"
+    },
+    {
       "id": "src_app_global_error",
       "label": "global-error.tsx",
       "_origin": "ast",
@@ -3288,6 +3464,72 @@
       "norm_label": "metadata",
       "source_file": "src/app/layout.tsx",
       "source_location": "L15"
+    },
+    {
+      "id": "src_app_login_page",
+      "label": "login/page.tsx",
+      "_origin": "ast",
+      "community": 13,
+      "community_name": "errorLogger.ts",
+      "file_type": "code",
+      "norm_label": "login/page.tsx",
+      "source_file": "src/app/login/page.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_app_login_page_loginschema",
+      "label": "loginSchema",
+      "_origin": "ast",
+      "community": 13,
+      "community_name": "errorLogger.ts",
+      "file_type": "code",
+      "norm_label": "loginschema",
+      "source_file": "src/app/login/page.tsx",
+      "source_location": "L16"
+    },
+    {
+      "id": "src_app_register_page",
+      "label": "register/page.tsx",
+      "_origin": "ast",
+      "community": 13,
+      "community_name": "errorLogger.ts",
+      "file_type": "code",
+      "norm_label": "register/page.tsx",
+      "source_file": "src/app/register/page.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_app_register_page_registerschema",
+      "label": "registerSchema",
+      "_origin": "ast",
+      "community": 13,
+      "community_name": "errorLogger.ts",
+      "file_type": "code",
+      "norm_label": "registerschema",
+      "source_file": "src/app/register/page.tsx",
+      "source_location": "L16"
+    },
+    {
+      "id": "src_app_update_password_page",
+      "label": "update-password/page.tsx",
+      "_origin": "ast",
+      "community": 13,
+      "community_name": "errorLogger.ts",
+      "file_type": "code",
+      "norm_label": "update-password/page.tsx",
+      "source_file": "src/app/update-password/page.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_app_update_password_page_updatepasswordschema",
+      "label": "updatePasswordSchema",
+      "_origin": "ast",
+      "community": 13,
+      "community_name": "errorLogger.ts",
+      "file_type": "code",
+      "norm_label": "updatepasswordschema",
+      "source_file": "src/app/update-password/page.tsx",
+      "source_location": "L11"
     },
     {
       "id": "src_components_auth_authprovider",
@@ -3342,39 +3584,6 @@
       "file_type": "code",
       "norm_label": "globalerrorlistener.test.tsx",
       "source_file": "src/components/telemetry/GlobalErrorListener.test.tsx",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_components_ui_errorboundary",
-      "label": "ErrorBoundary.tsx",
-      "_origin": "ast",
-      "community": 13,
-      "community_name": "errorLogger.ts",
-      "file_type": "code",
-      "norm_label": "errorboundary.tsx",
-      "source_file": "src/components/ui/ErrorBoundary.tsx",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_components_ui_errorboundary_test",
-      "label": "ErrorBoundary.test.tsx",
-      "_origin": "ast",
-      "community": 13,
-      "community_name": "errorLogger.ts",
-      "file_type": "code",
-      "norm_label": "errorboundary.test.tsx",
-      "source_file": "src/components/ui/ErrorBoundary.test.tsx",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_components_ui_exportdropdown_test",
-      "label": "ExportDropdown.test.tsx",
-      "_origin": "ast",
-      "community": 13,
-      "community_name": "errorLogger.ts",
-      "file_type": "code",
-      "norm_label": "exportdropdown.test.tsx",
-      "source_file": "src/components/ui/ExportDropdown.test.tsx",
       "source_location": "L1"
     },
     {
@@ -3554,6 +3763,17 @@
       "source_location": "L22"
     },
     {
+      "id": "ref_react_hook_form",
+      "label": "react-hook-form",
+      "_origin": "ast",
+      "community": 13,
+      "community_name": "errorLogger.ts",
+      "file_type": "concept",
+      "norm_label": "react-hook-form",
+      "source_file": "package.json",
+      "source_location": "L31"
+    },
+    {
       "id": "ref_supabase_supabase_js",
       "label": "@supabase/supabase-js",
       "_origin": "ast",
@@ -3565,26 +3785,15 @@
       "source_location": "L22"
     },
     {
-      "id": "ref_testing_library_react",
-      "label": "@testing-library/react",
+      "id": "ref_zod",
+      "label": "zod",
       "_origin": "ast",
       "community": 13,
       "community_name": "errorLogger.ts",
       "file_type": "concept",
-      "norm_label": "@testing-library/react",
+      "norm_label": "zod",
       "source_file": "package.json",
-      "source_location": "L40"
-    },
-    {
-      "id": "ref_vitest",
-      "label": "vitest",
-      "_origin": "ast",
-      "community": 13,
-      "community_name": "errorLogger.ts",
-      "file_type": "concept",
-      "norm_label": "vitest",
-      "source_file": "package.json",
-      "source_location": "L49"
+      "source_location": "L33"
     },
     {
       "id": "changelog",
@@ -3848,7 +4057,7 @@
       "node_kind": "heading",
       "norm_label": "1. execution tiers & state machine",
       "source_file": "AGENTS.md",
-      "source_location": "L15"
+      "source_location": "L16"
     },
     {
       "id": "agents_2_high_impact_project_gotchas_guardrails_critical",
@@ -3860,7 +4069,7 @@
       "node_kind": "heading",
       "norm_label": "2. high-impact project gotchas & guardrails (critical)",
       "source_file": "AGENTS.md",
-      "source_location": "L29"
+      "source_location": "L30"
     },
     {
       "id": "agents_3_design_engineering_fintech_craft_protocol",
@@ -3872,7 +4081,7 @@
       "node_kind": "heading",
       "norm_label": "3. design engineering & fintech craft protocol",
       "source_file": "AGENTS.md",
-      "source_location": "L39"
+      "source_location": "L40"
     },
     {
       "id": "agents_4_reconnaissance_context_protocol",
@@ -3884,7 +4093,7 @@
       "node_kind": "heading",
       "norm_label": "4. reconnaissance & context protocol",
       "source_file": "AGENTS.md",
-      "source_location": "L59"
+      "source_location": "L60"
     },
     {
       "id": "agents_5_validation_subagent_delegation",
@@ -3896,7 +4105,7 @@
       "node_kind": "heading",
       "norm_label": "5. validation & subagent delegation",
       "source_file": "AGENTS.md",
-      "source_location": "L67"
+      "source_location": "L68"
     },
     {
       "id": "agents_6_lean_response_protocol_strict",
@@ -3908,7 +4117,7 @@
       "node_kind": "heading",
       "norm_label": "6. lean response protocol (strict)",
       "source_file": "AGENTS.md",
-      "source_location": "L86"
+      "source_location": "L89"
     },
     {
       "id": "agents_agent_directive_senior_staff_full_stack_architect_design_engineer",
@@ -3932,7 +4141,7 @@
       "node_kind": "heading",
       "norm_label": "fast-track & approval gating:",
       "source_file": "AGENTS.md",
-      "source_location": "L23"
+      "source_location": "L24"
     },
     {
       "id": "agents_mechanical_validation",
@@ -3944,7 +4153,7 @@
       "node_kind": "heading",
       "norm_label": "mechanical validation:",
       "source_file": "AGENTS.md",
-      "source_location": "L69"
+      "source_location": "L70"
     },
     {
       "id": "agents_subagent_delegation_matrix",
@@ -3956,7 +4165,7 @@
       "node_kind": "heading",
       "norm_label": "subagent delegation matrix:",
       "source_file": "AGENTS.md",
-      "source_location": "L74"
+      "source_location": "L75"
     },
     {
       "id": "package_devdependencies",
@@ -4432,7 +4641,7 @@
       "node_kind": "heading",
       "norm_label": "authentication flow",
       "source_file": "ARCHITECTURE.md",
-      "source_location": "L115"
+      "source_location": "L117"
     },
     {
       "id": "architecture_constants_single_source_of_truth_lib_constants_ts",
@@ -4444,7 +4653,7 @@
       "node_kind": "heading",
       "norm_label": "constants (single source of truth: `lib/constants.ts`)",
       "source_file": "ARCHITECTURE.md",
-      "source_location": "L183"
+      "source_location": "L185"
     },
     {
       "id": "architecture_dashboard_page",
@@ -4456,7 +4665,7 @@
       "node_kind": "heading",
       "norm_label": "dashboard page (`/`)",
       "source_file": "ARCHITECTURE.md",
-      "source_location": "L144"
+      "source_location": "L146"
     },
     {
       "id": "architecture_data_flow",
@@ -4468,7 +4677,7 @@
       "node_kind": "heading",
       "norm_label": "data flow",
       "source_file": "ARCHITECTURE.md",
-      "source_location": "L93"
+      "source_location": "L95"
     },
     {
       "id": "architecture_directory_structure",
@@ -4480,7 +4689,7 @@
       "node_kind": "heading",
       "norm_label": "directory structure",
       "source_file": "ARCHITECTURE.md",
-      "source_location": "L24"
+      "source_location": "L26"
     },
     {
       "id": "architecture_history_page_history",
@@ -4492,7 +4701,7 @@
       "node_kind": "heading",
       "norm_label": "history page (`/history`)",
       "source_file": "ARCHITECTURE.md",
-      "source_location": "L153"
+      "source_location": "L155"
     },
     {
       "id": "architecture_key_component_relationships",
@@ -4504,7 +4713,7 @@
       "node_kind": "heading",
       "norm_label": "key component relationships",
       "source_file": "ARCHITECTURE.md",
-      "source_location": "L142"
+      "source_location": "L144"
     },
     {
       "id": "architecture_statistics_page_statistics",
@@ -4516,7 +4725,7 @@
       "node_kind": "heading",
       "norm_label": "statistics page (`/statistics`)",
       "source_file": "ARCHITECTURE.md",
-      "source_location": "L159"
+      "source_location": "L161"
     },
     {
       "id": "architecture_supabase_tables",
@@ -4528,7 +4737,7 @@
       "node_kind": "heading",
       "norm_label": "supabase tables",
       "source_file": "ARCHITECTURE.md",
-      "source_location": "L172"
+      "source_location": "L174"
     },
     {
       "id": "architecture_tech_stack",
@@ -4609,28 +4818,6 @@
       "source_location": "L21"
     },
     {
-      "id": "src_app_forgot_password_page",
-      "label": "forgot-password/page.tsx",
-      "_origin": "ast",
-      "community": 22,
-      "community_name": "react",
-      "file_type": "code",
-      "norm_label": "forgot-password/page.tsx",
-      "source_file": "src/app/forgot-password/page.tsx",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_app_forgot_password_page_forgotpasswordschema",
-      "label": "forgotPasswordSchema",
-      "_origin": "ast",
-      "community": 22,
-      "community_name": "react",
-      "file_type": "code",
-      "norm_label": "forgotpasswordschema",
-      "source_file": "src/app/forgot-password/page.tsx",
-      "source_location": "L12"
-    },
-    {
       "id": "src_app_history_loading",
       "label": "history/loading.tsx",
       "_origin": "ast",
@@ -4639,17 +4826,6 @@
       "file_type": "code",
       "norm_label": "history/loading.tsx",
       "source_file": "src/app/history/loading.tsx",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_app_history_page",
-      "label": "history/page.tsx",
-      "_origin": "ast",
-      "community": 22,
-      "community_name": "react",
-      "file_type": "code",
-      "norm_label": "history/page.tsx",
-      "source_file": "src/app/history/page.tsx",
       "source_location": "L1"
     },
     {
@@ -4662,28 +4838,6 @@
       "norm_label": "app/loading.tsx",
       "source_file": "src/app/loading.tsx",
       "source_location": "L1"
-    },
-    {
-      "id": "src_app_login_page",
-      "label": "login/page.tsx",
-      "_origin": "ast",
-      "community": 22,
-      "community_name": "react",
-      "file_type": "code",
-      "norm_label": "login/page.tsx",
-      "source_file": "src/app/login/page.tsx",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_app_login_page_loginschema",
-      "label": "loginSchema",
-      "_origin": "ast",
-      "community": 22,
-      "community_name": "react",
-      "file_type": "code",
-      "norm_label": "loginschema",
-      "source_file": "src/app/login/page.tsx",
-      "source_location": "L16"
     },
     {
       "id": "src_app_page",
@@ -4708,28 +4862,6 @@
       "source_location": "L7"
     },
     {
-      "id": "src_app_register_page",
-      "label": "register/page.tsx",
-      "_origin": "ast",
-      "community": 22,
-      "community_name": "react",
-      "file_type": "code",
-      "norm_label": "register/page.tsx",
-      "source_file": "src/app/register/page.tsx",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_app_register_page_registerschema",
-      "label": "registerSchema",
-      "_origin": "ast",
-      "community": 22,
-      "community_name": "react",
-      "file_type": "code",
-      "norm_label": "registerschema",
-      "source_file": "src/app/register/page.tsx",
-      "source_location": "L16"
-    },
-    {
       "id": "src_app_statistics_loading",
       "label": "statistics/loading.tsx",
       "_origin": "ast",
@@ -4738,39 +4870,6 @@
       "file_type": "code",
       "norm_label": "statistics/loading.tsx",
       "source_file": "src/app/statistics/loading.tsx",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_app_update_password_page",
-      "label": "update-password/page.tsx",
-      "_origin": "ast",
-      "community": 22,
-      "community_name": "react",
-      "file_type": "code",
-      "norm_label": "update-password/page.tsx",
-      "source_file": "src/app/update-password/page.tsx",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_app_update_password_page_updatepasswordschema",
-      "label": "updatePasswordSchema",
-      "_origin": "ast",
-      "community": 22,
-      "community_name": "react",
-      "file_type": "code",
-      "norm_label": "updatepasswordschema",
-      "source_file": "src/app/update-password/page.tsx",
-      "source_location": "L11"
-    },
-    {
-      "id": "src_components_dashboard_dashboardclient",
-      "label": "DashboardClient.tsx",
-      "_origin": "ast",
-      "community": 22,
-      "community_name": "react",
-      "file_type": "code",
-      "norm_label": "dashboardclient.tsx",
-      "source_file": "src/components/dashboard/DashboardClient.tsx",
       "source_location": "L1"
     },
     {
@@ -4840,26 +4939,70 @@
       "source_location": "L1"
     },
     {
-      "id": "src_components_ui_tooltip",
-      "label": "Tooltip.tsx",
+      "id": "src_components_ui_errorboundary",
+      "label": "ErrorBoundary.tsx",
       "_origin": "ast",
       "community": 22,
       "community_name": "react",
       "file_type": "code",
-      "norm_label": "tooltip.tsx",
-      "source_file": "src/components/ui/Tooltip.tsx",
+      "norm_label": "errorboundary.tsx",
+      "source_file": "src/components/ui/ErrorBoundary.tsx",
       "source_location": "L1"
     },
     {
-      "id": "src_components_ui_tooltip_test",
-      "label": "Tooltip.test.tsx",
+      "id": "src_components_ui_errorboundary_test",
+      "label": "ErrorBoundary.test.tsx",
       "_origin": "ast",
       "community": 22,
       "community_name": "react",
       "file_type": "code",
-      "norm_label": "tooltip.test.tsx",
-      "source_file": "src/components/ui/Tooltip.test.tsx",
+      "norm_label": "errorboundary.test.tsx",
+      "source_file": "src/components/ui/ErrorBoundary.test.tsx",
       "source_location": "L1"
+    },
+    {
+      "id": "src_components_ui_statusnotification",
+      "label": "StatusNotification.tsx",
+      "_origin": "ast",
+      "community": 22,
+      "community_name": "react",
+      "file_type": "code",
+      "norm_label": "statusnotification.tsx",
+      "source_file": "src/components/ui/StatusNotification.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_components_ui_statusnotification_test",
+      "label": "StatusNotification.test.tsx",
+      "_origin": "ast",
+      "community": 22,
+      "community_name": "react",
+      "file_type": "code",
+      "norm_label": "statusnotification.test.tsx",
+      "source_file": "src/components/ui/StatusNotification.test.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_store_toaststore",
+      "label": "toastStore.ts",
+      "_origin": "ast",
+      "community": 22,
+      "community_name": "react",
+      "file_type": "code",
+      "norm_label": "toaststore.ts",
+      "source_file": "src/store/toastStore.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_store_toaststore_usetoaststore",
+      "label": "useToastStore",
+      "_origin": "ast",
+      "community": 22,
+      "community_name": "react",
+      "file_type": "code",
+      "norm_label": "usetoaststore",
+      "source_file": "src/store/toastStore.ts",
+      "source_location": "L20"
     },
     {
       "id": "ref_react",
@@ -4873,17 +5016,6 @@
       "source_location": "L29"
     },
     {
-      "id": "ref_react_hook_form",
-      "label": "react-hook-form",
-      "_origin": "ast",
-      "community": 22,
-      "community_name": "react",
-      "file_type": "concept",
-      "norm_label": "react-hook-form",
-      "source_file": "package.json",
-      "source_location": "L31"
-    },
-    {
       "id": "ref_testing_library_jest_dom",
       "label": "@testing-library/jest-dom",
       "_origin": "ast",
@@ -4895,15 +5027,37 @@
       "source_location": "L39"
     },
     {
-      "id": "ref_zod",
-      "label": "zod",
+      "id": "ref_zustand",
+      "label": "zustand",
       "_origin": "ast",
       "community": 22,
       "community_name": "react",
       "file_type": "concept",
-      "norm_label": "zod",
+      "norm_label": "zustand",
       "source_file": "package.json",
-      "source_location": "L33"
+      "source_location": "L34"
+    },
+    {
+      "id": "src_app_history_page",
+      "label": "history/page.tsx",
+      "_origin": "ast",
+      "community": 24,
+      "community_name": "transactionStore.ts",
+      "file_type": "code",
+      "norm_label": "history/page.tsx",
+      "source_file": "src/app/history/page.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_components_dashboard_dashboardclient",
+      "label": "DashboardClient.tsx",
+      "_origin": "ast",
+      "community": 24,
+      "community_name": "transactionStore.ts",
+      "file_type": "code",
+      "norm_label": "dashboardclient.tsx",
+      "source_file": "src/components/dashboard/DashboardClient.tsx",
+      "source_location": "L1"
     },
     {
       "id": "src_components_transactions_edittransactionmodal",
@@ -5027,6 +5181,39 @@
       "source_location": "L10"
     },
     {
+      "id": "src_lib_excelexport_test",
+      "label": "excelExport.test.ts",
+      "_origin": "ast",
+      "community": 24,
+      "community_name": "transactionStore.ts",
+      "file_type": "code",
+      "norm_label": "excelexport.test.ts",
+      "source_file": "src/lib/excelExport.test.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_lib_excelexport_test_mock_expenses",
+      "label": "MOCK_EXPENSES",
+      "_origin": "ast",
+      "community": 24,
+      "community_name": "transactionStore.ts",
+      "file_type": "code",
+      "norm_label": "mock_expenses",
+      "source_file": "src/lib/excelExport.test.ts",
+      "source_location": "L31"
+    },
+    {
+      "id": "src_lib_excelexport_test_mock_incomes",
+      "label": "MOCK_INCOMES",
+      "_origin": "ast",
+      "community": 24,
+      "community_name": "transactionStore.ts",
+      "file_type": "code",
+      "norm_label": "mock_incomes",
+      "source_file": "src/lib/excelExport.test.ts",
+      "source_location": "L12"
+    },
+    {
       "id": "src_lib_expenserowcolors",
       "label": "expenseRowColors.ts",
       "_origin": "ast",
@@ -5113,6 +5300,28 @@
       "norm_label": "index.test.ts",
       "source_file": "src/types/index.test.ts",
       "source_location": "L1"
+    },
+    {
+      "id": "ref_testing_library_react",
+      "label": "@testing-library/react",
+      "_origin": "ast",
+      "community": 24,
+      "community_name": "transactionStore.ts",
+      "file_type": "concept",
+      "norm_label": "@testing-library/react",
+      "source_file": "package.json",
+      "source_location": "L40"
+    },
+    {
+      "id": "ref_vitest",
+      "label": "vitest",
+      "_origin": "ast",
+      "community": 24,
+      "community_name": "transactionStore.ts",
+      "file_type": "concept",
+      "norm_label": "vitest",
+      "source_file": "package.json",
+      "source_location": "L49"
     },
     {
       "id": "readme",
@@ -5240,6 +5449,72 @@
       "source_location": "L118"
     },
     {
+      "id": "src_components_history_annualsummary",
+      "label": "AnnualSummary.tsx",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "constants.ts",
+      "file_type": "code",
+      "norm_label": "annualsummary.tsx",
+      "source_file": "src/components/history/AnnualSummary.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_components_ui_statdisplay",
+      "label": "StatDisplay.tsx",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "constants.ts",
+      "file_type": "code",
+      "norm_label": "statdisplay.tsx",
+      "source_file": "src/components/ui/StatDisplay.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_lib_constants",
+      "label": "constants.ts",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "constants.ts",
+      "file_type": "code",
+      "norm_label": "constants.ts",
+      "source_file": "src/lib/constants.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_lib_constants_chart_colors",
+      "label": "CHART_COLORS",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "constants.ts",
+      "file_type": "code",
+      "norm_label": "chart_colors",
+      "source_file": "src/lib/constants.ts",
+      "source_location": "L47"
+    },
+    {
+      "id": "src_lib_constants_currency_format_options",
+      "label": "CURRENCY_FORMAT_OPTIONS",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "constants.ts",
+      "file_type": "code",
+      "norm_label": "currency_format_options",
+      "source_file": "src/lib/constants.ts",
+      "source_location": "L82"
+    },
+    {
+      "id": "src_lib_constants_currency_transition_date",
+      "label": "CURRENCY_TRANSITION_DATE",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "constants.ts",
+      "file_type": "code",
+      "norm_label": "currency_transition_date",
+      "source_file": "src/lib/constants.ts",
+      "source_location": "L64"
+    },
+    {
       "id": "src_components_forms_quicktransactionform",
       "label": "QuickTransactionForm.tsx",
       "_origin": "ast",
@@ -5281,28 +5556,6 @@
       "file_type": "code",
       "norm_label": "qrscannermodal.tsx",
       "source_file": "src/components/scanner/QrScannerModal.tsx",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_components_ui_statusnotification",
-      "label": "StatusNotification.tsx",
-      "_origin": "ast",
-      "community": 36,
-      "community_name": "QuickTransactionForm.tsx",
-      "file_type": "code",
-      "norm_label": "statusnotification.tsx",
-      "source_file": "src/components/ui/StatusNotification.tsx",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_components_ui_statusnotification_test",
-      "label": "StatusNotification.test.tsx",
-      "_origin": "ast",
-      "community": 36,
-      "community_name": "QuickTransactionForm.tsx",
-      "file_type": "code",
-      "norm_label": "statusnotification.test.tsx",
-      "source_file": "src/components/ui/StatusNotification.test.tsx",
       "source_location": "L1"
     },
     {
@@ -5350,28 +5603,6 @@
       "source_location": "L1"
     },
     {
-      "id": "src_store_toaststore",
-      "label": "toastStore.ts",
-      "_origin": "ast",
-      "community": 36,
-      "community_name": "QuickTransactionForm.tsx",
-      "file_type": "code",
-      "norm_label": "toaststore.ts",
-      "source_file": "src/store/toastStore.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_store_toaststore_usetoaststore",
-      "label": "useToastStore",
-      "_origin": "ast",
-      "community": 36,
-      "community_name": "QuickTransactionForm.tsx",
-      "file_type": "code",
-      "norm_label": "usetoaststore",
-      "source_file": "src/store/toastStore.ts",
-      "source_location": "L20"
-    },
-    {
       "id": "ref_jsqr",
       "label": "jsqr",
       "_origin": "ast",
@@ -5381,17 +5612,6 @@
       "norm_label": "jsqr",
       "source_file": "package.json",
       "source_location": "L26"
-    },
-    {
-      "id": "ref_zustand",
-      "label": "zustand",
-      "_origin": "ast",
-      "community": 36,
-      "community_name": "QuickTransactionForm.tsx",
-      "file_type": "concept",
-      "norm_label": "zustand",
-      "source_file": "package.json",
-      "source_location": "L34"
     },
     {
       "id": "package_scripts",
@@ -5515,6 +5735,72 @@
       "source_location": "L15"
     },
     {
+      "id": "src_components_statistics_spendinghabits",
+      "label": "SpendingHabits.tsx",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "SpendingHabits.tsx",
+      "file_type": "code",
+      "norm_label": "spendinghabits.tsx",
+      "source_file": "src/components/statistics/SpendingHabits.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_components_statistics_spendinghabits_category_bar_bg",
+      "label": "CATEGORY_BAR_BG",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "SpendingHabits.tsx",
+      "file_type": "code",
+      "norm_label": "category_bar_bg",
+      "source_file": "src/components/statistics/SpendingHabits.tsx",
+      "source_location": "L70"
+    },
+    {
+      "id": "src_components_statistics_spendinghabits_category_icons",
+      "label": "CATEGORY_ICONS",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "SpendingHabits.tsx",
+      "file_type": "code",
+      "norm_label": "category_icons",
+      "source_file": "src/components/statistics/SpendingHabits.tsx",
+      "source_location": "L38"
+    },
+    {
+      "id": "src_components_statistics_spendinghabits_category_squircle_classes",
+      "label": "CATEGORY_SQUIRCLE_CLASSES",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "SpendingHabits.tsx",
+      "file_type": "code",
+      "norm_label": "category_squircle_classes",
+      "source_file": "src/components/statistics/SpendingHabits.tsx",
+      "source_location": "L54"
+    },
+    {
+      "id": "src_components_ui_tooltip",
+      "label": "Tooltip.tsx",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "SpendingHabits.tsx",
+      "file_type": "code",
+      "norm_label": "tooltip.tsx",
+      "source_file": "src/components/ui/Tooltip.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_components_ui_tooltip_test",
+      "label": "Tooltip.test.tsx",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "SpendingHabits.tsx",
+      "file_type": "code",
+      "norm_label": "tooltip.test.tsx",
+      "source_file": "src/components/ui/Tooltip.test.tsx",
+      "source_location": "L1"
+    },
+    {
       "id": "package",
       "label": "package.json",
       "_origin": "ast",
@@ -5590,17 +5876,6 @@
       "norm_label": "@hookform/resolvers",
       "source_file": "package.json",
       "source_location": "L18"
-    },
-    {
-      "id": "ref_hugeicons_react",
-      "label": "@hugeicons/react",
-      "_origin": "ast",
-      "community": 47,
-      "community_name": "package.json",
-      "file_type": "concept",
-      "norm_label": "@hugeicons/react",
-      "source_file": "package.json",
-      "source_location": "L20"
     },
     {
       "id": "ref_jsdom",
@@ -5711,6 +5986,116 @@
       "norm_label": "@vercel/speed-insights",
       "source_file": "package.json",
       "source_location": "L23"
+    },
+    {
+      "id": "auth_users",
+      "label": "auth.users",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "20260919000000_baseline_schema.sql",
+      "file_type": "code",
+      "norm_label": "auth.users",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "supabase_migrations_20260919000000_baseline_schema",
+      "label": "20260919000000_baseline_schema.sql",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "20260919000000_baseline_schema.sql",
+      "file_type": "code",
+      "norm_label": "20260919000000_baseline_schema.sql",
+      "source_file": "supabase/migrations/20260919000000_baseline_schema.sql",
+      "source_location": null
+    },
+    {
+      "id": "supabase_migrations_20260919000000_baseline_schema_idx_error_logs_action",
+      "label": "idx_error_logs_action",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "20260919000000_baseline_schema.sql",
+      "file_type": "code",
+      "norm_label": "idx_error_logs_action",
+      "source_file": "supabase/migrations/20260919000000_baseline_schema.sql",
+      "source_location": "L121"
+    },
+    {
+      "id": "supabase_migrations_20260919000000_baseline_schema_idx_error_logs_created_at",
+      "label": "idx_error_logs_created_at",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "20260919000000_baseline_schema.sql",
+      "file_type": "code",
+      "norm_label": "idx_error_logs_created_at",
+      "source_file": "supabase/migrations/20260919000000_baseline_schema.sql",
+      "source_location": "L118"
+    },
+    {
+      "id": "supabase_migrations_20260919000000_baseline_schema_idx_expense_entries_user_category",
+      "label": "idx_expense_entries_user_category",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "20260919000000_baseline_schema.sql",
+      "file_type": "code",
+      "norm_label": "idx_expense_entries_user_category",
+      "source_file": "supabase/migrations/20260919000000_baseline_schema.sql",
+      "source_location": "L82"
+    },
+    {
+      "id": "supabase_migrations_20260919000000_baseline_schema_idx_expense_entries_user_date",
+      "label": "idx_expense_entries_user_date",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "20260919000000_baseline_schema.sql",
+      "file_type": "code",
+      "norm_label": "idx_expense_entries_user_date",
+      "source_file": "supabase/migrations/20260919000000_baseline_schema.sql",
+      "source_location": "L79"
+    },
+    {
+      "id": "supabase_migrations_20260919000000_baseline_schema_idx_income_entries_user_date",
+      "label": "idx_income_entries_user_date",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "20260919000000_baseline_schema.sql",
+      "file_type": "code",
+      "norm_label": "idx_income_entries_user_date",
+      "source_file": "supabase/migrations/20260919000000_baseline_schema.sql",
+      "source_location": "L25"
+    },
+    {
+      "id": "supabase_migrations_20260919000000_baseline_schema_public_error_logs",
+      "label": "public.error_logs",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "20260919000000_baseline_schema.sql",
+      "file_type": "code",
+      "norm_label": "public.error_logs",
+      "source_file": "supabase/migrations/20260919000000_baseline_schema.sql",
+      "source_location": "L108"
+    },
+    {
+      "id": "supabase_migrations_20260919000000_baseline_schema_public_expense_entries",
+      "label": "public.expense_entries",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "20260919000000_baseline_schema.sql",
+      "file_type": "code",
+      "norm_label": "public.expense_entries",
+      "source_file": "supabase/migrations/20260919000000_baseline_schema.sql",
+      "source_location": "L51"
+    },
+    {
+      "id": "supabase_migrations_20260919000000_baseline_schema_public_income_entries",
+      "label": "public.income_entries",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "20260919000000_baseline_schema.sql",
+      "file_type": "code",
+      "norm_label": "public.income_entries",
+      "source_file": "supabase/migrations/20260919000000_baseline_schema.sql",
+      "source_location": "L13"
     },
     {
       "id": "e2e_auth_spec",
@@ -5988,208 +6373,10 @@
       "source_location": "L25"
     },
     {
-      "id": "src_components_history_annualsummary",
-      "label": "AnnualSummary.tsx",
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "constants.ts",
-      "file_type": "code",
-      "norm_label": "annualsummary.tsx",
-      "source_file": "src/components/history/AnnualSummary.tsx",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_components_history_monthcard",
-      "label": "MonthCard.tsx",
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "constants.ts",
-      "file_type": "code",
-      "norm_label": "monthcard.tsx",
-      "source_file": "src/components/history/MonthCard.tsx",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_components_statistics_funfacts",
-      "label": "FunFacts.tsx",
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "constants.ts",
-      "file_type": "code",
-      "norm_label": "funfacts.tsx",
-      "source_file": "src/components/statistics/FunFacts.tsx",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_components_statistics_incomebreakdown",
-      "label": "IncomeBreakdown.tsx",
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "constants.ts",
-      "file_type": "code",
-      "norm_label": "incomebreakdown.tsx",
-      "source_file": "src/components/statistics/IncomeBreakdown.tsx",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_components_statistics_overviewcards",
-      "label": "OverviewCards.tsx",
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "constants.ts",
-      "file_type": "code",
-      "norm_label": "overviewcards.tsx",
-      "source_file": "src/components/statistics/OverviewCards.tsx",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_components_statistics_recordhighlights",
-      "label": "RecordHighlights.tsx",
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "constants.ts",
-      "file_type": "code",
-      "norm_label": "recordhighlights.tsx",
-      "source_file": "src/components/statistics/RecordHighlights.tsx",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_components_statistics_spendinghabits",
-      "label": "SpendingHabits.tsx",
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "constants.ts",
-      "file_type": "code",
-      "norm_label": "spendinghabits.tsx",
-      "source_file": "src/components/statistics/SpendingHabits.tsx",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_components_statistics_spendinghabits_category_bar_bg",
-      "label": "CATEGORY_BAR_BG",
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "constants.ts",
-      "file_type": "code",
-      "norm_label": "category_bar_bg",
-      "source_file": "src/components/statistics/SpendingHabits.tsx",
-      "source_location": "L70"
-    },
-    {
-      "id": "src_components_statistics_spendinghabits_category_icons",
-      "label": "CATEGORY_ICONS",
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "constants.ts",
-      "file_type": "code",
-      "norm_label": "category_icons",
-      "source_file": "src/components/statistics/SpendingHabits.tsx",
-      "source_location": "L38"
-    },
-    {
-      "id": "src_components_statistics_spendinghabits_category_squircle_classes",
-      "label": "CATEGORY_SQUIRCLE_CLASSES",
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "constants.ts",
-      "file_type": "code",
-      "norm_label": "category_squircle_classes",
-      "source_file": "src/components/statistics/SpendingHabits.tsx",
-      "source_location": "L54"
-    },
-    {
-      "id": "src_components_ui_appicon",
-      "label": "AppIcon.tsx",
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "constants.ts",
-      "file_type": "code",
-      "norm_label": "appicon.tsx",
-      "source_file": "src/components/ui/AppIcon.tsx",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_components_ui_statdisplay",
-      "label": "StatDisplay.tsx",
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "constants.ts",
-      "file_type": "code",
-      "norm_label": "statdisplay.tsx",
-      "source_file": "src/components/ui/StatDisplay.tsx",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_lib_constants",
-      "label": "constants.ts",
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "constants.ts",
-      "file_type": "code",
-      "norm_label": "constants.ts",
-      "source_file": "src/lib/constants.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_lib_constants_currency_format_options",
-      "label": "CURRENCY_FORMAT_OPTIONS",
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "constants.ts",
-      "file_type": "code",
-      "norm_label": "currency_format_options",
-      "source_file": "src/lib/constants.ts",
-      "source_location": "L80"
-    },
-    {
-      "id": "src_lib_constants_currency_transition_date",
-      "label": "CURRENCY_TRANSITION_DATE",
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "constants.ts",
-      "file_type": "code",
-      "norm_label": "currency_transition_date",
-      "source_file": "src/lib/constants.ts",
-      "source_location": "L64"
-    },
-    {
-      "id": "src_lib_constants_number_locale",
-      "label": "NUMBER_LOCALE",
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "constants.ts",
-      "file_type": "code",
-      "norm_label": "number_locale",
-      "source_file": "src/lib/constants.ts",
-      "source_location": "L77"
-    },
-    {
-      "id": "ref_hugeicons_core_free_icons",
-      "label": "@hugeicons/core-free-icons",
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "constants.ts",
-      "file_type": "concept",
-      "norm_label": "@hugeicons/core-free-icons",
-      "source_file": "package.json",
-      "source_location": "L19"
-    },
-    {
-      "id": "exceljs",
-      "label": "exceljs",
-      "_origin": "ast",
-      "community": 83,
-      "community_name": "statistics/page.tsx",
-      "confidence": "EXTRACTED",
-      "file_type": "code",
-      "norm_label": "exceljs",
-      "source_file": "exceljs"
-    },
-    {
       "id": "src_app_statistics_page",
       "label": "statistics/page.tsx",
       "_origin": "ast",
-      "community": 83,
+      "community": 7,
       "community_name": "statistics/page.tsx",
       "file_type": "code",
       "norm_label": "statistics/page.tsx",
@@ -6197,44 +6384,88 @@
       "source_location": "L1"
     },
     {
+      "id": "src_components_statistics_incomebreakdown",
+      "label": "IncomeBreakdown.tsx",
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "statistics/page.tsx",
+      "file_type": "code",
+      "norm_label": "incomebreakdown.tsx",
+      "source_file": "src/components/statistics/IncomeBreakdown.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "ref_lucide_react",
+      "label": "lucide-react",
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "statistics/page.tsx",
+      "file_type": "concept",
+      "norm_label": "lucide-react",
+      "source_file": "package.json",
+      "source_location": "L27"
+    },
+    {
+      "id": "src_components_statistics_funfacts",
+      "label": "FunFacts.tsx",
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "FunFacts.tsx",
+      "file_type": "code",
+      "norm_label": "funfacts.tsx",
+      "source_file": "src/components/statistics/FunFacts.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_components_statistics_recordhighlights",
+      "label": "RecordHighlights.tsx",
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "FunFacts.tsx",
+      "file_type": "code",
+      "norm_label": "recordhighlights.tsx",
+      "source_file": "src/components/statistics/RecordHighlights.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_components_ui_appicon",
+      "label": "AppIcon.tsx",
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "FunFacts.tsx",
+      "file_type": "code",
+      "norm_label": "appicon.tsx",
+      "source_file": "src/components/ui/AppIcon.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "ref_hugeicons_react",
+      "label": "@hugeicons/react",
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "FunFacts.tsx",
+      "file_type": "concept",
+      "norm_label": "@hugeicons/react",
+      "source_file": "package.json",
+      "source_location": "L20"
+    },
+    {
       "id": "src_app_statistics_page_monthlytrendschart",
       "label": "MonthlyTrendsChart",
       "_origin": "ast",
       "community": 83,
-      "community_name": "statistics/page.tsx",
+      "community_name": "MonthlyTrendsChart.tsx",
       "file_type": "code",
       "norm_label": "monthlytrendschart",
       "source_file": "src/app/statistics/page.tsx",
       "source_location": "L23"
     },
     {
-      "id": "src_components_charts_categorychart",
-      "label": "CategoryChart.tsx",
-      "_origin": "ast",
-      "community": 83,
-      "community_name": "statistics/page.tsx",
-      "file_type": "code",
-      "norm_label": "categorychart.tsx",
-      "source_file": "src/components/charts/CategoryChart.tsx",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_components_dashboard_dashboardclient_categorychart",
-      "label": "CategoryChart",
-      "_origin": "ast",
-      "community": 83,
-      "community_name": "statistics/page.tsx",
-      "file_type": "code",
-      "norm_label": "categorychart",
-      "source_file": "src/components/dashboard/DashboardClient.tsx",
-      "source_location": "L18"
-    },
-    {
       "id": "src_components_statistics_monthlytrendschart",
       "label": "MonthlyTrendsChart.tsx",
       "_origin": "ast",
       "community": 83,
-      "community_name": "statistics/page.tsx",
+      "community_name": "MonthlyTrendsChart.tsx",
       "file_type": "code",
       "norm_label": "monthlytrendschart.tsx",
       "source_file": "src/components/statistics/MonthlyTrendsChart.tsx",
@@ -6245,161 +6476,40 @@
       "label": "LABEL_MAP",
       "_origin": "ast",
       "community": 83,
-      "community_name": "statistics/page.tsx",
+      "community_name": "MonthlyTrendsChart.tsx",
       "file_type": "code",
       "norm_label": "label_map",
       "source_file": "src/components/statistics/MonthlyTrendsChart.tsx",
       "source_location": "L56"
     },
     {
-      "id": "src_components_ui_exportdropdown",
-      "label": "ExportDropdown.tsx",
+      "id": "src_components_charts_categorychart",
+      "label": "CategoryChart.tsx",
       "_origin": "ast",
-      "community": 83,
-      "community_name": "statistics/page.tsx",
+      "community": 9,
+      "community_name": "CategoryChart.tsx",
       "file_type": "code",
-      "norm_label": "exportdropdown.tsx",
-      "source_file": "src/components/ui/ExportDropdown.tsx",
+      "norm_label": "categorychart.tsx",
+      "source_file": "src/components/charts/CategoryChart.tsx",
       "source_location": "L1"
     },
     {
-      "id": "src_hooks_usestatisticsdata",
-      "label": "useStatisticsData.ts",
+      "id": "src_components_dashboard_dashboardclient_categorychart",
+      "label": "CategoryChart",
       "_origin": "ast",
-      "community": 83,
-      "community_name": "statistics/page.tsx",
+      "community": 9,
+      "community_name": "CategoryChart.tsx",
       "file_type": "code",
-      "norm_label": "usestatisticsdata.ts",
-      "source_file": "src/hooks/useStatisticsData.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_lib_constants_category_bg_map",
-      "label": "CATEGORY_BG_MAP",
-      "_origin": "ast",
-      "community": 83,
-      "community_name": "statistics/page.tsx",
-      "file_type": "code",
-      "norm_label": "category_bg_map",
-      "source_file": "src/lib/constants.ts",
-      "source_location": "L27"
-    },
-    {
-      "id": "src_lib_constants_chart_colors",
-      "label": "CHART_COLORS",
-      "_origin": "ast",
-      "community": 83,
-      "community_name": "statistics/page.tsx",
-      "file_type": "code",
-      "norm_label": "chart_colors",
-      "source_file": "src/lib/constants.ts",
-      "source_location": "L47"
-    },
-    {
-      "id": "src_lib_constants_month_names_bg",
-      "label": "MONTH_NAMES_BG",
-      "_origin": "ast",
-      "community": 83,
-      "community_name": "statistics/page.tsx",
-      "file_type": "code",
-      "norm_label": "month_names_bg",
-      "source_file": "src/lib/constants.ts",
-      "source_location": "L86"
-    },
-    {
-      "id": "src_lib_excelexport",
-      "label": "excelExport.ts",
-      "_origin": "ast",
-      "community": 83,
-      "community_name": "statistics/page.tsx",
-      "file_type": "code",
-      "norm_label": "excelexport.ts",
-      "source_file": "src/lib/excelExport.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_lib_excelexport_columns_headers",
-      "label": "COLUMNS_HEADERS",
-      "_origin": "ast",
-      "community": 83,
-      "community_name": "statistics/page.tsx",
-      "file_type": "code",
-      "norm_label": "columns_headers",
-      "source_file": "src/lib/excelExport.ts",
-      "source_location": "L44"
-    },
-    {
-      "id": "src_lib_excelexport_excel_colors",
-      "label": "EXCEL_COLORS",
-      "_origin": "ast",
-      "community": 83,
-      "community_name": "statistics/page.tsx",
-      "file_type": "code",
-      "norm_label": "excel_colors",
-      "source_file": "src/lib/excelExport.ts",
-      "source_location": "L22"
-    },
-    {
-      "id": "src_lib_excelexport_test",
-      "label": "excelExport.test.ts",
-      "_origin": "ast",
-      "community": 83,
-      "community_name": "statistics/page.tsx",
-      "file_type": "code",
-      "norm_label": "excelexport.test.ts",
-      "source_file": "src/lib/excelExport.test.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_lib_excelexport_test_mock_expenses",
-      "label": "MOCK_EXPENSES",
-      "_origin": "ast",
-      "community": 83,
-      "community_name": "statistics/page.tsx",
-      "file_type": "code",
-      "norm_label": "mock_expenses",
-      "source_file": "src/lib/excelExport.test.ts",
-      "source_location": "L31"
-    },
-    {
-      "id": "src_lib_excelexport_test_mock_incomes",
-      "label": "MOCK_INCOMES",
-      "_origin": "ast",
-      "community": 83,
-      "community_name": "statistics/page.tsx",
-      "file_type": "code",
-      "norm_label": "mock_incomes",
-      "source_file": "src/lib/excelExport.test.ts",
-      "source_location": "L12"
-    },
-    {
-      "id": "ref_exceljs",
-      "label": "exceljs",
-      "_origin": "ast",
-      "community": 83,
-      "community_name": "statistics/page.tsx",
-      "file_type": "concept",
-      "norm_label": "exceljs",
-      "source_file": "package.json",
-      "source_location": "L24"
-    },
-    {
-      "id": "ref_lucide_react",
-      "label": "lucide-react",
-      "_origin": "ast",
-      "community": 83,
-      "community_name": "statistics/page.tsx",
-      "file_type": "concept",
-      "norm_label": "lucide-react",
-      "source_file": "package.json",
-      "source_location": "L27"
+      "norm_label": "categorychart",
+      "source_file": "src/components/dashboard/DashboardClient.tsx",
+      "source_location": "L18"
     },
     {
       "id": "ref_recharts",
       "label": "recharts",
       "_origin": "ast",
-      "community": 83,
-      "community_name": "statistics/page.tsx",
+      "community": 9,
+      "community_name": "CategoryChart.tsx",
       "file_type": "concept",
       "norm_label": "recharts",
       "source_file": "package.json",
@@ -8696,7 +8806,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/qrParser.ts",
-      "source_location": "L72",
+      "source_location": "L74",
       "weight": 1.0
     },
     {
@@ -8708,7 +8818,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/qrParser.ts",
-      "source_location": "L74",
+      "source_location": "L76",
       "weight": 1.0
     },
     {
@@ -8720,7 +8830,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/qrParser.ts",
-      "source_location": "L135",
+      "source_location": "L137",
       "weight": 1.0
     },
     {
@@ -8732,7 +8842,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/qrParser.ts",
-      "source_location": "L139",
+      "source_location": "L141",
       "weight": 1.0
     },
     {
@@ -8744,7 +8854,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/qrParser.ts",
-      "source_location": "L109",
+      "source_location": "L111",
       "weight": 1.0
     },
     {
@@ -8756,7 +8866,19 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/qrParser.ts",
-      "source_location": "L113",
+      "source_location": "L115",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_qrparser_parseurlreceipt",
+      "target": "src_lib_dateutils_toisodatestring",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "src/lib/qrParser.ts",
+      "source_location": "L117",
       "weight": 1.0
     },
     {
@@ -12146,7 +12268,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "src/lib/csvExport.test.ts",
-      "source_location": "L56",
+      "source_location": "L57",
       "weight": 1.0
     },
     {
@@ -12171,6 +12293,18 @@
       "context": "import",
       "source_file": "src/lib/csvExport.test.ts",
       "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_csvexport_test",
+      "target": "src_lib_dateutils_toisodatestring",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/lib/csvExport.test.ts",
+      "source_location": "L9",
       "weight": 1.0
     },
     {
@@ -12555,6 +12689,18 @@
       "context": "import",
       "source_file": "src/lib/qrDetector.test.ts",
       "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_qrparser",
+      "target": "src_lib_dateutils_toisodatestring",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/lib/qrParser.ts",
+      "source_location": "L23",
       "weight": 1.0
     },
     {
@@ -16279,7 +16425,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "src/lib/csvExport.test.ts",
-      "source_location": "L56",
+      "source_location": "L57",
       "weight": 1.0
     },
     {
@@ -16305,6 +16451,18 @@
       "source_file": "src/lib/csvExport.test.ts",
       "source_location": "L8",
       "type_only": true,
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_csvexport_test",
+      "target": "src_lib_dateutils",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/lib/csvExport.test.ts",
+      "source_location": "L9",
       "weight": 1.0
     },
     {
@@ -16598,6 +16756,18 @@
       "context": "import",
       "source_file": "src/lib/qrDetector.test.ts",
       "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_qrparser",
+      "target": "src_lib_dateutils",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/lib/qrParser.ts",
+      "source_location": "L23",
       "weight": 1.0
     },
     {
@@ -16921,7 +17091,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "AGENTS.md",
-      "source_location": "L23",
+      "source_location": "L24",
       "weight": 1.0
     },
     {
@@ -16932,7 +17102,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "AGENTS.md",
-      "source_location": "L69",
+      "source_location": "L70",
       "weight": 1.0
     },
     {
@@ -16943,7 +17113,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "AGENTS.md",
-      "source_location": "L74",
+      "source_location": "L75",
       "weight": 1.0
     },
     {
@@ -16954,7 +17124,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "AGENTS.md",
-      "source_location": "L15",
+      "source_location": "L16",
       "weight": 1.0
     },
     {
@@ -16965,7 +17135,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "AGENTS.md",
-      "source_location": "L29",
+      "source_location": "L30",
       "weight": 1.0
     },
     {
@@ -16976,7 +17146,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "AGENTS.md",
-      "source_location": "L39",
+      "source_location": "L40",
       "weight": 1.0
     },
     {
@@ -16987,7 +17157,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "AGENTS.md",
-      "source_location": "L59",
+      "source_location": "L60",
       "weight": 1.0
     },
     {
@@ -16998,7 +17168,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "AGENTS.md",
-      "source_location": "L67",
+      "source_location": "L68",
       "weight": 1.0
     },
     {
@@ -17020,7 +17190,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "AGENTS.md",
-      "source_location": "L86",
+      "source_location": "L89",
       "weight": 1.0
     },
     {
@@ -17042,7 +17212,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "ARCHITECTURE.md",
-      "source_location": "L115",
+      "source_location": "L117",
       "weight": 1.0
     },
     {
@@ -17053,7 +17223,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "ARCHITECTURE.md",
-      "source_location": "L142",
+      "source_location": "L144",
       "weight": 1.0
     },
     {
@@ -17064,7 +17234,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "ARCHITECTURE.md",
-      "source_location": "L172",
+      "source_location": "L174",
       "weight": 1.0
     },
     {
@@ -17075,7 +17245,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "ARCHITECTURE.md",
-      "source_location": "L183",
+      "source_location": "L185",
       "weight": 1.0
     },
     {
@@ -17086,7 +17256,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "ARCHITECTURE.md",
-      "source_location": "L24",
+      "source_location": "L26",
       "weight": 1.0
     },
     {
@@ -17108,7 +17278,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "ARCHITECTURE.md",
-      "source_location": "L93",
+      "source_location": "L95",
       "weight": 1.0
     },
     {
@@ -17119,7 +17289,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "ARCHITECTURE.md",
-      "source_location": "L144",
+      "source_location": "L146",
       "weight": 1.0
     },
     {
@@ -17130,7 +17300,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "ARCHITECTURE.md",
-      "source_location": "L153",
+      "source_location": "L155",
       "weight": 1.0
     },
     {
@@ -17141,7 +17311,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "ARCHITECTURE.md",
-      "source_location": "L159",
+      "source_location": "L161",
       "weight": 1.0
     },
     {
@@ -19715,7 +19885,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/constants.ts",
-      "source_location": "L77",
+      "source_location": "L79",
       "weight": 1.0
     },
     {
@@ -19726,7 +19896,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/constants.ts",
-      "source_location": "L80",
+      "source_location": "L82",
       "weight": 1.0
     },
     {
@@ -19737,7 +19907,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/constants.ts",
-      "source_location": "L86",
+      "source_location": "L88",
       "weight": 1.0
     },
     {
@@ -19803,7 +19973,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/csvExport.test.ts",
-      "source_location": "L32",
+      "source_location": "L33",
       "weight": 1.0
     },
     {
@@ -19814,7 +19984,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/csvExport.test.ts",
-      "source_location": "L34",
+      "source_location": "L35",
       "weight": 1.0
     },
     {
@@ -19825,7 +19995,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/csvExport.test.ts",
-      "source_location": "L44",
+      "source_location": "L45",
       "weight": 1.0
     },
     {
@@ -20628,7 +20798,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/qrParser.ts",
-      "source_location": "L131",
+      "source_location": "L133",
       "weight": 1.0
     },
     {
@@ -20639,7 +20809,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/qrParser.ts",
-      "source_location": "L29",
+      "source_location": "L31",
       "weight": 1.0
     },
     {
@@ -20650,7 +20820,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/qrParser.ts",
-      "source_location": "L47",
+      "source_location": "L49",
       "weight": 1.0
     },
     {
@@ -20661,7 +20831,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/qrParser.ts",
-      "source_location": "L59",
+      "source_location": "L61",
       "weight": 1.0
     },
     {
@@ -20683,7 +20853,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/qrParser.ts",
-      "source_location": "L90",
+      "source_location": "L92",
       "weight": 1.0
     },
     {
@@ -21138,6 +21308,94 @@
       "weight": 1.0
     },
     {
+      "source": "supabase_migrations_20260919000000_baseline_schema",
+      "target": "supabase_migrations_20260919000000_baseline_schema_public_error_logs",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "supabase/migrations/20260919000000_baseline_schema.sql",
+      "source_location": "L108",
+      "weight": 1.0
+    },
+    {
+      "source": "supabase_migrations_20260919000000_baseline_schema",
+      "target": "supabase_migrations_20260919000000_baseline_schema_idx_error_logs_created_at",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "supabase/migrations/20260919000000_baseline_schema.sql",
+      "source_location": "L118",
+      "weight": 1.0
+    },
+    {
+      "source": "supabase_migrations_20260919000000_baseline_schema",
+      "target": "supabase_migrations_20260919000000_baseline_schema_idx_error_logs_action",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "supabase/migrations/20260919000000_baseline_schema.sql",
+      "source_location": "L121",
+      "weight": 1.0
+    },
+    {
+      "source": "supabase_migrations_20260919000000_baseline_schema",
+      "target": "supabase_migrations_20260919000000_baseline_schema_public_income_entries",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "supabase/migrations/20260919000000_baseline_schema.sql",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "supabase_migrations_20260919000000_baseline_schema",
+      "target": "supabase_migrations_20260919000000_baseline_schema_idx_income_entries_user_date",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "supabase/migrations/20260919000000_baseline_schema.sql",
+      "source_location": "L25",
+      "weight": 1.0
+    },
+    {
+      "source": "supabase_migrations_20260919000000_baseline_schema",
+      "target": "supabase_migrations_20260919000000_baseline_schema_public_expense_entries",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "supabase/migrations/20260919000000_baseline_schema.sql",
+      "source_location": "L51",
+      "weight": 1.0
+    },
+    {
+      "source": "supabase_migrations_20260919000000_baseline_schema",
+      "target": "supabase_migrations_20260919000000_baseline_schema_idx_expense_entries_user_date",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "supabase/migrations/20260919000000_baseline_schema.sql",
+      "source_location": "L79",
+      "weight": 1.0
+    },
+    {
+      "source": "supabase_migrations_20260919000000_baseline_schema",
+      "target": "supabase_migrations_20260919000000_baseline_schema_idx_expense_entries_user_category",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "supabase/migrations/20260919000000_baseline_schema.sql",
+      "source_location": "L82",
+      "weight": 1.0
+    },
+    {
       "source": "tsconfig",
       "target": "tsconfig_compileroptions",
       "relation": "contains",
@@ -21437,6 +21695,61 @@
       "source_file": "src/store/transactionStore.test.ts"
     },
     {
+      "source": "supabase_migrations_20260919000000_baseline_schema_idx_error_logs_action",
+      "target": "supabase_migrations_20260919000000_baseline_schema_public_error_logs",
+      "relation": "indexes",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "supabase/migrations/20260919000000_baseline_schema.sql",
+      "source_location": "L121",
+      "weight": 1.0
+    },
+    {
+      "source": "supabase_migrations_20260919000000_baseline_schema_idx_error_logs_created_at",
+      "target": "supabase_migrations_20260919000000_baseline_schema_public_error_logs",
+      "relation": "indexes",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "supabase/migrations/20260919000000_baseline_schema.sql",
+      "source_location": "L118",
+      "weight": 1.0
+    },
+    {
+      "source": "supabase_migrations_20260919000000_baseline_schema_idx_expense_entries_user_category",
+      "target": "supabase_migrations_20260919000000_baseline_schema_public_expense_entries",
+      "relation": "indexes",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "supabase/migrations/20260919000000_baseline_schema.sql",
+      "source_location": "L82",
+      "weight": 1.0
+    },
+    {
+      "source": "supabase_migrations_20260919000000_baseline_schema_idx_expense_entries_user_date",
+      "target": "supabase_migrations_20260919000000_baseline_schema_public_expense_entries",
+      "relation": "indexes",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "supabase/migrations/20260919000000_baseline_schema.sql",
+      "source_location": "L79",
+      "weight": 1.0
+    },
+    {
+      "source": "supabase_migrations_20260919000000_baseline_schema_idx_income_entries_user_date",
+      "target": "supabase_migrations_20260919000000_baseline_schema_public_income_entries",
+      "relation": "indexes",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "supabase/migrations/20260919000000_baseline_schema.sql",
+      "source_location": "L25",
+      "weight": 1.0
+    },
+    {
       "source": "src_components_ui_errorboundary_errorboundary",
       "target": "src_components_ui_errorboundary_errorboundary_constructor",
       "relation": "method",
@@ -21536,6 +21849,28 @@
       "weight": 1.0
     },
     {
+      "source": "supabase_migrations_20260919000000_baseline_schema_public_expense_entries",
+      "target": "auth_users",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "supabase/migrations/20260919000000_baseline_schema.sql",
+      "source_location": "L51",
+      "weight": 1.0
+    },
+    {
+      "source": "supabase_migrations_20260919000000_baseline_schema_public_income_entries",
+      "target": "auth_users",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "supabase/migrations/20260919000000_baseline_schema.sql",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
       "source": "src_lib_csvexport_exporttocsv",
       "target": "src_lib_csvexport_rowtocsv",
       "relation": "indirect_call",
@@ -21561,5 +21896,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "8d559793580a3ddd30a5695aae83489ab8ea2873"
+  "built_at_commit": "44fff3539bc1490e1cfd2e7daed8c3484ed3d2ab"
 }

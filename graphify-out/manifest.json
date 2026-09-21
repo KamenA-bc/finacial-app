@@ -24,10 +24,10 @@
     "semantic_hash": "49a81a2f38e87cc4885607e22ff00e6c"
   },
   "eslint.config.mjs": {
-    "mtime": 1775662877.7778537,
-    "seen": 1789411855.8324754,
-    "ast_hash": "6c4307ffa009658f5c97f5629094c0c2",
-    "semantic_hash": "6c4307ffa009658f5c97f5629094c0c2"
+    "mtime": 1790021759.6868086,
+    "seen": 1790021819.2905223,
+    "ast_hash": "04a672a9c216f6f7db4310ccd9087ea8",
+    "semantic_hash": ""
   },
   "next.config.ts": {
     "mtime": 1775662877.7778537,
@@ -336,16 +336,16 @@
     "semantic_hash": ""
   },
   "src/lib/constants.ts": {
-    "mtime": 1779733056.9917972,
-    "seen": 1789411855.8325183,
-    "ast_hash": "ec67aa3677cbd3eee45390c40c1ee882",
-    "semantic_hash": "ec67aa3677cbd3eee45390c40c1ee882"
+    "mtime": 1790021720.2512414,
+    "seen": 1790021819.2906125,
+    "ast_hash": "91c066a0733fef1c527fe736abb0fe75",
+    "semantic_hash": ""
   },
   "src/lib/csvExport.test.ts": {
-    "mtime": 1789831287.411838,
-    "seen": 1789834802.426947,
-    "ast_hash": "414840a90b7cf8c1f6b75223559ac76a",
-    "semantic_hash": "414840a90b7cf8c1f6b75223559ac76a"
+    "mtime": 1790021750.9066765,
+    "seen": 1790021819.2906137,
+    "ast_hash": "c9d5fe977af6783f820b605e0c736cfd",
+    "semantic_hash": ""
   },
   "src/lib/csvExport.ts": {
     "mtime": 1789831276.4243045,
@@ -558,21 +558,21 @@
     "semantic_hash": "ec23bba96a4979621e23fd4d7a01a167"
   },
   "src/lib/qrParser.ts": {
-    "mtime": 1789676414.4426477,
-    "seen": 1789834802.4278736,
-    "ast_hash": "4abc49a7ca39158249076aade83b8736",
-    "semantic_hash": "4abc49a7ca39158249076aade83b8736"
+    "mtime": 1790021737.4279933,
+    "seen": 1790021819.2906332,
+    "ast_hash": "74fe3134837e9805c68250afb0e73b5d",
+    "semantic_hash": ""
   },
   "AGENTS.md": {
-    "mtime": 1790021128.5289268,
-    "seen": 1790021162.2097623,
-    "ast_hash": "8b381ea86466a1d629962001b33620a2",
+    "mtime": 1790021811.5375042,
+    "seen": 1790021819.290657,
+    "ast_hash": "81187919ec4340c9ce4772cc6001d34b",
     "semantic_hash": ""
   },
   "ARCHITECTURE.md": {
-    "mtime": 1788989801.1280842,
-    "seen": 1789834826.2677796,
-    "ast_hash": "e9abed333307131f68fba715832ff4d1",
+    "mtime": 1790021788.369808,
+    "seen": 1790021819.2906582,
+    "ast_hash": "1b4c5309776266d16284b6198a47e758",
     "semantic_hash": ""
   },
   "CHANGELOG.md": {
@@ -657,6 +657,12 @@
     "mtime": 1790020933.98326,
     "seen": 1790020986.4599202,
     "ast_hash": "c57fbc7c0e44f2a6c0b38ddd36e75f93",
+    "semantic_hash": ""
+  },
+  "supabase/migrations/20260919000000_baseline_schema.sql": {
+    "mtime": 1789840527.9332347,
+    "seen": 1790021819.2906494,
+    "ast_hash": "b488db9a34daf8be4bce7bd5aacd26eb",
     "semantic_hash": ""
   }
 }

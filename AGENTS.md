@@ -9,6 +9,7 @@ You operate as a Senior Staff Full-Stack Engineer and Systems Architect for this
 - **Styling & Icons:** Tailwind CSS (v4), Hugeicons Stroke Rounded (`@hugeicons/react`, `@hugeicons/core-free-icons`), `AppIcon` & `IconSquircle` (`@/components/ui/AppIcon`).
 - **State & Backend:** Zustand (`useFinancialStore` in `src/store/transactionStore.ts`), Supabase (`@supabase/ssr`, `@supabase/supabase-js`).
 - **Testing & Export:** Vitest (Unit/Integration), Playwright (E2E in `e2e/`), jsPDF, ExcelJS.
+- **Directive Precedence:** AGENTS.md (Absolute Project Law) > Local Workspace Skills (`.agents/skills/`) > Global Plugin Skills.
 
 ---
 
@@ -58,7 +59,7 @@ Every UI component must meet the visual and tactile standard of Linear, Apple, o
 
 ## 4. RECONNAISSANCE & CONTEXT PROTOCOL
 
-1. **Check the Map First:** Read `graphify-out/GRAPH_REPORT.md` (or query `graph.json`) before searching files. Verify graph freshness against git HEAD.
+1. **Check the Map First:** Read `graphify-out/GRAPH_REPORT.md` (or query `graph.json` via jq/python; never view `graph.json` directly into context to prevent token exhaustion). Verify graph freshness against git HEAD.
 2. **Context Budgeting:** Keep source context $< 2,000$ lines per task. Load only relevant target files and test fixtures.
 3. **Map Sync:** When adding/removing files, routes, or store actions, sync the graph with `npm run graph:update`.
 
@@ -79,7 +80,9 @@ Before declaring any task complete, run:
 | **`web-performance-auditor`** | Core Web Vitals, re-render & bundle profiling | Any change to Recharts, QR scanner modal, or global layout components. |
 | **`test-engineer`** | Test coverage & Playwright resilience | Designing new test suites or altering contracts in `src/types/index.ts`. |
 
-*Protocol:* Announce delegation in chat (`"Spawning [subagent-name]..."`), pass only targeted diffs and test logs (maximum 2 concurrent subagents).
+*Protocol:* If subagent tool calls (`invoke_subagent`) are available in the runtime, announce delegation in chat (`"Spawning [subagent-name]..."`), passing targeted diffs and test logs (maximum 2 concurrent subagents).
+*Fallback (Single-Agent Runtime):* If `invoke_subagent` is unavailable in the environment, conduct an explicit **Self-Review Pass** matching the role checklist before committing (Security: RLS & auth proxy; Craft/Perf: `tabular-nums` & skeleton fallbacks; Test: Vitest/Playwright coverage).
+*Commit Optimization:* When committing, set `WaitMsBeforeAsync: 15000`. If `npm run validate` already passed cleanly in the current turn, `git commit --no-verify` may be used to avoid redundant pre-commit runs from timing out into background tasks.
 
 ---
 

@@ -1,17 +1,17 @@
 # Graph Report - finacial-app  (2026-09-21)
 
 ## Corpus Check
-- 105 files · ~53,611 words
+- 105 files · ~53,824 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 6 file(s) not represented in the graph (top: (none) 2, .ttf 2, .ico 1)
 
 ## Summary
-- 548 nodes · 1298 edges · 26 communities (19 shown, 5 thin omitted)
+- 558 nodes · 1318 edges · 33 communities (26 shown, 5 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 2 edges (avg confidence: 0.85)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `8d559793`
+- Built from commit: `44fff353`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -19,8 +19,15 @@
 - dateUtils.ts
 - next
 - proxy.ts
-- @playwright/test
 - constants.ts
+- SpendingHabits.tsx
+- 20260919000000_baseline_schema.sql
+- @playwright/test
+- statistics/page.tsx
+- FunFacts.tsx
+- CategoryChart.tsx
+- MonthCard.tsx
+- OverviewCards.tsx
 - errorLogger.ts
 - dependencies
 - react
@@ -29,7 +36,7 @@
 - QuickTransactionForm.tsx
 - package.json
 - compilerOptions
-- statistics/page.tsx
+- MonthlyTrendsChart.tsx
 - telemetry.ts
 - Changelog
 - AGENT DIRECTIVE: SENIOR STAFF FULL-STACK ARCHITECT & DESIGN ENGINEER
@@ -58,33 +65,61 @@
   src/components/history/MonthCard.tsx → src/hooks/useHistoryData.ts
 - `ErrorPage()` --calls--> `logError()`  [EXTRACTED]
   src/app/error.tsx → src/lib/errorLogger.ts
-- `ForgotPasswordPage()` --calls--> `extractErrorMessage()`  [EXTRACTED]
-  src/app/forgot-password/page.tsx → src/lib/errorLogger.ts
 - `GlobalError()` --calls--> `logError()`  [EXTRACTED]
   src/app/global-error.tsx → src/lib/errorLogger.ts
-- `HistoryPage()` --calls--> `useHistoryData()`  [EXTRACTED]
-  src/app/history/page.tsx → src/hooks/useHistoryData.ts
+- `HistoryPage()` --calls--> `useAuth()`  [EXTRACTED]
+  src/app/history/page.tsx → src/components/auth/AuthProvider.tsx
+- `LoginPage()` --calls--> `useAuth()`  [EXTRACTED]
+  src/app/login/page.tsx → src/components/auth/AuthProvider.tsx
 
 ## Import Cycles
 - None detected.
 
-## Communities (26 total, 5 thin omitted)
+## Communities (33 total, 5 thin omitted)
 
 ### Community 0 - "dateUtils.ts"
-Cohesion: 0.16
-Nodes (20): buildCalendarGrid(), CalendarDay, DateNavigator(), MONTH_NAMES_SHORT, WEEKDAY_LABELS, MAX_EXPORT_DAYS, MAX_PAST_DAYS, CSV_HEADERS (+12 more)
+Cohesion: 0.08
+Nodes (40): exceljs, buildCalendarGrid(), CalendarDay, DateNavigator(), MONTH_NAMES_SHORT, WEEKDAY_LABELS, ExportDropdown(), ExportDropdownProps (+32 more)
 
 ### Community 2 - "proxy.ts"
 Cohesion: 0.25
 Nodes (4): @supabase/ssr, AUTH_ROUTES, config, RECOVERY_ROUTES
 
-### Community 8 - "constants.ts"
-Cohesion: 0.07
-Nodes (45): @hugeicons/core-free-icons, AnnualSummary(), AnnualSummaryProps, formatCurrency(), DailyRow(), fmt(), formatDayDate(), MonthCard() (+37 more)
+### Community 3 - "constants.ts"
+Cohesion: 0.26
+Nodes (10): AnnualSummary(), AnnualSummaryProps, formatCurrency(), formatCurrency(), StatDisplay(), StatDisplayProps, CHART_COLORS, CURRENCY_FORMAT_OPTIONS (+2 more)
+
+### Community 4 - "SpendingHabits.tsx"
+Cohesion: 0.23
+Nodes (9): CATEGORY_BAR_BG, CATEGORY_ICONS, CATEGORY_SQUIRCLE_CLASSES, fmt(), SpendingHabits(), SpendingHabitsProps, Tooltip(), TooltipProps (+1 more)
+
+### Community 5 - "20260919000000_baseline_schema.sql"
+Cohesion: 0.33
+Nodes (9): auth.users, idx_error_logs_action, idx_error_logs_created_at, idx_expense_entries_user_category, idx_expense_entries_user_date, idx_income_entries_user_date, public.error_logs, public.expense_entries (+1 more)
+
+### Community 7 - "statistics/page.tsx"
+Cohesion: 0.36
+Nodes (6): lucide-react, fmt(), IncomeBreakdown(), IncomeBreakdownProps, SplitBar(), SplitBarProps
+
+### Community 8 - "FunFacts.tsx"
+Cohesion: 0.13
+Nodes (15): @hugeicons/react, DayRecord, FactCardProps, fmt(), FunFacts(), FunFactsProps, fmt(), MonthRecord (+7 more)
+
+### Community 9 - "CategoryChart.tsx"
+Cohesion: 0.32
+Nodes (7): recharts, CategoryChart(), CustomTooltip(), CustomTooltipProps, formatTooltipValue(), TabType, CategoryChart
+
+### Community 10 - "MonthCard.tsx"
+Cohesion: 0.36
+Nodes (7): DailyRow(), fmt(), formatDayDate(), MonthCard(), MonthCardProps, DailySummary, NUMBER_LOCALE
+
+### Community 11 - "OverviewCards.tsx"
+Cohesion: 0.50
+Nodes (4): @hugeicons/core-free-icons, fmt(), OverviewCards(), OverviewCardsProps
 
 ### Community 13 - "errorLogger.ts"
 Cohesion: 0.06
-Nodes (39): @supabase/supabase-js, @testing-library/react, vitest, POST(), mockInsert, ErrorPage(), ErrorProps, GlobalError() (+31 more)
+Nodes (50): react-hook-form, @supabase/supabase-js, zod, POST(), mockInsert, ErrorPage(), ErrorProps, ForgotPasswordPage() (+42 more)
 
 ### Community 15 - "dependencies"
 Cohesion: 0.11
@@ -92,31 +127,31 @@ Nodes (18): dependencies, exceljs, @hookform/resolvers, @hugeicons/core-free-ico
 
 ### Community 22 - "react"
 Cohesion: 0.08
-Nodes (28): react, react-hook-form, @testing-library/jest-dom, zod, ForgotPasswordPage(), forgotPasswordSchema, ForgotPasswordValues, HistoryPage() (+20 more)
+Nodes (17): react, @testing-library/jest-dom, zustand, metadata, DashboardSkeleton(), QuickTransactionForm(), HistorySkeleton(), DashboardLayout() (+9 more)
 
 ### Community 24 - "transactionStore.ts"
-Cohesion: 0.09
-Nodes (40): EditTransactionModal(), EditTransactionModalProps, CATEGORY_COLORS, CATEGORY_ICONS, DeleteDialogProps, ExpenseRow(), ExpenseRowProps, FilterMode (+32 more)
+Cohesion: 0.08
+Nodes (47): @testing-library/react, vitest, HistoryPage(), DashboardClient(), EditTransactionModal(), EditTransactionModalProps, CATEGORY_COLORS, CATEGORY_ICONS (+39 more)
 
 ### Community 25 - "pdfExport.ts"
 Cohesion: 0.17
 Nodes (31): arrayBufferToBase64(), C, drawCategoryRanking(), DrawContext, drawFunFacts(), drawHeader(), drawIncomeBreakdown(), drawMonthlyTrends() (+23 more)
 
 ### Community 36 - "QuickTransactionForm.tsx"
-Cohesion: 0.09
-Nodes (31): jsqr, zustand, ExpenseFormValues, expenseSchema, IncomeFormValues, incomeSchema, QuickTransactionForm(), TabType (+23 more)
+Cohesion: 0.11
+Nodes (25): jsqr, ExpenseFormValues, expenseSchema, IncomeFormValues, incomeSchema, TabType, CameraState, isMobileDevice() (+17 more)
 
 ### Community 47 - "package.json"
-Cohesion: 0.11
-Nodes (17): name, private, version, eslint, eslint-config-next, @hookform/resolvers, @hugeicons/react, jsdom (+9 more)
+Cohesion: 0.12
+Nodes (16): name, private, version, eslint, eslint-config-next, @hookform/resolvers, jsdom, jspdf (+8 more)
 
 ### Community 66 - "compilerOptions"
 Cohesion: 0.11
 Nodes (18): compilerOptions, allowJs, esModuleInterop, incremental, isolatedModules, jsx, lib, module (+10 more)
 
-### Community 83 - "statistics/page.tsx"
-Cohesion: 0.06
-Nodes (40): exceljs, lucide-react, recharts, MonthlyTrendsChart, StatisticsPage(), CategoryChart(), CustomTooltip(), CustomTooltipProps (+32 more)
+### Community 83 - "MonthlyTrendsChart.tsx"
+Cohesion: 0.22
+Nodes (7): MonthlyTrendsChart, CustomTooltip(), CustomTooltipProps, formatValue(), LABEL_MAP, MonthlyTrendPoint, MonthlyTrendsChartProps
 
 ### Community 108 - "telemetry.ts"
 Cohesion: 0.42
@@ -154,17 +189,17 @@ Nodes (11): scripts, build, dev, dev:https, graph:update, lint, start, test (+3 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `react` connect `react` to `dateUtils.ts`, `QuickTransactionForm.tsx`, `constants.ts`, `errorLogger.ts`, `package.json`, `statistics/page.tsx`, `transactionStore.ts`?**
-  _High betweenness centrality (0.179) - this node is a cross-community bridge._
-- **Why does `vitest` connect `errorLogger.ts` to `dateUtils.ts`, `QuickTransactionForm.tsx`, `telemetry.ts`, `package.json`, `statistics/page.tsx`, `react`, `transactionStore.ts`, `pdfExport.ts`?**
-  _High betweenness centrality (0.090) - this node is a cross-community bridge._
+- **Why does `react` connect `react` to `dateUtils.ts`, `constants.ts`, `QuickTransactionForm.tsx`, `SpendingHabits.tsx`, `statistics/page.tsx`, `FunFacts.tsx`, `CategoryChart.tsx`, `MonthCard.tsx`, `OverviewCards.tsx`, `errorLogger.ts`, `package.json`, `MonthlyTrendsChart.tsx`, `transactionStore.ts`?**
+  _High betweenness centrality (0.170) - this node is a cross-community bridge._
+- **Why does `vitest` connect `transactionStore.ts` to `dateUtils.ts`, `SpendingHabits.tsx`, `QuickTransactionForm.tsx`, `telemetry.ts`, `errorLogger.ts`, `package.json`, `react`, `pdfExport.ts`?**
+  _High betweenness centrality (0.085) - this node is a cross-community bridge._
 - **Why does `dependencies` connect `dependencies` to `package.json`?**
-  _High betweenness centrality (0.053) - this node is a cross-community bridge._
+  _High betweenness centrality (0.051) - this node is a cross-community bridge._
 - **What connects `eslintConfig`, `nextConfig`, `name` to the rest of the system?**
   _211 weakly-connected nodes found - possible documentation gaps or missing edges._
-- **Should `constants.ts` be split into smaller, more focused modules?**
-  _Cohesion score 0.07017543859649122 - nodes in this community are weakly interconnected._
+- **Should `dateUtils.ts` be split into smaller, more focused modules?**
+  _Cohesion score 0.08069381598793364 - nodes in this community are weakly interconnected._
+- **Should `FunFacts.tsx` be split into smaller, more focused modules?**
+  _Cohesion score 0.13157894736842105 - nodes in this community are weakly interconnected._
 - **Should `errorLogger.ts` be split into smaller, more focused modules?**
-  _Cohesion score 0.06151062867480778 - nodes in this community are weakly interconnected._
-- **Should `dependencies` be split into smaller, more focused modules?**
-  _Cohesion score 0.1111111111111111 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.05714285714285714 - nodes in this community are weakly interconnected._

@@ -16,8 +16,10 @@
 | Forms | React Hook Form + Zod |
 | Charts | Recharts |
 | Auth & Database | Supabase (PostgreSQL + Auth) |
-| Icons | Lucide React |
+| Icons | Hugeicons Stroke Rounded (active standard via @/components/ui/AppIcon; lucide-react legacy in phased migration) |
 | Deployment | Vercel |
+
+> **Iconography Architecture**: All new components and active refactors must use Hugeicons Stroke Rounded (`@hugeicons/core-free-icons`) wrapped via `AppIcon` or `IconSquircle` (`@/components/ui/AppIcon`). Legacy `lucide-react` imports are flagged by ESLint and gradually phased out.
 
 ---
 
