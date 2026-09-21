@@ -66,10 +66,10 @@
     "semantic_hash": "d8e0b87776275e46d2e41aeb374ef82d"
   },
   "src/app/api/log-error/route.test.ts": {
-    "mtime": 1788981289.95645,
-    "seen": 1789411855.8324814,
-    "ast_hash": "9de3274eea3698337d208462312cad6c",
-    "semantic_hash": "9de3274eea3698337d208462312cad6c"
+    "mtime": 1790022509.464562,
+    "seen": 1790022719.5607913,
+    "ast_hash": "913d8c7d4c35276b04cf84f75a981d7c",
+    "semantic_hash": ""
   },
   "src/app/api/log-error/route.ts": {
     "mtime": 1788981284.54906,
@@ -618,9 +618,9 @@
     "semantic_hash": ""
   },
   ".github/workflows/ci.yml": {
-    "mtime": 1789836302.488976,
-    "seen": 1789836337.7483582,
-    "ast_hash": "d2a16c08c0d1d3a43c5237adf87951db",
+    "mtime": 1790022502.1215515,
+    "seen": 1790022719.5610368,
+    "ast_hash": "7586dcab1fbcabda0fc51b23d928c4b2",
     "semantic_hash": ""
   },
   "vitest.config.mts": {
@@ -663,6 +663,12 @@
     "mtime": 1789840527.9332347,
     "seen": 1790021819.2906494,
     "ast_hash": "b488db9a34daf8be4bce7bd5aacd26eb",
+    "semantic_hash": ""
+  },
+  "src/components/statistics/SpendingHabits.test.tsx": {
+    "mtime": 1790022704.1784317,
+    "seen": 1790022719.560882,
+    "ast_hash": "7206bd0551e797539b3bfb538100f23d",
     "semantic_hash": ""
   }
 }
