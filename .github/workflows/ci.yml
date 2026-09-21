@@ -37,7 +37,7 @@ jobs:
         run: npm ci
 
       - name: Install graphify
-        run: pip install graphifyy
+        run: pip install "graphifyy[sql]"
 
       - name: Run ESLint
         run: npm run lint

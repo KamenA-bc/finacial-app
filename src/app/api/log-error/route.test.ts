@@ -60,6 +60,7 @@ describe('API Route - /api/log-error', () => {
     });
 
     it('returns 500 if Supabase insert returns an error', async () => {
+        const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
         mockInsert.mockResolvedValueOnce({ error: { message: 'Database connection error' } });
 
         const req = new NextRequest('http://localhost:3000/api/log-error', {
@@ -74,5 +75,10 @@ describe('API Route - /api/log-error', () => {
         expect(res.status).toBe(500);
         const data = await res.json();
         expect(data.error).toBe('Database connection error');
+        expect(consoleSpy).toHaveBeenCalledWith(
+            '[API /api/log-error] Supabase insert failed:',
+            'Database connection error'
+        );
+        consoleSpy.mockRestore();
     });
 });
