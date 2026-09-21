@@ -5,7 +5,7 @@
  */
 'use client';
 
-import React, { useState, useRef, useEffect, useId } from 'react';
+import React, { useState, useRef, useEffect, useId, useCallback } from 'react';
 
 export interface TooltipProps {
     children: React.ReactNode;
@@ -26,39 +26,53 @@ export function Tooltip({
     triggerClassName = '',
     triggerAriaLabel,
 }: TooltipProps): React.ReactElement {
-    const [isOpen, setIsOpen] = useState(false);
+    const [isToggled, setIsToggled] = useState(false);
+    const [isHovered, setIsHovered] = useState(false);
+    const [isFocused, setIsFocused] = useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
+    const isPointerDownRef = useRef(false);
     const tooltipId = useId();
 
-    // Tap-outside & Escape key dismissal for mobile / keyboard ergonomics
-    useEffect(() => {
-        if (!isOpen) return;
+    const isVisible = isToggled || isHovered || isFocused;
 
-        const handleClickOutside = (e: MouseEvent | TouchEvent) => {
+    const closeAll = useCallback(() => {
+        setIsToggled(false);
+        setIsHovered(false);
+        setIsFocused(false);
+    }, []);
+
+    // Dismissal for outside clicks/taps & Escape key
+    useEffect(() => {
+        if (!isVisible) return;
+
+        const handleClickOutside = (e: MouseEvent | TouchEvent | PointerEvent) => {
             if (
                 containerRef.current &&
                 !containerRef.current.contains(e.target as Node)
             ) {
-                setIsOpen(false);
+                closeAll();
             }
         };
 
         const handleKeyDown = (e: KeyboardEvent) => {
             if (e.key === 'Escape') {
-                setIsOpen(false);
+                closeAll();
             }
         };
 
+        // Pointerdown catches taps/clicks before click handlers on outside elements
+        document.addEventListener('pointerdown', handleClickOutside);
         document.addEventListener('mousedown', handleClickOutside);
         document.addEventListener('touchstart', handleClickOutside);
         document.addEventListener('keydown', handleKeyDown);
 
         return () => {
+            document.removeEventListener('pointerdown', handleClickOutside);
             document.removeEventListener('mousedown', handleClickOutside);
             document.removeEventListener('touchstart', handleClickOutside);
             document.removeEventListener('keydown', handleKeyDown);
         };
-    }, [isOpen]);
+    }, [isVisible, closeAll]);
 
     // Alignment classes for positioning the floating bubble
     const alignClasses = {
@@ -79,37 +93,81 @@ export function Tooltip({
         ? 'bottom-full mb-2 origin-bottom'
         : 'top-full mt-2 origin-top';
 
+    const handlePointerDown = () => {
+        isPointerDownRef.current = true;
+    };
+
+    const handlePointerUp = () => {
+        // Reset after this tick's click handler has fired
+        setTimeout(() => {
+            isPointerDownRef.current = false;
+        }, 0);
+    };
+
+    const handlePointerEnter = (e: React.PointerEvent) => {
+        // Only trigger hover on real mouse/pen devices, never on touch devices
+        if (e.pointerType !== 'touch') {
+            setIsHovered(true);
+        }
+    };
+
+    const handlePointerLeave = (e: React.PointerEvent) => {
+        if (e.pointerType !== 'touch') {
+            setIsHovered(false);
+        }
+    };
+
+    const handleClick = (e: React.MouseEvent) => {
+        e.stopPropagation();
+        isPointerDownRef.current = false;
+        setIsToggled((prev) => !prev);
+    };
+
+    const handleFocus = () => {
+        // Only show tooltip on focus if user navigated via keyboard (Tab), not click/tap
+        if (!isPointerDownRef.current) {
+            setIsFocused(true);
+        }
+    };
+
+    const handleBlur = () => {
+        setIsFocused(false);
+    };
+
+    const handleKeyDownTrigger = (e: React.KeyboardEvent) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            setIsToggled((prev) => !prev);
+        }
+    };
+
     return (
         <div
             ref={containerRef}
             className={`relative inline-flex items-center justify-center ${className}`}
-            onMouseEnter={() => setIsOpen(true)}
-            onMouseLeave={() => setIsOpen(false)}
+            onPointerEnter={handlePointerEnter}
+            onPointerLeave={handlePointerLeave}
         >
             <div
                 role="button"
                 tabIndex={0}
                 aria-label={triggerAriaLabel || (typeof content === 'string' ? content : undefined)}
-                aria-describedby={isOpen ? tooltipId : undefined}
-                onClick={(e) => {
-                    e.stopPropagation();
-                    setIsOpen((prev) => !prev);
-                }}
-                onFocus={() => setIsOpen(true)}
-                onBlur={() => setIsOpen(false)}
-                onKeyDown={(e) => {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
-                        setIsOpen((prev) => !prev);
-                    }
-                }}
+                aria-expanded={isVisible}
+                aria-describedby={isVisible ? tooltipId : undefined}
+                onPointerDown={handlePointerDown}
+                onPointerUp={handlePointerUp}
+                onTouchStart={handlePointerDown}
+                onClick={handleClick}
+                onFocus={handleFocus}
+                onBlur={handleBlur}
+                onKeyDown={handleKeyDownTrigger}
                 className={`cursor-pointer select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/60 rounded-lg ${triggerClassName || 'inline-flex items-center'}`}
             >
                 {children}
             </div>
 
             {/* Floating Bubble */}
-            {isOpen && (
+            {isVisible && (
                 <div
                     id={tooltipId}
                     role="tooltip"

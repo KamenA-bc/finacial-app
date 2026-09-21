@@ -16,41 +16,163 @@ describe('Tooltip component', () => {
         expect(screen.queryByText('Helper explanation')).not.toBeInTheDocument();
     });
 
-    it('shows tooltip content on mouse enter and hides on mouse leave', () => {
+    // BUG REGRESSION TEST: Real browsers fire pointerDown -> focus -> click in sequence.
+    // The previous implementation had a bug where focus opened the tooltip and the subsequent
+    // click immediately inverted the state to closed, forcing users to click twice.
+    it('opens on the FIRST click/tap when browser dispatches pointerDown -> focus -> click', () => {
         render(
-            <Tooltip content="Helper explanation">
-                <span>Trigger Label</span>
-            </Tooltip>
-        );
-
-        const trigger = screen.getByText('Trigger Label');
-        fireEvent.mouseEnter(trigger.parentElement?.parentElement ?? trigger);
-
-        expect(screen.getByText('Helper explanation')).toBeInTheDocument();
-
-        fireEvent.mouseLeave(trigger.parentElement?.parentElement ?? trigger);
-        expect(screen.queryByText('Helper explanation')).not.toBeInTheDocument();
-    });
-
-    it('toggles on click (tap-to-inspect for mobile users)', () => {
-        render(
-            <Tooltip content="Mobile explanation">
-                <span>Mobile Trigger</span>
+            <Tooltip content="First click explanation">
+                <span>Metric Trigger</span>
             </Tooltip>
         );
 
         const button = screen.getByRole('button');
-        
-        // Tap to open
-        fireEvent.click(button);
-        expect(screen.getByText('Mobile explanation')).toBeInTheDocument();
 
-        // Tap to close
+        // Simulate exact mobile browser tap / desktop click event cascade
+        fireEvent.pointerDown(button);
+        fireEvent.focus(button);
         fireEvent.click(button);
-        expect(screen.queryByText('Mobile explanation')).not.toBeInTheDocument();
+
+        // MUST be visible on the very first click
+        expect(screen.getByText('First click explanation')).toBeInTheDocument();
+
+        // Second click closes it
+        fireEvent.pointerDown(button);
+        fireEvent.click(button);
+        expect(screen.queryByText('First click explanation')).not.toBeInTheDocument();
     });
 
-    it('dismisses tooltip on click outside', () => {
+    it('opens on the FIRST tap when browser dispatches touchStart -> focus -> click (mobile fallback)', () => {
+        render(
+            <Tooltip content="Touch explanation">
+                <span>Touch Trigger</span>
+            </Tooltip>
+        );
+
+        const button = screen.getByRole('button');
+
+        // Simulate mobile touch event sequence
+        fireEvent.touchStart(button);
+        fireEvent.focus(button);
+        fireEvent.click(button);
+
+        expect(screen.getByText('Touch explanation')).toBeInTheDocument();
+
+        // Second tap closes it
+        fireEvent.touchStart(button);
+        fireEvent.click(button);
+        expect(screen.queryByText('Touch explanation')).not.toBeInTheDocument();
+    });
+
+    it('supports rapid multiple click toggles consistently', () => {
+        render(
+            <Tooltip content="Rapid toggle explanation">
+                <span>Toggle Trigger</span>
+            </Tooltip>
+        );
+
+        const button = screen.getByRole('button');
+
+        // 1st click -> Open
+        fireEvent.pointerDown(button);
+        fireEvent.click(button);
+        expect(screen.getByText('Rapid toggle explanation')).toBeInTheDocument();
+
+        // 2nd click -> Close
+        fireEvent.pointerDown(button);
+        fireEvent.click(button);
+        expect(screen.queryByText('Rapid toggle explanation')).not.toBeInTheDocument();
+
+        // 3rd click -> Open
+        fireEvent.pointerDown(button);
+        fireEvent.click(button);
+        expect(screen.getByText('Rapid toggle explanation')).toBeInTheDocument();
+
+        // 4th click -> Close
+        fireEvent.pointerDown(button);
+        fireEvent.click(button);
+        expect(screen.queryByText('Rapid toggle explanation')).not.toBeInTheDocument();
+    });
+
+    it('shows on desktop mouse hover and hides on mouse leave', () => {
+        render(
+            <Tooltip content="Hover explanation">
+                <span>Hover Trigger</span>
+            </Tooltip>
+        );
+
+        const button = screen.getByRole('button');
+        const container = button.parentElement!;
+
+        // Pointer enter with mouse pointerType
+        fireEvent.pointerEnter(container, { pointerType: 'mouse' });
+        expect(screen.getByText('Hover explanation')).toBeInTheDocument();
+
+        // Pointer leave with mouse pointerType
+        fireEvent.pointerLeave(container, { pointerType: 'mouse' });
+        expect(screen.queryByText('Hover explanation')).not.toBeInTheDocument();
+    });
+
+    it('does NOT trigger hover state on touch pointerEnter events', () => {
+        render(
+            <Tooltip content="Touch hover should not trigger">
+                <span>Touch Trigger</span>
+            </Tooltip>
+        );
+
+        const button = screen.getByRole('button');
+        const container = button.parentElement!;
+
+        // Emulate mobile browser firing pointerEnter during touch
+        fireEvent.pointerEnter(container, { pointerType: 'touch' });
+        expect(screen.queryByText('Touch hover should not trigger')).not.toBeInTheDocument();
+    });
+
+    it('shows on keyboard focus (Tab) and hides on blur (Shift+Tab / Tab away)', () => {
+        render(
+            <Tooltip content="Keyboard accessible explanation">
+                <span>Keyboard Trigger</span>
+            </Tooltip>
+        );
+
+        const button = screen.getByRole('button');
+
+        // Pure keyboard navigation: focus without pointerDown
+        fireEvent.focus(button);
+        expect(screen.getByText('Keyboard accessible explanation')).toBeInTheDocument();
+
+        // Tab away: blur hides it
+        fireEvent.blur(button);
+        expect(screen.queryByText('Keyboard accessible explanation')).not.toBeInTheDocument();
+    });
+
+    it('toggles via Enter key and Space key for keyboard users', () => {
+        render(
+            <Tooltip content="Key toggle explanation">
+                <span>Key Toggle Trigger</span>
+            </Tooltip>
+        );
+
+        const button = screen.getByRole('button');
+
+        // Press Enter to open
+        fireEvent.keyDown(button, { key: 'Enter' });
+        expect(screen.getByText('Key toggle explanation')).toBeInTheDocument();
+
+        // Press Enter to close
+        fireEvent.keyDown(button, { key: 'Enter' });
+        expect(screen.queryByText('Key toggle explanation')).not.toBeInTheDocument();
+
+        // Press Space to open
+        fireEvent.keyDown(button, { key: ' ' });
+        expect(screen.getByText('Key toggle explanation')).toBeInTheDocument();
+
+        // Press Space to close
+        fireEvent.keyDown(button, { key: ' ' });
+        expect(screen.queryByText('Key toggle explanation')).not.toBeInTheDocument();
+    });
+
+    it('dismisses tooltip on click outside via pointerDown, mouseDown, and touchStart', () => {
         render(
             <div>
                 <span data-testid="outside">Outside area</span>
@@ -61,11 +183,24 @@ describe('Tooltip component', () => {
         );
 
         const button = screen.getByRole('button');
+        const outside = screen.getByTestId('outside');
+
+        // Open with click
+        fireEvent.pointerDown(button);
         fireEvent.click(button);
         expect(screen.getByText('Dismissible text')).toBeInTheDocument();
 
-        // Click outside
-        fireEvent.mouseDown(screen.getByTestId('outside'));
+        // PointerDown outside dismisses
+        fireEvent.pointerDown(outside);
+        expect(screen.queryByText('Dismissible text')).not.toBeInTheDocument();
+
+        // Re-open with click
+        fireEvent.pointerDown(button);
+        fireEvent.click(button);
+        expect(screen.getByText('Dismissible text')).toBeInTheDocument();
+
+        // TouchStart outside dismisses
+        fireEvent.touchStart(outside);
         expect(screen.queryByText('Dismissible text')).not.toBeInTheDocument();
     });
 
@@ -77,6 +212,7 @@ describe('Tooltip component', () => {
         );
 
         const button = screen.getByRole('button');
+        fireEvent.pointerDown(button);
         fireEvent.click(button);
         expect(screen.getByText('Key dismiss text')).toBeInTheDocument();
 
