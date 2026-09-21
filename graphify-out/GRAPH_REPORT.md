@@ -1,26 +1,28 @@
 # Graph Report - finacial-app  (2026-09-21)
 
 ## Corpus Check
-- 103 files · ~52,797 words
+- 103 files · ~53,754 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 6 file(s) not represented in the graph (top: (none) 2, .ttf 2, .ico 1)
 
 ## Summary
-- 549 nodes · 1285 edges · 27 communities (21 shown, 4 thin omitted)
+- 551 nodes · 1294 edges · 28 communities (20 shown, 6 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 2 edges (avg confidence: 0.85)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `ee8ce2e5`
+- Built from commit: `0ea8bb94`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
 ## Community Hubs (Navigation)
-- login/page.tsx
-- lucide-react
+- MonthlyTrendsChart.tsx
+- toastStore.ts
 - proxy.ts
+- ErrorBoundary
+- next
 - @playwright/test
-- constants.ts
+- TransactionList.tsx
 - errorLogger.ts
 - dependencies
 - react
@@ -29,9 +31,8 @@
 - QrScannerModal.tsx
 - package.json
 - compilerOptions
-- TransactionList.tsx
-- DashboardClient.tsx
-- layout.tsx
+- constants.ts
+- telemetry.ts
 - Changelog
 - AGENT DIRECTIVE: SENIOR STAFF FULL-STACK ARCHITECT & DESIGN ENGINEER
 - devDependencies
@@ -48,60 +49,60 @@
 3. `getCurrencySymbol()` - 33 edges
 4. `logError()` - 26 edges
 5. `vitest` - 24 edges
-6. `lucide-react` - 19 edges
-7. `IncomeEntry` - 19 edges
-8. `ExpenseEntry` - 19 edges
+6. `IncomeEntry` - 19 edges
+7. `ExpenseEntry` - 19 edges
+8. `lucide-react` - 18 edges
 9. `useAuth()` - 18 edges
 10. `compilerOptions` - 16 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `ErrorPage()` --calls--> `logError()`  [EXTRACTED]
   src/app/error.tsx → src/lib/errorLogger.ts
-- `LoginPage()` --calls--> `useAuth()`  [EXTRACTED]
-  src/app/login/page.tsx → src/components/auth/AuthProvider.tsx
-- `RegisterPage()` --calls--> `useAuth()`  [EXTRACTED]
-  src/app/register/page.tsx → src/components/auth/AuthProvider.tsx
-- `UpdatePasswordPage()` --calls--> `useAuth()`  [EXTRACTED]
-  src/app/update-password/page.tsx → src/components/auth/AuthProvider.tsx
 - `MonthCardProps` --references--> `MonthlySummary`  [EXTRACTED]
   src/components/history/MonthCard.tsx → src/hooks/useHistoryData.ts
+- `ExpenseRowProps` --references--> `ExpenseEntry`  [EXTRACTED]
+  src/components/transactions/TransactionList.tsx → src/types/index.ts
+- `IncomeRowProps` --references--> `IncomeEntry`  [EXTRACTED]
+  src/components/transactions/TransactionList.tsx → src/types/index.ts
+- `ForgotPasswordPage()` --calls--> `extractErrorMessage()`  [EXTRACTED]
+  src/app/forgot-password/page.tsx → src/lib/errorLogger.ts
 
 ## Import Cycles
 - None detected.
 
-## Communities (27 total, 4 thin omitted)
+## Communities (28 total, 6 thin omitted)
 
-### Community 0 - "login/page.tsx"
-Cohesion: 0.22
-Nodes (8): react-hook-form, zod, LoginFormValues, LoginPage(), loginSchema, UpdatePasswordPage(), updatePasswordSchema, UpdatePasswordValues
+### Community 0 - "MonthlyTrendsChart.tsx"
+Cohesion: 0.20
+Nodes (8): recharts, MonthlyTrendsChart, CustomTooltip(), CustomTooltipProps, formatValue(), LABEL_MAP, MonthlyTrendPoint, MonthlyTrendsChartProps
 
-### Community 1 - "lucide-react"
-Cohesion: 0.25
-Nodes (6): lucide-react, ErrorPage(), ErrorProps, RegisterFormValues, RegisterPage(), registerSchema
+### Community 1 - "toastStore.ts"
+Cohesion: 0.36
+Nodes (6): zustand, EditTransactionModal(), StatusNotification(), ToastState, ToastVariant, useToastStore
 
 ### Community 2 - "proxy.ts"
 Cohesion: 0.25
 Nodes (4): @supabase/ssr, AUTH_ROUTES, config, RECOVERY_ROUTES
 
-### Community 8 - "constants.ts"
+### Community 8 - "TransactionList.tsx"
 Cohesion: 0.05
-Nodes (54): @hugeicons/core-free-icons, @hugeicons/react, recharts, MonthlyTrendsChart, AnnualSummary(), AnnualSummaryProps, formatCurrency(), DailyRow() (+46 more)
+Nodes (58): @hugeicons/core-free-icons, @hugeicons/react, ExpenseFormValues, expenseSchema, IncomeFormValues, incomeSchema, QuickTransactionForm(), TabType (+50 more)
 
 ### Community 13 - "errorLogger.ts"
 Cohesion: 0.09
-Nodes (33): @supabase/supabase-js, POST(), mockInsert, ForgotPasswordPage(), forgotPasswordSchema, ForgotPasswordValues, GlobalError(), GlobalErrorProps (+25 more)
+Nodes (32): @supabase/supabase-js, POST(), mockInsert, GlobalError(), GlobalErrorProps, inter, metadata, AuthContext (+24 more)
 
 ### Community 15 - "dependencies"
 Cohesion: 0.11
 Nodes (18): dependencies, exceljs, @hookform/resolvers, @hugeicons/core-free-icons, @hugeicons/react, jspdf, jsqr, lucide-react (+10 more)
 
 ### Community 22 - "react"
-Cohesion: 0.11
-Nodes (14): react, @testing-library/jest-dom, HistoryPage(), metadata, StatisticsPage(), useAuth(), DashboardSkeleton(), HistorySkeleton() (+6 more)
+Cohesion: 0.07
+Nodes (39): lucide-react, react, react-hook-form, zod, ErrorPage(), ErrorProps, ForgotPasswordPage(), forgotPasswordSchema (+31 more)
 
 ### Community 24 - "transactionStore.ts"
-Cohesion: 0.09
-Nodes (35): @testing-library/react, vitest, zustand, ExpenseFormValues, expenseSchema, IncomeFormValues, incomeSchema, QuickTransactionForm() (+27 more)
+Cohesion: 0.08
+Nodes (39): exceljs, @testing-library/jest-dom, @testing-library/react, vitest, HistoryPage(), DashboardClient(), EditTransactionModalProps, buildCategoryBreakdown() (+31 more)
 
 ### Community 25 - "pdfExport.ts"
 Cohesion: 0.17
@@ -119,17 +120,13 @@ Nodes (16): name, private, version, eslint, eslint-config-next, @hookform/resolv
 Cohesion: 0.11
 Nodes (18): compilerOptions, allowJs, esModuleInterop, incremental, isolatedModules, jsx, lib, module (+10 more)
 
-### Community 71 - "TransactionList.tsx"
-Cohesion: 0.15
-Nodes (14): CATEGORY_COLORS, CATEGORY_ICONS, DeleteDialogProps, ExpenseRow(), ExpenseRowProps, FilterMode, formatAmount(), IncomeRow() (+6 more)
+### Community 83 - "constants.ts"
+Cohesion: 0.09
+Nodes (39): CategoryChart(), CustomTooltip(), CustomTooltipProps, formatTooltipValue(), TabType, CategoryChart, buildCalendarGrid(), CalendarDay (+31 more)
 
-### Community 83 - "DashboardClient.tsx"
-Cohesion: 0.06
-Nodes (54): exceljs, CategoryChart(), CustomTooltip(), CustomTooltipProps, formatTooltipValue(), TabType, CategoryChart, DashboardClient() (+46 more)
-
-### Community 108 - "layout.tsx"
-Cohesion: 0.19
-Nodes (10): nextConfig, next, inter, metadata, WebVitals(), calculateMetricRating(), getTelemetrySessionId(), MetricRating (+2 more)
+### Community 108 - "telemetry.ts"
+Cohesion: 0.42
+Nodes (6): WebVitals(), calculateMetricRating(), getTelemetrySessionId(), MetricRating, PerformanceMetricEvent, recordWebVital()
 
 ### Community 138 - "Changelog"
 Cohesion: 0.11
@@ -158,21 +155,21 @@ Nodes (11): scripts, build, dev, dev:https, graph:update, lint, start, test (+3 
 ## Knowledge Gaps
 - **216 isolated node(s):** `eslintConfig`, `nextConfig`, `name`, `version`, `private` (+211 more)
   These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 259 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
-- **4 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **6 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `react` connect `react` to `login/page.tsx`, `lucide-react`, `QrScannerModal.tsx`, `TransactionList.tsx`, `constants.ts`, `errorLogger.ts`, `package.json`, `DashboardClient.tsx`, `transactionStore.ts`?**
+- **Why does `react` connect `react` to `MonthlyTrendsChart.tsx`, `toastStore.ts`, `QrScannerModal.tsx`, `TransactionList.tsx`, `errorLogger.ts`, `package.json`, `constants.ts`, `transactionStore.ts`?**
   _High betweenness centrality (0.169) - this node is a cross-community bridge._
-- **Why does `vitest` connect `transactionStore.ts` to `QrScannerModal.tsx`, `TransactionList.tsx`, `layout.tsx`, `errorLogger.ts`, `package.json`, `DashboardClient.tsx`, `react`, `pdfExport.ts`?**
-  _High betweenness centrality (0.088) - this node is a cross-community bridge._
+- **Why does `vitest` connect `transactionStore.ts` to `toastStore.ts`, `QrScannerModal.tsx`, `TransactionList.tsx`, `telemetry.ts`, `errorLogger.ts`, `package.json`, `constants.ts`, `react`, `pdfExport.ts`?**
+  _High betweenness centrality (0.087) - this node is a cross-community bridge._
 - **Why does `dependencies` connect `dependencies` to `package.json`?**
   _High betweenness centrality (0.052) - this node is a cross-community bridge._
 - **What connects `eslintConfig`, `nextConfig`, `name` to the rest of the system?**
   _216 weakly-connected nodes found - possible documentation gaps or missing edges._
-- **Should `constants.ts` be split into smaller, more focused modules?**
-  _Cohesion score 0.05328218243819267 - nodes in this community are weakly interconnected._
+- **Should `TransactionList.tsx` be split into smaller, more focused modules?**
+  _Cohesion score 0.051228070175438595 - nodes in this community are weakly interconnected._
 - **Should `errorLogger.ts` be split into smaller, more focused modules?**
   _Cohesion score 0.08776595744680851 - nodes in this community are weakly interconnected._
 - **Should `dependencies` be split into smaller, more focused modules?**

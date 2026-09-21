@@ -139,4 +139,39 @@ describe('useStatisticsData – Mathematical Aggregations & KPIs', () => {
         expect(result.current.totalExpenses).toBe(300);
         expect(result.current.netProfit).toBe(1200);
     });
+
+    it('computes categoryRanking, allCategories, and mostFrequentCategory with ticket metrics', () => {
+        const expenseEntries: ExpenseEntry[] = [
+            { id: 'e1', date: '2026-02-01', amount: 50, description: 'Groceries 1', category: 'Магазини (Храна/Вода)', isWorkExpense: false, isWithKami: false, isWithOthers: false },
+            { id: 'e2', date: '2026-02-05', amount: 150, description: 'Groceries 2', category: 'Магазини (Храна/Вода)', isWorkExpense: false, isWithKami: false, isWithOthers: false },
+            { id: 'e3', date: '2026-02-10', amount: 100, description: 'Groceries 3', category: 'Магазини (Храна/Вода)', isWorkExpense: false, isWithKami: false, isWithOthers: false },
+            { id: 'e4', date: '2026-03-01', amount: 700, description: 'Big flight', category: 'Пътуване', isWorkExpense: false, isWithKami: false, isWithOthers: false },
+        ];
+
+        useFinancialStore.setState({ incomeEntries: [], expenseEntries });
+
+        const { result } = renderHook(() => useStatisticsData(2026));
+
+        // Total expenses = 50 + 150 + 100 + 700 = 1000
+        expect(result.current.totalExpenses).toBe(1000);
+        // Only 2 active categories
+        expect(result.current.categoryRanking).toHaveLength(2);
+        // All 13 categories present in allCategories
+        expect(result.current.allCategories).toHaveLength(13);
+
+        // Top category by spend: Пътуване (700 лв., 70%)
+        expect(result.current.topCategory?.name).toBe('Пътуване');
+        expect(result.current.topCategory?.amount).toBe(700);
+        expect(result.current.topCategory?.percentage).toBe(70);
+        expect(result.current.topCategory?.transactionCount).toBe(1);
+        expect(result.current.topCategory?.avgPerTransaction).toBe(700);
+
+        // Most frequent category: Магазини (Храна/Вода) (3 transactions, 300 лв., 30%, avg 100)
+        expect(result.current.mostFrequentCategory?.name).toBe('Магазини (Храна/Вода)');
+        expect(result.current.mostFrequentCategory?.transactionCount).toBe(3);
+        expect(result.current.mostFrequentCategory?.amount).toBe(300);
+        expect(result.current.mostFrequentCategory?.percentage).toBe(30);
+        expect(result.current.mostFrequentCategory?.avgPerTransaction).toBe(100);
+    });
 });
+

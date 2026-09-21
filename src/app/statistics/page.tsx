@@ -147,9 +147,11 @@ export default function StatisticsPage(): React.ReactElement {
                         year={year}
                         topCategory={stats.topCategory}
                         categoryRanking={stats.categoryRanking}
+                        allCategories={stats.allCategories}
+                        mostFrequentCategory={stats.mostFrequentCategory}
                         avgExpensePerTransaction={stats.avgExpensePerTransaction}
+                        totalExpenses={stats.totalExpenses}
                         totalTransactionCount={stats.totalTransactionCount}
-                        incomeTransactionCount={stats.incomeTransactionCount}
                         expenseTransactionCount={stats.expenseTransactionCount}
                     />
                     <IncomeBreakdown

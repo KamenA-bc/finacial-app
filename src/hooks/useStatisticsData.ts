@@ -26,6 +26,9 @@ export interface CategoryRankEntry {
     name: string;
     displayName: string;
     amount: number;
+    transactionCount?: number;
+    percentage?: number;
+    avgPerTransaction?: number;
 }
 
 export interface MonthlyTrendPoint {
@@ -51,6 +54,8 @@ export interface StatisticsData {
     // Section 3: Spending Habits
     topCategory: CategoryRankEntry | null;
     categoryRanking: CategoryRankEntry[];
+    allCategories?: CategoryRankEntry[];
+    mostFrequentCategory?: CategoryRankEntry | null;
     avgExpensePerTransaction: number;
     totalTransactionCount: number;
     incomeTransactionCount: number;
@@ -161,15 +166,28 @@ export const useStatisticsData = (year: number): StatisticsData => {
             : null;
 
         // ── Section 3: Spending Habits ────────────────────────────────────
-        const categoryTotals: CategoryRankEntry[] = EXPENSE_CATEGORIES.map((cat) => ({
-            name: cat,
-            displayName: CATEGORY_BG_MAP[cat] ?? cat,
-            amount: sumAmount(yearExpense.filter((e) => e.category === cat)),
-        }))
-            .filter((c) => c.amount > 0)
-            .sort((a, b) => b.amount - a.amount);
+        const allCategoryTotals: CategoryRankEntry[] = EXPENSE_CATEGORIES.map((cat) => {
+            const catExpenses = yearExpense.filter((e) => e.category === cat);
+            const amount = sumAmount(catExpenses);
+            const transactionCount = catExpenses.length;
+            const percentage = totalExpenses > 0 ? (amount / totalExpenses) * 100 : 0;
+            const avgPerTransaction = transactionCount > 0 ? amount / transactionCount : 0;
+            return {
+                name: cat,
+                displayName: CATEGORY_BG_MAP[cat] ?? cat,
+                amount,
+                transactionCount,
+                percentage,
+                avgPerTransaction,
+            };
+        }).sort((a, b) => b.amount - a.amount);
 
+        const categoryTotals = allCategoryTotals.filter((c) => c.amount > 0);
         const topCategory = categoryTotals.length > 0 ? categoryTotals[0] : null;
+
+        const mostFrequentCategory = categoryTotals.length > 0
+            ? [...categoryTotals].sort((a, b) => (b.transactionCount ?? 0) - (a.transactionCount ?? 0))[0]
+            : null;
 
         const incomeTransactionCount = yearIncome.length;
         const expenseTransactionCount = yearExpense.length;
@@ -245,6 +263,8 @@ export const useStatisticsData = (year: number): StatisticsData => {
             worstMonth,
             topCategory,
             categoryRanking: categoryTotals,
+            allCategories: allCategoryTotals,
+            mostFrequentCategory,
             avgExpensePerTransaction,
             totalTransactionCount,
             incomeTransactionCount,
