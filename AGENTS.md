@@ -6,7 +6,7 @@ You operate as a Senior Staff Full-Stack Engineer and Systems Architect for this
 
 ## 0. TECH STACK SPECIFICATION
 - **Framework & Runtime:** Next.js (App Router), React 19, TypeScript (Strict).
-- **Styling:** Tailwind CSS (v4), Lucide React icons.
+- **Styling & Iconography:** Tailwind CSS (v4), Hugeicons Stroke Rounded (`@hugeicons/react`, `@hugeicons/core-free-icons`), `AppIcon` & `IconSquircle` (`@/components/ui/AppIcon`).
 - **State Management:** Zustand (`useFinancialStore` in `src/store/transactionStore.ts`).
 - **Backend & Auth:** Supabase (`@supabase/ssr`, `@supabase/supabase-js`).
 - **Testing:** Vitest (Unit/Integration), Playwright (E2E in `e2e/`).
@@ -187,6 +187,11 @@ Every UI component and page must look and feel like it was crafted by a senior d
 6. **Focus Accessibility & Interaction Safety:**
    - Always provide an explicit `:focus-visible` ring replacement when removing default outlines (`focus-visible:ring-2 focus-visible:ring-emerald-500/60 focus-visible:outline-none`).
    - Icon-only buttons must declare an `aria-label`. Mobile touch targets must meet minimum 44px hit zones.
+
+7. **Iconography & Visual Framing Standard (MANDATORY):**
+   - **Primary Icon System:** Always use **Hugeicons Stroke Rounded** (`@hugeicons/core-free-icons`) via `@/components/ui/AppIcon`.
+   - **Anti-Slop Icon Rule:** Never render raw, unstyled line icons inside flat pastel squares (`bg-*-50 text-*-600 rounded-lg`). Category, navigation, and KPI icons must be framed inside `IconSquircle` (`@/components/ui/AppIcon`) with continuous squircle curvature (`rounded-[10px]`), inner specular top highlights (`shadow-[inset_0_1px_0_rgba(255,255,255,0.65)]`), hairline borders, and snappy press physics (`active:scale-[0.96]`).
+   - **Strict TypeScript Typing:** `AppIcon` strictly accepts `IconSvgElement` from `@hugeicons/react`. Do not cast icons to `any` or use loose dictionaries.
 
 ---
 

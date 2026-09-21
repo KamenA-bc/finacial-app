@@ -1,7 +1,14 @@
 'use client';
 
 import React from 'react';
-import { Wallet, LogOut, History, BarChart3 } from 'lucide-react';
+import {
+    Wallet01Icon,
+    DashboardSquare01Icon,
+    Time02Icon,
+    Analytics01Icon,
+    Logout01Icon,
+} from '@hugeicons/core-free-icons';
+import { AppIcon } from '@/components/ui/AppIcon';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useAuth } from '@/components/auth/AuthProvider';
@@ -22,9 +29,9 @@ export const DashboardLayout = ({
     const pathname = usePathname();
 
     const navLinks = [
-        { href: '/', label: 'Табло' },
-        { href: '/history', label: 'История', icon: <History size={14} /> },
-        { href: '/statistics', label: 'Статистика', icon: <BarChart3 size={14} /> },
+        { href: '/', label: 'Табло', icon: <AppIcon icon={DashboardSquare01Icon} size={14} /> },
+        { href: '/history', label: 'История', icon: <AppIcon icon={Time02Icon} size={14} /> },
+        { href: '/statistics', label: 'Статистика', icon: <AppIcon icon={Analytics01Icon} size={14} /> },
     ];
 
     return (
@@ -33,8 +40,8 @@ export const DashboardLayout = ({
             <header className="sticky top-0 z-10 bg-white/85 backdrop-blur-md border-b border-stone-200/70 shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
                 <div className="max-w-5xl mx-auto px-3 sm:px-6 h-14 flex items-center gap-2">
                     {/* Logo */}
-                    <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-stone-900 shadow-xs flex-shrink-0">
-                        <Wallet size={14} className="text-white" />
+                    <div className="flex items-center justify-center w-7 h-7 rounded-[8px] bg-stone-900 shadow-xs flex-shrink-0">
+                        <AppIcon icon={Wallet01Icon} size={14} className="text-white" />
                     </div>
                     <span className="font-semibold text-stone-900 tracking-tight hidden sm:block">
                         Finance Tracker
@@ -73,7 +80,7 @@ export const DashboardLayout = ({
                             className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium text-stone-500 hover:text-stone-900 hover:bg-stone-100/60 transition-colors cursor-pointer"
                             aria-label="Изход"
                         >
-                            <LogOut size={13} />
+                            <AppIcon icon={Logout01Icon} size={14} />
                             <span className="hidden sm:inline">Изход</span>
                         </button>
                     </div>

@@ -2,16 +2,17 @@
 
 import React, { useState, useEffect } from 'react';
 import {
-    X,
-    Briefcase,
-    Heart,
-    UsersRound,
-    Check,
-    Loader2,
-    Calendar,
-    Receipt,
-    TrendingUp,
-} from 'lucide-react';
+    Cancel01Icon,
+    Briefcase01Icon,
+    FavouriteIcon,
+    User02Icon,
+    CheckmarkBadge01Icon,
+    Loading03Icon,
+    Invoice01Icon,
+    TrendingUpIcon,
+    Calendar01Icon,
+} from '@hugeicons/core-free-icons';
+import { AppIcon, IconSquircle } from '@/components/ui/AppIcon';
 import { ExpenseCategory, ExpenseEntry, IncomeEntry } from '@/types';
 import { useFinancialStore } from '@/store/transactionStore';
 import { useToastStore } from '@/store/toastStore';
@@ -47,29 +48,32 @@ export const EditTransactionModal = ({
     const [isWithKami, setIsWithKami] = useState(false);
     const [isWithOthers, setIsWithOthers] = useState(false);
     const [isWorkIncome, setIsWorkIncome] = useState(false);
-    const [validationError, setValidationError] = useState<string | null>(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [validationError, setValidationError] = useState<string | null>(null);
 
-    // Sync form with selected transaction
+    const isExpense = transaction?.type === 'expense';
+
     useEffect(() => {
-        if (!transaction) return;
-        if (transaction.type === 'expense') {
-            setAmount(String(transaction.entry.amount));
-            setDate(transaction.entry.date);
-            setDescription(transaction.entry.description);
-            setCategory(transaction.entry.category);
-            setIsWorkExpense(transaction.entry.isWorkExpense);
-            setIsWithKami(transaction.entry.isWithKami);
-            setIsWithOthers(transaction.entry.isWithOthers);
-        } else {
-            setAmount(String(transaction.entry.amount));
-            setDate(transaction.entry.date);
-            setDescription(transaction.entry.description);
-            setIsWorkIncome(transaction.entry.isWorkIncome);
-            setIsWithKami(transaction.entry.isWithKami);
-        }
+        if (!isOpen || !transaction) return;
+
+        const currentEntry = transaction.entry;
+        setAmount(String(currentEntry.amount));
+        setDate(currentEntry.date);
+        setDescription(currentEntry.description || '');
         setValidationError(null);
-    }, [transaction]);
+
+        if (transaction.type === 'expense') {
+            const exp = transaction.entry as ExpenseEntry;
+            setCategory(exp.category);
+            setIsWorkExpense(Boolean(exp.isWorkExpense));
+            setIsWithKami(Boolean(exp.isWithKami));
+            setIsWithOthers(Boolean(exp.isWithOthers));
+        } else {
+            const inc = transaction.entry as IncomeEntry;
+            setIsWorkIncome(Boolean(inc.isWorkIncome));
+            setIsWithKami(Boolean(inc.isWithKami));
+        }
+    }, [isOpen, transaction]);
 
     // Handle Escape key to close modal
     useEffect(() => {
@@ -83,8 +87,7 @@ export const EditTransactionModal = ({
 
     if (!isOpen || !transaction) return null;
 
-    const isExpense = transaction.type === 'expense';
-    const currency = getCurrencySymbol(date || undefined);
+    const currency = getCurrencySymbol(date || transaction.entry.date);
 
     const handleSubmit = async (e: React.FormEvent): Promise<void> => {
         e.preventDefault();
@@ -105,8 +108,8 @@ export const EditTransactionModal = ({
             return;
         }
 
-        setIsSubmitting(true);
         setValidationError(null);
+        setIsSubmitting(true);
 
         try {
             if (isExpense) {
@@ -149,14 +152,14 @@ export const EditTransactionModal = ({
 
     return (
         <div
-            className="fixed inset-0 z-50 flex items-center justify-center p-4"
             role="dialog"
             aria-modal="true"
             aria-labelledby="edit-transaction-title"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4"
         >
             {/* Backdrop */}
             <div
-                className="absolute inset-0 bg-black/40 backdrop-blur-[2px] transition-opacity"
+                className="absolute inset-0 bg-black/40 backdrop-blur-xs transition-opacity"
                 onClick={onClose}
                 aria-hidden="true"
             />
@@ -166,15 +169,19 @@ export const EditTransactionModal = ({
                 {/* Header */}
                 <div className="flex items-center justify-between border-b border-stone-100 pb-3">
                     <div className="flex items-center gap-2">
-                        <div
-                            className={`flex items-center justify-center w-8 h-8 rounded-lg ${
+                        <IconSquircle
+                            className={
                                 isExpense
-                                    ? 'bg-rose-50 text-rose-600'
-                                    : 'bg-emerald-50 text-emerald-600'
-                            }`}
+                                    ? 'bg-rose-50 text-rose-600 border-rose-200/70'
+                                    : 'bg-emerald-50 text-emerald-600 border-emerald-200/70'
+                            }
                         >
-                            {isExpense ? <Receipt size={16} /> : <TrendingUp size={16} />}
-                        </div>
+                            {isExpense ? (
+                                <AppIcon icon={Invoice01Icon} size={15} />
+                            ) : (
+                                <AppIcon icon={TrendingUpIcon} size={15} />
+                            )}
+                        </IconSquircle>
                         <div>
                             <h2
                                 id="edit-transaction-title"
@@ -193,7 +200,7 @@ export const EditTransactionModal = ({
                         className="p-1 rounded-md text-stone-400 hover:text-stone-600 hover:bg-stone-100 active:scale-[0.97] transition-all cursor-pointer"
                         aria-label="Затвори"
                     >
-                        <X size={16} />
+                        <AppIcon icon={Cancel01Icon} size={16} />
                     </button>
                 </div>
 
@@ -229,7 +236,7 @@ export const EditTransactionModal = ({
                                 htmlFor="edit-date"
                                 className="text-xs font-medium text-stone-600 flex items-center gap-1"
                             >
-                                <Calendar size={12} className="text-stone-400" />
+                                <AppIcon icon={Calendar01Icon} size={12} className="text-stone-400" />
                                 <span>Дата</span>
                             </label>
                             <input
@@ -303,7 +310,7 @@ export const EditTransactionModal = ({
                                                 : 'bg-stone-50 text-stone-600 border-stone-200 hover:bg-stone-100'
                                         }`}
                                     >
-                                        <Briefcase size={12} className={isWorkExpense ? 'text-amber-700' : 'text-stone-400'} />
+                                        <AppIcon icon={Briefcase01Icon} size={13} className={isWorkExpense ? 'text-amber-700' : 'text-stone-400'} />
                                         <span>Работни</span>
                                     </button>
 
@@ -317,7 +324,7 @@ export const EditTransactionModal = ({
                                                 : 'bg-stone-50 text-stone-600 border-stone-200 hover:bg-stone-100'
                                         }`}
                                     >
-                                        <Heart size={12} className={isWithKami ? 'text-pink-600 fill-pink-500' : 'text-stone-400'} />
+                                        <AppIcon icon={FavouriteIcon} size={13} className={isWithKami ? 'text-pink-600' : 'text-stone-400'} />
                                         <span>Kami ❤️</span>
                                     </button>
 
@@ -331,7 +338,7 @@ export const EditTransactionModal = ({
                                                 : 'bg-stone-50 text-stone-600 border-stone-200 hover:bg-stone-100'
                                         }`}
                                     >
-                                        <UsersRound size={12} className={isWithOthers ? 'text-emerald-700' : 'text-stone-400'} />
+                                        <AppIcon icon={User02Icon} size={13} className={isWithOthers ? 'text-emerald-700' : 'text-stone-400'} />
                                         <span>С Други</span>
                                     </button>
                                 </>
@@ -347,7 +354,7 @@ export const EditTransactionModal = ({
                                                 : 'bg-stone-50 text-stone-600 border-stone-200 hover:bg-stone-100'
                                         }`}
                                     >
-                                        <Briefcase size={12} className={isWorkIncome ? 'text-blue-600' : 'text-stone-400'} />
+                                        <AppIcon icon={Briefcase01Icon} size={13} className={isWorkIncome ? 'text-blue-600' : 'text-stone-400'} />
                                         <span>Работен</span>
                                     </button>
 
@@ -361,7 +368,7 @@ export const EditTransactionModal = ({
                                                 : 'bg-stone-50 text-stone-600 border-stone-200 hover:bg-stone-100'
                                         }`}
                                     >
-                                        <Heart size={12} className={isWithKami ? 'text-pink-600 fill-pink-500' : 'text-stone-400'} />
+                                        <AppIcon icon={FavouriteIcon} size={13} className={isWithKami ? 'text-pink-600' : 'text-stone-400'} />
                                         <span>Kami ❤️</span>
                                     </button>
                                 </>
@@ -392,12 +399,12 @@ export const EditTransactionModal = ({
                         >
                             {isSubmitting ? (
                                 <>
-                                    <Loader2 size={13} className="animate-spin" />
+                                    <AppIcon icon={Loading03Icon} size={13} className="animate-spin" />
                                     <span>Запазване…</span>
                                 </>
                             ) : (
                                 <>
-                                    <Check size={13} />
+                                    <AppIcon icon={CheckmarkBadge01Icon} size={13} />
                                     <span>Запази промените</span>
                                 </>
                             )}

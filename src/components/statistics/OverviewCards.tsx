@@ -6,7 +6,13 @@
 'use client';
 
 import React from 'react';
-import { TrendingUp, TrendingDown, BarChart3, Percent } from 'lucide-react';
+import {
+    TrendingUpIcon,
+    TrendingDownIcon,
+    Analytics01Icon,
+    PercentIcon,
+} from '@hugeicons/core-free-icons';
+import { AppIcon } from '@/components/ui/AppIcon';
 import {
     getCurrencySymbol,
     NUMBER_LOCALE,
@@ -43,25 +49,25 @@ export const OverviewCards = ({
             label: 'Общ приход',
             value: `+${fmt(totalIncome, year)}`,
             valueClass: 'text-emerald-600',
-            icon: <TrendingUp size={14} className="text-emerald-500" />,
+            icon: <AppIcon icon={TrendingUpIcon} size={15} className="text-emerald-500" />,
         },
         {
             label: 'Общи разходи',
             value: `−${fmt(totalExpenses, year)}`,
             valueClass: 'text-rose-500',
-            icon: <TrendingDown size={14} className="text-rose-400" />,
+            icon: <AppIcon icon={TrendingDownIcon} size={15} className="text-rose-400" />,
         },
         {
             label: 'Нетна печалба',
             value: `${profitSign}${fmt(netProfit, year)}`,
             valueClass: profitClass,
-            icon: <BarChart3 size={14} className={profitClass} />,
+            icon: <AppIcon icon={Analytics01Icon} size={15} className={profitClass} />,
         },
         {
             label: 'Спестявания',
             value: `${savingsRate >= 0 ? '' : '−'}${Math.abs(savingsRate).toFixed(1)}%`,
             valueClass: savingsClass,
-            icon: <Percent size={14} className={savingsClass} />,
+            icon: <AppIcon icon={PercentIcon} size={15} className={savingsClass} />,
         },
     ];
 

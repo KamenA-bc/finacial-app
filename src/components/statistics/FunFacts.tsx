@@ -6,7 +6,13 @@
 'use client';
 
 import React from 'react';
-import { Flame, TrendingDown, Calculator, Heart } from 'lucide-react';
+import {
+    Fire02Icon,
+    TrendingDownIcon,
+    Calculator01Icon,
+    FavouriteIcon,
+} from '@hugeicons/core-free-icons';
+import { AppIcon, IconSquircle } from '@/components/ui/AppIcon';
 import {
     getCurrencySymbol,
     NUMBER_LOCALE,
@@ -49,10 +55,10 @@ const FactCard = ({
     iconBg,
     valueClass = 'text-gray-700',
 }: FactCardProps): React.ReactElement => (
-    <div className="flex items-center gap-3 p-4 bg-gray-50/50 rounded-lg border border-gray-100">
-        <div className={`flex items-center justify-center w-9 h-9 rounded-lg flex-shrink-0 ${iconBg}`}>
+    <div className="flex items-center gap-3 p-4 bg-gray-50/50 rounded-xl border border-gray-100">
+        <IconSquircle size="lg" className={iconBg}>
             {icon}
-        </div>
+        </IconSquircle>
         <div className="min-w-0">
             <p className="text-xs text-gray-400 font-medium uppercase tracking-wider">
                 {label}
@@ -75,7 +81,7 @@ export const FunFacts = ({
 }: FunFactsProps): React.ReactElement => (
     <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-5">
         <div className="flex items-center gap-2 mb-4">
-            <Flame size={16} className="text-orange-400" />
+            <AppIcon icon={Fire02Icon} size={16} className="text-orange-500" />
             <h2 className="text-xs font-semibold uppercase tracking-widest text-gray-400">
                 Интересни факти
             </h2>
@@ -88,16 +94,16 @@ export const FunFacts = ({
                     label="Kami ❤️"
                     value={kamiSpending > 0 ? `−${fmt(kamiSpending, year)}` : '—'}
                     subtext={kamiSpending > 0 ? 'общо за годината' : 'Няма маркирани'}
-                    icon={<Heart size={15} className="text-pink-500" />}
-                    iconBg="bg-pink-50"
+                    icon={<AppIcon icon={FavouriteIcon} size={15} className="text-pink-500" />}
+                    iconBg="bg-pink-50 text-pink-500 border-pink-200/70"
                     valueClass={kamiSpending > 0 ? 'text-pink-500' : 'text-gray-300'}
                 />
                 <FactCard
                     label="Най-скъп ден"
                     value={biggestSpendingDay ? `−${fmt(biggestSpendingDay.amount, year)}` : '—'}
                     subtext={biggestSpendingDay ? formatDisplayDate(biggestSpendingDay.date) : undefined}
-                    icon={<TrendingDown size={15} className="text-rose-400" />}
-                    iconBg="bg-rose-50"
+                    icon={<AppIcon icon={TrendingDownIcon} size={15} className="text-rose-500" />}
+                    iconBg="bg-rose-50 text-rose-500 border-rose-200/70"
                     valueClass="text-rose-500"
                 />
             </div>
@@ -106,8 +112,8 @@ export const FunFacts = ({
             <FactCard
                 label="Среден дневен разход"
                 value={fmt(avgDailyExpense, year)}
-                icon={<Calculator size={15} className="text-blue-500" />}
-                iconBg="bg-blue-50"
+                icon={<AppIcon icon={Calculator01Icon} size={15} className="text-blue-500" />}
+                iconBg="bg-blue-50 text-blue-500 border-blue-200/70"
                 valueClass="text-gray-700"
             />
         </div>

@@ -5,7 +5,13 @@
 'use client';
 
 import React from 'react';
-import { Trophy, TrendingUp, TrendingDown, AlertTriangle } from 'lucide-react';
+import {
+    TrophyIcon,
+    TrendingUpIcon,
+    TrendingDownIcon,
+    AlertDiamondIcon,
+} from '@hugeicons/core-free-icons';
+import { AppIcon, IconSquircle } from '@/components/ui/AppIcon';
 import {
     getCurrencySymbol,
     NUMBER_LOCALE,
@@ -48,10 +54,10 @@ const RecordCard = ({
     value,
     valueClass,
 }: RecordCardProps): React.ReactElement => (
-    <div className="flex items-center gap-3 p-4 bg-gray-50/50 rounded-lg border border-gray-100">
-        <div className={`flex items-center justify-center w-9 h-9 rounded-lg ${iconBg}`}>
+    <div className="flex items-center gap-3 p-4 bg-gray-50/50 rounded-xl border border-gray-100">
+        <IconSquircle size="lg" className={iconBg}>
             {icon}
-        </div>
+        </IconSquircle>
         <div className="flex-1 min-w-0">
             <p className="text-xs text-gray-400 font-medium uppercase tracking-wider">
                 {label}
@@ -80,24 +86,24 @@ export const RecordHighlights = ({
     const records = [
         {
             label: 'Най-печеливш месец',
-            icon: <TrendingUp size={16} className="text-emerald-500" />,
-            iconBg: 'bg-emerald-50',
+            icon: <AppIcon icon={TrendingUpIcon} size={16} className="text-emerald-600" />,
+            iconBg: 'bg-emerald-50 text-emerald-600 border-emerald-200/70',
             month: biggestEarningMonth?.month ?? null,
             value: biggestEarningMonth ? `+${fmt(biggestEarningMonth.amount, year)}` : null,
             valueClass: 'text-emerald-600',
         },
         {
             label: 'Най-разходен месец',
-            icon: <TrendingDown size={16} className="text-rose-400" />,
-            iconBg: 'bg-rose-50',
+            icon: <AppIcon icon={TrendingDownIcon} size={16} className="text-rose-500" />,
+            iconBg: 'bg-rose-50 text-rose-500 border-rose-200/70',
             month: biggestSpendingMonth?.month ?? null,
             value: biggestSpendingMonth ? `−${fmt(biggestSpendingMonth.amount, year)}` : null,
             valueClass: 'text-rose-500',
         },
         {
             label: 'Най-добър месец',
-            icon: <Trophy size={16} className="text-amber-500" />,
-            iconBg: 'bg-amber-50',
+            icon: <AppIcon icon={TrophyIcon} size={16} className="text-amber-600" />,
+            iconBg: 'bg-amber-50 text-amber-600 border-amber-200/70',
             month: mostProfitableMonth?.month ?? null,
             value: mostProfitableMonth
                 ? `${mostProfitableMonth.amount >= 0 ? '+' : '−'}${fmt(mostProfitableMonth.amount, year)}`
@@ -108,8 +114,8 @@ export const RecordHighlights = ({
         },
         {
             label: 'Най-лош месец',
-            icon: <AlertTriangle size={16} className="text-gray-400" />,
-            iconBg: 'bg-gray-100',
+            icon: <AppIcon icon={AlertDiamondIcon} size={16} className="text-stone-500" />,
+            iconBg: 'bg-stone-100 text-stone-600 border-stone-200/70',
             month: worstMonth?.month ?? null,
             value: worstMonth
                 ? `${worstMonth.amount >= 0 ? '+' : '−'}${fmt(worstMonth.amount, year)}`
@@ -123,7 +129,7 @@ export const RecordHighlights = ({
     return (
         <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-5">
             <div className="flex items-center gap-2 mb-4">
-                <Trophy size={16} className="text-amber-500" />
+                <AppIcon icon={TrophyIcon} size={16} className="text-amber-500" />
                 <h2 className="text-xs font-semibold uppercase tracking-widest text-gray-400">
                     Рекорди
                 </h2>

@@ -5,15 +5,16 @@ import { useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import {
-    PlusCircle,
-    Receipt,
-    TrendingUp,
-    Briefcase,
-    Heart,
-    UsersRound,
-    AlertCircle,
-    QrCode,
-} from 'lucide-react';
+    PlusSignCircleIcon,
+    Invoice01Icon,
+    TrendingUpIcon,
+    Briefcase01Icon,
+    FavouriteIcon,
+    User02Icon,
+    AlertCircleIcon,
+    QrCode01Icon,
+} from '@hugeicons/core-free-icons';
+import { AppIcon } from '@/components/ui/AppIcon';
 import { useFinancialStore } from '@/store/transactionStore';
 import { useToastStore } from '@/store/toastStore';
 import {
@@ -206,7 +207,7 @@ export const QuickTransactionForm = (): React.ReactElement => {
                             : 'text-stone-500 hover:text-stone-800'
                     }`}
                 >
-                    <TrendingUp size={14} />
+                    <AppIcon icon={TrendingUpIcon} size={15} />
                     <span>Приход</span>
                 </button>
                 <button
@@ -218,7 +219,7 @@ export const QuickTransactionForm = (): React.ReactElement => {
                             : 'text-stone-500 hover:text-stone-800'
                     }`}
                 >
-                    <Receipt size={14} />
+                    <AppIcon icon={Invoice01Icon} size={15} />
                     <span>Разход</span>
                 </button>
             </div>
@@ -259,7 +260,7 @@ export const QuickTransactionForm = (): React.ReactElement => {
                                     title="Сканирай касов бон"
                                     aria-label="Сканирай касов бон с QR код"
                                 >
-                                    <QrCode size={16} />
+                                    <AppIcon icon={QrCode01Icon} size={16} />
                                 </button>
                             </div>
                             {expenseErrors.amount && (
@@ -334,7 +335,7 @@ export const QuickTransactionForm = (): React.ReactElement => {
                                 }`}
                                 aria-pressed={isWorkExpense}
                             >
-                                <Briefcase size={12} className={isWorkExpense ? 'text-amber-600' : 'text-stone-400'} />
+                                <AppIcon icon={Briefcase01Icon} size={13} className={isWorkExpense ? 'text-amber-600' : 'text-stone-400'} />
                                 <span>Работни</span>
                             </button>
 
@@ -349,7 +350,7 @@ export const QuickTransactionForm = (): React.ReactElement => {
                                 }`}
                                 aria-pressed={isWithKami}
                             >
-                                <Heart size={12} className={isWithKami ? 'text-pink-600 fill-pink-500' : 'text-stone-400'} />
+                                <AppIcon icon={FavouriteIcon} size={13} className={isWithKami ? 'text-pink-600' : 'text-stone-400'} />
                                 <span>Kami</span>
                             </button>
 
@@ -364,7 +365,7 @@ export const QuickTransactionForm = (): React.ReactElement => {
                                 }`}
                                 aria-pressed={isWithOthers}
                             >
-                                <UsersRound size={12} className={isWithOthers ? 'text-emerald-600' : 'text-stone-400'} />
+                                <AppIcon icon={User02Icon} size={13} className={isWithOthers ? 'text-emerald-600' : 'text-stone-400'} />
                                 <span>С Други</span>
                             </button>
                         </div>
@@ -376,7 +377,7 @@ export const QuickTransactionForm = (): React.ReactElement => {
                         disabled={isExpenseSubmitting || isSubmittingForm}
                         className="mt-1 flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-rose-500 text-white text-xs font-semibold hover:bg-rose-600 active:scale-[0.99] disabled:opacity-60 shadow-xs transition-all cursor-pointer"
                     >
-                        <PlusCircle size={15} />
+                        <AppIcon icon={PlusSignCircleIcon} size={16} />
                         <span>{isSubmittingForm ? 'Запазване…' : 'Добави разход'}</span>
                     </button>
                 </form>
@@ -456,7 +457,7 @@ export const QuickTransactionForm = (): React.ReactElement => {
                                 }`}
                                 aria-pressed={isWorkIncome}
                             >
-                                <Briefcase size={12} className={isWorkIncome ? 'text-blue-600' : 'text-stone-400'} />
+                                <AppIcon icon={Briefcase01Icon} size={13} className={isWorkIncome ? 'text-blue-600' : 'text-stone-400'} />
                                 <span>Работен приход</span>
                             </button>
                         </div>
@@ -468,7 +469,7 @@ export const QuickTransactionForm = (): React.ReactElement => {
                         disabled={isIncomeSubmitting || isSubmittingForm}
                         className="mt-1 flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-emerald-600 text-white text-xs font-semibold hover:bg-emerald-700 active:scale-[0.99] disabled:opacity-60 shadow-xs transition-all cursor-pointer"
                     >
-                        <PlusCircle size={15} />
+                        <AppIcon icon={PlusSignCircleIcon} size={16} />
                         <span>{isSubmittingForm ? 'Запазване…' : 'Добави приход'}</span>
                     </button>
                 </form>
@@ -476,7 +477,7 @@ export const QuickTransactionForm = (): React.ReactElement => {
 
             {storeError && (
                 <div className="mt-3 p-2.5 rounded-lg bg-rose-50 border border-rose-200 flex items-center gap-2 text-rose-700 text-xs">
-                    <AlertCircle size={14} className="flex-shrink-0 text-rose-500" />
+                    <AppIcon icon={AlertCircleIcon} size={14} className="flex-shrink-0 text-rose-500" />
                     <span>
                         Грешка: {storeError.includes('check constraint') ? 'Невалидна категория в базата данни' : storeError}
                     </span>

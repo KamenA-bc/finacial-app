@@ -2,25 +2,26 @@
 
 import React, { useState } from 'react';
 import {
-    ShoppingCart,
-    Bus,
-    Utensils,
-    Film,
-    MoreHorizontal,
-    TrendingUp,
-    Trash2,
-    Pill,
-    Fuel,
-    Briefcase,
-    ShoppingBag,
-    Plane,
-    Receipt,
-    Sparkles,
-    Gift,
-    AlertTriangle,
-    X,
-    Pencil,
-} from 'lucide-react';
+    ShoppingBasket01Icon,
+    Restaurant01Icon,
+    Fuel01Icon,
+    Bus01Icon,
+    Medicine02Icon,
+    SparklesIcon,
+    ShoppingBag01Icon,
+    Film01Icon,
+    Airplane01Icon,
+    Invoice01Icon,
+    Briefcase01Icon,
+    GiftIcon,
+    MoreHorizontalIcon,
+    TrendingUpIcon,
+    PencilEdit02Icon,
+    Delete02Icon,
+    Cancel01Icon,
+    AlertDiamondIcon,
+} from '@hugeicons/core-free-icons';
+import { AppIcon, IconSquircle } from '@/components/ui/AppIcon';
 import { ExpenseCategory, ExpenseEntry, IncomeEntry } from '@/types';
 import { useFinancialData } from '@/hooks/useFinancialData';
 import { useFinancialStore } from '@/store/transactionStore';
@@ -36,35 +37,35 @@ import { EditTransactionModal } from './EditTransactionModal';
 // ── Constants ────────────────────────────────────────────────────────────────
 
 const CATEGORY_ICONS: Record<ExpenseCategory, React.ReactElement> = {
-    'Магазини (Храна/Вода)': <ShoppingCart size={14} />,
-    'Eating out': <Utensils size={14} />,
-    'Гориво': <Fuel size={14} />,
-    'Градски транспорт': <Bus size={14} />,
-    'Health/Аптека': <Pill size={14} />,
-    'Beauty': <Sparkles size={14} />,
-    'Shopping': <ShoppingBag size={14} />,
-    'Entertainment': <Film size={14} />,
-    'Пътуване': <Plane size={14} />,
-    'Сметки/Разходи': <Receipt size={14} />,
-    'Фирмени разходи': <Briefcase size={14} />,
-    'Подаръци': <Gift size={14} />,
-    'Други': <MoreHorizontal size={14} />,
+    'Магазини (Храна/Вода)': <AppIcon icon={ShoppingBasket01Icon} size={15} />,
+    'Eating out': <AppIcon icon={Restaurant01Icon} size={15} />,
+    'Гориво': <AppIcon icon={Fuel01Icon} size={15} />,
+    'Градски транспорт': <AppIcon icon={Bus01Icon} size={15} />,
+    'Health/Аптека': <AppIcon icon={Medicine02Icon} size={15} />,
+    'Beauty': <AppIcon icon={SparklesIcon} size={15} />,
+    'Shopping': <AppIcon icon={ShoppingBag01Icon} size={15} />,
+    'Entertainment': <AppIcon icon={Film01Icon} size={15} />,
+    'Пътуване': <AppIcon icon={Airplane01Icon} size={15} />,
+    'Сметки/Разходи': <AppIcon icon={Invoice01Icon} size={15} />,
+    'Фирмени разходи': <AppIcon icon={Briefcase01Icon} size={15} />,
+    'Подаръци': <AppIcon icon={GiftIcon} size={15} />,
+    'Други': <AppIcon icon={MoreHorizontalIcon} size={15} />,
 };
 
 const CATEGORY_COLORS: Record<ExpenseCategory, string> = {
-    'Магазини (Храна/Вода)': 'bg-emerald-50 text-emerald-600',
-    'Eating out': 'bg-rose-50 text-rose-500',
-    'Гориво': 'bg-orange-50 text-orange-500',
-    'Градски транспорт': 'bg-blue-50 text-blue-500',
-    'Health/Аптека': 'bg-pink-50 text-pink-500',
-    'Beauty': 'bg-fuchsia-50 text-fuchsia-500',
-    'Shopping': 'bg-teal-50 text-teal-500',
-    'Entertainment': 'bg-purple-50 text-purple-500',
-    'Пътуване': 'bg-sky-50 text-sky-500',
-    'Сметки/Разходи': 'bg-amber-50 text-amber-600',
-    'Фирмени разходи': 'bg-slate-50 text-slate-500',
-    'Подаръци': 'bg-red-50 text-red-400',
-    'Други': 'bg-gray-100 text-gray-500',
+    'Магазини (Храна/Вода)': 'bg-emerald-50 text-emerald-600 border-emerald-200/70',
+    'Eating out': 'bg-rose-50 text-rose-500 border-rose-200/70',
+    'Гориво': 'bg-orange-50 text-orange-500 border-orange-200/70',
+    'Градски транспорт': 'bg-blue-50 text-blue-500 border-blue-200/70',
+    'Health/Аптека': 'bg-pink-50 text-pink-500 border-pink-200/70',
+    'Beauty': 'bg-fuchsia-50 text-fuchsia-500 border-fuchsia-200/70',
+    'Shopping': 'bg-teal-50 text-teal-500 border-teal-200/70',
+    'Entertainment': 'bg-purple-50 text-purple-500 border-purple-200/70',
+    'Пътуване': 'bg-sky-50 text-sky-500 border-sky-200/70',
+    'Сметки/Разходи': 'bg-amber-50 text-amber-600 border-amber-200/70',
+    'Фирмени разходи': 'bg-slate-50 text-slate-600 border-slate-200/70',
+    'Подаръци': 'bg-red-50 text-red-400 border-red-200/70',
+    'Други': 'bg-stone-100 text-stone-600 border-stone-200/70',
 };
 
 const formatAmount = (amount: number, date?: string): string =>
@@ -87,16 +88,16 @@ const DeleteDialog = ({ description, amount, onConfirm, onCancel }: DeleteDialog
         {/* Backdrop */}
         <div className="absolute inset-0 bg-black/30 backdrop-blur-[2px]" onClick={onCancel} />
         {/* Dialog */}
-        <div className="relative bg-white rounded-xl shadow-xl border border-gray-100 w-full max-w-xs p-5 flex flex-col items-center gap-4">
+        <div className="relative bg-white rounded-2xl shadow-xl border border-gray-100 w-full max-w-xs p-5 flex flex-col items-center gap-4">
             <button
                 onClick={onCancel}
                 className="absolute top-3 right-3 p-1 rounded-md text-gray-300 hover:text-gray-500 hover:bg-gray-50 transition-colors"
                 aria-label="Затвори"
             >
-                <X size={16} />
+                <AppIcon icon={Cancel01Icon} size={16} />
             </button>
-            <div className="flex items-center justify-center w-11 h-11 rounded-full bg-rose-50">
-                <AlertTriangle size={20} className="text-rose-400" />
+            <div className="flex items-center justify-center w-11 h-11 rounded-full bg-rose-50 border border-rose-100">
+                <AppIcon icon={AlertDiamondIcon} size={20} className="text-rose-400" />
             </div>
             <div className="text-center">
                 <p className="text-sm font-semibold text-gray-800 mb-1">Изтриване на транзакция</p>
@@ -109,13 +110,13 @@ const DeleteDialog = ({ description, amount, onConfirm, onCancel }: DeleteDialog
             <div className="flex gap-2.5 w-full">
                 <button
                     onClick={onCancel}
-                    className="flex-1 py-2 rounded-lg text-sm font-medium text-gray-600 bg-gray-100 hover:bg-gray-200 transition-colors"
+                    className="flex-1 py-2 rounded-lg text-sm font-medium text-gray-600 bg-gray-100 hover:bg-gray-200 transition-colors cursor-pointer"
                 >
                     Отказ
                 </button>
                 <button
                     onClick={onConfirm}
-                    className="flex-1 py-2 rounded-lg text-sm font-medium text-white bg-rose-400 hover:bg-rose-500 active:scale-[0.98] transition-all"
+                    className="flex-1 py-2 rounded-lg text-sm font-medium text-white bg-rose-400 hover:bg-rose-500 active:scale-[0.98] transition-all cursor-pointer"
                 >
                     Изтрий
                 </button>
@@ -143,11 +144,9 @@ const ExpenseRow = ({ expense, onEdit, onDelete }: ExpenseRowProps): React.React
         <div className={`group flex items-center justify-between gap-3 py-2.5 px-3 -mx-1 rounded-xl border-b border-stone-100 last:border-0 hover:bg-stone-50/90 transition-all ${rowBg}`}>
             {/* Left: Icon + Text */}
             <div className="flex items-center gap-2.5 min-w-0 flex-1">
-                <div
-                    className={`flex items-center justify-center w-8 h-8 rounded-lg flex-shrink-0 ${CATEGORY_COLORS[expense.category]}`}
-                >
+                <IconSquircle className={CATEGORY_COLORS[expense.category]}>
                     {CATEGORY_ICONS[expense.category]}
-                </div>
+                </IconSquircle>
                 <div className="flex-1 min-w-0">
                     <p className="text-sm text-stone-800 font-medium truncate">
                         {expense.description}
@@ -184,14 +183,14 @@ const ExpenseRow = ({ expense, onEdit, onDelete }: ExpenseRowProps): React.React
                         aria-label={`Редактирай разход: ${expense.description}`}
                         className="p-1.5 rounded-lg text-stone-600 bg-stone-100 hover:bg-stone-200 hover:text-stone-900 active:scale-[0.95] transition-all cursor-pointer flex items-center justify-center"
                     >
-                        <Pencil size={13} />
+                        <AppIcon icon={PencilEdit02Icon} size={13} />
                     </button>
                     <button
                         onClick={() => onDelete(expense.id)}
                         aria-label={`Delete expense: ${expense.description}`}
                         className="p-1.5 rounded-lg text-stone-400 hover:text-rose-600 hover:bg-rose-50 active:scale-[0.95] transition-all cursor-pointer flex items-center justify-center"
                     >
-                        <Trash2 size={13} />
+                        <AppIcon icon={Delete02Icon} size={13} />
                     </button>
                 </div>
             </div>
@@ -208,15 +207,21 @@ interface IncomeRowProps {
 const IncomeRow = ({ income, onEdit, onDelete }: IncomeRowProps): React.ReactElement => {
     const isWork = income.isWorkIncome;
     const amountColor = isWork ? 'text-blue-600' : 'text-emerald-600';
-    const iconClass = isWork ? 'bg-blue-50 text-blue-600' : 'bg-emerald-50 text-emerald-600';
+    const iconClass = isWork
+        ? 'bg-blue-50 text-blue-600 border-blue-200/70'
+        : 'bg-emerald-50 text-emerald-600 border-emerald-200/70';
 
     return (
         <div className="group flex items-center justify-between gap-3 py-2.5 px-3 -mx-1 rounded-xl border-b border-stone-100 last:border-0 hover:bg-stone-50/90 transition-all">
             {/* Left: Icon + Text */}
             <div className="flex items-center gap-2.5 min-w-0 flex-1">
-                <div className={`flex items-center justify-center w-8 h-8 rounded-lg flex-shrink-0 ${iconClass}`}>
-                    {isWork ? <Briefcase size={14} /> : <TrendingUp size={14} />}
-                </div>
+                <IconSquircle className={iconClass}>
+                    {isWork ? (
+                        <AppIcon icon={Briefcase01Icon} size={15} />
+                    ) : (
+                        <AppIcon icon={TrendingUpIcon} size={15} />
+                    )}
+                </IconSquircle>
                 <div className="flex-1 min-w-0">
                     <p className="text-sm text-stone-800 font-medium truncate">
                         {income.description || 'Приход'}
@@ -243,14 +248,14 @@ const IncomeRow = ({ income, onEdit, onDelete }: IncomeRowProps): React.ReactEle
                         aria-label={`Редактирай приход: ${income.description || 'Приход'}`}
                         className="p-1.5 rounded-lg text-stone-600 bg-stone-100 hover:bg-stone-200 hover:text-stone-900 active:scale-[0.95] transition-all cursor-pointer flex items-center justify-center"
                     >
-                        <Pencil size={13} />
+                        <AppIcon icon={PencilEdit02Icon} size={13} />
                     </button>
                     <button
                         onClick={() => onDelete(income.id)}
                         aria-label={`Delete income of ${formatAmount(income.amount, income.date)}`}
                         className="p-1.5 rounded-lg text-stone-400 hover:text-rose-600 hover:bg-rose-50 active:scale-[0.95] transition-all cursor-pointer flex items-center justify-center"
                     >
-                        <Trash2 size={13} />
+                        <AppIcon icon={Delete02Icon} size={13} />
                     </button>
                 </div>
             </div>
@@ -318,7 +323,7 @@ export const TransactionList = (): React.ReactElement => {
         return (
             <div className="flex flex-col items-center justify-center py-8 text-center">
                 <div className="w-10 h-10 rounded-full bg-stone-100 flex items-center justify-center text-stone-400 mb-2">
-                    <Receipt size={18} />
+                    <AppIcon icon={Invoice01Icon} size={18} />
                 </div>
                 <p className="text-xs font-semibold text-stone-600">Няма транзакции за този ден</p>
                 <p className="text-[11px] text-stone-400 mt-0.5">Всички добавени приходи и разходи ще се появят тук</p>
