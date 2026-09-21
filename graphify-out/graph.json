@@ -3899,14 +3899,14 @@
       "source_location": "L67"
     },
     {
-      "id": "agents_6_agent_response_format",
-      "label": "6. AGENT RESPONSE FORMAT",
+      "id": "agents_6_lean_response_protocol_strict",
+      "label": "6. LEAN RESPONSE PROTOCOL (STRICT)",
       "_origin": "ast",
       "community": 139,
       "community_name": "AGENT DIRECTIVE: SENIOR STAFF FULL-STACK ARCHITECT & DESIGN ENGINEER",
       "file_type": "document",
       "node_kind": "heading",
-      "norm_label": "6. agent response format",
+      "norm_label": "6. lean response protocol (strict)",
       "source_file": "AGENTS.md",
       "source_location": "L86"
     },
@@ -17014,7 +17014,7 @@
     },
     {
       "source": "agents_agent_directive_senior_staff_full_stack_architect_design_engineer",
-      "target": "agents_6_agent_response_format",
+      "target": "agents_6_lean_response_protocol_strict",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -21561,5 +21561,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "7c7f5507643a5c09ac86f3b0cb29236f1f3fe7df"
+  "built_at_commit": "8d559793580a3ddd30a5695aae83489ab8ea2873"
 }

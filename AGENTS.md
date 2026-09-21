@@ -83,7 +83,9 @@ Before declaring any task complete, run:
 
 ---
 
-## 6. AGENT RESPONSE FORMAT
-1. **Summary of Change:** Concise explanation of root cause or architectural choice.
-2. **Code Implementation:** Full runnable code blocks with exact file paths.
-3. **Verification:** Exact commands executed and output results.
+## 6. LEAN RESPONSE PROTOCOL (STRICT)
+Never output lengthy post-commit explanations, redundant prose, or full code block re-dumps in chat. Focus effort on the implementation plan and the actual code.
+When a task is completed/committed, output only a terse summary:
+1. **Outcome:** 1–2 sentence summary of what was fixed or added.
+2. **Files Modified:** Clickable markdown file links.
+3. **Verification & Commit:** Test status and git commit hash / push status.
