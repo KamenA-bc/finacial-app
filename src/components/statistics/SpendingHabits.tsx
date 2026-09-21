@@ -20,9 +20,6 @@ import {
     Briefcase01Icon,
     GiftIcon,
     MoreHorizontalIcon,
-    ReceiptIcon,
-    PieChart01Icon,
-    Coins01Icon,
     ArrowDown01Icon,
     ArrowUp01Icon,
 } from '@hugeicons/core-free-icons';
@@ -170,82 +167,52 @@ export const SpendingHabits = ({
                 </div>
             ) : (
                 <>
-                    {/* Compact 3-Column Micro-Metrics Strip */}
-                    <div className="grid grid-cols-3 gap-1.5 sm:gap-3">
+                    {/* Unified 3-Column Stats Strip */}
+                    <div className="grid grid-cols-3 divide-x divide-stone-200/70 bg-stone-50/70 rounded-xl border border-stone-200/60 py-2 sm:py-2.5 px-0.5 sm:px-2 text-center">
                         {/* 1. Avg ticket size */}
-                        <div className="bg-stone-50/70 rounded-xl border border-stone-200/60 p-2 sm:p-2.5 flex flex-col justify-between gap-1">
-                            <div className="flex items-center justify-between gap-1">
-                                <span className="text-[10px] font-medium uppercase tracking-wider text-stone-400 truncate">
-                                    Ср. покупка
-                                </span>
-                                <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-[6px] sm:rounded-[8px] bg-blue-50 text-blue-600 border border-blue-200/70 flex items-center justify-center flex-shrink-0 shadow-[inset_0_1px_0_rgba(255,255,255,0.65)]">
-                                    <AppIcon icon={ReceiptIcon} size={12} />
-                                </div>
-                            </div>
-                            <div>
-                                <p className="text-xs sm:text-sm md:text-base font-bold text-stone-800 tabular-nums truncate">
-                                    {fmt(avgExpensePerTransaction, year)}
-                                </p>
-                                <p className="text-[10px] text-stone-400 tabular-nums truncate">
-                                    {expenseTransactionCount} {expenseTransactionCount === 1 ? 'бр.' : 'броя'}
-                                </p>
-                            </div>
+                        <div className="px-1 sm:px-2 flex flex-col items-center justify-between min-w-0">
+                            <span className="text-[11px] font-medium text-stone-500 whitespace-nowrap">
+                                Ср. разход
+                            </span>
+                            <p className="text-xs sm:text-sm font-bold text-stone-800 tabular-nums truncate max-w-full my-0.5">
+                                {fmt(avgExpensePerTransaction, year)}
+                            </p>
+                            <span className="text-[10px] text-stone-400 tabular-nums truncate max-w-full">
+                                {expenseTransactionCount} {expenseTransactionCount === 1 ? 'покупка' : 'покупки'}
+                            </span>
                         </div>
 
                         {/* 2. Most frequent category */}
-                        <div className="bg-stone-50/70 rounded-xl border border-stone-200/60 p-2 sm:p-2.5 flex flex-col justify-between gap-1">
-                            <div className="flex items-center justify-between gap-1">
-                                <span className="text-[10px] font-medium uppercase tracking-wider text-stone-400 truncate">
-                                    Най-чест
-                                </span>
-                                <div
-                                    className={`w-5 h-5 sm:w-6 sm:h-6 rounded-[6px] sm:rounded-[8px] flex items-center justify-center flex-shrink-0 border shadow-[inset_0_1px_0_rgba(255,255,255,0.65)] ${
-                                        mostFrequentCategory
-                                            ? CATEGORY_SQUIRCLE_CLASSES[mostFrequentCategory.name as ExpenseCategory] ??
-                                              'bg-emerald-50 text-emerald-600 border-emerald-200/70'
-                                            : 'bg-stone-100 text-stone-600 border-stone-200/70'
-                                    }`}
-                                >
-                                    <AppIcon
-                                        icon={
-                                            mostFrequentCategory
-                                                ? CATEGORY_ICONS[mostFrequentCategory.name as ExpenseCategory] ?? Coins01Icon
-                                                : Coins01Icon
-                                        }
-                                        size={12}
-                                    />
-                                </div>
-                            </div>
-                            <div>
-                                <p className="text-xs sm:text-sm font-bold text-stone-800 truncate" title={mostFrequentCategory?.displayName}>
-                                    {mostFrequentCategory?.displayName ?? '—'}
-                                </p>
-                                <p className="text-[10px] text-stone-400 tabular-nums truncate">
-                                    {mostFrequentCategory
-                                        ? `${mostFrequentCategory.transactionCount ?? 0} покупки`
-                                        : '—'}
-                                </p>
-                            </div>
+                        <div className="px-1 sm:px-2 flex flex-col items-center justify-between min-w-0">
+                            <span className="text-[11px] font-medium text-stone-500 whitespace-nowrap">
+                                Най-чест
+                            </span>
+                            <p
+                                className="text-xs sm:text-sm font-bold text-stone-800 truncate max-w-full my-0.5"
+                                title={mostFrequentCategory?.displayName}
+                            >
+                                {mostFrequentCategory
+                                    ? mostFrequentCategory.displayName.replace(/\s*\(.*?\)/, '')
+                                    : '—'}
+                            </p>
+                            <span className="text-[10px] text-stone-400 tabular-nums truncate max-w-full">
+                                {mostFrequentCategory
+                                    ? `${mostFrequentCategory.transactionCount ?? 0} покупки`
+                                    : '—'}
+                            </span>
                         </div>
 
                         {/* 3. Top category by spend */}
-                        <div className="bg-stone-50/70 rounded-xl border border-stone-200/60 p-2 sm:p-2.5 flex flex-col justify-between gap-1">
-                            <div className="flex items-center justify-between gap-1">
-                                <span className="text-[10px] font-medium uppercase tracking-wider text-stone-400 truncate">
-                                    Топ разход
-                                </span>
-                                <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-[6px] sm:rounded-[8px] bg-rose-50 text-rose-500 border border-rose-200/70 flex items-center justify-center flex-shrink-0 shadow-[inset_0_1px_0_rgba(255,255,255,0.65)]">
-                                    <AppIcon icon={PieChart01Icon} size={12} />
-                                </div>
-                            </div>
-                            <div>
-                                <p className="text-xs sm:text-sm font-bold text-stone-800 truncate" title={topCategory?.displayName}>
-                                    {topCategory ? `−${fmt(topCategory.amount, year)}` : '—'}
-                                </p>
-                                <p className="text-[10px] text-rose-500 font-semibold tabular-nums truncate">
-                                    {topCategory ? `${(topCategory.percentage ?? 0).toFixed(0)}% от общо` : '—'}
-                                </p>
-                            </div>
+                        <div className="px-1 sm:px-2 flex flex-col items-center justify-between min-w-0">
+                            <span className="text-[11px] font-medium text-stone-500 whitespace-nowrap">
+                                Топ разход
+                            </span>
+                            <p className="text-xs sm:text-sm font-bold text-stone-800 tabular-nums truncate max-w-full my-0.5">
+                                {topCategory ? `−${fmt(topCategory.amount, year)}` : '—'}
+                            </p>
+                            <span className="text-[10px] text-rose-500 font-semibold tabular-nums truncate max-w-full">
+                                {topCategory ? `${(topCategory.percentage ?? 0).toFixed(0)}% от общо` : '—'}
+                            </span>
                         </div>
                     </div>
 

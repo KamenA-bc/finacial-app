@@ -1,7 +1,7 @@
 # Graph Report - finacial-app  (2026-09-21)
 
 ## Corpus Check
-- 103 files · ~53,812 words
+- 103 files · ~53,705 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 6 file(s) not represented in the graph (top: (none) 2, .ttf 2, .ico 1)
 
@@ -11,7 +11,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `fac43d0b`
+- Built from commit: `6ea26433`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 

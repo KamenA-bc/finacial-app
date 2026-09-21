@@ -222,9 +222,9 @@
     "semantic_hash": ""
   },
   "src/components/statistics/SpendingHabits.tsx": {
-    "mtime": 1790018407.5682685,
-    "seen": 1790018502.352352,
-    "ast_hash": "0625554f501b8974e1a97e767d3d4b6c",
+    "mtime": 1790019044.584331,
+    "seen": 1790019065.0937328,
+    "ast_hash": "a93e1ad1a9be6a00a9aa951672a705d7",
     "semantic_hash": ""
   },
   "src/components/telemetry/GlobalErrorListener.test.tsx": {

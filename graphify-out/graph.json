@@ -781,7 +781,7 @@
       "file_type": "code",
       "norm_label": "spendinghabitsprops",
       "source_file": "src/components/statistics/SpendingHabits.tsx",
-      "source_location": "L90"
+      "source_location": "L87"
     },
     {
       "id": "src_components_transactions_transactionlist_deletedialogprops",
@@ -2602,7 +2602,7 @@
       "file_type": "code",
       "norm_label": "fmt()",
       "source_file": "src/components/statistics/SpendingHabits.tsx",
-      "source_location": "L103"
+      "source_location": "L100"
     },
     {
       "id": "src_components_statistics_spendinghabits_spendinghabits",
@@ -2614,7 +2614,7 @@
       "file_type": "code",
       "norm_label": "spendinghabits()",
       "source_file": "src/components/statistics/SpendingHabits.tsx",
-      "source_location": "L109"
+      "source_location": "L106"
     },
     {
       "id": "src_components_transactions_transactionlist_deletedialog",
@@ -6066,7 +6066,7 @@
       "file_type": "code",
       "norm_label": "category_bar_bg",
       "source_file": "src/components/statistics/SpendingHabits.tsx",
-      "source_location": "L72"
+      "source_location": "L69"
     },
     {
       "id": "src_components_statistics_spendinghabits_category_icons",
@@ -6077,7 +6077,7 @@
       "file_type": "code",
       "norm_label": "category_icons",
       "source_file": "src/components/statistics/SpendingHabits.tsx",
-      "source_location": "L40"
+      "source_location": "L37"
     },
     {
       "id": "src_components_statistics_spendinghabits_category_squircle_classes",
@@ -6088,7 +6088,7 @@
       "file_type": "code",
       "norm_label": "category_squircle_classes",
       "source_file": "src/components/statistics/SpendingHabits.tsx",
-      "source_location": "L56"
+      "source_location": "L53"
     },
     {
       "id": "src_components_transactions_edittransactionmodal",
@@ -7065,7 +7065,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/components/statistics/SpendingHabits.tsx",
-      "source_location": "L104",
+      "source_location": "L101",
       "weight": 1.0
     },
     {
@@ -7077,7 +7077,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/components/statistics/SpendingHabits.tsx",
-      "source_location": "L187",
+      "source_location": "L178",
       "weight": 1.0
     },
     {
@@ -8985,7 +8985,7 @@
       "confidence_score": 1.0,
       "context": "field",
       "source_file": "src/components/statistics/SpendingHabits.tsx",
-      "source_location": "L92",
+      "source_location": "L89",
       "weight": 1.0
     },
     {
@@ -10923,7 +10923,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "src/components/statistics/SpendingHabits.tsx",
-      "source_location": "L29",
+      "source_location": "L26",
       "weight": 1.0
     },
     {
@@ -10935,7 +10935,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "src/components/statistics/SpendingHabits.tsx",
-      "source_location": "L29",
+      "source_location": "L26",
       "weight": 1.0
     },
     {
@@ -10947,7 +10947,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "src/components/statistics/SpendingHabits.tsx",
-      "source_location": "L30",
+      "source_location": "L27",
       "weight": 1.0
     },
     {
@@ -10959,7 +10959,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "src/components/statistics/SpendingHabits.tsx",
-      "source_location": "L31",
+      "source_location": "L28",
       "weight": 1.0
     },
     {
@@ -10971,7 +10971,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "src/components/statistics/SpendingHabits.tsx",
-      "source_location": "L32",
+      "source_location": "L29",
       "weight": 1.0
     },
     {
@@ -10983,7 +10983,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "src/components/statistics/SpendingHabits.tsx",
-      "source_location": "L32",
+      "source_location": "L29",
       "weight": 1.0
     },
     {
@@ -10995,7 +10995,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "src/components/statistics/SpendingHabits.tsx",
-      "source_location": "L32",
+      "source_location": "L29",
       "weight": 1.0
     },
     {
@@ -14816,7 +14816,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "src/components/statistics/SpendingHabits.tsx",
-      "source_location": "L29",
+      "source_location": "L26",
       "weight": 1.0
     },
     {
@@ -14828,7 +14828,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "src/components/statistics/SpendingHabits.tsx",
-      "source_location": "L30",
+      "source_location": "L27",
       "weight": 1.0
     },
     {
@@ -14840,7 +14840,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "src/components/statistics/SpendingHabits.tsx",
-      "source_location": "L31",
+      "source_location": "L28",
       "weight": 1.0
     },
     {
@@ -14852,7 +14852,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "src/components/statistics/SpendingHabits.tsx",
-      "source_location": "L32",
+      "source_location": "L29",
       "weight": 1.0
     },
     {
@@ -18973,7 +18973,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/statistics/SpendingHabits.tsx",
-      "source_location": "L103",
+      "source_location": "L100",
       "weight": 1.0
     },
     {
@@ -18984,7 +18984,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/statistics/SpendingHabits.tsx",
-      "source_location": "L109",
+      "source_location": "L106",
       "weight": 1.0
     },
     {
@@ -18995,7 +18995,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/statistics/SpendingHabits.tsx",
-      "source_location": "L40",
+      "source_location": "L37",
       "weight": 1.0
     },
     {
@@ -19006,7 +19006,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/statistics/SpendingHabits.tsx",
-      "source_location": "L56",
+      "source_location": "L53",
       "weight": 1.0
     },
     {
@@ -19017,7 +19017,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/statistics/SpendingHabits.tsx",
-      "source_location": "L72",
+      "source_location": "L69",
       "weight": 1.0
     },
     {
@@ -19028,7 +19028,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/statistics/SpendingHabits.tsx",
-      "source_location": "L90",
+      "source_location": "L87",
       "weight": 1.0
     },
     {
@@ -21545,5 +21545,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "fac43d0b930c661e7243391c77028bfa7de5e16f"
+  "built_at_commit": "6ea26433d1c2262bb29d64685a906493e9c7b6d5"
 }
