@@ -222,9 +222,9 @@
     "semantic_hash": ""
   },
   "src/components/statistics/SpendingHabits.tsx": {
-    "mtime": 1790019920.1971402,
-    "seen": 1790019954.4713593,
-    "ast_hash": "044b10f6f697eeaf98419f77ed69629d",
+    "mtime": 1790020662.029531,
+    "seen": 1790020700.981483,
+    "ast_hash": "0ede3a53dfffe949ff6f82fc8aaf44c3",
     "semantic_hash": ""
   },
   "src/components/telemetry/GlobalErrorListener.test.tsx": {
@@ -648,15 +648,15 @@
     "semantic_hash": ""
   },
   "src/components/ui/Tooltip.test.tsx": {
-    "mtime": 1790019884.9494727,
-    "seen": 1790019954.473153,
-    "ast_hash": "9d104759d834330b7e6632d94c838463",
+    "mtime": 1790020669.540751,
+    "seen": 1790020700.9840398,
+    "ast_hash": "68903dbf5a69274e7534c91be4564c95",
     "semantic_hash": ""
   },
   "src/components/ui/Tooltip.tsx": {
-    "mtime": 1790019853.5874166,
-    "seen": 1790019954.473155,
-    "ast_hash": "8ae364d0aa9fabf2cb28270f55cd2519",
+    "mtime": 1790020648.7932198,
+    "seen": 1790020700.984042,
+    "ast_hash": "d91d2ac49e54933f3d6c3c212ce39517",
     "semantic_hash": ""
   }
 }

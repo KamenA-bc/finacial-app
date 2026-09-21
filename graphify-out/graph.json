@@ -1823,7 +1823,7 @@
       "file_type": "code",
       "norm_label": "tooltip()",
       "source_file": "src/components/ui/Tooltip.tsx",
-      "source_location": "L18"
+      "source_location": "L20"
     },
     {
       "id": "src_lib_dateutils_getcalendarmonthrange",
@@ -7040,7 +7040,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/components/statistics/SpendingHabits.tsx",
-      "source_location": "L184",
+      "source_location": "L185",
       "weight": 1.0
     },
     {
@@ -19451,7 +19451,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/ui/Tooltip.tsx",
-      "source_location": "L18",
+      "source_location": "L20",
       "weight": 1.0
     },
     {
@@ -21561,5 +21561,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "677ff531a648645dfdfea8be251d7074615773aa"
+  "built_at_commit": "7c7f5507643a5c09ac86f3b0cb29236f1f3fe7df"
 }

@@ -13,6 +13,8 @@ export interface TooltipProps {
     align?: 'start' | 'center' | 'end';
     position?: 'top' | 'bottom';
     className?: string;
+    triggerClassName?: string;
+    triggerAriaLabel?: string;
 }
 
 export function Tooltip({
@@ -21,6 +23,8 @@ export function Tooltip({
     align = 'center',
     position = 'top',
     className = '',
+    triggerClassName = '',
+    triggerAriaLabel,
 }: TooltipProps): React.ReactElement {
     const [isOpen, setIsOpen] = useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
@@ -65,9 +69,9 @@ export function Tooltip({
 
     // Arrow alignment matching container positioning
     const arrowAlignClasses = {
-        start: 'left-4 -translate-x-1/2',
+        start: 'left-6 -translate-x-1/2',
         center: 'left-1/2 -translate-x-1/2',
-        end: 'right-4 translate-x-1/2',
+        end: 'right-6 translate-x-1/2',
     }[align];
 
     const isTop = position === 'top';
@@ -85,6 +89,7 @@ export function Tooltip({
             <div
                 role="button"
                 tabIndex={0}
+                aria-label={triggerAriaLabel || (typeof content === 'string' ? content : undefined)}
                 aria-describedby={isOpen ? tooltipId : undefined}
                 onClick={(e) => {
                     e.stopPropagation();
@@ -98,7 +103,7 @@ export function Tooltip({
                         setIsOpen((prev) => !prev);
                     }
                 }}
-                className="inline-flex items-center cursor-pointer select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/60 rounded"
+                className={`cursor-pointer select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/60 rounded-lg ${triggerClassName || 'inline-flex items-center'}`}
             >
                 {children}
             </div>

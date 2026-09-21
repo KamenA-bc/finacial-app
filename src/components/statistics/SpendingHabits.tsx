@@ -169,66 +169,72 @@ export const SpendingHabits = ({
             ) : (
                 <>
                     {/* Unified 3-Column Stats Strip with Subtle Context Tooltips */}
-                    <div className="grid grid-cols-3 divide-x divide-stone-200/70 bg-stone-50/70 rounded-xl border border-stone-200/60 py-2 sm:py-2.5 px-0.5 sm:px-2 text-center">
+                    <div className="grid grid-cols-3 divide-x divide-stone-200/70 bg-stone-50/70 rounded-xl border border-stone-200/60 p-1 sm:p-1.5 text-center">
                         {/* 1. Avg ticket size */}
-                        <div className="px-1 sm:px-2 flex flex-col items-center justify-between min-w-0">
+                        <div className="px-0.5 sm:px-1 flex flex-col items-center justify-between min-w-0">
                             <Tooltip
                                 content="Среден размер на една покупка (общо разходи разделени на броя покупки)."
                                 align="start"
+                                className="w-full"
+                                triggerClassName="w-full h-full p-1 sm:p-1.5 flex flex-col items-center justify-between min-w-0 hover:bg-stone-100/80 active:bg-stone-200/60 active:scale-[0.98] transition-all rounded-lg"
                             >
-                                <span className="text-[11px] font-medium text-stone-500 whitespace-nowrap border-b border-dotted border-stone-300 hover:border-stone-500 transition-colors">
+                                <span className="text-[11px] font-medium text-stone-500 whitespace-nowrap border-b border-dotted border-stone-300 transition-colors">
                                     Ср. разход
                                 </span>
+                                <p className="text-xs sm:text-sm font-bold text-stone-800 tabular-nums truncate max-w-full my-0.5">
+                                    {fmt(avgExpensePerTransaction, year)}
+                                </p>
+                                <span className="text-[10px] text-stone-400 tabular-nums truncate max-w-full">
+                                    {expenseTransactionCount} {expenseTransactionCount === 1 ? 'покупка' : 'покупки'}
+                                </span>
                             </Tooltip>
-                            <p className="text-xs sm:text-sm font-bold text-stone-800 tabular-nums truncate max-w-full my-0.5">
-                                {fmt(avgExpensePerTransaction, year)}
-                            </p>
-                            <span className="text-[10px] text-stone-400 tabular-nums truncate max-w-full">
-                                {expenseTransactionCount} {expenseTransactionCount === 1 ? 'покупка' : 'покупки'}
-                            </span>
                         </div>
 
                         {/* 2. Most frequent category */}
-                        <div className="px-1 sm:px-2 flex flex-col items-center justify-between min-w-0">
+                        <div className="px-0.5 sm:px-1 flex flex-col items-center justify-between min-w-0">
                             <Tooltip
                                 content="Категорията с най-много отделни покупки през избраната година."
                                 align="center"
+                                className="w-full"
+                                triggerClassName="w-full h-full p-1 sm:p-1.5 flex flex-col items-center justify-between min-w-0 hover:bg-stone-100/80 active:bg-stone-200/60 active:scale-[0.98] transition-all rounded-lg"
                             >
-                                <span className="text-[11px] font-medium text-stone-500 whitespace-nowrap border-b border-dotted border-stone-300 hover:border-stone-500 transition-colors">
+                                <span className="text-[11px] font-medium text-stone-500 whitespace-nowrap border-b border-dotted border-stone-300 transition-colors">
                                     Най-чест
                                 </span>
+                                <p
+                                    className="text-xs sm:text-sm font-bold text-stone-800 truncate max-w-full my-0.5"
+                                    title={mostFrequentCategory?.displayName}
+                                >
+                                    {mostFrequentCategory
+                                        ? mostFrequentCategory.displayName.replace(/\s*\(.*?\)/, '')
+                                        : '—'}
+                                </p>
+                                <span className="text-[10px] text-stone-400 tabular-nums truncate max-w-full">
+                                    {mostFrequentCategory
+                                        ? `${mostFrequentCategory.transactionCount ?? 0} покупки`
+                                        : '—'}
+                                </span>
                             </Tooltip>
-                            <p
-                                className="text-xs sm:text-sm font-bold text-stone-800 truncate max-w-full my-0.5"
-                                title={mostFrequentCategory?.displayName}
-                            >
-                                {mostFrequentCategory
-                                    ? mostFrequentCategory.displayName.replace(/\s*\(.*?\)/, '')
-                                    : '—'}
-                            </p>
-                            <span className="text-[10px] text-stone-400 tabular-nums truncate max-w-full">
-                                {mostFrequentCategory
-                                    ? `${mostFrequentCategory.transactionCount ?? 0} покупки`
-                                    : '—'}
-                            </span>
                         </div>
 
                         {/* 3. Top category by spend */}
-                        <div className="px-1 sm:px-2 flex flex-col items-center justify-between min-w-0">
+                        <div className="px-0.5 sm:px-1 flex flex-col items-center justify-between min-w-0">
                             <Tooltip
                                 content="Категорията с най-голяма обща похарчена сума и нейният дял от годишния бюджет."
                                 align="end"
+                                className="w-full"
+                                triggerClassName="w-full h-full p-1 sm:p-1.5 flex flex-col items-center justify-between min-w-0 hover:bg-stone-100/80 active:bg-stone-200/60 active:scale-[0.98] transition-all rounded-lg"
                             >
-                                <span className="text-[11px] font-medium text-stone-500 whitespace-nowrap border-b border-dotted border-stone-300 hover:border-stone-500 transition-colors">
+                                <span className="text-[11px] font-medium text-stone-500 whitespace-nowrap border-b border-dotted border-stone-300 transition-colors">
                                     Топ разход
                                 </span>
+                                <p className="text-xs sm:text-sm font-bold text-stone-800 tabular-nums truncate max-w-full my-0.5">
+                                    {topCategory ? `−${fmt(topCategory.amount, year)}` : '—'}
+                                </p>
+                                <span className="text-[10px] text-rose-500 font-semibold tabular-nums truncate max-w-full">
+                                    {topCategory ? `${(topCategory.percentage ?? 0).toFixed(0)}% от общо` : '—'}
+                                </span>
                             </Tooltip>
-                            <p className="text-xs sm:text-sm font-bold text-stone-800 tabular-nums truncate max-w-full my-0.5">
-                                {topCategory ? `−${fmt(topCategory.amount, year)}` : '—'}
-                            </p>
-                            <span className="text-[10px] text-rose-500 font-semibold tabular-nums truncate max-w-full">
-                                {topCategory ? `${(topCategory.percentage ?? 0).toFixed(0)}% от общо` : '—'}
-                            </span>
                         </div>
                     </div>
 

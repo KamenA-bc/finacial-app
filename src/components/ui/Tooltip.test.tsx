@@ -83,4 +83,21 @@ describe('Tooltip component', () => {
         fireEvent.keyDown(document, { key: 'Escape' });
         expect(screen.queryByText('Key dismiss text')).not.toBeInTheDocument();
     });
+
+    it('renders with custom triggerClassName and triggerAriaLabel for expanded touch targets', () => {
+        render(
+            <Tooltip
+                content="Extended touch content"
+                triggerClassName="w-full h-full p-4 custom-class"
+                triggerAriaLabel="Custom touch label"
+            >
+                <div>Cell Content</div>
+            </Tooltip>
+        );
+
+        const button = screen.getByRole('button', { name: 'Custom touch label' });
+        expect(button).toBeInTheDocument();
+        expect(button.className).toContain('w-full');
+        expect(button.className).toContain('custom-class');
+    });
 });
