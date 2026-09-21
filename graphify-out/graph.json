@@ -7077,7 +7077,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/components/statistics/SpendingHabits.tsx",
-      "source_location": "L190",
+      "source_location": "L187",
       "weight": 1.0
     },
     {
@@ -21545,5 +21545,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "0ea8bb9403bc7bee10fdb60ea99bedfa58e90980"
+  "built_at_commit": "fac43d0b930c661e7243391c77028bfa7de5e16f"
 }

@@ -1,7 +1,7 @@
 /**
  * SpendingHabits – category ranking, habit spotlight, and spend distribution.
- * Redesigned with Top 5 Spotlight, habit badges, per-category ticket metrics,
- * and an expandable full category breakdown.
+ * Compact mobile-first design: single-row 3-column habit strip, streamlined
+ * high-density category list, and sleek expander.
  */
 'use client';
 
@@ -126,21 +126,21 @@ export const SpendingHabits = ({
     const canExpand = fullList.length > 5;
 
     return (
-        <div className="bg-white rounded-2xl shadow-sm border border-stone-200/70 p-5 flex flex-col gap-5">
+        <div className="bg-white rounded-2xl shadow-sm border border-stone-200/70 p-3.5 sm:p-5 flex flex-col gap-3 sm:gap-4">
             {/* Header */}
             <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2.5">
+                <div className="flex items-center gap-2 sm:gap-2.5">
                     <IconSquircle
                         className="bg-stone-100 text-stone-700 border-stone-200/70"
                         size="sm"
                     >
-                        <AppIcon icon={ShoppingBag01Icon} size={15} />
+                        <AppIcon icon={ShoppingBag01Icon} size={14} />
                     </IconSquircle>
                     <div>
-                        <h2 className="text-sm font-semibold text-stone-800 tracking-tight">
+                        <h2 className="text-xs sm:text-sm font-semibold text-stone-800 tracking-tight">
                             Навици за харчене
                         </h2>
-                        <p className="text-[11px] text-stone-400 font-medium">
+                        <p className="text-[10px] sm:text-[11px] text-stone-400 font-medium">
                             {activeCount > 0
                                 ? `${activeCount} активни категории през ${year}`
                                 : `Няма активност за ${year}`}
@@ -149,66 +149,62 @@ export const SpendingHabits = ({
                 </div>
 
                 {activeCount > 0 && (
-                    <span className="text-[11px] font-semibold text-stone-500 bg-stone-100/80 px-2.5 py-1 rounded-full border border-stone-200/60 tabular-nums">
+                    <span className="text-[10px] sm:text-[11px] font-semibold text-stone-500 bg-stone-100/80 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full border border-stone-200/60 tabular-nums">
                         {isExpanded ? `Всички ${fullList.length}` : `Топ ${Math.min(5, activeCount)}`}
                     </span>
                 )}
             </div>
 
             {!hasExpenses ? (
-                <div className="flex flex-col items-center justify-center py-10 text-center gap-2">
+                <div className="flex flex-col items-center justify-center py-8 text-center gap-2">
                     <IconSquircle
                         className="bg-stone-50 text-stone-400 border-stone-200/60 mb-1"
                         size="md"
                     >
-                        <AppIcon icon={ShoppingBag01Icon} size={18} />
+                        <AppIcon icon={ShoppingBag01Icon} size={16} />
                     </IconSquircle>
-                    <p className="text-sm font-medium text-stone-600">Няма записани разходи</p>
-                    <p className="text-xs text-stone-400">
+                    <p className="text-xs sm:text-sm font-medium text-stone-600">Няма записани разходи</p>
+                    <p className="text-[11px] text-stone-400">
                         Добавете разход за {year}&nbsp;г., за да видите навиците си за харчене.
                     </p>
                 </div>
             ) : (
                 <>
-                    {/* Habit Highlight Cards */}
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    {/* Compact 3-Column Micro-Metrics Strip */}
+                    <div className="grid grid-cols-3 gap-1.5 sm:gap-3">
                         {/* 1. Avg ticket size */}
-                        <div className="bg-stone-50/70 rounded-xl border border-stone-200/60 p-3 flex flex-col justify-between gap-2">
-                            <div className="flex items-center justify-between">
-                                <span className="text-[11px] font-medium uppercase tracking-wider text-stone-400">
+                        <div className="bg-stone-50/70 rounded-xl border border-stone-200/60 p-2 sm:p-2.5 flex flex-col justify-between gap-1">
+                            <div className="flex items-center justify-between gap-1">
+                                <span className="text-[10px] font-medium uppercase tracking-wider text-stone-400 truncate">
                                     Ср. покупка
                                 </span>
-                                <IconSquircle
-                                    className="bg-blue-50 text-blue-600 border-blue-200/70"
-                                    size="sm"
-                                >
-                                    <AppIcon icon={ReceiptIcon} size={14} />
-                                </IconSquircle>
+                                <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-[6px] sm:rounded-[8px] bg-blue-50 text-blue-600 border border-blue-200/70 flex items-center justify-center flex-shrink-0 shadow-[inset_0_1px_0_rgba(255,255,255,0.65)]">
+                                    <AppIcon icon={ReceiptIcon} size={12} />
+                                </div>
                             </div>
                             <div>
-                                <p className="text-base font-bold text-stone-800 tabular-nums">
+                                <p className="text-xs sm:text-sm md:text-base font-bold text-stone-800 tabular-nums truncate">
                                     {fmt(avgExpensePerTransaction, year)}
                                 </p>
-                                <p className="text-[11px] text-stone-400 tabular-nums">
-                                    {expenseTransactionCount} {expenseTransactionCount === 1 ? 'покупка' : 'покупки'}
+                                <p className="text-[10px] text-stone-400 tabular-nums truncate">
+                                    {expenseTransactionCount} {expenseTransactionCount === 1 ? 'бр.' : 'броя'}
                                 </p>
                             </div>
                         </div>
 
                         {/* 2. Most frequent category */}
-                        <div className="bg-stone-50/70 rounded-xl border border-stone-200/60 p-3 flex flex-col justify-between gap-2">
-                            <div className="flex items-center justify-between">
-                                <span className="text-[11px] font-medium uppercase tracking-wider text-stone-400">
-                                    Най-чест разход
+                        <div className="bg-stone-50/70 rounded-xl border border-stone-200/60 p-2 sm:p-2.5 flex flex-col justify-between gap-1">
+                            <div className="flex items-center justify-between gap-1">
+                                <span className="text-[10px] font-medium uppercase tracking-wider text-stone-400 truncate">
+                                    Най-чест
                                 </span>
-                                <IconSquircle
-                                    className={
+                                <div
+                                    className={`w-5 h-5 sm:w-6 sm:h-6 rounded-[6px] sm:rounded-[8px] flex items-center justify-center flex-shrink-0 border shadow-[inset_0_1px_0_rgba(255,255,255,0.65)] ${
                                         mostFrequentCategory
                                             ? CATEGORY_SQUIRCLE_CLASSES[mostFrequentCategory.name as ExpenseCategory] ??
                                               'bg-emerald-50 text-emerald-600 border-emerald-200/70'
                                             : 'bg-stone-100 text-stone-600 border-stone-200/70'
-                                    }
-                                    size="sm"
+                                    }`}
                                 >
                                     <AppIcon
                                         icon={
@@ -216,48 +212,45 @@ export const SpendingHabits = ({
                                                 ? CATEGORY_ICONS[mostFrequentCategory.name as ExpenseCategory] ?? Coins01Icon
                                                 : Coins01Icon
                                         }
-                                        size={14}
+                                        size={12}
                                     />
-                                </IconSquircle>
+                                </div>
                             </div>
                             <div>
-                                <p className="text-sm font-bold text-stone-800 truncate" title={mostFrequentCategory?.displayName}>
+                                <p className="text-xs sm:text-sm font-bold text-stone-800 truncate" title={mostFrequentCategory?.displayName}>
                                     {mostFrequentCategory?.displayName ?? '—'}
                                 </p>
-                                <p className="text-[11px] text-stone-400 tabular-nums">
+                                <p className="text-[10px] text-stone-400 tabular-nums truncate">
                                     {mostFrequentCategory
-                                        ? `${mostFrequentCategory.transactionCount ?? 0} покупки (${(mostFrequentCategory.percentage ?? 0).toFixed(0)}% дял)`
+                                        ? `${mostFrequentCategory.transactionCount ?? 0} покупки`
                                         : '—'}
                                 </p>
                             </div>
                         </div>
 
                         {/* 3. Top category by spend */}
-                        <div className="bg-stone-50/70 rounded-xl border border-stone-200/60 p-3 flex flex-col justify-between gap-2">
-                            <div className="flex items-center justify-between">
-                                <span className="text-[11px] font-medium uppercase tracking-wider text-stone-400">
-                                    Най-голям дял
+                        <div className="bg-stone-50/70 rounded-xl border border-stone-200/60 p-2 sm:p-2.5 flex flex-col justify-between gap-1">
+                            <div className="flex items-center justify-between gap-1">
+                                <span className="text-[10px] font-medium uppercase tracking-wider text-stone-400 truncate">
+                                    Топ разход
                                 </span>
-                                <IconSquircle
-                                    className="bg-rose-50 text-rose-500 border-rose-200/70"
-                                    size="sm"
-                                >
-                                    <AppIcon icon={PieChart01Icon} size={14} />
-                                </IconSquircle>
+                                <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-[6px] sm:rounded-[8px] bg-rose-50 text-rose-500 border border-rose-200/70 flex items-center justify-center flex-shrink-0 shadow-[inset_0_1px_0_rgba(255,255,255,0.65)]">
+                                    <AppIcon icon={PieChart01Icon} size={12} />
+                                </div>
                             </div>
                             <div>
-                                <p className="text-sm font-bold text-stone-800 truncate" title={topCategory?.displayName}>
-                                    {topCategory?.displayName ?? '—'}
+                                <p className="text-xs sm:text-sm font-bold text-stone-800 truncate" title={topCategory?.displayName}>
+                                    {topCategory ? `−${fmt(topCategory.amount, year)}` : '—'}
                                 </p>
-                                <p className="text-[11px] text-rose-500 font-semibold tabular-nums">
-                                    {topCategory ? `−${fmt(topCategory.amount, year)} (${(topCategory.percentage ?? 0).toFixed(0)}%)` : '—'}
+                                <p className="text-[10px] text-rose-500 font-semibold tabular-nums truncate">
+                                    {topCategory ? `${(topCategory.percentage ?? 0).toFixed(0)}% от общо` : '—'}
                                 </p>
                             </div>
                         </div>
                     </div>
 
-                    {/* Spotlight Category Breakdown */}
-                    <div className="flex flex-col gap-2 pt-1">
+                    {/* Streamlined Category Breakdown List */}
+                    <div className="flex flex-col divide-y divide-stone-100/90 pt-0.5">
                         {displayedCategories.map((cat) => {
                             const isCategoryActive = cat.amount > 0;
                             const categoryIcon = CATEGORY_ICONS[cat.name as ExpenseCategory] ?? MoreHorizontalIcon;
@@ -270,26 +263,26 @@ export const SpendingHabits = ({
                             return (
                                 <div
                                     key={cat.name}
-                                    className={`flex flex-col gap-2 p-2.5 rounded-xl border transition-colors ${
+                                    className={`py-2 sm:py-2.5 px-0.5 sm:px-1.5 flex flex-col gap-1.5 transition-colors ${
                                         isCategoryActive
-                                            ? 'bg-stone-50/40 border-stone-200/50 hover:bg-stone-50/80 hover:border-stone-200'
-                                            : 'bg-stone-50/20 border-transparent opacity-50'
+                                            ? 'hover:bg-stone-50/50 rounded-lg'
+                                            : 'opacity-40'
                                     }`}
                                 >
-                                    <div className="flex items-center justify-between gap-3">
+                                    <div className="flex items-center justify-between gap-2.5">
                                         {/* Category info */}
-                                        <div className="flex items-center gap-2.5 min-w-0 flex-1">
+                                        <div className="flex items-center gap-2 sm:gap-2.5 min-w-0 flex-1">
                                             <IconSquircle
                                                 className={squircleClass}
                                                 size="sm"
                                             >
-                                                <AppIcon icon={categoryIcon} size={14} />
+                                                <AppIcon icon={categoryIcon} size={13} />
                                             </IconSquircle>
                                             <div className="min-w-0 flex-1">
-                                                <p className="text-xs sm:text-sm font-semibold text-stone-800 truncate">
+                                                <p className="text-xs sm:text-sm font-semibold text-stone-800 truncate tracking-tight">
                                                     {cat.displayName}
                                                 </p>
-                                                <p className="text-[11px] text-stone-400 tabular-nums">
+                                                <p className="text-[10px] sm:text-[11px] text-stone-400 tabular-nums truncate">
                                                     {isCategoryActive
                                                         ? `${count} ${
                                                               count === 1 ? 'покупка' : 'покупки'
@@ -308,14 +301,14 @@ export const SpendingHabits = ({
                                             >
                                                 {isCategoryActive ? `−${fmt(cat.amount, year)}` : fmt(0, year)}
                                             </p>
-                                            <span className="text-[11px] font-semibold text-stone-400 tabular-nums">
-                                                {pct.toFixed(1)}% от разходите
+                                            <span className="text-[10px] sm:text-[11px] font-semibold text-stone-400 tabular-nums">
+                                                {pct.toFixed(1)}%
                                             </span>
                                         </div>
                                     </div>
 
-                                    {/* Proportional visual bar */}
-                                    <div className="w-full h-1.5 bg-stone-100 rounded-full overflow-hidden">
+                                    {/* Slim Proportional Bar */}
+                                    <div className="w-full h-1 sm:h-1.5 bg-stone-100 rounded-full overflow-hidden">
                                         <div
                                             className={`h-full rounded-full transition-all duration-500 ${barBg}`}
                                             style={{
@@ -328,12 +321,12 @@ export const SpendingHabits = ({
                         })}
                     </div>
 
-                    {/* Expander Button */}
+                    {/* Compact Expander Button */}
                     {canExpand && (
                         <button
                             type="button"
                             onClick={() => setIsExpanded((prev) => !prev)}
-                            className="w-full py-2.5 px-4 rounded-xl border border-stone-200/80 bg-stone-50/60 hover:bg-stone-100/80 text-stone-700 text-xs font-semibold flex items-center justify-center gap-2 transition-transform duration-150 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/60"
+                            className="w-full py-2 px-3 rounded-xl border border-stone-200/80 bg-stone-50/60 hover:bg-stone-100/80 text-stone-700 text-xs font-semibold flex items-center justify-center gap-1.5 transition-transform duration-150 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/60"
                         >
                             <span>
                                 {isExpanded
@@ -342,7 +335,7 @@ export const SpendingHabits = ({
                             </span>
                             <AppIcon
                                 icon={isExpanded ? ArrowUp01Icon : ArrowDown01Icon}
-                                size={14}
+                                size={13}
                             />
                         </button>
                     )}
