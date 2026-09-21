@@ -24,6 +24,7 @@ import {
     ArrowUp01Icon,
 } from '@hugeicons/core-free-icons';
 import { AppIcon, IconSquircle } from '@/components/ui/AppIcon';
+import { Tooltip } from '@/components/ui/Tooltip';
 import { ExpenseCategory } from '@/types';
 import { CategoryRankEntry } from '@/hooks/useStatisticsData';
 import {
@@ -167,13 +168,18 @@ export const SpendingHabits = ({
                 </div>
             ) : (
                 <>
-                    {/* Unified 3-Column Stats Strip */}
+                    {/* Unified 3-Column Stats Strip with Subtle Context Tooltips */}
                     <div className="grid grid-cols-3 divide-x divide-stone-200/70 bg-stone-50/70 rounded-xl border border-stone-200/60 py-2 sm:py-2.5 px-0.5 sm:px-2 text-center">
                         {/* 1. Avg ticket size */}
                         <div className="px-1 sm:px-2 flex flex-col items-center justify-between min-w-0">
-                            <span className="text-[11px] font-medium text-stone-500 whitespace-nowrap">
-                                Ср. разход
-                            </span>
+                            <Tooltip
+                                content="Среден размер на една покупка (общо разходи разделени на броя покупки)."
+                                align="start"
+                            >
+                                <span className="text-[11px] font-medium text-stone-500 whitespace-nowrap border-b border-dotted border-stone-300 hover:border-stone-500 transition-colors">
+                                    Ср. разход
+                                </span>
+                            </Tooltip>
                             <p className="text-xs sm:text-sm font-bold text-stone-800 tabular-nums truncate max-w-full my-0.5">
                                 {fmt(avgExpensePerTransaction, year)}
                             </p>
@@ -184,9 +190,14 @@ export const SpendingHabits = ({
 
                         {/* 2. Most frequent category */}
                         <div className="px-1 sm:px-2 flex flex-col items-center justify-between min-w-0">
-                            <span className="text-[11px] font-medium text-stone-500 whitespace-nowrap">
-                                Най-чест
-                            </span>
+                            <Tooltip
+                                content="Категорията с най-много отделни покупки през избраната година."
+                                align="center"
+                            >
+                                <span className="text-[11px] font-medium text-stone-500 whitespace-nowrap border-b border-dotted border-stone-300 hover:border-stone-500 transition-colors">
+                                    Най-чест
+                                </span>
+                            </Tooltip>
                             <p
                                 className="text-xs sm:text-sm font-bold text-stone-800 truncate max-w-full my-0.5"
                                 title={mostFrequentCategory?.displayName}
@@ -204,9 +215,14 @@ export const SpendingHabits = ({
 
                         {/* 3. Top category by spend */}
                         <div className="px-1 sm:px-2 flex flex-col items-center justify-between min-w-0">
-                            <span className="text-[11px] font-medium text-stone-500 whitespace-nowrap">
-                                Топ разход
-                            </span>
+                            <Tooltip
+                                content="Категорията с най-голяма обща похарчена сума и нейният дял от годишния бюджет."
+                                align="end"
+                            >
+                                <span className="text-[11px] font-medium text-stone-500 whitespace-nowrap border-b border-dotted border-stone-300 hover:border-stone-500 transition-colors">
+                                    Топ разход
+                                </span>
+                            </Tooltip>
                             <p className="text-xs sm:text-sm font-bold text-stone-800 tabular-nums truncate max-w-full my-0.5">
                                 {topCategory ? `−${fmt(topCategory.amount, year)}` : '—'}
                             </p>
