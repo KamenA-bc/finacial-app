@@ -4,6 +4,17 @@ All notable changes to the Finance Tracker project will be documented in this fi
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [2026-09-22]
+
+### Added
+- **Home Expense Category**: Added `Home` expense category placed immediately before `Shopping` across the application:
+  - `src/types/index.ts`: Added `'Home'` to `ExpenseCategory` union type.
+  - `src/lib/constants.ts`: Registered `'Home'` in `EXPENSE_CATEGORIES`, mapped `'Home': 'Home'` in `CATEGORY_BG_MAP`, and added dedicated muted indigo palette color (`#8C85B8`) in `CHART_COLORS`.
+  - `src/components/transactions/TransactionList.tsx`: Added `Home01Icon` from Hugeicons and indigo styling tokens (`bg-indigo-50 text-indigo-500 border-indigo-200/70`).
+  - `src/components/statistics/SpendingHabits.tsx`: Added `Home01Icon`, category squircle classes, and progress bar background.
+  - `supabase/migrations/20260922141600_add_home_expense_category.sql`: Added database migration updating `expense_entries_category_check` CHECK constraint to include `'Home'`.
+  - `src/types/index.test.ts` & `src/hooks/useStatisticsData.test.ts`: Added contract tests and updated category count assertions (13 → 14).
+
 ## [2026-09-20]
 
 ### Added

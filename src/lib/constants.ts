@@ -14,6 +14,7 @@ export const EXPENSE_CATEGORIES: readonly ExpenseCategory[] = [
     'Градски транспорт',
     'Health/Аптека',
     'Beauty',
+    'Home',
     'Shopping',
     'Entertainment',
     'Пътуване',
@@ -31,6 +32,7 @@ export const CATEGORY_BG_MAP: Record<ExpenseCategory, string> = {
     'Градски транспорт': 'Градски транспорт',
     'Health/Аптека': 'Health/Аптека',
     'Beauty': 'Beauty',
+    'Home': 'Home',
     'Shopping': 'Shopping',
     'Entertainment': 'Entertainment',
     'Пътуване': 'Пътуване',
@@ -51,6 +53,7 @@ export const CHART_COLORS: readonly string[] = [
     '#BF7C7C', // Градски транспорт
     '#A07CBF', // Health/Аптека
     '#D9A0B0', // Beauty
+    '#8C85B8', // Home
     '#EFA876', // Shopping
     '#C4B5A5', // Entertainment
     '#8FBFA4', // Пътуване

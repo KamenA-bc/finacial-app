@@ -156,8 +156,8 @@ describe('useStatisticsData – Mathematical Aggregations & KPIs', () => {
         expect(result.current.totalExpenses).toBe(1000);
         // Only 2 active categories
         expect(result.current.categoryRanking).toHaveLength(2);
-        // All 13 categories present in allCategories
-        expect(result.current.allCategories).toHaveLength(13);
+        // All 14 categories present in allCategories
+        expect(result.current.allCategories).toHaveLength(14);
 
         // Top category by spend: Пътуване (700 лв., 70%)
         expect(result.current.topCategory?.name).toBe('Пътуване');

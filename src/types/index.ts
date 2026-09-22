@@ -12,6 +12,7 @@ export type ExpenseCategory =
   | 'Градски транспорт'
   | 'Health/Аптека'
   | 'Beauty'
+  | 'Home'
   | 'Shopping'
   | 'Entertainment'
   | 'Пътуване'

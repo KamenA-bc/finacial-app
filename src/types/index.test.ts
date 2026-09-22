@@ -90,3 +90,23 @@ describe('ExpenseEntry vs IncomeEntry – structural differences', () => {
         expect('isWithOthers' in income).toBe(false);
     });
 });
+
+describe('Expense categories contract', () => {
+    it('contains Home category right before Shopping in EXPENSE_CATEGORIES', async () => {
+        const { EXPENSE_CATEGORIES, CATEGORY_BG_MAP, CHART_COLORS } = await import('@/lib/constants');
+        
+        expect(EXPENSE_CATEGORIES).toContain('Home');
+        const homeIndex = EXPENSE_CATEGORIES.indexOf('Home');
+        const shoppingIndex = EXPENSE_CATEGORIES.indexOf('Shopping');
+        expect(homeIndex).toBe(shoppingIndex - 1);
+        expect(CATEGORY_BG_MAP['Home']).toBe('Home');
+        expect(CHART_COLORS).toHaveLength(EXPENSE_CATEGORIES.length);
+        expect(EXPENSE_CATEGORIES).toHaveLength(14);
+    });
+
+    it('allows Home as a valid category on an ExpenseEntry', () => {
+        const expense = makeExpense({ category: 'Home' });
+        expect(expense.category).toBe('Home');
+    });
+});
+
