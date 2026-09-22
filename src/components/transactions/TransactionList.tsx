@@ -33,6 +33,7 @@ import {
     CATEGORY_BG_MAP,
 } from '@/lib/constants';
 import { getExpenseRowColors } from '@/lib/expenseRowColors';
+import { useBodyScrollLock } from '@/hooks/useBodyScrollLock';
 import { EditTransactionModal } from './EditTransactionModal';
 import { ViewTransactionModal } from './ViewTransactionModal';
 
@@ -87,47 +88,68 @@ interface DeleteDialogProps {
     onCancel: () => void;
 }
 
-const DeleteDialog = ({ description, amount, onConfirm, onCancel }: DeleteDialogProps): React.ReactElement => (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-        {/* Backdrop */}
-        <div className="absolute inset-0 bg-black/30 backdrop-blur-[2px]" onClick={onCancel} />
-        {/* Dialog */}
-        <div className="relative bg-white rounded-2xl shadow-xl border border-gray-100 w-full max-w-xs p-5 flex flex-col items-center gap-4">
-            <button
-                onClick={onCancel}
-                className="absolute top-3 right-3 p-1 rounded-md text-gray-300 hover:text-gray-500 hover:bg-gray-50 transition-colors"
-                aria-label="Затвори"
+const DeleteDialog = ({ description, amount, onConfirm, onCancel }: DeleteDialogProps): React.ReactElement => {
+    useBodyScrollLock(true);
+
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (e.key === 'Escape') onCancel();
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [onCancel]);
+
+    return (
+        <div
+            role="dialog"
+            aria-modal="true"
+            aria-label="Изтриване на транзакция"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 overscroll-contain"
+            onClick={onCancel}
+        >
+            {/* Backdrop */}
+            <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px]" aria-hidden="true" />
+            {/* Dialog */}
+            <div
+                className="relative bg-white rounded-2xl shadow-xl border border-stone-200/80 w-full max-w-xs p-5 flex flex-col items-center gap-4 z-10 animate-toast-in"
+                onClick={(e) => e.stopPropagation()}
             >
-                <AppIcon icon={Cancel01Icon} size={16} />
-            </button>
-            <div className="flex items-center justify-center w-11 h-11 rounded-full bg-rose-50 border border-rose-100">
-                <AppIcon icon={AlertDiamondIcon} size={20} className="text-rose-400" />
-            </div>
-            <div className="text-center">
-                <p className="text-sm font-semibold text-gray-800 mb-1">Изтриване на транзакция</p>
-                <p className="text-xs text-gray-400 leading-relaxed">
-                    Сигурни ли сте, че искате да изтриете{' '}
-                    <span className="font-medium text-gray-600">&quot;{description}&quot;</span>{' '}
-                    ({amount})?
-                </p>
-            </div>
-            <div className="flex gap-2.5 w-full">
                 <button
                     onClick={onCancel}
-                    className="flex-1 py-2 rounded-lg text-sm font-medium text-gray-600 bg-gray-100 hover:bg-gray-200 transition-colors cursor-pointer"
+                    className="absolute top-3 right-3 p-1 rounded-md text-stone-400 hover:text-stone-700 hover:bg-stone-100 transition-colors"
+                    aria-label="Затвори"
                 >
-                    Отказ
+                    <AppIcon icon={Cancel01Icon} size={16} />
                 </button>
-                <button
-                    onClick={onConfirm}
-                    className="flex-1 py-2 rounded-lg text-sm font-medium text-white bg-rose-400 hover:bg-rose-500 active:scale-[0.98] transition-all cursor-pointer"
-                >
-                    Изтрий
-                </button>
+                <div className="flex items-center justify-center w-11 h-11 rounded-full bg-rose-50 border border-rose-100">
+                    <AppIcon icon={AlertDiamondIcon} size={20} className="text-rose-400" />
+                </div>
+                <div className="text-center">
+                    <p className="text-sm font-semibold text-stone-800 mb-1">Изтриване на транзакция</p>
+                    <p className="text-xs text-stone-500 leading-relaxed">
+                        Сигурни ли сте, че искате да изтриете{' '}
+                        <span className="font-semibold text-stone-700">&quot;{description}&quot;</span>{' '}
+                        ({amount})?
+                    </p>
+                </div>
+                <div className="flex gap-2.5 w-full">
+                    <button
+                        onClick={onCancel}
+                        className="flex-1 py-2 rounded-lg text-sm font-medium text-stone-600 bg-stone-100 hover:bg-stone-200 transition-colors cursor-pointer"
+                    >
+                        Отказ
+                    </button>
+                    <button
+                        onClick={onConfirm}
+                        className="flex-1 py-2 rounded-lg text-sm font-medium text-white bg-rose-500 hover:bg-rose-600 active:scale-[0.98] transition-all cursor-pointer"
+                    >
+                        Изтрий
+                    </button>
+                </div>
             </div>
         </div>
-    </div>
-);
+    );
+};
 
 // ── Action Sheet Menu ─────────────────────────────────────────────────────────
 
@@ -151,6 +173,8 @@ const TransactionActionMenu = ({
     onEdit,
     onDelete,
 }: TransactionActionMenuProps): React.ReactElement | null => {
+    useBodyScrollLock(isOpen && Boolean(transaction));
+
     useEffect(() => {
         if (!isOpen) return;
         const handleKeyDown = (e: KeyboardEvent) => {
@@ -172,12 +196,12 @@ const TransactionActionMenu = ({
             role="dialog"
             aria-modal="true"
             aria-label="Опции за транзакцията"
-            className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-3 sm:p-4"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 overscroll-contain"
+            onClick={onClose}
         >
             {/* Backdrop */}
             <div
                 className="absolute inset-0 bg-black/40 backdrop-blur-[2px] transition-opacity"
-                onClick={onClose}
                 aria-hidden="true"
             />
 
@@ -186,9 +210,6 @@ const TransactionActionMenu = ({
                 className="relative bg-white rounded-2xl shadow-xl border border-stone-200/80 w-full max-w-xs p-4 flex flex-col gap-2.5 z-10 animate-toast-in"
                 onClick={(e) => e.stopPropagation()}
             >
-                {/* Drag Handle Indicator */}
-                <div className="w-8 h-1 bg-stone-200 rounded-full mx-auto sm:hidden -mt-1 mb-0.5" />
-
                 {/* Header Preview */}
                 <div className="flex items-center justify-between pb-2.5 border-b border-stone-100">
                     <div className="min-w-0 flex-1 pr-2">

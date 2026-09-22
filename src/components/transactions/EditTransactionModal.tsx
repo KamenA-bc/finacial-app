@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { useBodyScrollLock } from '@/hooks/useBodyScrollLock';
 import {
     Cancel01Icon,
     Briefcase01Icon,
@@ -38,6 +39,8 @@ export const EditTransactionModal = ({
     const updateExpense = useFinancialStore((s) => s.updateExpense);
     const updateIncome = useFinancialStore((s) => s.updateIncome);
     const showToast = useToastStore((s) => s.showToast);
+
+    useBodyScrollLock(isOpen && Boolean(transaction));
 
     const [amount, setAmount] = useState('');
     const [date, setDate] = useState('');
@@ -154,17 +157,20 @@ export const EditTransactionModal = ({
             role="dialog"
             aria-modal="true"
             aria-labelledby="edit-transaction-title"
-            className="fixed inset-0 z-50 flex items-center justify-center p-4"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 overscroll-contain"
+            onClick={onClose}
         >
             {/* Backdrop */}
             <div
                 className="absolute inset-0 bg-black/40 backdrop-blur-xs transition-opacity"
-                onClick={onClose}
                 aria-hidden="true"
             />
 
             {/* Modal Dialog */}
-            <div className="relative bg-white rounded-2xl shadow-xl border border-stone-200/80 w-full max-w-md p-5 sm:p-6 flex flex-col gap-4 z-10 animate-toast-in">
+            <div
+                className="relative bg-white rounded-2xl shadow-xl border border-stone-200/80 w-full max-w-md p-5 sm:p-6 flex flex-col gap-4 z-10 animate-toast-in"
+                onClick={(e) => e.stopPropagation()}
+            >
                 {/* Header */}
                 <div className="flex items-center justify-between border-b border-stone-100 pb-3">
                     <div className="flex items-center gap-2">

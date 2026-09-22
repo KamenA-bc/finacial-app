@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { Camera, CameraOff, Image as ImageIcon, X, AlertCircle, FileText, Check } from 'lucide-react';
 import { ParsedReceiptQr } from '@/lib/qrParser';
 import { detectQrFromSource, isSecureCameraContext } from '@/lib/qrDetector';
+import { useBodyScrollLock } from '@/hooks/useBodyScrollLock';
 
 interface QrScannerModalProps {
     isOpen: boolean;
@@ -27,6 +28,7 @@ export const QrScannerModal: React.FC<QrScannerModalProps> = ({
     onClose,
     onScanSuccess,
 }) => {
+    useBodyScrollLock(isOpen);
     const videoRef = useRef<HTMLVideoElement | null>(null);
     const streamRef = useRef<MediaStream | null>(null);
     const animationFrameRef = useRef<number | null>(null);
@@ -345,15 +347,21 @@ export const QrScannerModal: React.FC<QrScannerModalProps> = ({
     if (!isOpen) return null;
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 animate-in fade-in duration-200">
+        <div
+            className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 overscroll-contain animate-in fade-in duration-200"
+            onClick={onClose}
+        >
             {/* Soft Ambient Backdrop */}
             <div
                 className="absolute inset-0 bg-stone-950/75 backdrop-blur-md transition-opacity"
-                onClick={onClose}
+                aria-hidden="true"
             />
 
             {/* Modal Dialog Card */}
-            <div className="relative bg-stone-900 border border-stone-800 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.7)] text-stone-100 rounded-2xl w-full max-w-sm sm:max-w-md overflow-hidden flex flex-col z-10 transition-all">
+            <div
+                className="relative bg-stone-900 border border-stone-800 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.7)] text-stone-100 rounded-2xl w-full max-w-sm sm:max-w-md overflow-hidden flex flex-col z-10 transition-all"
+                onClick={(e) => e.stopPropagation()}
+            >
                 {/* Global persistent file input */}
                 <input
                     ref={fileInputRef}

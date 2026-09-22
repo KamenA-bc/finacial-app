@@ -37,6 +37,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Fixed
 - **Income Edit Modal Tag Clean-up (`EditTransactionModal.tsx`)**: Removed deprecated "Kami ❤️" tag chip from the income edit modal and ensured edited income records cleanly set `isWithKami: false`. Updated test suite in `EditTransactionModal.test.tsx`.
 - **Read-Only View Modal Polish (`ViewTransactionModal.tsx`)**: Removed redundant bottom 'Затвори' and 'Редактирай' buttons to maintain a clean inspection-only view. Closing is handled via the header 'X' button, backdrop tap, or Escape key. Updated tests in `ViewTransactionModal.test.tsx`.
+- **Centered Modals & Background Scroll Lock (`useBodyScrollLock.ts`, `ViewTransactionModal.tsx`, `TransactionList.tsx`, `EditTransactionModal.tsx`, `QrScannerModal.tsx`)**: Centered all dialogs and action sheets in the middle of the screen across all viewports (`items-center justify-center p-4`), eliminating bottom sheets. Introduced `useBodyScrollLock` with `overflow: hidden`, `touch-action: none`, and `overscroll-contain` to prevent background scrolling and touch gestures behind active dialogs. Standardized outside tap-to-dismiss by attaching `onClick={onClose}` to outer overlay containers and `e.stopPropagation()` to inner dialog cards. Added unit test in `useBodyScrollLock.test.ts`.
 
 ## [2026-09-20]
 

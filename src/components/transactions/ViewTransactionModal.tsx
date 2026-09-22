@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect } from 'react';
+import { useBodyScrollLock } from '@/hooks/useBodyScrollLock';
 import {
     Cancel01Icon,
     Calendar01Icon,
@@ -95,6 +96,8 @@ export const ViewTransactionModal = ({
     onClose,
     transaction,
 }: ViewTransactionModalProps): React.ReactElement | null => {
+    useBodyScrollLock(isOpen && Boolean(transaction));
+
     // Escape key dismiss
     useEffect(() => {
         if (!isOpen) return;
@@ -148,15 +151,16 @@ export const ViewTransactionModal = ({
 
     return (
         <div
-            className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-3 sm:p-4"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 overscroll-contain"
             role="dialog"
             aria-modal="true"
             aria-labelledby="view-transaction-title"
+            onClick={onClose}
         >
             {/* Backdrop */}
             <div
                 className="absolute inset-0 bg-black/40 backdrop-blur-[2px] transition-opacity"
-                onClick={onClose}
+                aria-hidden="true"
             />
 
             {/* Modal Card */}
