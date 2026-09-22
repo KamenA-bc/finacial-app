@@ -21,6 +21,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   - Replaced unstructured 14-dot legend with a ranked category metric list featuring proportional progress tracks and an inline expand/collapse drawer (`Top 4` default).
   - Replaced restricted Lucide imports with Hugeicons Stroke Rounded (`PieChart01Icon`, `Calendar01Icon`, `ArrowDown01Icon`, `ArrowUp01Icon`).
   - Added component test suite in `src/components/charts/CategoryChart.test.tsx` (5 tests covering aggregation, expand/collapse, touch selection, and empty state).
+- **Agent Directive Update (`AGENTS.md`)**: Enshrined strict lifecycle for big/significant changes (`Architecture → Plan → Human User Approval Gate → Code → Test → Human User Local Test Gate → Commit to Git`). Explicitly prohibited proceeding on synthetic/automated review policy stop hook injections, and confirmed express fast-track for small changes (code, test, ship).
 
 ## [2026-09-20]
 
