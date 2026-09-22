@@ -15,6 +15,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   - `supabase/migrations/20260922141600_add_home_expense_category.sql`: Added database migration updating `expense_entries_category_check` CHECK constraint to include `'Home'`.
   - `src/types/index.test.ts` & `src/hooks/useStatisticsData.test.ts`: Added contract tests and updated category count assertions (13 → 14).
 - **Edit Modal Button Craft (`EditTransactionModal.tsx`)**: Removed static checkmark badge icon from the primary save button, established clear visual hierarchy with specular depth (`shadow-[inset_0_1px_0_rgba(255,255,255,0.18)]`), hairline separation border, confident padding (`px-5 py-2`), and softened secondary cancel action (`font-medium text-stone-500`).
+- **Mobile-First Category Breakdown Redesign (`CategoryChart.tsx`)**: Redesigned category spending breakdown for optimal mobile readability:
+  - Added Pareto Top 5 + "Останали" aggregation to prevent 14-slice overcrowding on phone screens.
+  - Implemented interactive center touch readout displaying category name, amount in `tabular-nums`, and percentage share without hover tooltip dependency.
+  - Replaced unstructured 14-dot legend with a ranked category metric list featuring proportional progress tracks and an inline expand/collapse drawer (`Top 4` default).
+  - Replaced restricted Lucide imports with Hugeicons Stroke Rounded (`PieChart01Icon`, `Calendar01Icon`, `ArrowDown01Icon`, `ArrowUp01Icon`).
+  - Added component test suite in `src/components/charts/CategoryChart.test.tsx` (5 tests covering aggregation, expand/collapse, touch selection, and empty state).
 
 ## [2026-09-20]
 
