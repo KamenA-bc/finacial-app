@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     ShoppingBasket01Icon,
     Restaurant01Icon,
@@ -129,16 +129,142 @@ const DeleteDialog = ({ description, amount, onConfirm, onCancel }: DeleteDialog
     </div>
 );
 
+// ── Action Sheet Menu ─────────────────────────────────────────────────────────
+
+interface TransactionActionMenuProps {
+    isOpen: boolean;
+    onClose: () => void;
+    transaction:
+        | { type: 'expense'; entry: ExpenseEntry }
+        | { type: 'income'; entry: IncomeEntry }
+        | null;
+    onView: () => void;
+    onEdit: () => void;
+    onDelete: () => void;
+}
+
+const TransactionActionMenu = ({
+    isOpen,
+    onClose,
+    transaction,
+    onView,
+    onEdit,
+    onDelete,
+}: TransactionActionMenuProps): React.ReactElement | null => {
+    useEffect(() => {
+        if (!isOpen) return;
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (e.key === 'Escape') onClose();
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [isOpen, onClose]);
+
+    if (!isOpen || !transaction) return null;
+
+    const isExpense = transaction.type === 'expense';
+    const entry = transaction.entry;
+    const title = entry.description || (isExpense ? 'Разход' : 'Приход');
+    const amount = formatAmount(entry.amount, entry.date);
+
+    return (
+        <div
+            role="dialog"
+            aria-modal="true"
+            aria-label="Опции за транзакцията"
+            className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-3 sm:p-4"
+        >
+            {/* Backdrop */}
+            <div
+                className="absolute inset-0 bg-black/40 backdrop-blur-[2px] transition-opacity"
+                onClick={onClose}
+                aria-hidden="true"
+            />
+
+            {/* Menu Sheet Card */}
+            <div
+                className="relative bg-white rounded-2xl shadow-xl border border-stone-200/80 w-full max-w-xs p-4 flex flex-col gap-2.5 z-10 animate-toast-in"
+                onClick={(e) => e.stopPropagation()}
+            >
+                {/* Drag Handle Indicator */}
+                <div className="w-8 h-1 bg-stone-200 rounded-full mx-auto sm:hidden -mt-1 mb-0.5" />
+
+                {/* Header Preview */}
+                <div className="flex items-center justify-between pb-2.5 border-b border-stone-100">
+                    <div className="min-w-0 flex-1 pr-2">
+                        <p className="text-xs font-semibold text-stone-800 truncate">
+                            {title}
+                        </p>
+                        <p className="text-[11px] text-stone-400 capitalize">
+                            {isExpense ? 'Разход' : 'Приход'}
+                        </p>
+                    </div>
+                    <span className={`text-xs font-bold tabular-nums flex-shrink-0 ${isExpense ? 'text-stone-800' : 'text-emerald-600'}`}>
+                        {isExpense ? `-${amount}` : `+${amount}`}
+                    </span>
+                </div>
+
+                {/* Actions */}
+                <div className="flex flex-col gap-1.5 pt-0.5">
+                    <button
+                        type="button"
+                        onClick={() => {
+                            onClose();
+                            onView();
+                        }}
+                        className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-xs font-medium text-stone-700 bg-stone-50 hover:bg-stone-100 active:scale-[0.98] transition-all cursor-pointer min-h-[44px]"
+                    >
+                        <AppIcon icon={Invoice01Icon} size={16} className="text-stone-500" />
+                        <span>Виж детайли</span>
+                    </button>
+
+                    <button
+                        type="button"
+                        onClick={() => {
+                            onClose();
+                            onEdit();
+                        }}
+                        className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-xs font-medium text-stone-700 bg-stone-50 hover:bg-stone-100 active:scale-[0.98] transition-all cursor-pointer min-h-[44px]"
+                    >
+                        <AppIcon icon={PencilEdit02Icon} size={16} className="text-stone-500" />
+                        <span>Редактирай</span>
+                    </button>
+
+                    <button
+                        type="button"
+                        onClick={() => {
+                            onClose();
+                            onDelete();
+                        }}
+                        className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-xs font-medium text-rose-600 bg-rose-50/60 hover:bg-rose-100 active:scale-[0.98] transition-all cursor-pointer min-h-[44px]"
+                    >
+                        <AppIcon icon={Delete02Icon} size={16} className="text-rose-500" />
+                        <span>Изтрий</span>
+                    </button>
+                </div>
+
+                {/* Cancel */}
+                <button
+                    type="button"
+                    onClick={onClose}
+                    className="w-full py-2 rounded-lg text-xs font-medium text-stone-400 hover:text-stone-600 active:scale-[0.98] transition-all cursor-pointer text-center mt-0.5"
+                >
+                    Отказ
+                </button>
+            </div>
+        </div>
+    );
+};
+
 // ── Row Components ────────────────────────────────────────────────────────────
 
 interface ExpenseRowProps {
     expense: ExpenseEntry;
     onView: (expense: ExpenseEntry) => void;
-    onEdit: (expense: ExpenseEntry) => void;
-    onDelete: (id: string) => void;
+    onOpenMenu: (expense: ExpenseEntry) => void;
 }
 
-const ExpenseRow = ({ expense, onView, onEdit, onDelete }: ExpenseRowProps): React.ReactElement => {
+const ExpenseRow = ({ expense, onView, onOpenMenu }: ExpenseRowProps): React.ReactElement => {
     const { amountColor, rowBg } = getExpenseRowColors(
         expense.isWorkExpense,
         expense.isWithKami,
@@ -146,19 +272,19 @@ const ExpenseRow = ({ expense, onView, onEdit, onDelete }: ExpenseRowProps): Rea
     );
 
     return (
-        <div className={`group flex items-center justify-between gap-2 py-2 px-2.5 -mx-1 rounded-xl border-b border-stone-100 last:border-0 hover:bg-stone-50/80 transition-all ${rowBg}`}>
-            {/* Left Zone: Tap to View Details */}
+        <div className={`group flex items-center justify-between gap-2.5 py-2.5 px-3 -mx-1 rounded-xl border-b border-stone-100 last:border-0 hover:bg-stone-50/80 transition-all ${rowBg}`}>
+            {/* Card Body: Tap to View Details */}
             <button
                 type="button"
                 onClick={() => onView(expense)}
-                className="flex items-center gap-2.5 min-w-0 flex-1 text-left cursor-pointer active:scale-[0.99] transition-transform select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/50 rounded-lg p-0.5"
+                className="flex items-center gap-3 min-w-0 flex-1 text-left cursor-pointer active:scale-[0.99] transition-transform select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/50 rounded-lg p-0.5"
                 aria-label={`Виж детайли за ${expense.description}`}
             >
                 <IconSquircle className={CATEGORY_COLORS[expense.category]}>
                     {CATEGORY_ICONS[expense.category]}
                 </IconSquircle>
-                <div className="flex-1 min-w-0">
-                    <p className="text-sm text-stone-800 font-medium truncate leading-snug">
+                <div className="flex-1 min-w-0 pr-1">
+                    <p className="text-sm text-stone-800 font-semibold truncate leading-snug">
                         {expense.description}
                     </p>
                     <div className="flex flex-wrap items-center gap-1.5 mt-0.5">
@@ -184,8 +310,8 @@ const ExpenseRow = ({ expense, onView, onEdit, onDelete }: ExpenseRowProps): Rea
                 </div>
             </button>
 
-            {/* Right Zone: Amount + Isolated Actions */}
-            <div className="flex items-center gap-2 flex-shrink-0">
+            {/* Right Zone: Amount + Quick Menu Button */}
+            <div className="flex items-center gap-1.5 flex-shrink-0">
                 <button
                     type="button"
                     onClick={() => onView(expense)}
@@ -196,33 +322,17 @@ const ExpenseRow = ({ expense, onView, onEdit, onDelete }: ExpenseRowProps): Rea
                         -{formatAmount(expense.amount, expense.date)}
                     </span>
                 </button>
-                <div
-                    className="flex items-center gap-1 pl-1.5 border-l border-stone-200/70"
-                    onClick={(e) => e.stopPropagation()}
+                <button
+                    type="button"
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        onOpenMenu(expense);
+                    }}
+                    aria-label={`Опции за ${expense.description}`}
+                    className="p-2 -mr-1 rounded-lg text-stone-400 hover:text-stone-700 hover:bg-stone-100 active:scale-[0.95] transition-all cursor-pointer flex items-center justify-center min-w-[36px] min-h-[36px]"
                 >
-                    <button
-                        type="button"
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            onEdit(expense);
-                        }}
-                        aria-label={`Редактирай разход: ${expense.description}`}
-                        className="p-1.5 rounded-lg text-stone-500 bg-stone-100 hover:bg-stone-200 hover:text-stone-900 active:scale-[0.95] transition-all cursor-pointer flex items-center justify-center min-w-[32px] min-h-[32px]"
-                    >
-                        <AppIcon icon={PencilEdit02Icon} size={13} />
-                    </button>
-                    <button
-                        type="button"
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            onDelete(expense.id);
-                        }}
-                        aria-label={`Delete expense: ${expense.description}`}
-                        className="p-1.5 rounded-lg text-stone-400 hover:text-rose-600 hover:bg-rose-50 active:scale-[0.95] transition-all cursor-pointer flex items-center justify-center min-w-[32px] min-h-[32px]"
-                    >
-                        <AppIcon icon={Delete02Icon} size={13} />
-                    </button>
-                </div>
+                    <AppIcon icon={MoreHorizontalIcon} size={16} />
+                </button>
             </div>
         </div>
     );
@@ -231,11 +341,10 @@ const ExpenseRow = ({ expense, onView, onEdit, onDelete }: ExpenseRowProps): Rea
 interface IncomeRowProps {
     income: IncomeEntry;
     onView: (income: IncomeEntry) => void;
-    onEdit: (income: IncomeEntry) => void;
-    onDelete: (id: string) => void;
+    onOpenMenu: (income: IncomeEntry) => void;
 }
 
-const IncomeRow = ({ income, onView, onEdit, onDelete }: IncomeRowProps): React.ReactElement => {
+const IncomeRow = ({ income, onView, onOpenMenu }: IncomeRowProps): React.ReactElement => {
     const isWork = income.isWorkIncome;
     const amountColor = isWork ? 'text-blue-600' : 'text-emerald-600';
     const iconClass = isWork
@@ -243,12 +352,12 @@ const IncomeRow = ({ income, onView, onEdit, onDelete }: IncomeRowProps): React.
         : 'bg-emerald-50 text-emerald-600 border-emerald-200/70';
 
     return (
-        <div className="group flex items-center justify-between gap-2 py-2 px-2.5 -mx-1 rounded-xl border-b border-stone-100 last:border-0 hover:bg-stone-50/80 transition-all">
-            {/* Left Zone: Tap to View Details */}
+        <div className="group flex items-center justify-between gap-2.5 py-2.5 px-3 -mx-1 rounded-xl border-b border-stone-100 last:border-0 hover:bg-stone-50/80 transition-all">
+            {/* Card Body: Tap to View Details */}
             <button
                 type="button"
                 onClick={() => onView(income)}
-                className="flex items-center gap-2.5 min-w-0 flex-1 text-left cursor-pointer active:scale-[0.99] transition-transform select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/50 rounded-lg p-0.5"
+                className="flex items-center gap-3 min-w-0 flex-1 text-left cursor-pointer active:scale-[0.99] transition-transform select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/50 rounded-lg p-0.5"
                 aria-label={`Виж детайли за ${income.description || 'Приход'}`}
             >
                 <IconSquircle className={iconClass}>
@@ -258,8 +367,8 @@ const IncomeRow = ({ income, onView, onEdit, onDelete }: IncomeRowProps): React.
                         <AppIcon icon={TrendingUpIcon} size={15} />
                     )}
                 </IconSquircle>
-                <div className="flex-1 min-w-0">
-                    <p className="text-sm text-stone-800 font-medium truncate leading-snug">
+                <div className="flex-1 min-w-0 pr-1">
+                    <p className="text-sm text-stone-800 font-semibold truncate leading-snug">
                         {income.description || 'Приход'}
                     </p>
                     <div className="flex flex-wrap items-center gap-1.5 mt-0.5">
@@ -278,8 +387,8 @@ const IncomeRow = ({ income, onView, onEdit, onDelete }: IncomeRowProps): React.
                 </div>
             </button>
 
-            {/* Right Zone: Amount + Isolated Actions */}
-            <div className="flex items-center gap-2 flex-shrink-0">
+            {/* Right Zone: Amount + Quick Menu Button */}
+            <div className="flex items-center gap-1.5 flex-shrink-0">
                 <button
                     type="button"
                     onClick={() => onView(income)}
@@ -290,33 +399,17 @@ const IncomeRow = ({ income, onView, onEdit, onDelete }: IncomeRowProps): React.
                         +{formatAmount(income.amount, income.date)}
                     </span>
                 </button>
-                <div
-                    className="flex items-center gap-1 pl-1.5 border-l border-stone-200/70"
-                    onClick={(e) => e.stopPropagation()}
+                <button
+                    type="button"
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        onOpenMenu(income);
+                    }}
+                    aria-label={`Опции за ${income.description || 'Приход'}`}
+                    className="p-2 -mr-1 rounded-lg text-stone-400 hover:text-stone-700 hover:bg-stone-100 active:scale-[0.95] transition-all cursor-pointer flex items-center justify-center min-w-[36px] min-h-[36px]"
                 >
-                    <button
-                        type="button"
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            onEdit(income);
-                        }}
-                        aria-label={`Редактирай приход: ${income.description || 'Приход'}`}
-                        className="p-1.5 rounded-lg text-stone-500 bg-stone-100 hover:bg-stone-200 hover:text-stone-900 active:scale-[0.95] transition-all cursor-pointer flex items-center justify-center min-w-[32px] min-h-[32px]"
-                    >
-                        <AppIcon icon={PencilEdit02Icon} size={13} />
-                    </button>
-                    <button
-                        type="button"
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            onDelete(income.id);
-                        }}
-                        aria-label={`Delete income of ${formatAmount(income.amount, income.date)}`}
-                        className="p-1.5 rounded-lg text-stone-400 hover:text-rose-600 hover:bg-rose-50 active:scale-[0.95] transition-all cursor-pointer flex items-center justify-center min-w-[32px] min-h-[32px]"
-                    >
-                        <AppIcon icon={Delete02Icon} size={13} />
-                    </button>
-                </div>
+                    <AppIcon icon={MoreHorizontalIcon} size={16} />
+                </button>
             </div>
         </div>
     );
@@ -346,6 +439,11 @@ export const TransactionList = (): React.ReactElement => {
         | null
     >(null);
     const [editingTransaction, setEditingTransaction] = useState<
+        | { type: 'expense'; entry: ExpenseEntry }
+        | { type: 'income'; entry: IncomeEntry }
+        | null
+    >(null);
+    const [menuTransaction, setMenuTransaction] = useState<
         | { type: 'expense'; entry: ExpenseEntry }
         | { type: 'income'; entry: IncomeEntry }
         | null
@@ -426,6 +524,32 @@ export const TransactionList = (): React.ReactElement => {
                 />
             )}
 
+            {/* Quick Action Menu Sheet */}
+            <TransactionActionMenu
+                isOpen={Boolean(menuTransaction)}
+                transaction={menuTransaction}
+                onClose={() => setMenuTransaction(null)}
+                onView={() => {
+                    if (menuTransaction) {
+                        setViewingTransaction(menuTransaction);
+                    }
+                }}
+                onEdit={() => {
+                    if (menuTransaction) {
+                        setEditingTransaction(menuTransaction);
+                    }
+                }}
+                onDelete={() => {
+                    if (menuTransaction) {
+                        if (menuTransaction.type === 'expense') {
+                            requestDeleteExpense(menuTransaction.entry.id);
+                        } else {
+                            requestDeleteIncome(menuTransaction.entry.id);
+                        }
+                    }
+                }}
+            />
+
             {/* Segmented Control */}
             <div className="flex p-1 bg-stone-100 rounded-xl mb-3">
                 <button
@@ -467,8 +591,7 @@ export const TransactionList = (): React.ReactElement => {
                             key={income.id}
                             income={income}
                             onView={(inc) => setViewingTransaction({ type: 'income', entry: inc })}
-                            onEdit={(inc) => setEditingTransaction({ type: 'income', entry: inc })}
-                            onDelete={requestDeleteIncome}
+                            onOpenMenu={(inc) => setMenuTransaction({ type: 'income', entry: inc })}
                         />
                     ))}
                     {[...filteredExpense].reverse().map((expense) => (
@@ -476,8 +599,7 @@ export const TransactionList = (): React.ReactElement => {
                             key={expense.id}
                             expense={expense}
                             onView={(exp) => setViewingTransaction({ type: 'expense', entry: exp })}
-                            onEdit={(exp) => setEditingTransaction({ type: 'expense', entry: exp })}
-                            onDelete={requestDeleteExpense}
+                            onOpenMenu={(exp) => setMenuTransaction({ type: 'expense', entry: exp })}
                         />
                     ))}
                 </div>

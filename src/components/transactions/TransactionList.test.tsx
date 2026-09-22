@@ -62,10 +62,17 @@ describe('TransactionList', () => {
         expect(screen.getByText('Пълно описание')).toBeInTheDocument();
     });
 
-    it('opens EditTransactionModal without opening ViewTransactionModal when clicking Edit button', () => {
+    it('opens quick menu and navigates to EditTransactionModal when clicking Edit in menu', () => {
         render(<TransactionList />);
 
-        const editBtn = screen.getByLabelText(/Редактирай разход: Supermarket weekly grocery run/);
+        const menuBtn = screen.getByLabelText(/Опции за Supermarket weekly grocery run/);
+        fireEvent.click(menuBtn);
+
+        // Action menu should open
+        expect(screen.getByRole('dialog', { name: /Опции за транзакцията/i })).toBeInTheDocument();
+
+        // Click Редактирай from the menu
+        const editBtn = screen.getByRole('button', { name: /^Редактирай$/i });
         fireEvent.click(editBtn);
 
         // EditTransactionModal should be open
@@ -74,16 +81,36 @@ describe('TransactionList', () => {
         expect(screen.queryByText('Пълно описание')).not.toBeInTheDocument();
     });
 
-    it('opens DeleteDialog without opening ViewTransactionModal when clicking Delete button', () => {
+    it('opens quick menu and navigates to DeleteDialog when clicking Delete in menu', () => {
         render(<TransactionList />);
 
-        const deleteBtn = screen.getByLabelText(/Delete expense: Supermarket weekly grocery run/);
+        const menuBtn = screen.getByLabelText(/Опции за Supermarket weekly grocery run/);
+        fireEvent.click(menuBtn);
+
+        // Action menu should open
+        expect(screen.getByRole('dialog', { name: /Опции за транзакцията/i })).toBeInTheDocument();
+
+        // Click Изтрий from the menu
+        const deleteBtn = screen.getByRole('button', { name: /^Изтрий$/i });
         fireEvent.click(deleteBtn);
 
         // Delete confirmation should be open
         expect(screen.getByText('Изтриване на транзакция')).toBeInTheDocument();
         // ViewTransactionModal should NOT be open
         expect(screen.queryByText('Пълно описание')).not.toBeInTheDocument();
+    });
+
+    it('opens ViewTransactionModal when clicking View Details in quick menu', () => {
+        render(<TransactionList />);
+
+        const menuBtn = screen.getByLabelText(/Опции за Supermarket weekly grocery run/);
+        fireEvent.click(menuBtn);
+
+        const viewDetailsBtn = screen.getByRole('button', { name: /^Виж детайли$/i });
+        fireEvent.click(viewDetailsBtn);
+
+        expect(screen.getByRole('dialog', { name: /Магазини \(Храна\/Вода\)/i })).toBeInTheDocument();
+        expect(screen.getByText('Пълно описание')).toBeInTheDocument();
     });
 
     it('filters entries when changing filter tabs', () => {

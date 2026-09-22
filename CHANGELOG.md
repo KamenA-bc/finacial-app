@@ -32,6 +32,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   - Streamlined category rows in `CategoryChart.tsx` and converted transaction badges into sleek micro-pills (`text-[9px]`) for neat mobile density.
   - Added test suites in `ViewTransactionModal.test.tsx` and `TransactionList.test.tsx`.
 - **Category Chart Click-Away Dismissal (`CategoryChart.tsx`)**: Added click-away listener so clicking anywhere outside the chart card or tapping non-interactive whitespace immediately clears active category selection and restores the graph and center readout to their normal state. Added unit test in `CategoryChart.test.tsx`.
+- **Compact Mobile Transaction Cards & Quick Action Menu (`TransactionList.tsx`)**: Redesigned transaction cards on mobile viewports by replacing crowded per-row edit/delete action clusters with a single `•••` quick menu button and a thumb-friendly `TransactionActionMenu` action sheet. Reclaimed $>55\text{px}-65\text{px}$ of horizontal space for transaction descriptions, eliminating aggressive text truncation. Updated unit test suite in `TransactionList.test.tsx`.
 
 ### Fixed
 - **Income Edit Modal Tag Clean-up (`EditTransactionModal.tsx`)**: Removed deprecated "Kami ❤️" tag chip from the income edit modal and ensured edited income records cleanly set `isWithKami: false`. Updated test suite in `EditTransactionModal.test.tsx`.
