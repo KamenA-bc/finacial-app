@@ -6,7 +6,6 @@ import {
     Briefcase01Icon,
     FavouriteIcon,
     User02Icon,
-    CheckmarkBadge01Icon,
     Loading03Icon,
     Invoice01Icon,
     TrendingUpIcon,
@@ -388,14 +387,14 @@ export const EditTransactionModal = ({
                         <button
                             type="button"
                             onClick={onClose}
-                            className="px-3.5 py-2 rounded-lg text-xs font-semibold text-stone-600 bg-stone-100 hover:bg-stone-200 active:scale-[0.97] transition-all cursor-pointer"
+                            className="px-4 py-2 rounded-lg text-xs font-medium text-stone-500 hover:text-stone-800 hover:bg-stone-100 active:scale-[0.97] transition-all cursor-pointer"
                         >
                             Отказ
                         </button>
                         <button
                             type="submit"
                             disabled={isSubmitting}
-                            className="px-4 py-2 rounded-lg text-xs font-semibold text-white bg-stone-900 hover:bg-stone-800 disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.97] transition-all cursor-pointer flex items-center gap-1.5 shadow-sm"
+                            className="px-5 py-2 rounded-lg text-xs font-semibold text-white bg-stone-900 hover:bg-stone-800 disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.97] transition-all cursor-pointer inline-flex items-center justify-center gap-1.5 shadow-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.18)] border border-stone-800 focus-visible:ring-2 focus-visible:ring-stone-400 focus-visible:outline-none"
                         >
                             {isSubmitting ? (
                                 <>
@@ -403,10 +402,7 @@ export const EditTransactionModal = ({
                                     <span>Запазване…</span>
                                 </>
                             ) : (
-                                <>
-                                    <AppIcon icon={CheckmarkBadge01Icon} size={13} />
-                                    <span>Запази промените</span>
-                                </>
+                                <span>Запази промените</span>
                             )}
                         </button>
                     </div>

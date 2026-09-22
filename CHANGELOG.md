@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   - `src/components/statistics/SpendingHabits.tsx`: Added `Home01Icon`, category squircle classes, and progress bar background.
   - `supabase/migrations/20260922141600_add_home_expense_category.sql`: Added database migration updating `expense_entries_category_check` CHECK constraint to include `'Home'`.
   - `src/types/index.test.ts` & `src/hooks/useStatisticsData.test.ts`: Added contract tests and updated category count assertions (13 → 14).
+- **Edit Modal Button Craft (`EditTransactionModal.tsx`)**: Removed static checkmark badge icon from the primary save button, established clear visual hierarchy with specular depth (`shadow-[inset_0_1px_0_rgba(255,255,255,0.18)]`), hairline separation border, confident padding (`px-5 py-2`), and softened secondary cancel action (`font-medium text-stone-500`).
 
 ## [2026-09-20]
 
