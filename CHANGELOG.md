@@ -26,6 +26,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   - Stripped all spurious `dark:` utility classes across `CategoryChart.tsx`, `QuickTransactionForm.tsx`, and `AppIcon.tsx` that caused contrast failures (white-on-white text and black progress tracks) on phones with system dark mode or forced-dark extensions.
   - Configured `@variant dark (&:where(.dark, .dark *));` and global `color-scheme: light` in `globals.css` with Next.js `viewport` metadata in `layout.tsx` to enforce pure light mode.
   - Updated `AGENTS.md` to formally declare phone viewports as the primary target and ban `dark:` classes until an in-app theme toggle is built.
+- **Read-Only Transaction View Modal & Compact Mobile Craft (`ViewTransactionModal.tsx`, `TransactionList.tsx`, `CategoryChart.tsx`)**:
+  - Added `ViewTransactionModal` allowing users to tap any transaction card to inspect full, un-truncated descriptions, Bulgarian formatted date, amount hero, and active tags in a clean read-only dialog.
+  - Implemented strict hitbox isolation in `TransactionList.tsx` with dedicated tap zones and isolated Edit/Delete action clusters with `e.stopPropagation()` to eliminate accidental mis-clicks.
+  - Streamlined category rows in `CategoryChart.tsx` and converted transaction badges into sleek micro-pills (`text-[9px]`) for neat mobile density.
+  - Added test suites in `ViewTransactionModal.test.tsx` and `TransactionList.test.tsx`.
 
 ## [2026-09-20]
 

@@ -335,7 +335,7 @@ export const CategoryChart = (): React.ReactElement => {
                                         key={cat.name}
                                         type="button"
                                         onClick={() => handleCategoryToggle(cat.name)}
-                                        className={`w-full flex flex-col gap-1 px-2.5 py-1.5 rounded-xl text-left transition-all cursor-pointer active:scale-[0.99] ${
+                                        className={`w-full flex flex-col gap-0.5 px-2 py-1 rounded-lg text-left transition-all cursor-pointer active:scale-[0.99] ${
                                             isSelected
                                                 ? 'bg-stone-100 ring-1 ring-stone-300/80'
                                                 : 'hover:bg-stone-50'
@@ -344,7 +344,7 @@ export const CategoryChart = (): React.ReactElement => {
                                         <div className="flex items-center justify-between gap-2">
                                             <div className="flex items-center gap-2 min-w-0">
                                                 <span
-                                                    className="w-2.5 h-2.5 rounded-full flex-shrink-0"
+                                                    className="w-2 h-2 rounded-full flex-shrink-0"
                                                     style={{ backgroundColor: cat.color }}
                                                 />
                                                 <span className="text-xs font-semibold text-stone-800 truncate">
@@ -355,14 +355,14 @@ export const CategoryChart = (): React.ReactElement => {
                                                 <span className="text-xs font-bold text-stone-900 tabular-nums">
                                                     {formatTooltipValue(cat.value, contextDate)}
                                                 </span>
-                                                <span className="text-[11px] font-semibold text-stone-500 tabular-nums min-w-[38px] text-right">
+                                                <span className="text-[11px] font-semibold text-stone-500 tabular-nums min-w-[36px] text-right">
                                                     {cat.percentage.toFixed(1)}%
                                                 </span>
                                             </div>
                                         </div>
 
                                         {/* Proportional Progress Track */}
-                                        <div className="w-full h-1.5 bg-stone-100 rounded-full overflow-hidden">
+                                        <div className="w-full h-1 bg-stone-100 rounded-full overflow-hidden">
                                             <div
                                                 className="h-full rounded-full transition-all duration-300"
                                                 style={{
@@ -380,7 +380,7 @@ export const CategoryChart = (): React.ReactElement => {
                                 <button
                                     type="button"
                                     onClick={() => setIsExpanded((prev) => !prev)}
-                                    className="flex items-center justify-center gap-1.5 py-2 px-3 mt-1 rounded-lg text-xs font-semibold text-stone-600 bg-stone-100/80 hover:bg-stone-200/80 border border-stone-200/60 active:scale-[0.98] transition-all cursor-pointer"
+                                    className="flex items-center justify-center gap-1.5 py-1.5 px-3 mt-0.5 rounded-lg text-[11px] font-semibold text-stone-600 bg-stone-100/80 hover:bg-stone-200/80 border border-stone-200/60 active:scale-[0.98] transition-all cursor-pointer"
                                 >
                                     <span>
                                         {isExpanded
@@ -389,7 +389,7 @@ export const CategoryChart = (): React.ReactElement => {
                                                   remainingCategories.length === 1 ? 'категория' : 'категории'
                                               } (${remainingPercentage.toFixed(1)}%)`}
                                     </span>
-                                    <AppIcon icon={isExpanded ? ArrowUp01Icon : ArrowDown01Icon} size={14} />
+                                    <AppIcon icon={isExpanded ? ArrowUp01Icon : ArrowDown01Icon} size={13} />
                                 </button>
                             )}
                         </div>

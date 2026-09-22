@@ -34,6 +34,7 @@ import {
 } from '@/lib/constants';
 import { getExpenseRowColors } from '@/lib/expenseRowColors';
 import { EditTransactionModal } from './EditTransactionModal';
+import { ViewTransactionModal } from './ViewTransactionModal';
 
 // ── Constants ────────────────────────────────────────────────────────────────
 
@@ -132,11 +133,12 @@ const DeleteDialog = ({ description, amount, onConfirm, onCancel }: DeleteDialog
 
 interface ExpenseRowProps {
     expense: ExpenseEntry;
+    onView: (expense: ExpenseEntry) => void;
     onEdit: (expense: ExpenseEntry) => void;
     onDelete: (id: string) => void;
 }
 
-const ExpenseRow = ({ expense, onEdit, onDelete }: ExpenseRowProps): React.ReactElement => {
+const ExpenseRow = ({ expense, onView, onEdit, onDelete }: ExpenseRowProps): React.ReactElement => {
     const { amountColor, rowBg } = getExpenseRowColors(
         expense.isWorkExpense,
         expense.isWithKami,
@@ -144,54 +146,79 @@ const ExpenseRow = ({ expense, onEdit, onDelete }: ExpenseRowProps): React.React
     );
 
     return (
-        <div className={`group flex items-center justify-between gap-3 py-2.5 px-3 -mx-1 rounded-xl border-b border-stone-100 last:border-0 hover:bg-stone-50/90 transition-all ${rowBg}`}>
-            {/* Left: Icon + Text */}
-            <div className="flex items-center gap-2.5 min-w-0 flex-1">
+        <div className={`group flex items-center justify-between gap-2 py-2 px-2.5 -mx-1 rounded-xl border-b border-stone-100 last:border-0 hover:bg-stone-50/80 transition-all ${rowBg}`}>
+            {/* Left Zone: Tap to View Details */}
+            <button
+                type="button"
+                onClick={() => onView(expense)}
+                className="flex items-center gap-2.5 min-w-0 flex-1 text-left cursor-pointer active:scale-[0.99] transition-transform select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/50 rounded-lg p-0.5"
+                aria-label={`Виж детайли за ${expense.description}`}
+            >
                 <IconSquircle className={CATEGORY_COLORS[expense.category]}>
                     {CATEGORY_ICONS[expense.category]}
                 </IconSquircle>
                 <div className="flex-1 min-w-0">
-                    <p className="text-sm text-stone-800 font-medium truncate">
+                    <p className="text-sm text-stone-800 font-medium truncate leading-snug">
                         {expense.description}
                     </p>
                     <div className="flex flex-wrap items-center gap-1.5 mt-0.5">
-                        <p className="text-xs text-stone-500 whitespace-nowrap">{CATEGORY_BG_MAP[expense.category] ?? expense.category}</p>
+                        <p className="text-xs text-stone-500 whitespace-nowrap font-medium">
+                            {CATEGORY_BG_MAP[expense.category] ?? expense.category}
+                        </p>
                         {expense.isWorkExpense && (
-                            <span className="whitespace-nowrap text-[10px] font-medium text-amber-700 bg-amber-50 border border-amber-200/80 px-1.5 py-0.2 rounded-md leading-tight">
+                            <span className="whitespace-nowrap text-[9px] font-semibold text-amber-700 bg-amber-50 border border-amber-200/80 px-1.5 py-0.5 rounded-full leading-none">
                                 Работни
                             </span>
                         )}
                         {expense.isWithKami && (
-                            <span className="whitespace-nowrap text-[10px] font-medium text-pink-700 bg-pink-50 border border-pink-200/80 px-1.5 py-0.2 rounded-md leading-tight">
+                            <span className="whitespace-nowrap text-[9px] font-semibold text-pink-700 bg-pink-50 border border-pink-200/80 px-1.5 py-0.5 rounded-full leading-none">
                                 Kami ❤️
                             </span>
                         )}
                         {expense.isWithOthers && (
-                            <span className="whitespace-nowrap text-[10px] font-medium text-emerald-700 bg-emerald-50 border border-emerald-200/80 px-1.5 py-0.2 rounded-md leading-tight">
+                            <span className="whitespace-nowrap text-[9px] font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200/80 px-1.5 py-0.5 rounded-full leading-none">
                                 С Други
                             </span>
                         )}
                     </div>
                 </div>
-            </div>
+            </button>
 
-            {/* Right: Amount + Actions */}
+            {/* Right Zone: Amount + Isolated Actions */}
             <div className="flex items-center gap-2 flex-shrink-0">
-                <span className={`text-sm font-semibold tabular-nums text-right ${amountColor}`}>
-                    -{formatAmount(expense.amount, expense.date)}
-                </span>
-                <div className="flex items-center gap-1">
+                <button
+                    type="button"
+                    onClick={() => onView(expense)}
+                    className="text-right cursor-pointer active:scale-[0.98] transition-transform select-none focus:outline-none"
+                    aria-label={`Сума: ${formatAmount(expense.amount, expense.date)}`}
+                >
+                    <span className={`text-sm font-bold tabular-nums ${amountColor}`}>
+                        -{formatAmount(expense.amount, expense.date)}
+                    </span>
+                </button>
+                <div
+                    className="flex items-center gap-1 pl-1.5 border-l border-stone-200/70"
+                    onClick={(e) => e.stopPropagation()}
+                >
                     <button
-                        onClick={() => onEdit(expense)}
+                        type="button"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            onEdit(expense);
+                        }}
                         aria-label={`Редактирай разход: ${expense.description}`}
-                        className="p-1.5 rounded-lg text-stone-600 bg-stone-100 hover:bg-stone-200 hover:text-stone-900 active:scale-[0.95] transition-all cursor-pointer flex items-center justify-center"
+                        className="p-1.5 rounded-lg text-stone-500 bg-stone-100 hover:bg-stone-200 hover:text-stone-900 active:scale-[0.95] transition-all cursor-pointer flex items-center justify-center min-w-[32px] min-h-[32px]"
                     >
                         <AppIcon icon={PencilEdit02Icon} size={13} />
                     </button>
                     <button
-                        onClick={() => onDelete(expense.id)}
+                        type="button"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            onDelete(expense.id);
+                        }}
                         aria-label={`Delete expense: ${expense.description}`}
-                        className="p-1.5 rounded-lg text-stone-400 hover:text-rose-600 hover:bg-rose-50 active:scale-[0.95] transition-all cursor-pointer flex items-center justify-center"
+                        className="p-1.5 rounded-lg text-stone-400 hover:text-rose-600 hover:bg-rose-50 active:scale-[0.95] transition-all cursor-pointer flex items-center justify-center min-w-[32px] min-h-[32px]"
                     >
                         <AppIcon icon={Delete02Icon} size={13} />
                     </button>
@@ -203,11 +230,12 @@ const ExpenseRow = ({ expense, onEdit, onDelete }: ExpenseRowProps): React.React
 
 interface IncomeRowProps {
     income: IncomeEntry;
+    onView: (income: IncomeEntry) => void;
     onEdit: (income: IncomeEntry) => void;
     onDelete: (id: string) => void;
 }
 
-const IncomeRow = ({ income, onEdit, onDelete }: IncomeRowProps): React.ReactElement => {
+const IncomeRow = ({ income, onView, onEdit, onDelete }: IncomeRowProps): React.ReactElement => {
     const isWork = income.isWorkIncome;
     const amountColor = isWork ? 'text-blue-600' : 'text-emerald-600';
     const iconClass = isWork
@@ -215,9 +243,14 @@ const IncomeRow = ({ income, onEdit, onDelete }: IncomeRowProps): React.ReactEle
         : 'bg-emerald-50 text-emerald-600 border-emerald-200/70';
 
     return (
-        <div className="group flex items-center justify-between gap-3 py-2.5 px-3 -mx-1 rounded-xl border-b border-stone-100 last:border-0 hover:bg-stone-50/90 transition-all">
-            {/* Left: Icon + Text */}
-            <div className="flex items-center gap-2.5 min-w-0 flex-1">
+        <div className="group flex items-center justify-between gap-2 py-2 px-2.5 -mx-1 rounded-xl border-b border-stone-100 last:border-0 hover:bg-stone-50/80 transition-all">
+            {/* Left Zone: Tap to View Details */}
+            <button
+                type="button"
+                onClick={() => onView(income)}
+                className="flex items-center gap-2.5 min-w-0 flex-1 text-left cursor-pointer active:scale-[0.99] transition-transform select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/50 rounded-lg p-0.5"
+                aria-label={`Виж детайли за ${income.description || 'Приход'}`}
+            >
                 <IconSquircle className={iconClass}>
                     {isWork ? (
                         <AppIcon icon={Briefcase01Icon} size={15} />
@@ -226,37 +259,60 @@ const IncomeRow = ({ income, onEdit, onDelete }: IncomeRowProps): React.ReactEle
                     )}
                 </IconSquircle>
                 <div className="flex-1 min-w-0">
-                    <p className="text-sm text-stone-800 font-medium truncate">
+                    <p className="text-sm text-stone-800 font-medium truncate leading-snug">
                         {income.description || 'Приход'}
                     </p>
                     <div className="flex flex-wrap items-center gap-1.5 mt-0.5">
-                        <p className="text-xs text-stone-500 whitespace-nowrap">Спечелени пари</p>
+                        <p className="text-xs text-stone-500 whitespace-nowrap font-medium">Спечелени пари</p>
                         {isWork && (
-                            <span className="whitespace-nowrap text-[10px] font-medium text-blue-700 bg-blue-50 border border-blue-200/80 px-1.5 py-0.2 rounded-md leading-tight">
+                            <span className="whitespace-nowrap text-[9px] font-semibold text-blue-700 bg-blue-50 border border-blue-200/80 px-1.5 py-0.5 rounded-full leading-none">
                                 Работен
+                            </span>
+                        )}
+                        {income.isWithKami && (
+                            <span className="whitespace-nowrap text-[9px] font-semibold text-pink-700 bg-pink-50 border border-pink-200/80 px-1.5 py-0.5 rounded-full leading-none">
+                                Kami ❤️
                             </span>
                         )}
                     </div>
                 </div>
-            </div>
+            </button>
 
-            {/* Right: Amount + Actions */}
+            {/* Right Zone: Amount + Isolated Actions */}
             <div className="flex items-center gap-2 flex-shrink-0">
-                <span className={`text-sm font-semibold tabular-nums text-right ${amountColor}`}>
-                    +{formatAmount(income.amount, income.date)}
-                </span>
-                <div className="flex items-center gap-1">
+                <button
+                    type="button"
+                    onClick={() => onView(income)}
+                    className="text-right cursor-pointer active:scale-[0.98] transition-transform select-none focus:outline-none"
+                    aria-label={`Сума: ${formatAmount(income.amount, income.date)}`}
+                >
+                    <span className={`text-sm font-bold tabular-nums ${amountColor}`}>
+                        +{formatAmount(income.amount, income.date)}
+                    </span>
+                </button>
+                <div
+                    className="flex items-center gap-1 pl-1.5 border-l border-stone-200/70"
+                    onClick={(e) => e.stopPropagation()}
+                >
                     <button
-                        onClick={() => onEdit(income)}
+                        type="button"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            onEdit(income);
+                        }}
                         aria-label={`Редактирай приход: ${income.description || 'Приход'}`}
-                        className="p-1.5 rounded-lg text-stone-600 bg-stone-100 hover:bg-stone-200 hover:text-stone-900 active:scale-[0.95] transition-all cursor-pointer flex items-center justify-center"
+                        className="p-1.5 rounded-lg text-stone-500 bg-stone-100 hover:bg-stone-200 hover:text-stone-900 active:scale-[0.95] transition-all cursor-pointer flex items-center justify-center min-w-[32px] min-h-[32px]"
                     >
                         <AppIcon icon={PencilEdit02Icon} size={13} />
                     </button>
                     <button
-                        onClick={() => onDelete(income.id)}
+                        type="button"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            onDelete(income.id);
+                        }}
                         aria-label={`Delete income of ${formatAmount(income.amount, income.date)}`}
-                        className="p-1.5 rounded-lg text-stone-400 hover:text-rose-600 hover:bg-rose-50 active:scale-[0.95] transition-all cursor-pointer flex items-center justify-center"
+                        className="p-1.5 rounded-lg text-stone-400 hover:text-rose-600 hover:bg-rose-50 active:scale-[0.95] transition-all cursor-pointer flex items-center justify-center min-w-[32px] min-h-[32px]"
                     >
                         <AppIcon icon={Delete02Icon} size={13} />
                     </button>
@@ -284,6 +340,11 @@ export const TransactionList = (): React.ReactElement => {
     const deleteExpense = useFinancialStore((s) => s.deleteExpense);
     const [filterMode, setFilterMode] = useState<FilterMode>('all');
     const [pendingDelete, setPendingDelete] = useState<PendingDelete | null>(null);
+    const [viewingTransaction, setViewingTransaction] = useState<
+        | { type: 'expense'; entry: ExpenseEntry }
+        | { type: 'income'; entry: IncomeEntry }
+        | null
+    >(null);
     const [editingTransaction, setEditingTransaction] = useState<
         | { type: 'expense'; entry: ExpenseEntry }
         | { type: 'income'; entry: IncomeEntry }
@@ -341,6 +402,17 @@ export const TransactionList = (): React.ReactElement => {
 
     return (
         <div className="flex flex-col">
+            {/* View Transaction Modal */}
+            <ViewTransactionModal
+                isOpen={Boolean(viewingTransaction)}
+                transaction={viewingTransaction}
+                onClose={() => setViewingTransaction(null)}
+                onEdit={(tx) => {
+                    setViewingTransaction(null);
+                    setEditingTransaction(tx);
+                }}
+            />
+
             {/* Edit Transaction Modal */}
             <EditTransactionModal
                 isOpen={Boolean(editingTransaction)}
@@ -398,6 +470,7 @@ export const TransactionList = (): React.ReactElement => {
                         <IncomeRow
                             key={income.id}
                             income={income}
+                            onView={(inc) => setViewingTransaction({ type: 'income', entry: inc })}
                             onEdit={(inc) => setEditingTransaction({ type: 'income', entry: inc })}
                             onDelete={requestDeleteIncome}
                         />
@@ -406,6 +479,7 @@ export const TransactionList = (): React.ReactElement => {
                         <ExpenseRow
                             key={expense.id}
                             expense={expense}
+                            onView={(exp) => setViewingTransaction({ type: 'expense', entry: exp })}
                             onEdit={(exp) => setEditingTransaction({ type: 'expense', entry: exp })}
                             onDelete={requestDeleteExpense}
                         />
