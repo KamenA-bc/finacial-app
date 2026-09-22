@@ -70,7 +70,7 @@ export const EditTransactionModal = ({
         } else {
             const inc = transaction.entry as IncomeEntry;
             setIsWorkIncome(Boolean(inc.isWorkIncome));
-            setIsWithKami(Boolean(inc.isWithKami));
+            setIsWithKami(false);
         }
     }, [isOpen, transaction]);
 
@@ -127,7 +127,7 @@ export const EditTransactionModal = ({
                     date,
                     description: description.trim(),
                     isWorkIncome,
-                    isWithKami,
+                    isWithKami: false,
                 });
             }
 
@@ -342,35 +342,19 @@ export const EditTransactionModal = ({
                                     </button>
                                 </>
                             ) : (
-                                <>
-                                    <button
-                                        type="button"
-                                        aria-pressed={isWorkIncome}
-                                        onClick={() => setIsWorkIncome(!isWorkIncome)}
-                                        className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium border transition-all cursor-pointer active:scale-[0.97] ${
-                                            isWorkIncome
-                                                ? 'bg-blue-50 text-blue-700 border-blue-300 ring-1 ring-blue-400/30'
-                                                : 'bg-stone-50 text-stone-600 border-stone-200 hover:bg-stone-100'
-                                        }`}
-                                    >
-                                        <AppIcon icon={Briefcase01Icon} size={13} className={isWorkIncome ? 'text-blue-600' : 'text-stone-400'} />
-                                        <span>Работен</span>
-                                    </button>
-
-                                    <button
-                                        type="button"
-                                        aria-pressed={isWithKami}
-                                        onClick={() => setIsWithKami(!isWithKami)}
-                                        className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium border transition-all cursor-pointer active:scale-[0.97] ${
-                                            isWithKami
-                                                ? 'bg-pink-50 text-pink-700 border-pink-300 ring-1 ring-pink-400/30'
-                                                : 'bg-stone-50 text-stone-600 border-stone-200 hover:bg-stone-100'
-                                        }`}
-                                    >
-                                        <AppIcon icon={FavouriteIcon} size={13} className={isWithKami ? 'text-pink-600' : 'text-stone-400'} />
-                                        <span>Kami ❤️</span>
-                                    </button>
-                                </>
+                                <button
+                                    type="button"
+                                    aria-pressed={isWorkIncome}
+                                    onClick={() => setIsWorkIncome(!isWorkIncome)}
+                                    className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium border transition-all cursor-pointer active:scale-[0.97] ${
+                                        isWorkIncome
+                                            ? 'bg-blue-50 text-blue-700 border-blue-300 ring-1 ring-blue-400/30'
+                                            : 'bg-stone-50 text-stone-600 border-stone-200 hover:bg-stone-100'
+                                    }`}
+                                >
+                                    <AppIcon icon={Briefcase01Icon} size={13} className={isWorkIncome ? 'text-blue-600' : 'text-stone-400'} />
+                                    <span>Работен</span>
+                                </button>
                             )}
                         </div>
                     </div>

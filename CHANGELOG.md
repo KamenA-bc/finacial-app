@@ -33,6 +33,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   - Added test suites in `ViewTransactionModal.test.tsx` and `TransactionList.test.tsx`.
 - **Category Chart Click-Away Dismissal (`CategoryChart.tsx`)**: Added click-away listener so clicking anywhere outside the chart card or tapping non-interactive whitespace immediately clears active category selection and restores the graph and center readout to their normal state. Added unit test in `CategoryChart.test.tsx`.
 
+### Fixed
+- **Income Edit Modal Tag Clean-up (`EditTransactionModal.tsx`)**: Removed deprecated "Kami ❤️" tag chip from the income edit modal and ensured edited income records cleanly set `isWithKami: false`. Updated test suite in `EditTransactionModal.test.tsx`.
+
 ## [2026-09-20]
 
 ### Added

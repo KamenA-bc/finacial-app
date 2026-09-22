@@ -98,6 +98,7 @@ describe('EditTransactionModal', () => {
 
         const workTag = screen.getByRole('button', { name: /работен/i });
         expect(workTag).toHaveAttribute('aria-pressed', 'true');
+        expect(screen.queryByRole('button', { name: /kami/i })).not.toBeInTheDocument();
     });
 
     it('shows validation error when amount is invalid or zero', async () => {
