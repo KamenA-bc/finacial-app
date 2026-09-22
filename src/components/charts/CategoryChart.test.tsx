@@ -164,4 +164,31 @@ describe('CategoryChart – Mobile-First Category Spending Breakdown', () => {
         expect(screen.getByText(/общо разход/i)).toBeInTheDocument();
         expect(screen.getByText('€400,00')).toBeInTheDocument();
     });
+
+    it('resets selection and returns graph to normal when clicking away outside the chart', () => {
+        const expenses: ExpenseEntry[] = [
+            { id: '1', date: '2026-03-01', amount: 300, description: 'Cat 1', category: 'Магазини (Храна/Вода)', isWorkExpense: false, isWithKami: false, isWithOthers: false },
+            { id: '2', date: '2026-03-02', amount: 100, description: 'Cat 2', category: 'Гориво', isWorkExpense: false, isWithKami: false, isWithOthers: false },
+        ];
+
+        useFinancialStore.setState({ expenseEntries: expenses });
+
+        render(
+            <div>
+                <button data-testid="outside-element">Outside</button>
+                <CategoryChart />
+            </div>
+        );
+
+        // Click category slice in pie
+        fireEvent.click(screen.getByTestId('slice-Магазини (Храна/Вода)'));
+        expect(screen.getByLabelText(/магазини \(храна\/вода\): €300,00/i)).toBeInTheDocument();
+
+        // Click outside element
+        fireEvent.pointerDown(screen.getByTestId('outside-element'));
+
+        // Center readout should reset back to total
+        expect(screen.getByText(/общо разход/i)).toBeInTheDocument();
+        expect(screen.getByText('€400,00')).toBeInTheDocument();
+    });
 });

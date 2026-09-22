@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useRef, useEffect } from 'react';
 import {
     PieChart,
     Pie,
@@ -172,8 +172,33 @@ export const CategoryChart = (): React.ReactElement => {
     const remainingCategories = sortedCategories.slice(4);
     const remainingPercentage = remainingCategories.reduce((acc, curr) => acc + curr.percentage, 0);
 
+    const containerRef = useRef<HTMLDivElement>(null);
+
+    // Reset highlight and return graph to normal when clicking away outside the chart
+    useEffect(() => {
+        if (!selectedCategoryName) return;
+
+        const handlePointerDown = (e: PointerEvent) => {
+            if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+                setSelection({ key: currentViewKey, name: null });
+            }
+        };
+
+        document.addEventListener('pointerdown', handlePointerDown);
+        return () => document.removeEventListener('pointerdown', handlePointerDown);
+    }, [selectedCategoryName, currentViewKey]);
+
+    // Also reset if user clicks on blank/card space not occupied by buttons or slices
+    const handleContainerClick = (e: React.MouseEvent<HTMLDivElement>) => {
+        if (!selectedCategoryName) return;
+        const target = e.target as HTMLElement;
+        if (!target.closest('button') && !target.closest('.recharts-pie-sector')) {
+            setSelection({ key: currentViewKey, name: null });
+        }
+    };
+
     return (
-        <div className="flex flex-col h-full">
+        <div ref={containerRef} onClick={handleContainerClick} className="flex flex-col h-full">
             {/* Header with Tab Switcher & Label */}
             <div className="flex flex-col gap-2.5 mb-3">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
