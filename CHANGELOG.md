@@ -35,6 +35,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Fixed
 - **Income Edit Modal Tag Clean-up (`EditTransactionModal.tsx`)**: Removed deprecated "Kami ❤️" tag chip from the income edit modal and ensured edited income records cleanly set `isWithKami: false`. Updated test suite in `EditTransactionModal.test.tsx`.
+- **Read-Only View Modal Polish (`ViewTransactionModal.tsx`)**: Removed redundant bottom 'Затвори' and 'Редактирай' buttons to maintain a clean inspection-only view. Closing is handled via the header 'X' button, backdrop tap, or Escape key. Updated tests in `ViewTransactionModal.test.tsx`.
 
 ## [2026-09-20]
 

@@ -4,7 +4,6 @@ import React, { useEffect } from 'react';
 import {
     Cancel01Icon,
     Calendar01Icon,
-    PencilEdit02Icon,
     Briefcase01Icon,
     TrendingUpIcon,
     Note01Icon,
@@ -71,11 +70,6 @@ const CATEGORY_COLORS: Record<ExpenseCategory, string> = {
 export interface ViewTransactionModalProps {
     isOpen: boolean;
     onClose: () => void;
-    onEdit?: (
-        transaction:
-            | { type: 'expense'; entry: ExpenseEntry }
-            | { type: 'income'; entry: IncomeEntry }
-    ) => void;
     transaction:
         | { type: 'expense'; entry: ExpenseEntry }
         | { type: 'income'; entry: IncomeEntry }
@@ -99,7 +93,6 @@ const formatFullDate = (dateStr: string): string => {
 export const ViewTransactionModal = ({
     isOpen,
     onClose,
-    onEdit,
     transaction,
 }: ViewTransactionModalProps): React.ReactElement | null => {
     // Escape key dismiss
@@ -255,30 +248,6 @@ export const ViewTransactionModal = ({
                         </div>
                     </div>
                 )}
-
-                {/* Footer Buttons */}
-                <div className="flex items-center gap-2 pt-2 border-t border-stone-100">
-                    <button
-                        type="button"
-                        onClick={onClose}
-                        className="flex-1 py-2.5 px-4 text-xs font-semibold text-stone-700 bg-stone-100 hover:bg-stone-200/80 active:scale-[0.98] transition-all rounded-lg cursor-pointer"
-                    >
-                        Затвори
-                    </button>
-                    {onEdit && (
-                        <button
-                            type="button"
-                            onClick={() => {
-                                onClose();
-                                onEdit(transaction);
-                            }}
-                            className="flex items-center justify-center gap-1.5 py-2.5 px-4 text-xs font-semibold text-white bg-stone-900 hover:bg-stone-800 shadow-[inset_0_1px_0_rgba(255,255,255,0.18)] active:scale-[0.98] transition-all rounded-lg cursor-pointer flex-1"
-                        >
-                            <AppIcon icon={PencilEdit02Icon} size={14} />
-                            <span>Редактирай</span>
-                        </button>
-                    )}
-                </div>
             </div>
         </div>
     );

@@ -407,10 +407,6 @@ export const TransactionList = (): React.ReactElement => {
                 isOpen={Boolean(viewingTransaction)}
                 transaction={viewingTransaction}
                 onClose={() => setViewingTransaction(null)}
-                onEdit={(tx) => {
-                    setViewingTransaction(null);
-                    setEditingTransaction(tx);
-                }}
             />
 
             {/* Edit Transaction Modal */}

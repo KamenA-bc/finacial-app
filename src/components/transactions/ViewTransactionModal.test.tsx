@@ -81,7 +81,7 @@ describe('ViewTransactionModal', () => {
 
     it('triggers onClose when close button or backdrop is clicked', () => {
         const onClose = vi.fn();
-        render(
+        const { container } = render(
             <ViewTransactionModal
                 isOpen={true}
                 transaction={{ type: 'expense', entry: mockExpense }}
@@ -94,10 +94,26 @@ describe('ViewTransactionModal', () => {
         fireEvent.click(closeBtn);
         expect(onClose).toHaveBeenCalledTimes(1);
 
-        // Click footer close button
-        const footerClose = screen.getByRole('button', { name: 'Затвори' });
-        fireEvent.click(footerClose);
-        expect(onClose).toHaveBeenCalledTimes(2);
+        // Click backdrop
+        const backdrop = container.querySelector('.bg-black\\/40');
+        expect(backdrop).toBeInTheDocument();
+        if (backdrop) {
+            fireEvent.click(backdrop);
+            expect(onClose).toHaveBeenCalledTimes(2);
+        }
+    });
+
+    it('does not render bottom close or edit buttons', () => {
+        render(
+            <ViewTransactionModal
+                isOpen={true}
+                transaction={{ type: 'expense', entry: mockExpense }}
+                onClose={vi.fn()}
+            />
+        );
+
+        expect(screen.queryByRole('button', { name: 'Затвори' })).not.toBeInTheDocument();
+        expect(screen.queryByRole('button', { name: /Редактирай/ })).not.toBeInTheDocument();
     });
 
     it('closes on Escape key press', () => {
@@ -112,23 +128,5 @@ describe('ViewTransactionModal', () => {
 
         fireEvent.keyDown(window, { key: 'Escape' });
         expect(onClose).toHaveBeenCalledTimes(1);
-    });
-
-    it('triggers onEdit callback when Edit button is clicked', () => {
-        const onEdit = vi.fn();
-        const onClose = vi.fn();
-        render(
-            <ViewTransactionModal
-                isOpen={true}
-                transaction={{ type: 'expense', entry: mockExpense }}
-                onClose={onClose}
-                onEdit={onEdit}
-            />
-        );
-
-        const editBtn = screen.getByRole('button', { name: /Редактирай/ });
-        fireEvent.click(editBtn);
-        expect(onClose).toHaveBeenCalled();
-        expect(onEdit).toHaveBeenCalledWith({ type: 'expense', entry: mockExpense });
     });
 });
