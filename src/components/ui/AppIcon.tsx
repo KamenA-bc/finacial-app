@@ -58,7 +58,7 @@ export function IconSquircle({
 
     return (
         <div
-            className={`relative flex items-center justify-center flex-shrink-0 transition-transform duration-150 active:scale-[0.96] shadow-[inset_0_1px_0_rgba(255,255,255,0.65)] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.12)] border ${sizeClasses} ${className}`}
+            className={`relative flex items-center justify-center flex-shrink-0 transition-transform duration-150 active:scale-[0.96] shadow-[inset_0_1px_0_rgba(255,255,255,0.65)] border ${sizeClasses} ${className}`}
             {...props}
         >
             {children}

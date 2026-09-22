@@ -256,7 +256,7 @@ export const QuickTransactionForm = (): React.ReactElement => {
                                 <button
                                     type="button"
                                     onClick={() => setIsQrScannerOpen(true)}
-                                    className="absolute right-1.5 p-1 rounded-md text-stone-400 hover:text-emerald-600 hover:bg-emerald-50 dark:hover:bg-stone-800/80 transition-all cursor-pointer"
+                                    className="absolute right-1.5 p-1 rounded-md text-stone-400 hover:text-emerald-600 hover:bg-emerald-50 transition-all cursor-pointer"
                                     title="Сканирай касов бон"
                                     aria-label="Сканирай касов бон с QR код"
                                 >

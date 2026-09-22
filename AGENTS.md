@@ -4,7 +4,9 @@ You operate as a Senior Staff Full-Stack Engineer and Systems Architect for this
 
 ---
 
-## 0. TECH STACK SPECIFICATION
+## 0. TECH STACK & PLATFORM TARGET SPECIFICATION
+- **Primary Platform Target:** **Mobile-First Web Application (Phone Users Primarily)**. The app is targeted primarily at users on mobile smartphones (iOS & Android). All UI components, charts, dialogs, touch targets ($\ge 44\text{px}$), font sizes, layout density, and ergonomics must prioritize one-handed phone viewports ($360\text{px} - 430\text{px}$) before scaling to tablets and desktops. Never rely on mouse hover states for essential information or interactions.
+- **Theme Policy:** **STRICT LIGHT THEME ONLY**. The application is strictly light-mode. Zero `dark:` Tailwind variant classes are permitted in UI components. Do not design for or activate dark mode until a native, opt-in in-app theme toggle is formally architected and implemented. Enforce `color-scheme: light` globally (`globals.css`, `layout.tsx`) so system dark mode and browser extensions cannot break contrast or invert text.
 - **Framework & Runtime:** Next.js (App Router), React 19, TypeScript (Strict).
 - **Styling & Icons:** Tailwind CSS (v4), Hugeicons Stroke Rounded (`@hugeicons/react`, `@hugeicons/core-free-icons`), `AppIcon` & `IconSquircle` (`@/components/ui/AppIcon`).
 - **State & Backend:** Zustand (`useFinancialStore` in `src/store/transactionStore.ts`), Supabase (`@supabase/ssr`, `@supabase/supabase-js`).
@@ -43,6 +45,8 @@ Every time there is a significant, complex, or architectural change where an imp
 3. **App Router Client Boundaries & Skeletons:** Dynamic imports for Recharts (`CategoryChart`, `MonthlyTrendsChart`) and camera/barcode detection must use `{ ssr: false }` with matching dimension skeleton fallbacks to prevent CLS.
 4. **Timezone-Safe Calendar Dates:** Always use `toISODateString(new Date())` from `@/lib/dateUtils` (never raw UTC `.toISOString().slice(0, 10)`) for Bulgarian locale (`bg-BG`) alignment.
 5. **Declarative Database Migrations:** When altering schemas (`src/types/index.ts`, store), add an incremental `.sql` migration in `supabase/migrations/` (`YYYYMMDDHHMMSS_<name>.sql`) with composite indexes on `(user_id, date)` and strict RLS (`auth.uid() = user_id`).
+6. **Strict Light-Theme Only (Zero `dark:` Utility Classes):** Never use `dark:` variant classes in UI code. When phone users have system-level dark mode active (or extensions that force dark mode), accidental `dark:` classes cause devastating contrast failures (e.g. near-white text on white cards or black progress tracks). Keep all colors pure, explicit light-mode tokens (`text-stone-900`, `text-stone-800`, `bg-stone-100`, etc.) with `@variant dark (&:where(.dark, .dark *));` in `globals.css`.
+7. **Mobile-First Touch Ergonomics (Zero Hover Reliance):** Ensure touch feedback (`active:scale-[0.97]`), tap targets $\ge 44\text{px}$, high ambient daylight contrast, readable `tabular-nums` without requiring tooltips, and thumb-friendly bottom-sheet/modal access on mobile viewports.
 
 ---
 
@@ -57,7 +61,7 @@ Every UI component must meet the visual and tactile standard of Linear, Apple, o
    - Headings use `text-balance` or `text-pretty`.
    - Non-breaking spaces between numbers and currency: `24.50&nbsp;лв.`. Use unicode ellipses (`…`), never `...`.
 5. **Visual Hierarchy & Depth:**
-   - Subtle hairline borders (`border-stone-200/70` light, `border-white/10` dark) with inner specular top highlight (`shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]`).
+   - Subtle hairline borders (`border-stone-200/70`) with inner specular top highlight (`shadow-[inset_0_1px_0_rgba(255,255,255,0.65)]`).
    - Radius scale: Outer cards/modals `rounded-2xl` (16px), inner containers `rounded-xl` (12px), buttons/inputs `rounded-lg` (8px), badges/tags `rounded-md` (6px) or `rounded-full`.
 6. **Focus & Accessibility:** Provide explicit `:focus-visible` rings (`focus-visible:ring-2 focus-visible:ring-emerald-500/60 focus-visible:outline-none`). Icon buttons must have `aria-label`. Touch targets $\ge 44\text{px}$.
 7. **Iconography Standard:**

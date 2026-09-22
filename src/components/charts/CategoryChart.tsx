@@ -56,10 +56,10 @@ const CustomTooltip = ({
     const percentage = item.payload?.percentage;
 
     return (
-        <div className="bg-white/95 dark:bg-stone-900/95 backdrop-blur-xs border border-stone-200/80 dark:border-stone-700 shadow-md rounded-xl px-3 py-2 text-xs">
-            <p className="font-medium text-stone-700 dark:text-stone-300 mb-0.5">{name}</p>
+        <div className="bg-white/95 backdrop-blur-xs border border-stone-200/80 shadow-md rounded-xl px-3 py-2 text-xs">
+            <p className="font-medium text-stone-700 mb-0.5">{name}</p>
             <div className="flex items-center gap-1.5">
-                <span className="text-rose-600 dark:text-rose-400 font-bold tabular-nums">
+                <span className="text-rose-600 font-bold tabular-nums">
                     {formatTooltipValue(value, date)}
                 </span>
                 {percentage !== undefined && (
@@ -179,27 +179,27 @@ export const CategoryChart = (): React.ReactElement => {
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                     <div className="flex items-center gap-2">
                         <AppIcon icon={PieChart01Icon} size={15} className="text-stone-400 flex-shrink-0" />
-                        <span className="text-xs font-semibold text-stone-700 dark:text-stone-200">
+                        <span className="text-xs font-semibold text-stone-700">
                             Разпределение по категории
                         </span>
                     </div>
 
                     <div className="flex items-center justify-between sm:justify-end gap-2 w-full sm:w-auto">
-                        <div className="bg-stone-50 dark:bg-stone-800/60 rounded-lg px-2.5 py-1 border border-stone-200/60 dark:border-stone-700/60 flex items-center gap-1.5 flex-shrink-0">
-                            <AppIcon icon={Calendar01Icon} size={13} className="text-emerald-600 dark:text-emerald-400" />
-                            <span className="text-[11px] font-medium text-stone-600 dark:text-stone-300">
+                        <div className="bg-stone-50 rounded-lg px-2.5 py-1 border border-stone-200/60 flex items-center gap-1.5 flex-shrink-0">
+                            <AppIcon icon={Calendar01Icon} size={13} className="text-emerald-600" />
+                            <span className="text-[11px] font-medium text-stone-600">
                                 {timeframeLabel}
                             </span>
                         </div>
 
-                        <div className="flex p-0.5 bg-stone-100 dark:bg-stone-800 rounded-lg border border-stone-200/70 dark:border-stone-700 flex-shrink-0">
+                        <div className="flex p-0.5 bg-stone-100 rounded-lg border border-stone-200/70 flex-shrink-0">
                             <button
                                 type="button"
                                 onClick={() => setActiveTab('monthly')}
                                 className={`px-2.5 py-1 text-[10px] font-bold rounded-md transition-all cursor-pointer ${
                                     activeTab === 'monthly'
-                                        ? 'bg-white dark:bg-stone-700 text-stone-900 dark:text-stone-100 shadow-xs'
-                                        : 'text-stone-500 hover:text-stone-800 dark:text-stone-400 dark:hover:text-stone-200'
+                                        ? 'bg-white text-stone-900 shadow-xs'
+                                        : 'text-stone-500 hover:text-stone-800'
                                 }`}
                             >
                                 МЕСЕЦ
@@ -209,8 +209,8 @@ export const CategoryChart = (): React.ReactElement => {
                                 onClick={() => setActiveTab('yearly')}
                                 className={`px-2.5 py-1 text-[10px] font-bold rounded-md transition-all cursor-pointer ${
                                     activeTab === 'yearly'
-                                        ? 'bg-white dark:bg-stone-700 text-stone-900 dark:text-stone-100 shadow-xs'
-                                        : 'text-stone-500 hover:text-stone-800 dark:text-stone-400 dark:hover:text-stone-200'
+                                        ? 'bg-white text-stone-900 shadow-xs'
+                                        : 'text-stone-500 hover:text-stone-800'
                                 }`}
                             >
                                 ГОДИНА
@@ -222,7 +222,7 @@ export const CategoryChart = (): React.ReactElement => {
 
             <div className="flex-1 relative">
                 {!hasData ? (
-                    <div className="min-h-[240px] flex flex-col items-center justify-center gap-2.5 text-stone-300 dark:text-stone-600">
+                    <div className="min-h-[240px] flex flex-col items-center justify-center gap-2.5 text-stone-300">
                         <AppIcon icon={PieChart01Icon} size={36} className="opacity-40" />
                         <p className="text-xs font-medium text-stone-400">Няма регистрирани разходи за периода</p>
                     </div>
@@ -293,13 +293,13 @@ export const CategoryChart = (): React.ReactElement => {
                             >
                                 {selectedItem ? (
                                     <>
-                                        <span className="text-[11px] font-semibold text-stone-700 dark:text-stone-200 truncate max-w-[130px] transition-colors">
+                                        <span className="text-[11px] font-semibold text-stone-700 truncate max-w-[130px] transition-colors">
                                             {selectedItem.displayName}
                                         </span>
-                                        <span className="text-base sm:text-lg font-bold text-rose-600 dark:text-rose-400 tabular-nums">
+                                        <span className="text-base sm:text-lg font-bold text-rose-600 tabular-nums">
                                             {formatTooltipValue(selectedItem.value, contextDate)}
                                         </span>
-                                        <span className="inline-flex items-center px-1.5 py-0.5 rounded-full text-[10px] font-bold tabular-nums bg-rose-50 dark:bg-rose-950/60 text-rose-600 dark:text-rose-300 mt-0.5">
+                                        <span className="inline-flex items-center px-1.5 py-0.5 rounded-full text-[10px] font-bold tabular-nums bg-rose-50 text-rose-600 mt-0.5">
                                             {selectedItem.percentage.toFixed(1)}%
                                         </span>
                                     </>
@@ -308,7 +308,7 @@ export const CategoryChart = (): React.ReactElement => {
                                         <span className="text-[10px] font-bold uppercase tracking-wider text-stone-400">
                                             Общо разход
                                         </span>
-                                        <span className="text-base sm:text-lg font-bold text-stone-800 dark:text-stone-100 tabular-nums">
+                                        <span className="text-base sm:text-lg font-bold text-stone-900 tabular-nums">
                                             {formatTooltipValue(totalPeriodExpense, contextDate)}
                                         </span>
                                         <span className="text-[10px] text-stone-400 font-medium mt-0.5 tabular-nums">
@@ -321,8 +321,8 @@ export const CategoryChart = (): React.ReactElement => {
                         </div>
 
                         {/* ── Ranked Metric List (Readable, Scannable, Mobile-Optimized) ── */}
-                        <div className="flex flex-col gap-1.5 mt-2 pt-3 border-t border-stone-100 dark:border-stone-800">
-                            <div className="flex items-center justify-between text-[11px] font-semibold text-stone-400 dark:text-stone-500 px-1 mb-0.5">
+                        <div className="flex flex-col gap-1.5 mt-2 pt-3 border-t border-stone-100">
+                            <div className="flex items-center justify-between text-[11px] font-semibold text-stone-400 px-1 mb-0.5">
                                 <span>Категория</span>
                                 <span>Сума / Дял</span>
                             </div>
@@ -337,8 +337,8 @@ export const CategoryChart = (): React.ReactElement => {
                                         onClick={() => handleCategoryToggle(cat.name)}
                                         className={`w-full flex flex-col gap-1 px-2.5 py-1.5 rounded-xl text-left transition-all cursor-pointer active:scale-[0.99] ${
                                             isSelected
-                                                ? 'bg-stone-100 dark:bg-stone-800/80 ring-1 ring-stone-300/80 dark:ring-stone-600'
-                                                : 'hover:bg-stone-50 dark:hover:bg-stone-800/40'
+                                                ? 'bg-stone-100 ring-1 ring-stone-300/80'
+                                                : 'hover:bg-stone-50'
                                         }`}
                                     >
                                         <div className="flex items-center justify-between gap-2">
@@ -347,22 +347,22 @@ export const CategoryChart = (): React.ReactElement => {
                                                     className="w-2.5 h-2.5 rounded-full flex-shrink-0"
                                                     style={{ backgroundColor: cat.color }}
                                                 />
-                                                <span className="text-xs font-medium text-stone-800 dark:text-stone-200 truncate">
+                                                <span className="text-xs font-semibold text-stone-800 truncate">
                                                     {cat.displayName}
                                                 </span>
                                             </div>
                                             <div className="flex items-center gap-2 flex-shrink-0">
-                                                <span className="text-xs font-bold text-stone-800 dark:text-stone-100 tabular-nums">
+                                                <span className="text-xs font-bold text-stone-900 tabular-nums">
                                                     {formatTooltipValue(cat.value, contextDate)}
                                                 </span>
-                                                <span className="text-[11px] font-semibold text-stone-400 dark:text-stone-400 tabular-nums min-w-[38px] text-right">
+                                                <span className="text-[11px] font-semibold text-stone-500 tabular-nums min-w-[38px] text-right">
                                                     {cat.percentage.toFixed(1)}%
                                                 </span>
                                             </div>
                                         </div>
 
                                         {/* Proportional Progress Track */}
-                                        <div className="w-full h-1 bg-stone-100 dark:bg-stone-800 rounded-full overflow-hidden">
+                                        <div className="w-full h-1.5 bg-stone-100 rounded-full overflow-hidden">
                                             <div
                                                 className="h-full rounded-full transition-all duration-300"
                                                 style={{
@@ -380,7 +380,7 @@ export const CategoryChart = (): React.ReactElement => {
                                 <button
                                     type="button"
                                     onClick={() => setIsExpanded((prev) => !prev)}
-                                    className="flex items-center justify-center gap-1.5 py-2 px-3 mt-1 rounded-lg text-xs font-semibold text-stone-600 dark:text-stone-300 bg-stone-100/70 hover:bg-stone-200/70 dark:bg-stone-800/60 dark:hover:bg-stone-800 active:scale-[0.98] transition-all cursor-pointer"
+                                    className="flex items-center justify-center gap-1.5 py-2 px-3 mt-1 rounded-lg text-xs font-semibold text-stone-600 bg-stone-100/80 hover:bg-stone-200/80 border border-stone-200/60 active:scale-[0.98] transition-all cursor-pointer"
                                 >
                                     <span>
                                         {isExpanded
