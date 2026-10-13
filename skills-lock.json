@@ -11,7 +11,7 @@
       "source": "graphify-labs/graphify",
       "sourceType": "github",
       "skillPath": "graphify/SKILL.md",
-      "computedHash": "148eecd9968969e6961ffa6ba35e484991e7603aa6b5ce4bf0a14bae912fd24a"
+      "computedHash": "415ce620f0f752a35d5256d700cc74eebe2a01f436cc1360e3d17815365b1cb5"
     },
     "supabase-postgres-best-practices": {
       "source": "supabase/agent-skills",

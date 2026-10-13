@@ -36,6 +36,7 @@ export const QrScannerModal: React.FC<QrScannerModalProps> = ({
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
     const isScanningRef = useRef(false);
     const cameraTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+    const scanLoopCallbackRef = useRef<() => void>(() => {});
 
     const [activeTab, setActiveTab] = useState<ScannerTab>('camera');
     const [cameraState, setCameraState] = useState<CameraState>('initializing');
@@ -44,7 +45,7 @@ export const QrScannerModal: React.FC<QrScannerModalProps> = ({
     const [isProcessingImage, setIsProcessingImage] = useState(false);
     const [isDragOver, setIsDragOver] = useState(false);
     const [scanConfirmed, setScanConfirmed] = useState(false);
-    const [isMobile, setIsMobile] = useState(false);
+    const [isMobile] = useState(() => isMobileDevice());
 
     // Stop camera video stream and scan loop
     const stopCamera = useCallback(() => {
@@ -89,7 +90,7 @@ export const QrScannerModal: React.FC<QrScannerModalProps> = ({
     const scanVideoFrame = useCallback(async () => {
         const video = videoRef.current;
         if (!video || video.readyState < video.HAVE_CURRENT_DATA) {
-            animationFrameRef.current = requestAnimationFrame(scanVideoFrame);
+            animationFrameRef.current = requestAnimationFrame(() => scanLoopCallbackRef.current());
             return;
         }
 
@@ -109,8 +110,12 @@ export const QrScannerModal: React.FC<QrScannerModalProps> = ({
             }
         }
 
-        animationFrameRef.current = requestAnimationFrame(scanVideoFrame);
+        animationFrameRef.current = requestAnimationFrame(() => scanLoopCallbackRef.current());
     }, [handleParsedResult]);
+
+    useEffect(() => {
+        scanLoopCallbackRef.current = scanVideoFrame;
+    }, [scanVideoFrame]);
 
     // Start camera stream with multi-tier fallback and 6-second timeout
     const startCamera = useCallback(async () => {
@@ -269,7 +274,6 @@ export const QrScannerModal: React.FC<QrScannerModalProps> = ({
     useEffect(() => {
         if (isOpen) {
             const mobile = isMobileDevice();
-            setIsMobile(mobile);
             if (mobile) {
                 setActiveTab('camera');
                 startCamera();

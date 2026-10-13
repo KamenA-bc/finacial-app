@@ -8,13 +8,15 @@
  *
  * Design decisions:
  * - Fire-and-forget: logging never throws or blocks the caller.
+ * - Circular-dependency safe: does NOT invoke `withJwtRetry` to prevent
+ *   cascading storms during authentication outages.
  * - Extracts messages from plain objects (Supabase PostgrestError),
  *   standard Error instances, and unknown throw values.
- * - Captures lightweight client metadata (URL, user-agent) without PII.
+ * - PII-safe: captures lightweight path (no query/hash credentials) and redacts emails/entries.
+ * - Client-side rate-limited and debounced against error loops.
  */
 
 import { supabase } from '@/lib/supabase';
-import { withJwtRetry } from '@/lib/supabaseRetry';
 
 // ── Types ────────────────────────────────────────────────────────────────────
 
@@ -78,18 +80,78 @@ export function extractErrorStack(err: unknown): string | null {
     return null;
 }
 
-// ── Client Metadata ──────────────────────────────────────────────────────────
+// ── Client Metadata & Sanitization ───────────────────────────────────────────
 
 function getClientMetadata(): Record<string, string> {
     if (typeof window === 'undefined') return { env: 'server' };
 
     return {
-        url: window.location.href,
+        path: window.location.pathname,
         userAgent: navigator.userAgent,
         screenWidth: String(window.screen.width),
         screenHeight: String(window.screen.height),
         language: navigator.language,
     };
+}
+
+export function sanitizeMetadata(metadata: Record<string, unknown>): Record<string, unknown> {
+    const clean: Record<string, unknown> = {};
+    for (const [key, value] of Object.entries(metadata)) {
+        const lowerKey = key.toLowerCase();
+        if (
+            lowerKey.includes('email') ||
+            lowerKey.includes('password') ||
+            lowerKey.includes('token') ||
+            lowerKey.includes('secret')
+        ) {
+            clean[key] = '[REDACTED]';
+        } else if (lowerKey === 'entry' && typeof value === 'object' && value !== null) {
+            clean[key] = '[TRANSACTION_PAYLOAD]';
+        } else {
+            clean[key] = value;
+        }
+    }
+    return clean;
+}
+
+// ── Rate Limiting & Debouncing ───────────────────────────────────────────────
+
+const recentErrors = new Map<string, number>();
+let logCountInWindow = 0;
+let windowStartTime = Date.now();
+const MAX_LOGS_PER_MINUTE = 20;
+const DEBOUNCE_MS = 10_000;
+
+export function clearErrorLoggerRateLimit(): void {
+    recentErrors.clear();
+    logCountInWindow = 0;
+    windowStartTime = Date.now();
+}
+
+function shouldThrottle(signature: string): boolean {
+    const now = Date.now();
+
+    // 1. Reset rolling window
+    if (now - windowStartTime > 60_000) {
+        logCountInWindow = 0;
+        windowStartTime = now;
+        recentErrors.clear();
+    }
+
+    // 2. Check window capacity
+    if (logCountInWindow >= MAX_LOGS_PER_MINUTE) {
+        return true;
+    }
+
+    // 3. Debounce identical error signatures
+    const lastSeen = recentErrors.get(signature);
+    if (lastSeen !== undefined && now - lastSeen < DEBOUNCE_MS) {
+        return true;
+    }
+
+    recentErrors.set(signature, now);
+    logCountInWindow++;
+    return false;
 }
 
 // ── Core Logger ──────────────────────────────────────────────────────────────
@@ -108,12 +170,19 @@ export function logError(
     metadata: Record<string, unknown> = {},
     severity: ErrorSeverity = 'error',
 ): void {
+    const rawMessage = extractErrorMessage(err);
+    const signature = `${action}:${rawMessage}`;
+
+    if (shouldThrottle(signature)) {
+        return;
+    }
+
     const entry: ErrorLogEntry = {
         action,
-        message: extractErrorMessage(err),
+        message: rawMessage,
         stack: extractErrorStack(err),
         severity,
-        metadata: { ...metadata, ...getClientMetadata() },
+        metadata: { ...sanitizeMetadata(metadata), ...getClientMetadata() },
     };
 
     // Always log to console for dev visibility
@@ -121,29 +190,25 @@ export function logError(
 
     // Persist to Supabase, fire-and-forget
     persistToSupabase(entry).catch((persistErr) => {
-        // Last resort: if DB write fails, at least console.error so
-        // Vercel runtime logs capture it.
         console.error('[ErrorLogger] Failed to persist error log:', persistErr);
         console.error('[ErrorLogger] Original error:', entry);
     });
 }
 
 /**
- * Writes an error log entry to the Supabase `error_logs` table.
- * Separated for testability.
+ * Writes an error log entry to the Supabase `error_logs` table directly
+ * without invoking retry loops.
  */
 export async function persistToSupabase(entry: ErrorLogEntry): Promise<void> {
     try {
-        await withJwtRetry(async () => {
-            const { error } = await supabase.from('error_logs').insert({
-                action: entry.action,
-                message: entry.message,
-                stack: entry.stack,
-                severity: entry.severity,
-                metadata: entry.metadata,
-            });
-            if (error) throw error;
-        }, 'persistToSupabase');
+        const { error } = await supabase.from('error_logs').insert({
+            action: entry.action,
+            message: entry.message,
+            stack: entry.stack,
+            severity: entry.severity,
+            metadata: entry.metadata,
+        });
+        if (error) throw error;
     } catch (persistErr) {
         // Fallback: in browser environments, post to /api/log-error server endpoint
         if (typeof window !== 'undefined' && typeof fetch === 'function') {
@@ -158,8 +223,6 @@ export async function persistToSupabase(entry: ErrorLogEntry): Promise<void> {
                 // Suppress API fallback error
             }
         }
-        // Don't throw — this is a best-effort logging mechanism.
-        // Log to console so Vercel runtime logs still capture it.
         console.error('[ErrorLogger] Supabase insert failed:', persistErr);
     }
 }

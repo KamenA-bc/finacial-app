@@ -74,7 +74,7 @@ describe('API Route - /api/log-error', () => {
         const res = await POST(req);
         expect(res.status).toBe(500);
         const data = await res.json();
-        expect(data.error).toBe('Database connection error');
+        expect(data.error).toBe('Failed to record error log');
         expect(consoleSpy).toHaveBeenCalledWith(
             '[API /api/log-error] Supabase insert failed:',
             'Database connection error'

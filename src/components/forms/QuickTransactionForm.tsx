@@ -17,14 +17,19 @@ import {
 import { AppIcon } from '@/components/ui/AppIcon';
 import { useFinancialStore } from '@/store/transactionStore';
 import { useToastStore } from '@/store/toastStore';
+import dynamic from 'next/dynamic';
 import {
     EXPENSE_CATEGORIES,
     CATEGORY_BG_MAP,
     getCurrencySymbol,
 } from '@/lib/constants';
 import { ExpenseCategory } from '@/types';
-import { QrScannerModal } from '@/components/scanner/QrScannerModal';
 import { ParsedReceiptQr } from '@/lib/qrParser';
+
+const QrScannerModal = dynamic(
+    () => import('@/components/scanner/QrScannerModal').then((m) => m.QrScannerModal),
+    { ssr: false }
+);
 
 // ── Validation Schemas ────────────────────────────────────────────────────────
 
@@ -485,11 +490,13 @@ export const QuickTransactionForm = (): React.ReactElement => {
             )}
 
             {/* Receipt QR Scanner Modal */}
-            <QrScannerModal
-                isOpen={isQrScannerOpen}
-                onClose={() => setIsQrScannerOpen(false)}
-                onScanSuccess={handleScanSuccess}
-            />
+            {isQrScannerOpen && (
+                <QrScannerModal
+                    isOpen={isQrScannerOpen}
+                    onClose={() => setIsQrScannerOpen(false)}
+                    onScanSuccess={handleScanSuccess}
+                />
+            )}
         </div>
     );
 };

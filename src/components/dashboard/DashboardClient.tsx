@@ -55,18 +55,16 @@ const StatDivider = (): React.ReactElement => (
   <div className="w-px bg-stone-200/60 self-stretch hidden sm:block" />
 );
 
+const emptySubscribe = () => () => {};
+
 export function DashboardClient(): React.ReactElement {
-  const [mounted, setMounted] = React.useState(false);
+  const mounted = React.useSyncExternalStore(emptySubscribe, () => true, () => false);
   const { user, loading: authLoading } = useAuth();
   const fetchTransactions = useFinancialStore((s) => s.fetchTransactions);
   const setUserId = useFinancialStore((s) => s.setUserId);
   const isLoading = useFinancialStore((s) => s.isLoading);
   const loadedYears = useFinancialStore((s) => s.loadedYears);
   const selectedDate = useFinancialStore((s) => s.selectedDate);
-
-  React.useEffect(() => {
-    setMounted(true);
-  }, []);
 
   const currentYear = selectedDate && selectedDate.length >= 4
     ? parseInt(selectedDate.slice(0, 4), 10)

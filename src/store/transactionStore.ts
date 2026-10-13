@@ -297,12 +297,41 @@ export const useFinancialStore = create<FinancialStore>()(
             };
 
             // 2. Seamlessly swap temporary ID with persistent database ID
-            set((state) => {
-                const exists = state.incomeEntries.some((e) => e.id === mapped.id);
-                const updated = exists
-                    ? state.incomeEntries.filter((e) => e.id !== tempId)
-                    : state.incomeEntries.map((e) => (e.id === tempId ? mapped : e));
+            const currentEntry = get().incomeEntries.find((e) => e.id === tempId);
+            if (!currentEntry) {
+                // Entry was deleted by user while insert was in flight
+                supabase.from('income_entries').delete().eq('id', mapped.id).then(null, () => {});
+                return;
+            }
 
+            const hasUserEdits =
+                currentEntry.date !== mapped.date ||
+                currentEntry.amount !== mapped.amount ||
+                currentEntry.description !== mapped.description ||
+                currentEntry.isWorkIncome !== mapped.isWorkIncome ||
+                currentEntry.isWithKami !== mapped.isWithKami;
+
+            const finalEntry: IncomeEntry = {
+                ...mapped,
+                date: currentEntry.date,
+                amount: currentEntry.amount,
+                description: currentEntry.description,
+                isWorkIncome: currentEntry.isWorkIncome,
+                isWithKami: currentEntry.isWithKami,
+            };
+
+            if (hasUserEdits) {
+                supabase.from('income_entries').update({
+                    date: finalEntry.date,
+                    amount: finalEntry.amount,
+                    description: finalEntry.description,
+                    is_work_income: finalEntry.isWorkIncome,
+                    is_with_kami: finalEntry.isWithKami,
+                }).eq('id', mapped.id).then(null, () => {});
+            }
+
+            set((state) => {
+                const updated = state.incomeEntries.map((e) => (e.id === tempId ? finalEntry : e));
                 const seen = new Set<string>();
                 const deduped: IncomeEntry[] = [];
                 for (const e of updated) {
@@ -389,12 +418,47 @@ export const useFinancialStore = create<FinancialStore>()(
             };
 
             // 2. Seamlessly swap temporary ID with persistent database ID
-            set((state) => {
-                const exists = state.expenseEntries.some((e) => e.id === mapped.id);
-                const updated = exists
-                    ? state.expenseEntries.filter((e) => e.id !== tempId)
-                    : state.expenseEntries.map((e) => (e.id === tempId ? mapped : e));
+            const currentEntry = get().expenseEntries.find((e) => e.id === tempId);
+            if (!currentEntry) {
+                // Entry was deleted by user while insert was in flight
+                supabase.from('expense_entries').delete().eq('id', mapped.id).then(null, () => {});
+                return;
+            }
 
+            const hasUserEdits =
+                currentEntry.date !== mapped.date ||
+                currentEntry.amount !== mapped.amount ||
+                currentEntry.description !== mapped.description ||
+                currentEntry.category !== mapped.category ||
+                currentEntry.isWorkExpense !== mapped.isWorkExpense ||
+                currentEntry.isWithKami !== mapped.isWithKami ||
+                currentEntry.isWithOthers !== mapped.isWithOthers;
+
+            const finalEntry: ExpenseEntry = {
+                ...mapped,
+                date: currentEntry.date,
+                amount: currentEntry.amount,
+                description: currentEntry.description,
+                category: currentEntry.category,
+                isWorkExpense: currentEntry.isWorkExpense,
+                isWithKami: currentEntry.isWithKami,
+                isWithOthers: currentEntry.isWithOthers,
+            };
+
+            if (hasUserEdits) {
+                supabase.from('expense_entries').update({
+                    date: finalEntry.date,
+                    amount: finalEntry.amount,
+                    description: finalEntry.description,
+                    category: finalEntry.category,
+                    is_work_expense: finalEntry.isWorkExpense,
+                    is_with_kami: finalEntry.isWithKami,
+                    is_with_others: finalEntry.isWithOthers,
+                }).eq('id', mapped.id).then(null, () => {});
+            }
+
+            set((state) => {
+                const updated = state.expenseEntries.map((e) => (e.id === tempId ? finalEntry : e));
                 const seen = new Set<string>();
                 const deduped: ExpenseEntry[] = [];
                 for (const e of updated) {
@@ -656,15 +720,19 @@ export const useFinancialStore = create<FinancialStore>()(
         {
             name: 'finance-tracker-store-cache',
             partialize: (state) => ({
-                userId: state.userId,
-                incomeEntries: state.incomeEntries.filter((e) => !e.id.startsWith('temp_')),
-                expenseEntries: state.expenseEntries.filter((e) => !e.id.startsWith('temp_')),
-                loadedYears: state.loadedYears,
+                selectedDate: state.selectedDate,
             }),
-            onRehydrateStorage: () => (state) => {
-                if (state) {
-                    state.incomeEntries = (state.incomeEntries || []).filter((e) => !e.id.startsWith('temp_'));
-                    state.expenseEntries = (state.expenseEntries || []).filter((e) => !e.id.startsWith('temp_'));
+            onRehydrateStorage: () => () => {
+                // Drop any legacy plaintext financial entries stored in localStorage
+                if (typeof window !== 'undefined') {
+                    try {
+                        const raw = localStorage.getItem('finance-tracker-store-cache');
+                        if (raw && (raw.includes('"incomeEntries"') || raw.includes('"expenseEntries"'))) {
+                            localStorage.removeItem('finance-tracker-store-cache');
+                        }
+                    } catch {
+                        // ignore
+                    }
                 }
             },
         }

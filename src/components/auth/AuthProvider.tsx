@@ -4,7 +4,7 @@
  */
 'use client';
 
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState, useMemo, useCallback } from 'react';
 import { supabase } from '@/lib/supabase';
 import type { User } from '@supabase/supabase-js';
 import { extractErrorMessage, logError } from '@/lib/errorLogger';
@@ -35,9 +35,13 @@ interface AuthProviderProps {
 export const AuthProvider = ({
     children,
 }: AuthProviderProps): React.ReactElement => {
-    // In E2E tests, initialize with mock user if cookie is present
+    // In E2E tests, initialize with mock user if cookie is present in non-production environments
     const [user, setUser] = useState<User | null>(() => {
-        if (typeof document !== 'undefined' && document.cookie.includes('playwright_test_user=true')) {
+        if (
+            process.env.NODE_ENV !== 'production' &&
+            typeof document !== 'undefined' &&
+            document.cookie.includes('playwright_test_user=true')
+        ) {
             return {
                 id: '00000000-0000-0000-0000-000000000001',
                 email: 'e2e@test.local',
@@ -67,9 +71,17 @@ export const AuthProvider = ({
         // Listen for auth state changes (login, logout, token refresh)
         const {
             data: { subscription },
-        } = supabase.auth.onAuthStateChange((_event, session) => {
+        } = supabase.auth.onAuthStateChange((event, session) => {
             setUser(session?.user ?? null);
             setLoading(false);
+
+            if (event === 'SIGNED_OUT') {
+                try {
+                    useFinancialStore.getState().clearStoreCache();
+                } catch (err) {
+                    logError('AuthProvider:onAuthStateChange:clearStoreCache', err, {}, 'warning');
+                }
+            }
         });
 
         // Stale-session detector: when tab returns to foreground after >= 5 min,
@@ -99,7 +111,7 @@ export const AuthProvider = ({
         };
     }, []);
 
-    const signUp = async (
+    const signUp = useCallback(async (
         email: string,
         password: string
     ): Promise<{ error: string | null }> => {
@@ -114,9 +126,9 @@ export const AuthProvider = ({
             logError('AuthProvider:signUp', err, { email }, 'warning');
             return { error: extractErrorMessage(err) };
         }
-    };
+    }, []);
 
-    const signIn = async (
+    const signIn = useCallback(async (
         email: string,
         password: string
     ): Promise<{ error: string | null }> => {
@@ -134,9 +146,9 @@ export const AuthProvider = ({
             logError('AuthProvider:signIn', err, { email }, 'warning');
             return { error: extractErrorMessage(err) };
         }
-    };
+    }, []);
 
-    const signOut = async (): Promise<void> => {
+    const signOut = useCallback(async (): Promise<void> => {
         try {
             useFinancialStore.getState().clearStoreCache();
         } catch (err) {
@@ -148,12 +160,11 @@ export const AuthProvider = ({
         } catch (err) {
             logError('AuthProvider:signOut', err, {}, 'error');
         } finally {
-            // Force a page reload/redirect to clear state and trigger middleware
             window.location.href = '/login';
         }
-    };
+    }, []);
 
-    const resetPassword = async (email: string): Promise<{ error: string | null }> => {
+    const resetPassword = useCallback(async (email: string): Promise<{ error: string | null }> => {
         try {
             const { error } = await supabase.auth.resetPasswordForEmail(email, {
                 redirectTo: `${window.location.origin}/update-password`,
@@ -168,9 +179,9 @@ export const AuthProvider = ({
             const msg = extractErrorMessage(err);
             return { error: msg || 'Failed to initialize password reset' };
         }
-    };
+    }, []);
 
-    const updatePassword = async (password: string): Promise<{ error: string | null }> => {
+    const updatePassword = useCallback(async (password: string): Promise<{ error: string | null }> => {
         try {
             const { error } = await supabase.auth.updateUser({ password });
             if (error) {
@@ -183,10 +194,23 @@ export const AuthProvider = ({
             const msg = extractErrorMessage(err);
             return { error: msg || 'Failed to update password' };
         }
-    };
+    }, []);
+
+    const contextValue = useMemo(
+        () => ({
+            user,
+            loading,
+            signUp,
+            signIn,
+            signOut,
+            resetPassword,
+            updatePassword,
+        }),
+        [user, loading, signUp, signIn, signOut, resetPassword, updatePassword]
+    );
 
     return (
-        <AuthContext.Provider value={{ user, loading, signUp, signIn, signOut, resetPassword, updatePassword }}>
+        <AuthContext.Provider value={contextValue}>
             {children}
         </AuthContext.Provider>
     );

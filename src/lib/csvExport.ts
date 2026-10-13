@@ -23,9 +23,17 @@ interface CsvRow {
 
 const CSV_HEADERS = ['Дата', 'Тип', 'Описание', 'Категория', 'Сума', 'Работни разходи', 'Kami ❤️', 'С Други'] as const;
 
-/** Escape a cell value so commas and quotes inside strings don't break CSV. */
+const FORMULA_TRIGGER_CHARS = ['=', '+', '-', '@', '\t', '\r'];
+
+/** Escape a cell value so commas and quotes inside strings don't break CSV and neutralize formulas. */
 const escapeCell = (value: string | number): string => {
-    const str = String(value);
+    let str = String(value);
+
+    // Neutralize spreadsheet formula injection if text starts with formula triggers
+    if (typeof value === 'string' && FORMULA_TRIGGER_CHARS.some((char) => str.startsWith(char))) {
+        str = `'${str}`;
+    }
+
     if (str.includes(',') || str.includes('"') || str.includes('\n')) {
         return `"${str.replace(/"/g, '""')}"`;
     }

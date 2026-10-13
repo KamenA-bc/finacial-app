@@ -46,15 +46,6 @@ export async function proxy(request: NextRequest): Promise<NextResponse> {
         return NextResponse.redirect(loginUrl);
     }
 
-    // C. Next.js link prefetch optimization on protected routes:
-    //    Bypass blocking getUser() call on prefetches to prevent network congestion on mobile.
-    const isPrefetch =
-        request.headers.get('x-purpose') === 'prefetch' ||
-        request.headers.get('purpose') === 'prefetch';
-    if (isPrefetch) {
-        return NextResponse.next();
-    }
-
     let response = NextResponse.next({
         request: { headers: request.headers },
     });
@@ -117,6 +108,6 @@ export const config = {
          * - favicon.ico, images, etc.
          * - API routes (they handle their own auth)
          */
-        '/((?!_next/static|_next/image|favicon.ico|api|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
+        '/((?!_next/static|_next/image|favicon.ico|api(?:/|$)|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
     ],
 };

@@ -122,6 +122,20 @@ describe('CSV export – escaping edge cases', () => {
         expect(dataLine).toContain('"a ""special"" item"');
     });
 
+    it('neutralizes spreadsheet formula injection characters (=, +, -, @)', () => {
+        exportToCsv([], [
+            makeExpense({ description: '=SUM(1,2)' }),
+            makeExpense({ description: '@malicious' }),
+            makeExpense({ description: '+danger' }),
+            makeExpense({ description: '-sensitive' }),
+        ]);
+        const lines = capturedCsvContent.split('\n');
+        expect(lines[1]).toContain("'=SUM(1,2)");
+        expect(lines[2]).toContain("'@malicious");
+        expect(lines[3]).toContain("'+danger");
+        expect(lines[4]).toContain("'-sensitive");
+    });
+
     it('handles empty expense and income arrays', () => {
         exportToCsv([], []);
         const lines = capturedCsvContent.split('\n');

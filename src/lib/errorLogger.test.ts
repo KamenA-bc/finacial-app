@@ -8,6 +8,8 @@ import {
     extractErrorStack,
     logError,
     persistToSupabase,
+    sanitizeMetadata,
+    clearErrorLoggerRateLimit,
 } from '@/lib/errorLogger';
 import type { ErrorLogEntry } from '@/lib/errorLogger';
 
@@ -23,12 +25,6 @@ vi.mock('@/lib/supabase', () => ({
     },
 }));
 
-vi.mock('@/lib/supabaseRetry', () => ({
-    withJwtRetry: vi.fn(async (operation) => {
-        return await operation();
-    }),
-}));
-
 // ── extractErrorMessage ──────────────────────────────────────────────────────
 
 describe('extractErrorMessage', () => {
@@ -38,7 +34,6 @@ describe('extractErrorMessage', () => {
     });
 
     it('extracts message from a Supabase PostgrestError-shaped object', () => {
-        // PostgrestError is a plain object with { message, details, hint, code }
         const postgrestError = {
             message: 'column "is_with_others" does not exist',
             details: null,
@@ -84,7 +79,6 @@ describe('extractErrorMessage', () => {
 
     it('ignores empty message strings and falls back', () => {
         const obj = { message: '' };
-        // Empty message string is falsy, should fall through to JSON.stringify
         expect(extractErrorMessage(obj)).toBe('{"message":""}');
     });
 });
@@ -109,6 +103,32 @@ describe('extractErrorStack', () => {
     });
 });
 
+// ── sanitizeMetadata ─────────────────────────────────────────────────────────
+
+describe('sanitizeMetadata', () => {
+    it('redacts sensitive keys like email and password', () => {
+        const cleaned = sanitizeMetadata({
+            userEmail: 'user@example.com',
+            password: 'secretpassword',
+            token: 'jwt.token.here',
+            publicField: 'safe',
+        });
+
+        expect(cleaned.userEmail).toBe('[REDACTED]');
+        expect(cleaned.password).toBe('[REDACTED]');
+        expect(cleaned.token).toBe('[REDACTED]');
+        expect(cleaned.publicField).toBe('safe');
+    });
+
+    it('redacts full entry transaction payloads', () => {
+        const cleaned = sanitizeMetadata({
+            entry: { amount: 150, description: 'Private expense' },
+        });
+
+        expect(cleaned.entry).toBe('[TRANSACTION_PAYLOAD]');
+    });
+});
+
 // ── logError ─────────────────────────────────────────────────────────────────
 
 describe('logError', () => {
@@ -117,21 +137,31 @@ describe('logError', () => {
     beforeEach(() => {
         consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
         vi.clearAllMocks();
+        clearErrorLoggerRateLimit();
     });
 
     afterEach(() => {
         consoleErrorSpy.mockRestore();
     });
 
-    it('logs to console.error in development mode', () => {
-        logError('testAction', new Error('dev error'), { extra: 'context' });
+    it('logs to console.error in development mode with sanitized metadata', () => {
+        logError('testAction', new Error('dev error'), { email: 'user@test.com', extra: 'context' });
 
         expect(consoleErrorSpy).toHaveBeenCalledTimes(1);
         expect(consoleErrorSpy).toHaveBeenCalledWith(
             '[ErrorLogger] testAction:',
             'dev error',
-            expect.objectContaining({ extra: 'context' })
+            expect.objectContaining({ email: '[REDACTED]', extra: 'context' })
         );
+    });
+
+    it('debounces identical repeated error signatures', () => {
+        logError('repeatAction', new Error('same error'));
+        logError('repeatAction', new Error('same error'));
+        logError('repeatAction', new Error('same error'));
+
+        // Only the first one should be logged; duplicates within debounce period are dropped
+        expect(consoleErrorSpy).toHaveBeenCalledTimes(1);
     });
 
     it('does not throw when called with any error shape', () => {
@@ -158,7 +188,7 @@ describe('persistToSupabase', () => {
         consoleErrorSpy.mockRestore();
     });
 
-    it('inserts a structured entry into the error_logs table', async () => {
+    it('inserts a structured entry into the error_logs table directly', async () => {
         const entry: ErrorLogEntry = {
             action: 'fetchTransactions',
             message: 'JWT expired',
@@ -168,9 +198,6 @@ describe('persistToSupabase', () => {
         };
 
         await persistToSupabase(entry);
-
-        const { withJwtRetry } = await import('@/lib/supabaseRetry');
-        expect(withJwtRetry).toHaveBeenCalled();
 
         expect(mockInsert).toHaveBeenCalledWith({
             action: 'fetchTransactions',
@@ -194,7 +221,6 @@ describe('persistToSupabase', () => {
             metadata: {},
         };
 
-        // Should NOT throw
         await expect(persistToSupabase(entry)).resolves.toBeUndefined();
         expect(consoleErrorSpy).toHaveBeenCalledWith(
             '[ErrorLogger] Supabase insert failed:',
