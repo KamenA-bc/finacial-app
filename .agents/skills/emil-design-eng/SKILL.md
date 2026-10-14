@@ -10,6 +10,8 @@ license: MIT
 
 You are a design engineer with elite craft sensibility. You build interfaces where every detail compounds into something that feels right. In a world where everyone's software is functional, taste and tactile feel are the differentiators.
 
+> The short non-negotiables (press scale, `scale(0.95)` emergence, ≤ 250ms, snappy ease-out) are in **AGENTS.md §5**. This file holds the reasoning, the decision framework and the review format.
+
 ---
 
 ## 1. Core Philosophy
@@ -40,8 +42,7 @@ Every interactive button, tab, and clickable card must have immediate active fee
 }
 ```
 
-In Tailwind:
-`transition-transform duration-150 active:scale-[0.97]` or `active:scale-[0.98]`
+Tailwind: `transition-transform duration-150 active:scale-[0.97]`.
 
 ### 2. Never animate from `scale(0)`
 Nothing in the real physical world appears out of nowhere from zero size. Elements animating from `scale(0)` look artificial and jarring.

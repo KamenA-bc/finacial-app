@@ -12,7 +12,7 @@ concurrency:
 
 jobs:
   validate:
-    name: Lint, Typecheck & Tests
+    name: Lint, Typecheck, Tests & Build
     runs-on: ubuntu-latest
     env:
       NEXT_PUBLIC_SUPABASE_URL: "https://placeholder-url.supabase.co"
@@ -22,22 +22,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js 20
+      - name: Setup Node.js 22
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: 'npm'
-
-      - name: Setup Python 3.11
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
 
       - name: Install dependencies
         run: npm ci
-
-      - name: Install graphify
-        run: pip install "graphifyy[sql]"
 
       - name: Run ESLint
         run: npm run lint
@@ -48,5 +40,35 @@ jobs:
       - name: Run Vitest unit & integration tests
         run: npm run test
 
-      - name: Verify Knowledge Graph sync
-        run: npm run graph:update
+      - name: Production build
+        run: npm run build
+
+  graph-sync:
+    name: Knowledge graph is up to date
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install graphify
+        run: pip install "graphifyy[sql]==0.9.61"
+
+      - name: Rebuild graph and compare structure
+        run: |
+          # The report header (date, commit hash) changes on every build, so compare only
+          # the structural summary line ("N nodes · M edges · K communities").
+          summary() { grep -m1 -E '^- [0-9]+ nodes' "$1"; }
+          BEFORE="$(summary graphify-out/GRAPH_REPORT.md)"
+          python -m graphify update .
+          AFTER="$(summary graphify-out/GRAPH_REPORT.md)"
+          echo "committed: $BEFORE"
+          echo "rebuilt:   $AFTER"
+          if [ "$BEFORE" != "$AFTER" ]; then
+            echo "::error::graphify-out/GRAPH_REPORT.md is stale. Run 'npm run graph:update' and commit the result."
+            exit 1
+          fi

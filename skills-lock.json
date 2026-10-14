@@ -11,7 +11,8 @@
       "source": "graphify-labs/graphify",
       "sourceType": "github",
       "skillPath": "graphify/SKILL.md",
-      "computedHash": "415ce620f0f752a35d5256d700cc74eebe2a01f436cc1360e3d17815365b1cb5"
+      "computedHash": "415ce620f0f752a35d5256d700cc74eebe2a01f436cc1360e3d17815365b1cb5",
+      "note": "Folder intentionally trimmed to skill.md + README.md; engine installed via pip (graphifyy). Hash is the upstream hash, expect a local mismatch."
     },
     "supabase-postgres-best-practices": {
       "source": "supabase/agent-skills",

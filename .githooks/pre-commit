@@ -1,0 +1,12 @@
+#!/bin/sh
+# Versioned pre-commit hook (activated by `npm install` via the "prepare" script).
+# Mechanically enforces lint, tsc and vitest before any commit.
+echo "==> [Pre-Commit] Running mechanical validation (lint, tsc, test)..."
+npm run validate
+STATUS=$?
+if [ $STATUS -ne 0 ]; then
+    echo "==> [Pre-Commit] Validation failed! Commit aborted. Please fix errors before committing."
+    exit 1
+fi
+echo "==> [Pre-Commit] All checks passed cleanly."
+exit 0

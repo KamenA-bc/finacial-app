@@ -4,6 +4,21 @@ All notable changes to the Finance Tracker project will be documented in this fi
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+
+## [2026-10-14]
+
+### Changed
+- **Harness overhaul**: `AGENTS.md` rewritten (persona and subagent protocol removed; added Commands, Security & Data, Currency rule `getCurrencySymbol(date)` €/лв., Testing conventions, Definition of Done, honest legacy `lucide-react` status). `ARCHITECTURE.md` regenerated from current code (`proxy.ts`, routes, `AppIcon`, retry/telemetry libs, real schema). `emil-design-eng` and `web-design-guidelines` skills deduplicated against `AGENTS.md`.
+- **graphify skill slimmed**: removed ~230 bundled files (Python engine and per-agent variants) from `.agents/skills/graphify/`; only `skill.md` and a README remain. Engine is installed via `pip install "graphifyy[sql]"`.
+- **Graph artifacts**: only `graphify-out/GRAPH_REPORT.md` is tracked; `graph.json`, `graph.html`, `manifest.json`, `cost.json` are git-ignored and regenerated with `npm run graph:update`.
+
+### Added
+- **Versioned git hook** `.githooks/pre-commit` (runs `npm run validate`), auto-enabled by the new `prepare` script (`core.hooksPath`).
+- **CI**: `next build` step, Node 22 (matches new `engines.node >=22`), and a `graph-sync` job that fails when the committed graph report's structure is stale (graphify pinned to 0.9.61).
+
+### Known issue (not changed here)
+- `src/app/api/log-error/route.ts` is unauthenticated and, without `SUPABASE_SERVICE_ROLE_KEY`, falls back to the anon key, which the hardened `error_logs` RLS rejects. Needs a follow-up decision (auth + rate limit, or service-role on the server).
+
 ## [2026-09-22]
 
 ### Added

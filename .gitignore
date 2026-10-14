@@ -56,4 +56,9 @@ next-env.d.ts
 graphify-out/cache/
 graphify-out/.*
 graphify-out/20*
+# regenerable graph artifacts (only GRAPH_REPORT.md is tracked; run `npm run graph:update`)
+graphify-out/graph.json
+graphify-out/graph.html
+graphify-out/manifest.json
+graphify-out/cost.json
 
