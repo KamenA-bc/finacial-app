@@ -8,7 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## [2026-10-17]
 
 ### Added
-- **Self-Improvement Skill & Continuous Learning Ledger**: Added `.agents/skills/self-improvement/SKILL.md` enforcing the closed-loop evaluation cycle (Observe → Diagnose Why → Formulate Rule → Log & Promote). Initialized `.learnings/LEARNINGS.md` and `.learnings/ERRORS.md` for persistent cross-session knowledge retention, and tracked them in `.gitignore`.
+- **Self-Improvement Skill & Continuous Learning Ledger**: Installed official `pskoett/pskoett-ai-skills@self-improvement` package via `npx skills add`, providing the complete multi-agent continuous learning loop, reference guides (`context-maintenance.md`, `openclaw-integration.md`), helper scripts, and structured templates in `.learnings/` (`LEARNINGS.md`, `ERRORS.md`, `FEATURE_REQUESTS.md`). Tracked package in `skills-lock.json` and allowed `.learnings/**` in `.gitignore`.
 
 ## [2026-10-14]
 

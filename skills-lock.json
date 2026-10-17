@@ -14,6 +14,13 @@
       "computedHash": "415ce620f0f752a35d5256d700cc74eebe2a01f436cc1360e3d17815365b1cb5",
       "note": "Folder intentionally trimmed to skill.md + README.md; engine installed via pip (graphifyy). Hash is the upstream hash, expect a local mismatch."
     },
+    "self-improvement": {
+      "source": "pskoett/pskoett-ai-skills",
+      "sourceType": "github",
+      "skillPath": "skills/self-improvement/SKILL.md",
+      "computedHash": "6fb904830c768ea84c96ab1450ad331255d1da9cdc59f6f6c4797a9d98a62a81"
+    },
+
     "supabase-postgres-best-practices": {
       "source": "supabase/agent-skills",
       "sourceType": "github",
