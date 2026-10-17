@@ -51,6 +51,7 @@ next-env.d.ts
 !graphify-out/GRAPH_REPORT.md
 !AGENTS.md
 !.agents/**
+!.learnings/**
 
 # graphify local cache
 graphify-out/cache/

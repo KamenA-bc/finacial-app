@@ -5,6 +5,11 @@ All notable changes to the Finance Tracker project will be documented in this fi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 
+## [2026-10-17]
+
+### Added
+- **Self-Improvement Skill & Continuous Learning Ledger**: Added `.agents/skills/self-improvement/SKILL.md` enforcing the closed-loop evaluation cycle (Observe → Diagnose Why → Formulate Rule → Log & Promote). Initialized `.learnings/LEARNINGS.md` and `.learnings/ERRORS.md` for persistent cross-session knowledge retention, and tracked them in `.gitignore`.
+
 ## [2026-10-14]
 
 ### Changed
