@@ -65,6 +65,14 @@ export function DashboardClient(): React.ReactElement {
   const isLoading = useFinancialStore((s) => s.isLoading);
   const loadedYears = useFinancialStore((s) => s.loadedYears);
   const selectedDate = useFinancialStore((s) => s.selectedDate);
+  const filterScope = useFinancialStore((s) => s.transactionFilters.scope);
+
+  const transactionsSectionTitle =
+    filterScope === 'year'
+      ? 'Годишни транзакции'
+      : filterScope === 'month'
+        ? 'Месечни транзакции'
+        : 'Днешни транзакции';
 
   const currentYear = selectedDate && selectedDate.length >= 4
     ? parseInt(selectedDate.slice(0, 4), 10)
@@ -181,7 +189,7 @@ export function DashboardClient(): React.ReactElement {
               <CategoryChart />
             </ErrorBoundary>
           </SectionCard>
-          <SectionCard title="Днешни транзакции">
+          <SectionCard title={transactionsSectionTitle}>
             <ErrorBoundary fallbackTitle="Неуспешно зареждане на списъка" actionName="DashboardTransactionList">
               <TransactionList />
             </ErrorBoundary>

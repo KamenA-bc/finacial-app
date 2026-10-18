@@ -15,6 +15,14 @@ interface FinancialData {
     dailyIncomeEntries: IncomeEntry[];
     /** All expense entries for the selected day. */
     dailyExpenseEntries: ExpenseEntry[];
+    /** All income entries for the calendar month of the selected date. */
+    monthlyIncomeEntries: IncomeEntry[];
+    /** All expense entries for the calendar month of the selected date. */
+    monthlyExpenseEntries: ExpenseEntry[];
+    /** All income entries for the calendar year of the selected date. */
+    yearlyIncomeEntries: IncomeEntry[];
+    /** All expense entries for the calendar year of the selected date. */
+    yearlyExpenseEntries: ExpenseEntry[];
     dailyIncome: number;
     dailyExpenses: number;
     dailyProfit: number;
@@ -84,6 +92,9 @@ export const useFinancialData = (): FinancialData => {
 
         // ── Category Breakdown (Yearly) ───────────────────────────────────────
         const { start: yearStart, end: yearEnd } = getCalendarYearRange(selectedDate);
+        const yearlyIncomeEntries = incomeEntries.filter(
+            (e) => e.date >= yearStart && e.date <= yearEnd
+        );
         const yearlyExpenseEntries = expenseEntries.filter(
             (e) => e.date >= yearStart && e.date <= yearEnd
         );
@@ -93,6 +104,10 @@ export const useFinancialData = (): FinancialData => {
         return {
             dailyIncomeEntries,
             dailyExpenseEntries,
+            monthlyIncomeEntries,
+            monthlyExpenseEntries,
+            yearlyIncomeEntries,
+            yearlyExpenseEntries,
             dailyIncome,
             dailyExpenses,
             dailyProfit,

@@ -59,12 +59,34 @@ export type UpdateIncomeInput = Partial<Omit<IncomeEntry, 'id'>>;
 /** Input payload for updating an existing expense entry. */
 export type UpdateExpenseInput = Partial<Omit<ExpenseEntry, 'id'>>;
 
+/** Time window scope for TransactionList filtering. */
+export type FilterScope = 'day' | 'month' | 'year';
+
+/** Entry type filter for TransactionList. */
+export type TransactionFilterType = 'all' | 'income' | 'expenses';
+
+/** Category filter value (supports single category or Pareto 'Останали' slice). */
+export type CategoryFilterValue = ExpenseCategory | 'Останали' | null;
+
+/** Transient filter state shared between CategoryChart, TransactionList, and History drill-down. */
+export interface TransactionFilters {
+  readonly searchQuery: string;
+  readonly type: TransactionFilterType;
+  readonly scope: FilterScope;
+  readonly category: CategoryFilterValue;
+  readonly isWork: boolean;
+  readonly isKami: boolean;
+  readonly isShared: boolean;
+}
+
 /** Shape of the centralized Zustand store. */
 export interface FinancialStore {
   incomeEntries: IncomeEntry[];
   expenseEntries: ExpenseEntry[];
   /** Currently selected date: YYYY-MM-DD */
   selectedDate: string;
+  /** Transient search, category, tag, and scope filters for TransactionList */
+  transactionFilters: TransactionFilters;
   /** Authenticated user ID */
   userId: string | null;
   /** Whether data is being loaded from the server */
@@ -84,6 +106,9 @@ export interface FinancialStore {
   deleteIncome: (id: string) => Promise<void>;
   deleteExpense: (id: string) => Promise<void>;
   setSelectedDate: (date: string) => void;
+  setTransactionFilters: (updates: Partial<TransactionFilters>) => void;
+  toggleCategoryFilter: (category: ExpenseCategory | 'Останали', scope?: FilterScope) => void;
+  resetTransactionFilters: (keepScope?: boolean) => void;
   clearStoreCache: () => void;
 }
 

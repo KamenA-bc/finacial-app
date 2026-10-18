@@ -82,18 +82,13 @@ type TabType = 'monthly' | 'yearly';
  */
 export const CategoryChart = (): React.ReactElement => {
     const [activeTab, setActiveTab] = useState<TabType>('monthly');
-    const [selection, setSelection] = useState<{ key: string; name: string | null }>({
-        key: '',
-        name: null,
-    });
     const [isExpanded, setIsExpanded] = useState<boolean>(false);
 
     const { monthlyCategoryBreakdown, yearlyCategoryBreakdown } = useFinancialData();
     const selectedDate = useFinancialStore((s) => s.selectedDate);
-
-    // Derived selected category name (automatically resets when activeTab or selectedDate changes)
-    const currentViewKey = `${activeTab}-${selectedDate}`;
-    const selectedCategoryName = selection.key === currentViewKey ? selection.name : null;
+    const selectedCategoryName = useFinancialStore((s) => s.transactionFilters.category);
+    const toggleCategoryFilter = useFinancialStore((s) => s.toggleCategoryFilter);
+    const setTransactionFilters = useFinancialStore((s) => s.setTransactionFilters);
 
     // Derived label for the current view
     const dateParts = selectedDate.split('-');
@@ -161,10 +156,18 @@ export const CategoryChart = (): React.ReactElement => {
     }, [selectedCategoryName, chartSlices, sortedCategories]);
 
     const handleCategoryToggle = (name: string) => {
-        setSelection((prev) => ({
-            key: currentViewKey,
-            name: prev.key === currentViewKey && prev.name === name ? null : name,
-        }));
+        const targetScope = activeTab === 'monthly' ? 'month' : 'year';
+        toggleCategoryFilter(name as ExpenseCategory | 'Останали', targetScope);
+    };
+
+    const handleTabChange = (nextTab: TabType) => {
+        setActiveTab(nextTab);
+        if (selectedCategoryName) {
+            setTransactionFilters({
+                scope: nextTab === 'monthly' ? 'month' : 'year',
+                ...(selectedCategoryName === 'Останали' ? { category: null } : {}),
+            });
+        }
     };
 
     // Categories to display in the list (Top 4 collapsed, all when expanded)
@@ -174,26 +177,33 @@ export const CategoryChart = (): React.ReactElement => {
 
     const containerRef = useRef<HTMLDivElement>(null);
 
-    // Reset highlight and return graph to normal when clicking away outside the chart
+    // Reset highlight when clicking away outside both the chart and TransactionList
     useEffect(() => {
         if (!selectedCategoryName) return;
 
         const handlePointerDown = (e: PointerEvent) => {
-            if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
-                setSelection({ key: currentViewKey, name: null });
+            const targetNode = e.target as Node | null;
+            const targetEl = e.target instanceof Element ? e.target : null;
+            if (
+                containerRef.current &&
+                targetNode &&
+                !containerRef.current.contains(targetNode) &&
+                !targetEl?.closest('[data-transaction-list]')
+            ) {
+                setTransactionFilters({ category: null });
             }
         };
 
         document.addEventListener('pointerdown', handlePointerDown);
         return () => document.removeEventListener('pointerdown', handlePointerDown);
-    }, [selectedCategoryName, currentViewKey]);
+    }, [selectedCategoryName, setTransactionFilters]);
 
     // Also reset if user clicks on blank/card space not occupied by buttons or slices
     const handleContainerClick = (e: React.MouseEvent<HTMLDivElement>) => {
         if (!selectedCategoryName) return;
         const target = e.target as HTMLElement;
         if (!target.closest('button') && !target.closest('.recharts-pie-sector')) {
-            setSelection({ key: currentViewKey, name: null });
+            setTransactionFilters({ category: null });
         }
     };
 
@@ -220,7 +230,7 @@ export const CategoryChart = (): React.ReactElement => {
                         <div className="flex p-0.5 bg-stone-100 rounded-lg border border-stone-200/70 flex-shrink-0">
                             <button
                                 type="button"
-                                onClick={() => setActiveTab('monthly')}
+                                onClick={() => handleTabChange('monthly')}
                                 className={`px-2.5 py-1 text-[10px] font-bold rounded-md transition-all cursor-pointer ${
                                     activeTab === 'monthly'
                                         ? 'bg-white text-stone-900 shadow-xs'
@@ -231,7 +241,7 @@ export const CategoryChart = (): React.ReactElement => {
                             </button>
                             <button
                                 type="button"
-                                onClick={() => setActiveTab('yearly')}
+                                onClick={() => handleTabChange('yearly')}
                                 className={`px-2.5 py-1 text-[10px] font-bold rounded-md transition-all cursor-pointer ${
                                     activeTab === 'yearly'
                                         ? 'bg-white text-stone-900 shadow-xs'
@@ -307,7 +317,7 @@ export const CategoryChart = (): React.ReactElement => {
                             {/* ── Center Readout (Touch-friendly, zero hover dependency) ── */}
                             <button
                                 type="button"
-                                onClick={() => setSelection({ key: currentViewKey, name: null })}
+                                onClick={() => setTransactionFilters({ category: null })}
                                 className="absolute inset-0 flex flex-col items-center justify-center select-none text-center px-4 cursor-pointer group focus:outline-none"
                                 title={selectedItem ? 'Натиснете за връщане към общата сума' : undefined}
                                 aria-label={

@@ -45,6 +45,7 @@ vi.mock('recharts', async () => {
 
 describe('CategoryChart – Mobile-First Category Spending Breakdown', () => {
     beforeEach(() => {
+        useFinancialStore.getState().resetTransactionFilters();
         useFinancialStore.setState({
             incomeEntries: [],
             expenseEntries: [],
@@ -141,7 +142,7 @@ describe('CategoryChart – Mobile-First Category Spending Breakdown', () => {
         expect(screen.queryByText('Home')).not.toBeInTheDocument();
     });
 
-    it('updates center readout on category slice or row selection, and resets on second click', () => {
+    it('updates center readout and store transactionFilters on slice selection, and resets on second click', () => {
         const expenses: ExpenseEntry[] = [
             { id: '1', date: '2026-03-01', amount: 300, description: 'Cat 1', category: 'Магазини (Храна/Вода)', isWorkExpense: false, isWithKami: false, isWithOthers: false },
             { id: '2', date: '2026-03-02', amount: 100, description: 'Cat 2', category: 'Гориво', isWorkExpense: false, isWithKami: false, isWithOthers: false },
@@ -154,18 +155,20 @@ describe('CategoryChart – Mobile-First Category Spending Breakdown', () => {
         // Click category slice in pie
         fireEvent.click(screen.getByTestId('slice-Магазини (Храна/Вода)'));
 
-        // Center readout should now display category details
+        // Center readout should now display category details and sync to store
         expect(screen.getByLabelText(/магазини \(храна\/вода\): €300,00/i)).toBeInTheDocument();
-        // 75.0% appears in center badge and in row
+        expect(useFinancialStore.getState().transactionFilters.category).toBe('Магазини (Храна/Вода)');
+        expect(useFinancialStore.getState().transactionFilters.scope).toBe('month');
         expect(screen.getAllByText('75.0%').length).toBeGreaterThanOrEqual(1);
 
         // Click again to reset to total
         fireEvent.click(screen.getByTestId('slice-Магазини (Храна/Вода)'));
         expect(screen.getByText(/общо разход/i)).toBeInTheDocument();
         expect(screen.getByText('€400,00')).toBeInTheDocument();
+        expect(useFinancialStore.getState().transactionFilters.category).toBeNull();
     });
 
-    it('resets selection and returns graph to normal when clicking away outside the chart', () => {
+    it('resets selection when clicking outside, but preserves selection when clicking inside [data-transaction-list]', () => {
         const expenses: ExpenseEntry[] = [
             { id: '1', date: '2026-03-01', amount: 300, description: 'Cat 1', category: 'Магазини (Храна/Вода)', isWorkExpense: false, isWithKami: false, isWithOthers: false },
             { id: '2', date: '2026-03-02', amount: 100, description: 'Cat 2', category: 'Гориво', isWorkExpense: false, isWithKami: false, isWithOthers: false },
@@ -176,6 +179,9 @@ describe('CategoryChart – Mobile-First Category Spending Breakdown', () => {
         render(
             <div>
                 <button data-testid="outside-element">Outside</button>
+                <div data-transaction-list="true">
+                    <button data-testid="inside-tx-list">Transaction row</button>
+                </div>
                 <CategoryChart />
             </div>
         );
@@ -184,10 +190,12 @@ describe('CategoryChart – Mobile-First Category Spending Breakdown', () => {
         fireEvent.click(screen.getByTestId('slice-Магазини (Храна/Вода)'));
         expect(screen.getByLabelText(/магазини \(храна\/вода\): €300,00/i)).toBeInTheDocument();
 
-        // Click outside element
-        fireEvent.pointerDown(screen.getByTestId('outside-element'));
+        // Clicking inside TransactionList must NOT reset selection
+        fireEvent.pointerDown(screen.getByTestId('inside-tx-list'));
+        expect(screen.getByLabelText(/магазини \(храна\/вода\): €300,00/i)).toBeInTheDocument();
 
-        // Center readout should reset back to total
+        // Clicking unrelated outside element resets back to total
+        fireEvent.pointerDown(screen.getByTestId('outside-element'));
         expect(screen.getByText(/общо разход/i)).toBeInTheDocument();
         expect(screen.getByText('€400,00')).toBeInTheDocument();
     });

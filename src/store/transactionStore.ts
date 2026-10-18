@@ -11,8 +11,18 @@
 
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { FinancialStore, IncomeEntry, ExpenseEntry, UpdateIncomeInput, UpdateExpenseInput } from '@/types';
+import {
+    FinancialStore,
+    IncomeEntry,
+    ExpenseEntry,
+    UpdateIncomeInput,
+    UpdateExpenseInput,
+    ExpenseCategory,
+    FilterScope,
+    TransactionFilters,
+} from '@/types';
 import { toISODateString } from '@/lib/dateUtils';
+import { DEFAULT_TRANSACTION_FILTERS } from '@/lib/filterTransactions';
 import { supabase } from '@/lib/supabase';
 import { logError, extractErrorMessage } from '@/lib/errorLogger';
 import { withJwtRetry } from '@/lib/supabaseRetry';
@@ -23,6 +33,41 @@ import { withJwtRetry } from '@/lib/supabaseRetry';
  * all call fetchTransactions on mount (Dashboard, History, Statistics).
  */
 const FETCH_DEDUP_MS = 10_000;
+
+/**
+ * Maximum rows per PostgREST page when fetching a full calendar year.
+ * Supabase defaults to a server-side 1,000-row cap per request; paging with
+ * `.range()` ensures power users with >1,000 yearly entries never lose data.
+ */
+const SUPABASE_PAGE_SIZE = 1000;
+
+type RangeCapableQuery<T> = PromiseLike<{ data: T[] | null; error: unknown }> & {
+    range?: (from: number, to: number) => PromiseLike<{ data: T[] | null; error: unknown }>;
+};
+
+async function fetchAllYearRows<T>(buildQuery: () => RangeCapableQuery<T>): Promise<T[]> {
+    const allRows: T[] = [];
+    let offset = 0;
+
+    while (true) {
+        const query = buildQuery();
+        const res =
+            typeof query.range === 'function'
+                ? await query.range(offset, offset + SUPABASE_PAGE_SIZE - 1)
+                : await query;
+
+        if (res.error) throw res.error;
+        const page = res.data ?? [];
+        allRows.push(...page);
+
+        if (page.length < SUPABASE_PAGE_SIZE || typeof query.range !== 'function') {
+            break;
+        }
+        offset += SUPABASE_PAGE_SIZE;
+    }
+
+    return allRows;
+}
 
 function generateTempId(prefix: string): string {
     if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
@@ -56,6 +101,7 @@ export const useFinancialStore = create<FinancialStore>()(
     incomeEntries: [],
     expenseEntries: [],
     selectedDate: toISODateString(new Date()),
+    transactionFilters: DEFAULT_TRANSACTION_FILTERS,
     userId: null,
     isLoading: false,
     error: null,
@@ -73,6 +119,7 @@ export const useFinancialStore = create<FinancialStore>()(
                 loadedYears: [],
                 lastFetchedAt: null,
                 error: null,
+                transactionFilters: DEFAULT_TRANSACTION_FILTERS,
             });
             return;
         }
@@ -91,6 +138,7 @@ export const useFinancialStore = create<FinancialStore>()(
                 loadedYears: [],
                 lastFetchedAt: null,
                 error: null,
+                transactionFilters: DEFAULT_TRANSACTION_FILTERS,
             });
         }
 
@@ -131,31 +179,46 @@ export const useFinancialStore = create<FinancialStore>()(
                 const startDate = `${year}-01-01`;
                 const endDate = `${year}-12-31`;
 
-                const [incomeRes, expenseRes] = await withJwtRetry(async () => {
-                    const results = await Promise.all([
-                        supabase
-                            .from('income_entries')
-                            .select('id, date, amount, description, is_work_income, is_with_kami')
-                            .eq('user_id', userId)
-                            .gte('date', startDate)
-                            .lte('date', endDate)
-                            .order('date', { ascending: true }),
-                        supabase
-                            .from('expense_entries')
-                            .select('id, date, amount, description, category, is_work_expense, is_with_kami, is_with_others')
-                            .eq('user_id', userId)
-                            .gte('date', startDate)
-                            .lte('date', endDate)
-                            .order('date', { ascending: true }),
+                const [incomeRows, expenseRows] = await withJwtRetry(async () => {
+                    return Promise.all([
+                        fetchAllYearRows<{
+                            id: string;
+                            date: string;
+                            amount: number | string;
+                            description: string | null;
+                            is_work_income: boolean | null;
+                            is_with_kami: boolean | null;
+                        }>(() =>
+                            supabase
+                                .from('income_entries')
+                                .select('id, date, amount, description, is_work_income, is_with_kami')
+                                .eq('user_id', userId)
+                                .gte('date', startDate)
+                                .lte('date', endDate)
+                                .order('date', { ascending: true })
+                        ),
+                        fetchAllYearRows<{
+                            id: string;
+                            date: string;
+                            amount: number | string;
+                            description: string | null;
+                            category: ExpenseCategory;
+                            is_work_expense: boolean | null;
+                            is_with_kami: boolean | null;
+                            is_with_others: boolean | null;
+                        }>(() =>
+                            supabase
+                                .from('expense_entries')
+                                .select('id, date, amount, description, category, is_work_expense, is_with_kami, is_with_others')
+                                .eq('user_id', userId)
+                                .gte('date', startDate)
+                                .lte('date', endDate)
+                                .order('date', { ascending: true })
+                        ),
                     ]);
-
-                    if (results[0].error) throw results[0].error;
-                    if (results[1].error) throw results[1].error;
-
-                    return results;
                 }, 'fetchTransactions');
 
-                const newIncomeEntries: IncomeEntry[] = (incomeRes.data ?? []).map((row) => ({
+                const newIncomeEntries: IncomeEntry[] = incomeRows.map((row) => ({
                     id: row.id,
                     date: row.date,
                     amount: Number(row.amount),
@@ -164,7 +227,7 @@ export const useFinancialStore = create<FinancialStore>()(
                     isWithKami: Boolean(row.is_with_kami),
                 }));
 
-                const newExpenseEntries: ExpenseEntry[] = (expenseRes.data ?? []).map((row) => ({
+                const newExpenseEntries: ExpenseEntry[] = expenseRows.map((row) => ({
                     id: row.id,
                     date: row.date,
                     amount: Number(row.amount),
@@ -698,6 +761,39 @@ export const useFinancialStore = create<FinancialStore>()(
         set({ selectedDate: date });
     },
 
+    setTransactionFilters: (updates: Partial<TransactionFilters>): void => {
+        set((state) => ({
+            transactionFilters: {
+                ...state.transactionFilters,
+                ...updates,
+            },
+        }));
+    },
+
+    toggleCategoryFilter: (category: ExpenseCategory | 'Останали', scope?: FilterScope): void => {
+        set((state) => {
+            const isSameCategory = state.transactionFilters.category === category;
+            const isSameScope = !scope || state.transactionFilters.scope === scope;
+            const nextCategory = isSameCategory && isSameScope ? null : category;
+            return {
+                transactionFilters: {
+                    ...state.transactionFilters,
+                    category: nextCategory,
+                    ...(scope ? { scope: nextCategory === null ? 'day' : scope } : {}),
+                },
+            };
+        });
+    },
+
+    resetTransactionFilters: (keepScope = false): void => {
+        set((state) => ({
+            transactionFilters: {
+                ...DEFAULT_TRANSACTION_FILTERS,
+                ...(keepScope ? { scope: state.transactionFilters.scope } : {}),
+            },
+        }));
+    },
+
     clearStoreCache: (): void => {
         if (typeof window !== 'undefined') {
             try {
@@ -714,6 +810,7 @@ export const useFinancialStore = create<FinancialStore>()(
             isLoading: false,
             error: null,
             lastFetchedAt: null,
+            transactionFilters: DEFAULT_TRANSACTION_FILTERS,
         });
     },
 }),

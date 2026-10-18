@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
     ShoppingBasket01Icon,
     Restaurant01Icon,
@@ -33,9 +33,11 @@ import {
     CATEGORY_BG_MAP,
 } from '@/lib/constants';
 import { getExpenseRowColors } from '@/lib/expenseRowColors';
+import { filterTransactions } from '@/lib/filterTransactions';
 import { useBodyScrollLock } from '@/hooks/useBodyScrollLock';
 import { EditTransactionModal } from './EditTransactionModal';
 import { ViewTransactionModal } from './ViewTransactionModal';
+import { TransactionFilterBar } from './TransactionFilterBar';
 
 // ── Constants ────────────────────────────────────────────────────────────────
 
@@ -279,13 +281,19 @@ const TransactionActionMenu = ({
 
 // ── Row Components ────────────────────────────────────────────────────────────
 
+const formatShortRowDate = (dateStr: string): string => {
+    const d = new Date(`${dateStr}T00:00:00`);
+    return d.toLocaleDateString('bg-BG', { day: 'numeric', month: 'short' });
+};
+
 interface ExpenseRowProps {
     expense: ExpenseEntry;
+    showDate?: boolean;
     onView: (expense: ExpenseEntry) => void;
     onOpenMenu: (expense: ExpenseEntry) => void;
 }
 
-const ExpenseRow = ({ expense, onView, onOpenMenu }: ExpenseRowProps): React.ReactElement => {
+const ExpenseRow = ({ expense, showDate = false, onView, onOpenMenu }: ExpenseRowProps): React.ReactElement => {
     const { amountColor, rowBg } = getExpenseRowColors(
         expense.isWorkExpense,
         expense.isWithKami,
@@ -312,6 +320,11 @@ const ExpenseRow = ({ expense, onView, onOpenMenu }: ExpenseRowProps): React.Rea
                         <p className="text-xs text-stone-500 whitespace-nowrap font-medium">
                             {CATEGORY_BG_MAP[expense.category] ?? expense.category}
                         </p>
+                        {showDate && (
+                            <span className="text-[10px] text-stone-400 font-medium tabular-nums whitespace-nowrap">
+                                · {formatShortRowDate(expense.date)}
+                            </span>
+                        )}
                         {expense.isWorkExpense && (
                             <span className="whitespace-nowrap text-[9px] font-semibold text-amber-700 bg-amber-50 border border-amber-200/80 px-1.5 py-0.5 rounded-full leading-none">
                                 Работни
@@ -361,11 +374,12 @@ const ExpenseRow = ({ expense, onView, onOpenMenu }: ExpenseRowProps): React.Rea
 
 interface IncomeRowProps {
     income: IncomeEntry;
+    showDate?: boolean;
     onView: (income: IncomeEntry) => void;
     onOpenMenu: (income: IncomeEntry) => void;
 }
 
-const IncomeRow = ({ income, onView, onOpenMenu }: IncomeRowProps): React.ReactElement => {
+const IncomeRow = ({ income, showDate = false, onView, onOpenMenu }: IncomeRowProps): React.ReactElement => {
     const isWork = income.isWorkIncome;
     const amountColor = isWork ? 'text-blue-600' : 'text-emerald-600';
     const iconClass = isWork
@@ -394,6 +408,11 @@ const IncomeRow = ({ income, onView, onOpenMenu }: IncomeRowProps): React.ReactE
                     </p>
                     <div className="flex flex-wrap items-center gap-1.5 mt-0.5">
                         <p className="text-xs text-stone-500 whitespace-nowrap font-medium">Спечелени пари</p>
+                        {showDate && (
+                            <span className="text-[10px] text-stone-400 font-medium tabular-nums whitespace-nowrap">
+                                · {formatShortRowDate(income.date)}
+                            </span>
+                        )}
                         {isWork && (
                             <span className="whitespace-nowrap text-[9px] font-semibold text-blue-700 bg-blue-50 border border-blue-200/80 px-1.5 py-0.5 rounded-full leading-none">
                                 Работен
@@ -438,8 +457,6 @@ const IncomeRow = ({ income, onView, onOpenMenu }: IncomeRowProps): React.ReactE
 
 // ── Main Component ────────────────────────────────────────────────────────────
 
-type FilterMode = 'all' | 'income' | 'expenses';
-
 interface PendingDelete {
     id: string;
     type: 'income' | 'expense';
@@ -447,12 +464,26 @@ interface PendingDelete {
     amount: string;
 }
 
-/** Lists both income and expense entries for the selected day with delete buttons. */
+/** Lists income and expense entries with interactive search, scope switching, and flag/category filters. */
 export const TransactionList = (): React.ReactElement => {
-    const { dailyExpenseEntries, dailyIncomeEntries } = useFinancialData();
+    const {
+        dailyExpenseEntries,
+        dailyIncomeEntries,
+        monthlyExpenseEntries,
+        monthlyIncomeEntries,
+        yearlyExpenseEntries,
+        yearlyIncomeEntries,
+        monthlyCategoryBreakdown,
+        yearlyCategoryBreakdown,
+    } = useFinancialData();
+
+    const selectedDate = useFinancialStore((s) => s.selectedDate);
+    const transactionFilters = useFinancialStore((s) => s.transactionFilters);
+    const setTransactionFilters = useFinancialStore((s) => s.setTransactionFilters);
+    const resetTransactionFilters = useFinancialStore((s) => s.resetTransactionFilters);
     const deleteIncome = useFinancialStore((s) => s.deleteIncome);
     const deleteExpense = useFinancialStore((s) => s.deleteExpense);
-    const [filterMode, setFilterMode] = useState<FilterMode>('all');
+
     const [pendingDelete, setPendingDelete] = useState<PendingDelete | null>(null);
     const [viewingTransaction, setViewingTransaction] = useState<
         | { type: 'expense'; entry: ExpenseEntry }
@@ -470,8 +501,53 @@ export const TransactionList = (): React.ReactElement => {
         | null
     >(null);
 
+    const activeIncomeEntries =
+        transactionFilters.scope === 'year'
+            ? yearlyIncomeEntries
+            : transactionFilters.scope === 'month'
+              ? monthlyIncomeEntries
+              : dailyIncomeEntries;
+
+    const activeExpenseEntries =
+        transactionFilters.scope === 'year'
+            ? yearlyExpenseEntries
+            : transactionFilters.scope === 'month'
+              ? monthlyExpenseEntries
+              : dailyExpenseEntries;
+
+    // Resolve non-top-5 remainder categories when 'Останали' slice is active
+    const otherCategories = useMemo((): ExpenseCategory[] => {
+        const breakdown =
+            transactionFilters.scope === 'year'
+                ? yearlyCategoryBreakdown
+                : monthlyCategoryBreakdown;
+        return [...breakdown]
+            .filter((c) => c.value > 0)
+            .sort((a, b) => b.value - a.value)
+            .slice(5)
+            .map((c) => c.name);
+    }, [transactionFilters.scope, monthlyCategoryBreakdown, yearlyCategoryBreakdown]);
+
+    const {
+        filteredIncome,
+        filteredExpense,
+        filteredIncomeTotal,
+        filteredExpenseTotal,
+        totalMatchingCount,
+        hasActiveFilters,
+    } = useMemo(
+        () =>
+            filterTransactions(
+                activeIncomeEntries,
+                activeExpenseEntries,
+                transactionFilters,
+                otherCategories
+            ),
+        [activeIncomeEntries, activeExpenseEntries, transactionFilters, otherCategories]
+    );
+
     const requestDeleteExpense = (id: string): void => {
-        const entry = dailyExpenseEntries.find((e) => e.id === id);
+        const entry = activeExpenseEntries.find((e) => e.id === id);
         if (!entry) return;
         setPendingDelete({
             id,
@@ -482,7 +558,7 @@ export const TransactionList = (): React.ReactElement => {
     };
 
     const requestDeleteIncome = (id: string): void => {
-        const entry = dailyIncomeEntries.find((e) => e.id === id);
+        const entry = activeIncomeEntries.find((e) => e.id === id);
         if (!entry) return;
         setPendingDelete({
             id,
@@ -499,28 +575,21 @@ export const TransactionList = (): React.ReactElement => {
         setPendingDelete(null);
     };
 
-    const hasEntries =
-        dailyIncomeEntries.length > 0 || dailyExpenseEntries.length > 0;
+    const hasScopeEntries =
+        activeIncomeEntries.length > 0 || activeExpenseEntries.length > 0;
+    const hasFilteredEntries =
+        filteredIncome.length > 0 || filteredExpense.length > 0;
+    const showDateBadge = transactionFilters.scope !== 'day';
 
-    if (!hasEntries) {
-        return (
-            <div className="flex flex-col items-center justify-center py-8 text-center">
-                <div className="w-10 h-10 rounded-full bg-stone-100 flex items-center justify-center text-stone-400 mb-2">
-                    <AppIcon icon={Invoice01Icon} size={18} />
-                </div>
-                <p className="text-xs font-semibold text-stone-600">Няма транзакции за този ден</p>
-                <p className="text-[11px] text-stone-400 mt-0.5">Всички добавени приходи и разходи ще се появят тук</p>
-            </div>
-        );
-    }
-
-    const filteredIncome = filterMode === 'expenses' ? [] : dailyIncomeEntries;
-    const filteredExpense = filterMode === 'income' ? [] : dailyExpenseEntries;
-
-    const hasFilteredEntries = filteredIncome.length > 0 || filteredExpense.length > 0;
+    const emptyScopeLabel =
+        transactionFilters.scope === 'year'
+            ? 'тази година'
+            : transactionFilters.scope === 'month'
+              ? 'този месец'
+              : 'този ден';
 
     return (
-        <div className="flex flex-col">
+        <div className="flex flex-col" data-transaction-list="true">
             {/* View Transaction Modal */}
             <ViewTransactionModal
                 isOpen={Boolean(viewingTransaction)}
@@ -571,46 +640,37 @@ export const TransactionList = (): React.ReactElement => {
                 }}
             />
 
-            {/* Segmented Control */}
-            <div className="flex p-1 bg-stone-100 rounded-xl mb-3">
-                <button
-                    onClick={() => setFilterMode('all')}
-                    className={`flex-1 text-[11px] font-semibold py-1.5 rounded-lg transition-all cursor-pointer ${
-                        filterMode === 'all'
-                            ? 'bg-white text-stone-900 shadow-xs ring-1 ring-black/5'
-                            : 'text-stone-500 hover:text-stone-800'
-                    }`}
-                >
-                    Всички
-                </button>
-                <button
-                    onClick={() => setFilterMode('income')}
-                    className={`flex-1 text-[11px] font-semibold py-1.5 rounded-lg transition-all cursor-pointer ${
-                        filterMode === 'income'
-                            ? 'bg-white text-emerald-700 shadow-xs ring-1 ring-black/5'
-                            : 'text-stone-500 hover:text-stone-800'
-                    }`}
-                >
-                    Приходи
-                </button>
-                <button
-                    onClick={() => setFilterMode('expenses')}
-                    className={`flex-1 text-[11px] font-semibold py-1.5 rounded-lg transition-all cursor-pointer ${
-                        filterMode === 'expenses'
-                            ? 'bg-white text-rose-700 shadow-xs ring-1 ring-black/5'
-                            : 'text-stone-500 hover:text-stone-800'
-                    }`}
-                >
-                    Разходи
-                </button>
-            </div>
+            {/* Search, Scope, Type & Flag Filter Bar */}
+            <TransactionFilterBar
+                filters={transactionFilters}
+                selectedDate={selectedDate}
+                totalMatchingCount={totalMatchingCount}
+                filteredIncomeTotal={filteredIncomeTotal}
+                filteredExpenseTotal={filteredExpenseTotal}
+                hasActiveFilters={hasActiveFilters}
+                onUpdateFilters={setTransactionFilters}
+                onResetFilters={() => resetTransactionFilters()}
+            />
 
-            {hasFilteredEntries ? (
+            {!hasScopeEntries && !hasActiveFilters && transactionFilters.type === 'all' ? (
+                <div className="flex flex-col items-center justify-center py-8 text-center">
+                    <div className="w-10 h-10 rounded-full bg-stone-100 flex items-center justify-center text-stone-400 mb-2">
+                        <AppIcon icon={Invoice01Icon} size={18} />
+                    </div>
+                    <p className="text-xs font-semibold text-stone-600">
+                        Няма транзакции за {emptyScopeLabel}
+                    </p>
+                    <p className="text-[11px] text-stone-400 mt-0.5">
+                        Всички добавени приходи и разходи ще се появят тук
+                    </p>
+                </div>
+            ) : hasFilteredEntries ? (
                 <div className="flex flex-col">
                     {[...filteredIncome].reverse().map((income) => (
                         <IncomeRow
                             key={income.id}
                             income={income}
+                            showDate={showDateBadge}
                             onView={(inc) => setViewingTransaction({ type: 'income', entry: inc })}
                             onOpenMenu={(inc) => setMenuTransaction({ type: 'income', entry: inc })}
                         />
@@ -619,6 +679,7 @@ export const TransactionList = (): React.ReactElement => {
                         <ExpenseRow
                             key={expense.id}
                             expense={expense}
+                            showDate={showDateBadge}
                             onView={(exp) => setViewingTransaction({ type: 'expense', entry: exp })}
                             onOpenMenu={(exp) => setMenuTransaction({ type: 'expense', entry: exp })}
                         />
@@ -626,7 +687,13 @@ export const TransactionList = (): React.ReactElement => {
                 </div>
             ) : (
                 <div className="py-6 text-center text-xs text-stone-400">
-                    Няма намерени {filterMode === 'income' ? 'приходи' : 'разходи'} за този ден.
+                    Няма намерени{' '}
+                    {transactionFilters.type === 'income'
+                        ? 'приходи'
+                        : transactionFilters.type === 'expenses'
+                          ? 'разходи'
+                          : 'транзакции'}{' '}
+                    за {emptyScopeLabel}.
                 </div>
             )}
         </div>

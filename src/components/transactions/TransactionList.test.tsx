@@ -34,6 +34,7 @@ describe('TransactionList', () => {
 
     beforeEach(() => {
         vi.clearAllMocks();
+        useFinancialStore.getState().resetTransactionFilters();
         useFinancialStore.setState({
             selectedDate: '2026-09-22',
             expenseEntries: [mockExpense],
@@ -113,21 +114,71 @@ describe('TransactionList', () => {
         expect(screen.getByText('Пълно описание')).toBeInTheDocument();
     });
 
-    it('filters entries when changing filter tabs', () => {
+    it('filters entries when changing filter tabs inside the Филтри popover', () => {
         render(<TransactionList />);
 
-        // Default 'all' has both
+        // Default 'all' has both and popover is initially closed
         expect(screen.getByText('Supermarket weekly grocery run')).toBeInTheDocument();
         expect(screen.getByText('Client payment')).toBeInTheDocument();
+        expect(screen.queryByRole('dialog', { name: 'Меню с филтри' })).not.toBeInTheDocument();
+
+        // Open the 3-dashes filter popover
+        fireEvent.click(screen.getByRole('button', { name: 'Филтри' }));
+        expect(screen.getByRole('dialog', { name: 'Меню с филтри' })).toBeInTheDocument();
 
         // Switch to 'Приходи'
         fireEvent.click(screen.getByRole('button', { name: 'Приходи' }));
         expect(screen.queryByText('Supermarket weekly grocery run')).not.toBeInTheDocument();
         expect(screen.getByText('Client payment')).toBeInTheDocument();
 
-        // Switch to 'Разходи'
-        fireEvent.click(screen.getByRole('button', { name: 'Разходи' }));
+        // Switch to 'Разходи' inside the popover (within Тип транзакции group)
+        const typeGroup = screen.getByRole('group', { name: 'Тип транзакции' });
+        const expensesTabBtn = Array.from(typeGroup.querySelectorAll('button')).find(
+            (b) => b.textContent === 'Разходи'
+        )!;
+        fireEvent.click(expensesTabBtn);
         expect(screen.getByText('Supermarket weekly grocery run')).toBeInTheDocument();
         expect(screen.queryByText('Client payment')).not.toBeInTheDocument();
+    });
+
+    it('filters entries by text search and displays the live filtered summary bar', () => {
+        render(<TransactionList />);
+
+        const searchInput = screen.getByLabelText('Търси транзакции');
+        fireEvent.change(searchInput, { target: { value: 'supermarket' } });
+
+        expect(screen.getByText('Supermarket weekly grocery run')).toBeInTheDocument();
+        expect(screen.queryByText('Client payment')).not.toBeInTheDocument();
+        expect(screen.getByRole('status')).toHaveTextContent('Намерени: 1');
+    });
+
+    it('allows switching to Месец scope via the Филтри popover even when selected day is empty', () => {
+        const earlierMonthExpense: ExpenseEntry = {
+            id: 'exp-earlier',
+            amount: 40,
+            date: '2026-09-05',
+            description: 'Lidl receipt earlier in month',
+            category: 'Магазини (Храна/Вода)',
+            isWorkExpense: false,
+            isWithKami: true,
+            isWithOthers: false,
+        };
+
+        useFinancialStore.setState({
+            selectedDate: '2026-09-25', // Empty day
+            expenseEntries: [earlierMonthExpense],
+            incomeEntries: [],
+        });
+
+        render(<TransactionList />);
+
+        // Empty day message is shown, but filter bar is still visible above it
+        expect(screen.getByText(/Няма транзакции за този ден/i)).toBeInTheDocument();
+
+        // Open popover and switch scope from Ден to Месец
+        fireEvent.click(screen.getByRole('button', { name: 'Филтри' }));
+        fireEvent.click(screen.getByRole('button', { name: 'Месец' }));
+
+        expect(screen.getByText('Lidl receipt earlier in month')).toBeInTheDocument();
     });
 });
