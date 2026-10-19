@@ -5,10 +5,28 @@ All notable changes to the Finance Tracker project will be documented in this fi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 
+## [2026-10-19]
+
+### Fixed
+- **Default Selected Date on App Open (`src/store/transactionStore.ts`)**: Removed `localStorage` persistence of `selectedDate` (`finance-tracker-store-cache`) so opening or reloading the app always defaults `selectedDate` to today's local date (`toISODateString(new Date())`) rather than rehydrating a stale past date from a previous session, and reset `selectedDate` to today on sign-out and user switch.
+
+### Changed
+- **Agent Governance & Workspace Bridge (`AGENTS.md`, `.learnings/LEARNINGS.md`)**: Promoted `LRN-20261019-001` into `AGENTS.md` §2 (mandatory tier check before editing and zero post-hoc rationalization) and added root `AGENTS.md` include bridge at the parent workspace folder.
+
 ## [2026-10-17]
 
 ### Added
 - **Self-Improvement Skill & Continuous Learning Ledger**: Installed official `pskoett/pskoett-ai-skills@self-improvement` package via `npx skills add`, providing the complete multi-agent continuous learning loop, reference guides (`context-maintenance.md`, `openclaw-integration.md`), helper scripts, and structured templates in `.learnings/` (`LEARNINGS.md`, `ERRORS.md`, `FEATURE_REQUESTS.md`). Tracked package in `skills-lock.json` and allowed `.learnings/**` in `.gitignore`.
+
+### Changed
+- **Visual Craft & Design System Unification**:
+  - **100% Hugeicons Migration**: Migrated all 16 remaining files from `lucide-react` to `@hugeicons/core-free-icons` rendered through `AppIcon` and `IconSquircle` (`DateNavigator.tsx`, `ExportDropdown.tsx`, `ErrorBoundary.tsx`, `error.tsx`, `global-error.tsx`, `QrScannerModal.tsx`, `history/page.tsx`, `AnnualSummary.tsx`, `MonthCard.tsx`, `statistics/page.tsx`, `IncomeBreakdown.tsx`, `MonthlyTrendsChart.tsx`, `login/page.tsx`, `register/page.tsx`, `forgot-password/page.tsx`, `update-password/page.tsx`). Promoted `no-restricted-imports` for `lucide-react` in `eslint.config.mjs` from `"warn"` to `"error"` and removed `lucide-react` from `package.json`.
+  - **Warm Stone Palette & Card Architecture**: Replaced legacy cool `gray-*` tokens and `rounded-xl border-gray-100` card shells across History, Statistics, Auth, DateNavigator, ExportDropdown, and Error surfaces with the warm `stone-*` palette, `rounded-2xl border-stone-200/70` card shells, and subtle specular elevation (`shadow-[0_1px_3px_rgba(0,0,0,0.03),0_1px_2px_rgba(0,0,0,0.02)]`).
+  - **Statistics & History Visual Harmony**: Unified section headers across `RecordHighlights.tsx`, `MonthlyTrendsChart.tsx`, `IncomeBreakdown.tsx`, and `FunFacts.tsx` to match `SpendingHabits.tsx` (`IconSquircle` badge + title + subtitle), warmed Recharts grid/axis/separator colors in `MonthlyTrendsChart.tsx`, and standardized currency formatting (`symbol === '€' ? '€...' : '...\u00A0лв.'`).
+
+### Fixed
+- **Zero-CLS Skeleton Geometry (`StatisticsSkeleton.tsx`, `HistorySkeleton.tsx`)**: Synchronized `StatisticsSkeleton` Section 2 (`RecordHighlights`) and Section 6 (`FunFacts`) to render parent white cards containing `2×2` and `2+1` inner grids matching the real components, eliminating layout shift on load.
+- **Invalid Tailwind Classes & React 19 Effect Resets**: Fixed non-existent `text-gray-150` in `DateNavigator.tsx` and `py-0.2` in `ExportDropdown.tsx`; refactored synchronous `setState` in `useEffect` in `EditTransactionModal.tsx` and `QrScannerModal.tsx` to render-phase state tracking, achieving zero ESLint warnings across the repository.
 
 ## [2026-10-14]
 

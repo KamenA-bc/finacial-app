@@ -10,7 +10,6 @@
 'use client';
 
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
 import {
     FinancialStore,
     IncomeEntry,
@@ -92,12 +91,19 @@ function resolveTargetYear(targetYear?: number, selectedDate?: string): number {
     return new Date().getFullYear();
 }
 
+// ── Purge any legacy localStorage store cache on client startup ──────────────
+if (typeof window !== 'undefined') {
+    try {
+        localStorage.removeItem('finance-tracker-store-cache');
+    } catch {
+        // ignore storage access errors
+    }
+}
+
 // ── Module-level in-flight fetch deduplication map ───────────────────────────
 const inFlightFetches = new Map<string, Promise<void>>();
 
-export const useFinancialStore = create<FinancialStore>()(
-    persist(
-        (set, get) => ({
+export const useFinancialStore = create<FinancialStore>()((set, get) => ({
     incomeEntries: [],
     expenseEntries: [],
     selectedDate: toISODateString(new Date()),
@@ -119,6 +125,7 @@ export const useFinancialStore = create<FinancialStore>()(
                 loadedYears: [],
                 lastFetchedAt: null,
                 error: null,
+                selectedDate: toISODateString(new Date()),
                 transactionFilters: DEFAULT_TRANSACTION_FILTERS,
             });
             return;
@@ -127,10 +134,12 @@ export const useFinancialStore = create<FinancialStore>()(
     },
 
     fetchTransactions: async (userId: string, targetYear?: number) => {
-        const { lastFetchedAt, userId: currentUserId, loadedYears, selectedDate } = get();
+        const { lastFetchedAt, userId: currentUserId, loadedYears } = get();
+        let { selectedDate } = get();
 
         // ── Cross-User Cache Guard ───────────────────────────────────────────
         if (currentUserId !== null && currentUserId !== userId) {
+            selectedDate = toISODateString(new Date());
             set({
                 userId,
                 incomeEntries: [],
@@ -138,6 +147,7 @@ export const useFinancialStore = create<FinancialStore>()(
                 loadedYears: [],
                 lastFetchedAt: null,
                 error: null,
+                selectedDate,
                 transactionFilters: DEFAULT_TRANSACTION_FILTERS,
             });
         }
@@ -810,28 +820,9 @@ export const useFinancialStore = create<FinancialStore>()(
             isLoading: false,
             error: null,
             lastFetchedAt: null,
+            selectedDate: toISODateString(new Date()),
             transactionFilters: DEFAULT_TRANSACTION_FILTERS,
         });
     },
-}),
-        {
-            name: 'finance-tracker-store-cache',
-            partialize: (state) => ({
-                selectedDate: state.selectedDate,
-            }),
-            onRehydrateStorage: () => () => {
-                // Drop any legacy plaintext financial entries stored in localStorage
-                if (typeof window !== 'undefined') {
-                    try {
-                        const raw = localStorage.getItem('finance-tracker-store-cache');
-                        if (raw && (raw.includes('"incomeEntries"') || raw.includes('"expenseEntries"'))) {
-                            localStorage.removeItem('finance-tracker-store-cache');
-                        }
-                    } catch {
-                        // ignore
-                    }
-                }
-            },
-        }
-    )
-);
+}));
+

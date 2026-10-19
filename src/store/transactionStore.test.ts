@@ -770,6 +770,48 @@ describe('transactionStore - Optimistic Updates & Reliability', () => {
             expect(state.expenseEntries.some((e) => e.id === 'exp-2026-deleted-on-server')).toBe(false);
         });
     });
+
+    describe('selectedDate initialization & non-persistence', () => {
+        it('does not persist selectedDate to localStorage and ignores stale past selectedDate in localStorage on load', async () => {
+            const { toISODateString } = await import('@/lib/dateUtils');
+            const today = toISODateString(new Date());
+
+            // Simulate stale past date left in localStorage from a previous session
+            localStorage.setItem(
+                'finance-tracker-store-cache',
+                JSON.stringify({ state: { selectedDate: '2026-01-15' }, version: 0 })
+            );
+
+            vi.resetModules();
+            const { useFinancialStore: freshStore } = await import('./transactionStore');
+
+            expect(freshStore.getState().selectedDate).toBe(today);
+            expect(localStorage.getItem('finance-tracker-store-cache')).toBeNull();
+
+            // Navigating to a past date in-session must not write it to localStorage
+            freshStore.getState().setSelectedDate('2026-02-10');
+            expect(freshStore.getState().selectedDate).toBe('2026-02-10');
+            expect(localStorage.getItem('finance-tracker-store-cache')).toBeNull();
+        });
+
+        it('resets selectedDate to today when clearStoreCache is called or user switches', async () => {
+            const { toISODateString } = await import('@/lib/dateUtils');
+            const today = toISODateString(new Date());
+
+            useFinancialStore.setState({
+                userId: 'user-a',
+                selectedDate: '2026-01-15',
+            });
+
+            useFinancialStore.getState().setUserId('user-b');
+            expect(useFinancialStore.getState().selectedDate).toBe(today);
+
+            useFinancialStore.setState({ selectedDate: '2026-01-15' });
+            useFinancialStore.getState().clearStoreCache();
+            expect(useFinancialStore.getState().selectedDate).toBe(today);
+        });
+    });
 });
+
 
 

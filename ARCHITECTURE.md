@@ -11,11 +11,11 @@
 | Framework | Next.js 16 (App Router), React 19 |
 | Language | TypeScript (strict) |
 | Styling | Tailwind CSS v4 (strict light theme, `color-scheme: light`) |
-| State | Zustand (`useFinancialStore`, persisted cache) |
+| State | Zustand (`useFinancialStore`, in-memory client cache) |
 | Forms | React Hook Form + Zod |
 | Charts | Recharts (dynamic import, `ssr: false`) |
 | Auth & DB | Supabase (PostgreSQL + Auth) via `@supabase/ssr` |
-| Icons | Hugeicons Stroke Rounded via `@/components/ui/AppIcon` (`lucide-react` is legacy, 16 files pending migration) |
+| Icons | Hugeicons Stroke Rounded via `@/components/ui/AppIcon` (`AppIcon`, `IconSquircle`) |
 | Export | jsPDF, ExcelJS, CSV (UTF-8 BOM) |
 | Tests | Vitest + Testing Library (colocated), Playwright (`e2e/`) |
 | Deployment | Vercel (cron: `/api/cron/keepalive`, Mon & Thu 09:00) |
@@ -80,7 +80,7 @@ finacial-app/
 ```
 ┌─────────────┐   withJwtRetry   ┌───────────────────┐       ┌────────────────┐
 │  Supabase   │◄────────────────►│ transactionStore  │◄─────►│  Components    │
-│  (Postgres) │                  │ (Zustand+persist) │       │  (React)       │
+│  (Postgres) │                  │     (Zustand)     │       │  (React)       │
 └─────────────┘                  └───────────────────┘       └────────────────┘
        ▲                                   │
        │                                   ▼
@@ -91,7 +91,7 @@ finacial-app/
 ```
 
 1. **Supabase** stores `income_entries`, `expense_entries` (RLS by `user_id`) and `error_logs`.
-2. **`useFinancialStore`** actions: `setUserId`, `fetchTransactions(userId, year?)`, `addIncome/Expense`, `updateIncome/Expense`, `deleteIncome/Expense`, `setSelectedDate`, `clearStoreCache`. Mutations update the client cache and Supabase; every client call is wrapped in `withJwtRetry`. The cache is persisted (`partialize`), so it must be cleared on sign-out via `clearStoreCache`.
+2. **`useFinancialStore`** actions: `setUserId`, `fetchTransactions(userId, year?)`, `addIncome/Expense`, `updateIncome/Expense`, `deleteIncome/Expense`, `setSelectedDate`, `clearStoreCache`. Mutations update the client cache and Supabase; every client call is wrapped in `withJwtRetry`. `selectedDate` always defaults to today on app load (not persisted in `localStorage`), and the store is cleared on sign-out via `clearStoreCache`.
 3. **Hooks** derive daily/monthly/annual stats from the store with `useMemo`; no extra API calls.
 4. **Errors** flow through `logError` (`lib/errorLogger.ts`) → `/api/log-error` → `error_logs`.
 
