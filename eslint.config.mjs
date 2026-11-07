@@ -23,12 +23,12 @@ const eslintConfig = defineConfig([
         },
       ],
       "no-restricted-imports": [
-        "warn",
+        "error",
         {
           paths: [
             {
               name: "lucide-react",
-              message: "Hugeicons via @/components/ui/AppIcon is the active standard. Avoid importing from lucide-react in new or updated code.",
+              message: "Hugeicons via @/components/ui/AppIcon is the required standard. Do not import from lucide-react.",
             },
           ],
         },

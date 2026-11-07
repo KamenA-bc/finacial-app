@@ -5,7 +5,8 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowLeft01Icon, ArrowRight01Icon } from '@hugeicons/core-free-icons';
+import { AppIcon } from '@/components/ui/AppIcon';
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import { AnnualSummary } from '@/components/history/AnnualSummary';
 import { MonthCard } from '@/components/history/MonthCard';
@@ -49,21 +50,21 @@ export default function HistoryPage(): React.ReactElement {
             <div className="flex items-center justify-center gap-4 mb-6">
                 <button
                     onClick={() => setYear((y) => y - 1)}
-                    className="flex items-center justify-center w-9 h-9 rounded-full border border-gray-200 text-gray-500 hover:border-gray-400 hover:text-gray-700 transition-colors"
+                    className="flex items-center justify-center w-9 h-9 rounded-full border border-stone-200 bg-white text-stone-600 hover:border-stone-300 hover:bg-stone-100/70 hover:text-stone-900 transition-transform duration-150 active:scale-[0.97] cursor-pointer shadow-2xs focus-visible:ring-2 focus-visible:ring-emerald-500/60 focus-visible:outline-none"
                     aria-label="Предишна година"
                 >
-                    <ChevronLeft size={18} />
+                    <AppIcon icon={ArrowLeft01Icon} size={18} />
                 </button>
-                <span className="text-lg font-bold text-gray-800 tabular-nums min-w-[60px] text-center">
+                <span className="text-lg font-bold text-stone-900 tabular-nums min-w-[60px] text-center tracking-tight">
                     {year}
                 </span>
                 <button
                     onClick={() => setYear((y) => y + 1)}
                     disabled={year >= currentYear}
-                    className="flex items-center justify-center w-9 h-9 rounded-full border border-gray-200 text-gray-500 hover:border-gray-400 hover:text-gray-700 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                    className="flex items-center justify-center w-9 h-9 rounded-full border border-stone-200 bg-white text-stone-600 hover:border-stone-300 hover:bg-stone-100/70 hover:text-stone-900 disabled:opacity-30 disabled:cursor-not-allowed transition-transform duration-150 active:scale-[0.97] cursor-pointer shadow-2xs focus-visible:ring-2 focus-visible:ring-emerald-500/60 focus-visible:outline-none"
                     aria-label="Следваща година"
                 >
-                    <ChevronRight size={18} />
+                    <AppIcon icon={ArrowRight01Icon} size={18} />
                 </button>
             </div>
 

@@ -5,6 +5,17 @@ All notable changes to the Finance Tracker project will be documented in this fi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 
+## [2026-11-07]
+
+### Changed
+- **Harness Modernization & Multi-Agent Compatibility**:
+  - Created root-level directory junctions (.agents, .learnings) to bridge Antigravity discovery from the parent workspace root to the application repository.
+  - Added native Antigravity self-improvement rule (.agents/rules/self-improvement.md) to drive learning capture into .learnings/.
+  - Refreshed knowledge graph (graphify-out/GRAPH_REPORT.md) to synchronize structure with current codebase.
+
+### Fixed
+- **Auth Navigation Warning (src/components/auth/AuthProvider.tsx)**: Added documented ESLint suppression for hard full-page redirect to /login on signOut to flush in-memory state and tokens without triggering @next/next/no-location-assign-relative-destination.
+
 ## [2026-10-19]
 
 ### Fixed

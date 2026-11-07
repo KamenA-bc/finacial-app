@@ -98,3 +98,45 @@ Started debugging and editing `src/store/transactionStore.ts` before reading `fi
 
 ---
 
+## [LRN-20261019-002] best_practice
+
+**Logged**: 2026-10-19T21:18:30+03:00
+**Priority**: high
+**Status**: resolved
+**Area**: frontend
+
+### Summary
+Never persist time-relative UI state (such as `selectedDate`) in `localStorage`, and remove Zustand `persist` middleware completely when its cached fields are retired instead of leaving a placeholder field in `partialize`.
+
+### Details
+In commit `f634d7a5` (2026-10-13), `userId`, `incomeEntries`, `expenseEntries`, and `loadedYears` were removed from Zustand's `persist` `partialize` config in `src/store/transactionStore.ts` for security. Instead of removing the `persist` wrapper altogether, `selectedDate: state.selectedDate` was placed into `partialize`. That caused `selectedDate` to be written to `localStorage['finance-tracker-store-cache']` whenever the store updated (including when opening the app on a past day or drilling down from `/history` in commit `0458edc` on 2026-10-18) and rehydrated on every subsequent app launch, overriding `toISODateString(new Date())` (today).
+
+### Suggested Action
+1. Never persist time-relative defaults (`selectedDate`, `transactionFilters`, transient UI state) across browser sessions in `localStorage`.
+2. When removing persisted fields from a Zustand store, remove the `persist(...)` middleware wrapper completely rather than substituting another state property into `partialize`.
+3. Keep unit tests in `src/store/transactionStore.test.ts` asserting that `selectedDate` initializes to `toISODateString(new Date())` and is never written to `localStorage`.
+
+### Metadata
+- Source: conversation
+- Related Files: src/store/transactionStore.ts, src/store/transactionStore.test.ts
+- Tags: zustand, persist, localStorage, selectedDate, state-management
+- Pattern-Key: store.no_persisted_time_relative_state
+- Recurrence-Count: 1
+- First-Seen: 2026-10-13
+- Last-Seen: 2026-10-19
+
+### Context Maintenance
+- Decay-Type: decision
+- Decay-Rate: durable (architectural invariant for session-scoped date state)
+- Authority: src/store/transactionStore.ts & src/store/transactionStore.test.ts; Owner: project maintainer
+- Revalidation: enforced by unit test `selectedDate initialization & non-persistence` in `src/store/transactionStore.test.ts`; triggers on any edit to `src/store/transactionStore.ts`
+- Validation: verified; Last-Validated: 2026-10-19; Evidence: commit `70fd849` and `src/store/transactionStore.test.ts`
+- Disposition: retain; Application: applied
+
+### Resolution
+- **Resolved**: 2026-10-19T21:16:35+03:00
+- **Commit/PR**: `70fd849`
+- **Notes**: Removed `persist` middleware from `useFinancialStore`, added startup purge for `finance-tracker-store-cache`, and added unit tests in `src/store/transactionStore.test.ts`.
+
+---
+

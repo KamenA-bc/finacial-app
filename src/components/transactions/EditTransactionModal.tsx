@@ -52,30 +52,37 @@ export const EditTransactionModal = ({
     const [isWorkIncome, setIsWorkIncome] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [validationError, setValidationError] = useState<string | null>(null);
+    const [prevTransactionRef, setPrevTransactionRef] = useState<
+        EditTransactionModalProps['transaction'] | null
+    >(null);
+    const [prevIsOpen, setPrevIsOpen] = useState(false);
 
     const isExpense = transaction?.type === 'expense';
 
-    useEffect(() => {
-        if (!isOpen || !transaction) return;
+    if (isOpen !== prevIsOpen || transaction !== prevTransactionRef) {
+        setPrevIsOpen(isOpen);
+        setPrevTransactionRef(transaction);
 
-        const currentEntry = transaction.entry;
-        setAmount(String(currentEntry.amount));
-        setDate(currentEntry.date);
-        setDescription(currentEntry.description || '');
-        setValidationError(null);
+        if (isOpen && transaction) {
+            const currentEntry = transaction.entry;
+            setAmount(String(currentEntry.amount));
+            setDate(currentEntry.date);
+            setDescription(currentEntry.description || '');
+            setValidationError(null);
 
-        if (transaction.type === 'expense') {
-            const exp = transaction.entry as ExpenseEntry;
-            setCategory(exp.category);
-            setIsWorkExpense(Boolean(exp.isWorkExpense));
-            setIsWithKami(Boolean(exp.isWithKami));
-            setIsWithOthers(Boolean(exp.isWithOthers));
-        } else {
-            const inc = transaction.entry as IncomeEntry;
-            setIsWorkIncome(Boolean(inc.isWorkIncome));
-            setIsWithKami(false);
+            if (transaction.type === 'expense') {
+                const exp = transaction.entry as ExpenseEntry;
+                setCategory(exp.category);
+                setIsWorkExpense(Boolean(exp.isWorkExpense));
+                setIsWithKami(Boolean(exp.isWithKami));
+                setIsWithOthers(Boolean(exp.isWithOthers));
+            } else {
+                const inc = transaction.entry as IncomeEntry;
+                setIsWorkIncome(Boolean(inc.isWorkIncome));
+                setIsWithKami(false);
+            }
         }
-    }, [isOpen, transaction]);
+    }
 
     // Handle Escape key to close modal
     useEffect(() => {
@@ -309,13 +316,13 @@ export const EditTransactionModal = ({
                                         type="button"
                                         aria-pressed={isWorkExpense}
                                         onClick={() => setIsWorkExpense(!isWorkExpense)}
-                                        className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium border transition-all cursor-pointer active:scale-[0.97] ${
+                                        className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border transition-all cursor-pointer select-none active:scale-[0.97] ${
                                             isWorkExpense
-                                                ? 'bg-amber-50 text-amber-800 border-amber-300 ring-1 ring-amber-400/30'
-                                                : 'bg-stone-50 text-stone-600 border-stone-200 hover:bg-stone-100'
+                                                ? 'bg-amber-500/10 border-amber-400/40 text-amber-800 shadow-xs'
+                                                : 'bg-stone-50 border-stone-200 text-stone-600 hover:border-stone-300 hover:bg-stone-100/60'
                                         }`}
                                     >
-                                        <AppIcon icon={Briefcase01Icon} size={13} className={isWorkExpense ? 'text-amber-700' : 'text-stone-400'} />
+                                        <AppIcon icon={Briefcase01Icon} size={13} className={isWorkExpense ? 'text-amber-600' : 'text-stone-400'} />
                                         <span>Работни</span>
                                     </button>
 
@@ -323,10 +330,10 @@ export const EditTransactionModal = ({
                                         type="button"
                                         aria-pressed={isWithKami}
                                         onClick={() => setIsWithKami(!isWithKami)}
-                                        className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium border transition-all cursor-pointer active:scale-[0.97] ${
+                                        className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border transition-all cursor-pointer select-none active:scale-[0.97] ${
                                             isWithKami
-                                                ? 'bg-pink-50 text-pink-700 border-pink-300 ring-1 ring-pink-400/30'
-                                                : 'bg-stone-50 text-stone-600 border-stone-200 hover:bg-stone-100'
+                                                ? 'bg-pink-500/10 border-pink-400/40 text-pink-800 shadow-xs'
+                                                : 'bg-stone-50 border-stone-200 text-stone-600 hover:border-stone-300 hover:bg-stone-100/60'
                                         }`}
                                     >
                                         <AppIcon icon={FavouriteIcon} size={13} className={isWithKami ? 'text-pink-600' : 'text-stone-400'} />
@@ -337,13 +344,13 @@ export const EditTransactionModal = ({
                                         type="button"
                                         aria-pressed={isWithOthers}
                                         onClick={() => setIsWithOthers(!isWithOthers)}
-                                        className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium border transition-all cursor-pointer active:scale-[0.97] ${
+                                        className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border transition-all cursor-pointer select-none active:scale-[0.97] ${
                                             isWithOthers
-                                                ? 'bg-emerald-50 text-emerald-800 border-emerald-300 ring-1 ring-emerald-400/30'
-                                                : 'bg-stone-50 text-stone-600 border-stone-200 hover:bg-stone-100'
+                                                ? 'bg-emerald-500/10 border-emerald-400/40 text-emerald-800 shadow-xs'
+                                                : 'bg-stone-50 border-stone-200 text-stone-600 hover:border-stone-300 hover:bg-stone-100/60'
                                         }`}
                                     >
-                                        <AppIcon icon={User02Icon} size={13} className={isWithOthers ? 'text-emerald-700' : 'text-stone-400'} />
+                                        <AppIcon icon={User02Icon} size={13} className={isWithOthers ? 'text-emerald-600' : 'text-stone-400'} />
                                         <span>С Други</span>
                                     </button>
                                 </>
@@ -352,10 +359,10 @@ export const EditTransactionModal = ({
                                     type="button"
                                     aria-pressed={isWorkIncome}
                                     onClick={() => setIsWorkIncome(!isWorkIncome)}
-                                    className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium border transition-all cursor-pointer active:scale-[0.97] ${
+                                    className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border transition-all cursor-pointer select-none active:scale-[0.97] ${
                                         isWorkIncome
-                                            ? 'bg-blue-50 text-blue-700 border-blue-300 ring-1 ring-blue-400/30'
-                                            : 'bg-stone-50 text-stone-600 border-stone-200 hover:bg-stone-100'
+                                            ? 'bg-blue-500/10 border-blue-400/40 text-blue-800 shadow-xs'
+                                            : 'bg-stone-50 border-stone-200 text-stone-600 hover:border-stone-300 hover:bg-stone-100/60'
                                     }`}
                                 >
                                     <AppIcon icon={Briefcase01Icon} size={13} className={isWorkIncome ? 'text-blue-600' : 'text-stone-400'} />

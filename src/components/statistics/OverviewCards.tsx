@@ -12,7 +12,7 @@ import {
     Analytics01Icon,
     PercentIcon,
 } from '@hugeicons/core-free-icons';
-import { AppIcon } from '@/components/ui/AppIcon';
+import { AppIcon, IconSquircle } from '@/components/ui/AppIcon';
 import {
     getCurrencySymbol,
     NUMBER_LOCALE,
@@ -27,11 +27,11 @@ interface OverviewCardsProps {
     savingsRate: number;
 }
 
-const fmt = (amount: number, year: number): string =>
-    `${getCurrencySymbol(`${year}-01-01`)}${Math.abs(amount).toLocaleString(
-        NUMBER_LOCALE,
-        CURRENCY_FORMAT_OPTIONS
-    )}`;
+const fmt = (amount: number, year: number): string => {
+    const symbol = getCurrencySymbol(`${year}-01-01`);
+    const num = Math.abs(amount).toLocaleString(NUMBER_LOCALE, CURRENCY_FORMAT_OPTIONS);
+    return symbol === '€' ? `€${num}` : `${num}\u00A0${symbol}`;
+};
 
 export const OverviewCards = ({
     year,
@@ -49,25 +49,29 @@ export const OverviewCards = ({
             label: 'Общ приход',
             value: `+${fmt(totalIncome, year)}`,
             valueClass: 'text-emerald-600',
-            icon: <AppIcon icon={TrendingUpIcon} size={15} className="text-emerald-500" />,
+            icon: <AppIcon icon={TrendingUpIcon} size={14} className="text-emerald-600" />,
+            iconBg: 'bg-emerald-50 border-emerald-200/70',
         },
         {
             label: 'Общи разходи',
             value: `−${fmt(totalExpenses, year)}`,
             valueClass: 'text-rose-500',
-            icon: <AppIcon icon={TrendingDownIcon} size={15} className="text-rose-400" />,
+            icon: <AppIcon icon={TrendingDownIcon} size={14} className="text-rose-500" />,
+            iconBg: 'bg-rose-50 border-rose-200/70',
         },
         {
             label: 'Нетна печалба',
             value: `${profitSign}${fmt(netProfit, year)}`,
             valueClass: profitClass,
-            icon: <AppIcon icon={Analytics01Icon} size={15} className={profitClass} />,
+            icon: <AppIcon icon={Analytics01Icon} size={14} className={profitClass} />,
+            iconBg: netProfit >= 0 ? 'bg-emerald-50 border-emerald-200/70' : 'bg-rose-50 border-rose-200/70',
         },
         {
             label: 'Спестявания',
             value: `${savingsRate >= 0 ? '' : '−'}${Math.abs(savingsRate).toFixed(1)}%`,
             valueClass: savingsClass,
-            icon: <AppIcon icon={PercentIcon} size={15} className={savingsClass} />,
+            icon: <AppIcon icon={PercentIcon} size={14} className={savingsClass} />,
+            iconBg: savingsRate >= 0 ? 'bg-emerald-50 border-emerald-200/70' : 'bg-rose-50 border-rose-200/70',
         },
     ];
 
@@ -76,10 +80,12 @@ export const OverviewCards = ({
             {cards.map((card) => (
                 <div
                     key={card.label}
-                    className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 sm:p-5 flex flex-col justify-between min-h-[100px]"
+                    className="bg-white rounded-2xl shadow-[0_1px_3px_rgba(0,0,0,0.03),0_1px_2px_rgba(0,0,0,0.02)] border border-stone-200/70 p-4 sm:p-5 flex flex-col justify-between min-h-[100px]"
                 >
-                    <div className="flex items-center gap-1.5 text-[10px] sm:text-xs text-gray-400 font-medium uppercase tracking-widest mb-2">
-                        {card.icon}
+                    <div className="flex items-center gap-2 text-[10px] sm:text-xs text-stone-500 font-semibold uppercase tracking-widest mb-2.5">
+                        <IconSquircle size="sm" className={card.iconBg}>
+                            {card.icon}
+                        </IconSquircle>
                         <span className="leading-tight">{card.label}</span>
                     </div>
                     <p className={`text-xl sm:text-2xl font-bold tabular-nums break-all ${card.valueClass}`}>

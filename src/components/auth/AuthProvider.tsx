@@ -160,6 +160,7 @@ export const AuthProvider = ({
         } catch (err) {
             logError('AuthProvider:signOut', err, {}, 'error');
         } finally {
+            // eslint-disable-next-line @next/next/no-location-assign-relative-destination -- Hard navigation flushes client component state, auth tokens, and in-memory caches
             window.location.href = '/login';
         }
     }, []);

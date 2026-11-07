@@ -8,7 +8,13 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { UserPlus, Mail, Lock, Loader2 } from 'lucide-react';
+import {
+    UserAdd01Icon,
+    Mail01Icon,
+    LockPasswordIcon,
+    Loading03Icon,
+} from '@hugeicons/core-free-icons';
+import { AppIcon, IconSquircle } from '@/components/ui/AppIcon';
 import { useAuth } from '@/components/auth/AuthProvider';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
@@ -52,35 +58,35 @@ export default function RegisterPage(): React.ReactElement {
     };
 
     const inputClass =
-        'w-full px-3 py-2.5 pl-10 border border-gray-200 rounded-md text-sm text-gray-800 placeholder-gray-300 focus:outline-none focus:border-gray-900 focus:ring-1 focus:ring-gray-900 transition-colors bg-white';
+        'w-full px-3 py-2.5 pl-10 border border-stone-200 rounded-lg text-sm text-stone-800 placeholder-stone-400 focus:outline-none focus:border-stone-900 focus:ring-1 focus:ring-stone-900 transition-colors bg-white';
 
     return (
-        <div className="min-h-screen flex items-center justify-center px-4" style={{ backgroundColor: '#faf9f7' }}>
+        <div className="min-h-screen flex items-center justify-center px-4 bg-[#faf9f7]">
             <div className="w-full max-w-sm">
                 {/* Header */}
                 <div className="text-center mb-8">
-                    <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gray-900 mb-4">
-                        <UserPlus size={22} className="text-white" />
+                    <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-stone-900 shadow-xs mb-4">
+                        <AppIcon icon={UserAdd01Icon} size={22} className="text-white" />
                     </div>
-                    <h1 className="text-xl font-bold text-gray-900 tracking-tight">
+                    <h1 className="text-xl font-bold text-stone-900 tracking-tight">
                         Create your account
                     </h1>
-                    <p className="text-sm text-gray-400 mt-1">
+                    <p className="text-sm text-stone-500 mt-1">
                         Start tracking your finances
                     </p>
                 </div>
 
                 {/* Form */}
-                <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+                <div className="bg-white rounded-2xl shadow-[0_1px_3px_rgba(0,0,0,0.03),0_1px_2px_rgba(0,0,0,0.02)] border border-stone-200/70 p-6">
                     {success ? (
                         <div className="text-center py-4">
-                            <div className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-emerald-50 mb-3">
-                                <UserPlus size={18} className="text-emerald-600" />
-                            </div>
-                            <p className="text-sm font-medium text-gray-700">
+                            <IconSquircle size="lg" className="bg-emerald-50 text-emerald-600 border-emerald-200/70 mx-auto mb-3">
+                                <AppIcon icon={UserAdd01Icon} size={18} />
+                            </IconSquircle>
+                            <p className="text-sm font-medium text-stone-800">
                                 Account created!
                             </p>
-                            <p className="text-xs text-gray-400 mt-1">
+                            <p className="text-xs text-stone-500 mt-1">
                                 Redirecting to login…
                             </p>
                         </div>
@@ -91,7 +97,7 @@ export default function RegisterPage(): React.ReactElement {
                             noValidate
                         >
                             {serverError && (
-                                <div className="bg-rose-50 border border-rose-200 text-rose-600 text-xs rounded-md px-3 py-2.5">
+                                <div className="bg-rose-50 border border-rose-200 text-rose-600 text-xs rounded-lg px-3 py-2.5">
                                     {serverError}
                                 </div>
                             )}
@@ -100,14 +106,15 @@ export default function RegisterPage(): React.ReactElement {
                             <div className="flex flex-col gap-1">
                                 <label
                                     htmlFor="register-email"
-                                    className="text-xs text-gray-500 font-medium"
+                                    className="text-xs text-stone-600 font-medium"
                                 >
                                     Email
                                 </label>
                                 <div className="relative">
-                                    <Mail
+                                    <AppIcon
+                                        icon={Mail01Icon}
                                         size={15}
-                                        className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-300"
+                                        className="absolute left-3 top-1/2 -translate-y-1/2 text-stone-400"
                                     />
                                     <input
                                         id="register-email"
@@ -129,14 +136,15 @@ export default function RegisterPage(): React.ReactElement {
                             <div className="flex flex-col gap-1">
                                 <label
                                     htmlFor="register-password"
-                                    className="text-xs text-gray-500 font-medium"
+                                    className="text-xs text-stone-600 font-medium"
                                 >
                                     Password
                                 </label>
                                 <div className="relative">
-                                    <Lock
+                                    <AppIcon
+                                        icon={LockPasswordIcon}
                                         size={15}
-                                        className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-300"
+                                        className="absolute left-3 top-1/2 -translate-y-1/2 text-stone-400"
                                     />
                                     <input
                                         id="register-password"
@@ -158,14 +166,15 @@ export default function RegisterPage(): React.ReactElement {
                             <div className="flex flex-col gap-1">
                                 <label
                                     htmlFor="register-confirm"
-                                    className="text-xs text-gray-500 font-medium"
+                                    className="text-xs text-stone-600 font-medium"
                                 >
                                     Confirm Password
                                 </label>
                                 <div className="relative">
-                                    <Lock
+                                    <AppIcon
+                                        icon={LockPasswordIcon}
                                         size={15}
-                                        className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-300"
+                                        className="absolute left-3 top-1/2 -translate-y-1/2 text-stone-400"
                                     />
                                     <input
                                         id="register-confirm"
@@ -186,12 +195,12 @@ export default function RegisterPage(): React.ReactElement {
                             <button
                                 type="submit"
                                 disabled={isSubmitting}
-                                className="flex items-center justify-center gap-2 w-full py-2.5 rounded-md bg-gray-900 text-white text-sm font-medium hover:bg-gray-800 active:scale-[0.98] disabled:opacity-60 transition-all mt-1"
+                                className="flex items-center justify-center gap-2 w-full py-2.5 rounded-lg bg-stone-900 text-white text-sm font-medium hover:bg-stone-800 active:scale-[0.98] disabled:opacity-60 transition-all mt-1"
                             >
                                 {isSubmitting ? (
-                                    <Loader2 size={16} className="animate-spin" />
+                                    <AppIcon icon={Loading03Icon} size={16} className="animate-spin" />
                                 ) : (
-                                    <UserPlus size={16} />
+                                    <AppIcon icon={UserAdd01Icon} size={16} />
                                 )}
                                 {isSubmitting ? 'Creating account…' : 'Create Account'}
                             </button>
@@ -200,11 +209,11 @@ export default function RegisterPage(): React.ReactElement {
                 </div>
 
                 {/* Footer */}
-                <p className="text-center text-xs text-gray-400 mt-5">
+                <p className="text-center text-xs text-stone-500 mt-5">
                     Already have an account?{' '}
                     <Link
                         href="/login"
-                        className="text-gray-700 font-medium hover:text-gray-900 transition-colors"
+                        className="text-stone-800 font-semibold hover:text-stone-950 transition-colors"
                     >
                         Sign in
                     </Link>

@@ -20,7 +20,8 @@ import {
     ResponsiveContainer,
     ReferenceLine,
 } from 'recharts';
-import { BarChart3 } from 'lucide-react';
+import { Analytics01Icon } from '@hugeicons/core-free-icons';
+import { AppIcon, IconSquircle } from '@/components/ui/AppIcon';
 import {
     getCurrencySymbol,
     NUMBER_LOCALE,
@@ -40,11 +41,11 @@ interface MonthlyTrendsChartProps {
     hasData: boolean;
 }
 
-const formatValue = (value: number, year: number): string =>
-    `${getCurrencySymbol(`${year}-01-01`)}${value.toLocaleString(
-        NUMBER_LOCALE,
-        CURRENCY_FORMAT_OPTIONS
-    )}`;
+const formatValue = (value: number, year: number): string => {
+    const symbol = getCurrencySymbol(`${year}-01-01`);
+    const num = value.toLocaleString(NUMBER_LOCALE, CURRENCY_FORMAT_OPTIONS);
+    return symbol === '€' ? `€${num}` : `${num}\u00A0${symbol}`;
+};
 
 interface CustomTooltipProps {
     active?: boolean;
@@ -68,16 +69,16 @@ const CustomTooltip = ({
     if (!active || !payload?.length) return null;
 
     return (
-        <div className="bg-white border border-gray-100 shadow-md rounded-lg px-3 py-2.5 text-xs">
-            <p className="font-bold text-gray-700 mb-1.5">{label}</p>
+        <div className="bg-white border border-stone-200/80 shadow-lg rounded-xl px-3.5 py-2.5 text-xs">
+            <p className="font-bold text-stone-800 mb-1.5">{label}</p>
             {payload.map((entry) => (
                 <div key={entry.name} className="flex items-center gap-2 py-0.5">
                     <div
                         className="w-2 h-2 rounded-full flex-shrink-0"
                         style={{ backgroundColor: entry.color }}
                     />
-                    <span className="text-gray-500">{LABEL_MAP[entry.name] ?? entry.name}:</span>
-                    <span className="font-medium text-gray-800 tabular-nums ml-auto">
+                    <span className="text-stone-500">{LABEL_MAP[entry.name] ?? entry.name}:</span>
+                    <span className="font-semibold text-stone-800 tabular-nums ml-auto">
                         {formatValue(entry.value, year)}
                     </span>
                 </div>
@@ -101,21 +102,21 @@ const ChartContent = ({
         margin={{ top: 5, right: 10, left: 0, bottom: 5 }}
         barCategoryGap="35%"
     >
-        {/* Subtle horizontal grid + black dotted vertical month separators */}
+        {/* Subtle horizontal grid + warm stone dotted vertical month separators */}
         <CartesianGrid
             strokeDasharray="3 3"
-            stroke="#f3f4f6"
+            stroke="#f5f5f4"
             horizontal={true}
             vertical={false}
         />
         <XAxis
             dataKey="month"
-            tick={{ fontSize: 11, fill: '#9ca3af' }}
-            axisLine={{ stroke: '#e5e7eb' }}
-            tickLine={{ stroke: '#1f2937', strokeDasharray: '2 2' }}
+            tick={{ fontSize: 11, fill: '#a8a29e' }}
+            axisLine={{ stroke: '#e7e5e4' }}
+            tickLine={{ stroke: '#78716c', strokeDasharray: '2 2' }}
         />
         <YAxis
-            tick={{ fontSize: 11, fill: '#9ca3af' }}
+            tick={{ fontSize: 11, fill: '#a8a29e' }}
             axisLine={false}
             tickLine={false}
             width={50}
@@ -124,15 +125,15 @@ const ChartContent = ({
             }
         />
 
-        {/* Black dotted vertical separators between each month */}
+        {/* Warm stone dotted vertical separators between each month */}
         {data.map((_, index) => (
             <ReferenceLine
                 key={index}
                 x={data[index].month}
-                stroke="#1f2937"
+                stroke="#d6d3d1"
                 strokeDasharray="3 3"
                 strokeWidth={0.75}
-                strokeOpacity={0.35}
+                strokeOpacity={0.6}
             />
         ))}
 
@@ -142,7 +143,7 @@ const ChartContent = ({
         <Legend
             iconType="circle"
             iconSize={8}
-            wrapperStyle={{ fontSize: '11px', color: '#6b7280', paddingTop: '10px' }}
+            wrapperStyle={{ fontSize: '11px', color: '#78716c', paddingTop: '10px' }}
             formatter={(value: string) => LABEL_MAP[value] ?? value}
         />
         <Bar dataKey="income" fill="#6ee7b7" radius={[3, 3, 0, 0]} />
@@ -156,24 +157,31 @@ export const MonthlyTrendsChart = ({
     data,
     hasData,
 }: MonthlyTrendsChartProps): React.ReactElement => (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-5">
+    <div className="bg-white rounded-2xl shadow-[0_1px_3px_rgba(0,0,0,0.03),0_1px_2px_rgba(0,0,0,0.02)] border border-stone-200/70 p-4 sm:p-5">
         <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-2">
-                <BarChart3 size={16} className="text-gray-400" />
-                <h2 className="text-xs font-semibold uppercase tracking-widest text-gray-400">
-                    Месечни тенденции
-                </h2>
+            <div className="flex items-center gap-2 sm:gap-2.5">
+                <IconSquircle size="sm" className="bg-stone-100 text-stone-700 border-stone-200/70">
+                    <AppIcon icon={Analytics01Icon} size={14} />
+                </IconSquircle>
+                <div>
+                    <h2 className="text-xs sm:text-sm font-semibold text-stone-800 tracking-tight">
+                        Месечни тенденции
+                    </h2>
+                    <p className="text-[10px] sm:text-[11px] text-stone-400 font-medium">
+                        Приходи, разходи и печалба по месеци за {year}
+                    </p>
+                </div>
             </div>
             {hasData && (
-                <span className="text-[10px] text-gray-300 sm:hidden">
+                <span className="text-[10px] text-stone-400 font-medium sm:hidden">
                     ← плъзни →
                 </span>
             )}
         </div>
 
         {!hasData ? (
-            <div className="flex flex-col items-center justify-center py-12 gap-3 text-gray-300">
-                <BarChart3 size={44} strokeWidth={1} className="opacity-50" />
+            <div className="flex flex-col items-center justify-center py-12 gap-3 text-stone-400">
+                <AppIcon icon={Analytics01Icon} size={44} className="opacity-50" />
                 <p className="text-sm font-medium">Няма данни за тази година</p>
             </div>
         ) : (

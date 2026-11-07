@@ -1,7 +1,16 @@
 'use client';
 
 import React, { useEffect, useRef, useState, useCallback } from 'react';
-import { Camera, CameraOff, Image as ImageIcon, X, AlertCircle, FileText, Check } from 'lucide-react';
+import {
+    Camera01Icon,
+    CameraOff01Icon,
+    Image01Icon,
+    Cancel01Icon,
+    AlertCircleIcon,
+    File01Icon,
+    Tick02Icon,
+} from '@hugeicons/core-free-icons';
+import { AppIcon } from '@/components/ui/AppIcon';
 import { ParsedReceiptQr } from '@/lib/qrParser';
 import { detectQrFromSource, isSecureCameraContext } from '@/lib/qrDetector';
 import { useBodyScrollLock } from '@/hooks/useBodyScrollLock';
@@ -38,7 +47,9 @@ export const QrScannerModal: React.FC<QrScannerModalProps> = ({
     const cameraTimeoutRef = useRef<NodeJS.Timeout | null>(null);
     const scanLoopCallbackRef = useRef<() => void>(() => {});
 
-    const [activeTab, setActiveTab] = useState<ScannerTab>('camera');
+    const [activeTab, setActiveTab] = useState<ScannerTab>(() =>
+        isMobileDevice() ? 'camera' : 'upload'
+    );
     const [cameraState, setCameraState] = useState<CameraState>('initializing');
     const [cameraError, setCameraError] = useState<string | null>(null);
     const [inlineError, setInlineError] = useState<string | null>(null);
@@ -46,6 +57,23 @@ export const QrScannerModal: React.FC<QrScannerModalProps> = ({
     const [isDragOver, setIsDragOver] = useState(false);
     const [scanConfirmed, setScanConfirmed] = useState(false);
     const [isMobile] = useState(() => isMobileDevice());
+    const [prevIsOpen, setPrevIsOpen] = useState(false);
+
+    if (isOpen !== prevIsOpen) {
+        setPrevIsOpen(isOpen);
+        if (isOpen) {
+            setActiveTab(isMobile ? 'camera' : 'upload');
+            setCameraState('initializing');
+            setCameraError(null);
+            setInlineError(null);
+        } else {
+            setCameraState('initializing');
+            setInlineError(null);
+            setCameraError(null);
+            setIsDragOver(false);
+            setScanConfirmed(false);
+        }
+    }
 
     // Stop camera video stream and scan loop
     const stopCamera = useCallback(() => {
@@ -71,7 +99,6 @@ export const QrScannerModal: React.FC<QrScannerModalProps> = ({
             canvasRef.current.height = 0;
             canvasRef.current = null;
         }
-        setCameraState('initializing');
     }, []);
 
     const handleParsedResult = useCallback(
@@ -79,6 +106,7 @@ export const QrScannerModal: React.FC<QrScannerModalProps> = ({
             setScanConfirmed(true);
             setTimeout(() => {
                 stopCamera();
+                setCameraState('initializing');
                 onScanSuccess(parsed);
                 setScanConfirmed(false);
             }, 250);
@@ -272,25 +300,23 @@ export const QrScannerModal: React.FC<QrScannerModalProps> = ({
 
     // Lifecycle
     useEffect(() => {
-        if (isOpen) {
-            const mobile = isMobileDevice();
-            if (mobile) {
-                setActiveTab('camera');
-                startCamera();
-            } else {
-                setActiveTab('upload');
-            }
-        } else {
+        if (!isOpen) {
             stopCamera();
-            setInlineError(null);
-            setCameraError(null);
-            setIsDragOver(false);
-            setScanConfirmed(false);
+            return;
         }
+
+        let initTimer: NodeJS.Timeout | null = null;
+        if (isMobile) {
+            initTimer = setTimeout(() => {
+                void startCamera();
+            }, 0);
+        }
+
         return () => {
+            if (initTimer) clearTimeout(initTimer);
             stopCamera();
         };
-    }, [isOpen, startCamera, stopCamera]);
+    }, [isOpen, isMobile, startCamera, stopCamera]);
 
     // Keyboard controls: ESC to close, Ctrl+V to paste screenshot
     useEffect(() => {
@@ -391,7 +417,7 @@ export const QrScannerModal: React.FC<QrScannerModalProps> = ({
                         className="w-8 h-8 rounded-full flex items-center justify-center text-stone-400 hover:text-stone-100 hover:bg-stone-800 transition-colors cursor-pointer active:scale-[0.95] focus-visible:ring-2 focus-visible:ring-emerald-500/60 focus-visible:outline-none"
                         aria-label="Затвори"
                     >
-                        <X size={18} />
+                        <AppIcon icon={Cancel01Icon} size={18} />
                     </button>
                 </div>
 
@@ -436,7 +462,7 @@ export const QrScannerModal: React.FC<QrScannerModalProps> = ({
                                         {scanConfirmed && (
                                             <div className="absolute inset-0 flex flex-col items-center justify-center animate-in fade-in zoom-in-95 duration-150">
                                                 <div className="w-12 h-12 rounded-full bg-emerald-500 text-stone-950 flex items-center justify-center shadow-lg shadow-emerald-500/50">
-                                                    <Check size={26} className="stroke-[3]" />
+                                                    <AppIcon icon={Tick02Icon} size={26} strokeWidth={2.5} />
                                                 </div>
                                                 <span className="text-xs font-bold text-emerald-300 mt-2 tracking-wide drop-shadow-md">
                                                     Разчетено!
@@ -455,7 +481,7 @@ export const QrScannerModal: React.FC<QrScannerModalProps> = ({
                                         onClick={() => fileInputRef.current?.click()}
                                         className="pointer-events-auto inline-flex items-center gap-2.5 px-5 py-3 rounded-full bg-stone-900/75 hover:bg-stone-900/85 text-stone-100 border border-white/20 backdrop-blur-md shadow-xl text-xs font-medium active:scale-[0.97] transition-all cursor-pointer focus-visible:ring-2 focus-visible:ring-emerald-500/60 focus-visible:outline-none"
                                     >
-                                        <ImageIcon size={15} className="text-emerald-400" />
+                                        <AppIcon icon={Image01Icon} size={15} className="text-emerald-400" />
                                         <span>Избери от галерия</span>
                                     </button>
                                 </div>
@@ -466,11 +492,11 @@ export const QrScannerModal: React.FC<QrScannerModalProps> = ({
                                 <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center z-10 bg-stone-950/95 animate-in fade-in duration-200">
                                     <div className="relative mb-3.5 flex items-center justify-center">
                                         <div className="w-12 h-12 rounded-2xl bg-stone-900 border border-stone-800 flex items-center justify-center text-emerald-400 shadow-inner">
-                                            <Camera size={20} className="animate-pulse" />
+                                            <AppIcon icon={Camera01Icon} size={20} className="animate-pulse" />
                                         </div>
                                         <div className="absolute -inset-1 rounded-2xl border-2 border-emerald-500/30 animate-ping pointer-events-none" />
                                     </div>
-                                    <p className="text-xs font-semibold text-stone-200 mb-1">Свързване с камерата...</p>
+                                    <p className="text-xs font-semibold text-stone-200 mb-1">Свързване с камерата…</p>
                                     <p className="text-[11px] text-stone-400 max-w-[220px] leading-relaxed">
                                         Ако браузърът поиска разрешение, натиснете „Разреши“
                                     </p>
@@ -481,7 +507,7 @@ export const QrScannerModal: React.FC<QrScannerModalProps> = ({
                             {cameraState === 'error' && (
                                 <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center z-10 bg-stone-950 animate-in fade-in duration-200">
                                     <div className="w-12 h-12 rounded-2xl bg-stone-900 border border-stone-800 flex items-center justify-center text-stone-400 mb-3 shadow-inner">
-                                        <CameraOff size={20} className="text-rose-400/80" />
+                                        <AppIcon icon={CameraOff01Icon} size={20} className="text-rose-400/80" />
                                     </div>
                                     <p className="text-xs font-semibold text-stone-200 mb-1">
                                         {cameraError || 'Камерата не беше открита'}
@@ -517,7 +543,7 @@ export const QrScannerModal: React.FC<QrScannerModalProps> = ({
                                 /* Mobile-tailored gallery picker card (no drag-and-drop confusion) */
                                 <div className="relative aspect-square w-full rounded-xl overflow-hidden flex flex-col items-center justify-center text-center p-6 border border-stone-800 bg-stone-950">
                                     <div className="w-12 h-12 rounded-2xl bg-stone-900 flex items-center justify-center text-emerald-400 border border-stone-800 mb-3 shadow-inner">
-                                        <ImageIcon size={22} />
+                                        <AppIcon icon={Image01Icon} size={22} />
                                     </div>
                                     <p className="text-xs font-semibold text-stone-200 mb-1">
                                         {cameraError ? 'Камерата не е достъпна' : 'Снимка на касов бон'}
@@ -531,7 +557,7 @@ export const QrScannerModal: React.FC<QrScannerModalProps> = ({
                                             onClick={() => fileInputRef.current?.click()}
                                             className="w-full py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-medium text-xs flex items-center justify-center gap-2 active:scale-[0.97] transition-all shadow-md cursor-pointer"
                                         >
-                                            <ImageIcon size={15} />
+                                            <AppIcon icon={Image01Icon} size={15} />
                                             <span>Отвори галерията</span>
                                         </button>
                                         {cameraError && (
@@ -562,7 +588,7 @@ export const QrScannerModal: React.FC<QrScannerModalProps> = ({
                                     }`}
                                 >
                                     <div className="w-10 h-10 rounded-xl bg-stone-900 flex items-center justify-center text-stone-400 border border-stone-800 mb-2.5">
-                                        <FileText size={18} />
+                                        <AppIcon icon={File01Icon} size={18} />
                                     </div>
 
                                     <div>
@@ -599,14 +625,14 @@ export const QrScannerModal: React.FC<QrScannerModalProps> = ({
                     {isProcessingImage && (
                         <div className="mt-2.5 py-2 px-3 bg-stone-800/80 border border-stone-700 rounded-xl flex items-center justify-center gap-2 text-xs text-stone-300 animate-in fade-in duration-150">
                             <div className="w-3.5 h-3.5 border-2 border-emerald-400 border-t-transparent rounded-full animate-spin" />
-                            <span>Разчитане на данните от QR кода...</span>
+                            <span>Разчитане на данните от QR кода…</span>
                         </div>
                     )}
 
                     {/* Subtle Inline Error Message */}
                     {inlineError && !isProcessingImage && (
                         <div className="mt-2.5 p-2.5 bg-amber-950/40 border border-amber-800/60 rounded-xl flex items-start gap-2 text-amber-200 text-xs animate-in fade-in slide-in-from-top-1 duration-150">
-                            <AlertCircle size={14} className="shrink-0 mt-0.5 text-amber-400" />
+                            <AppIcon icon={AlertCircleIcon} size={14} className="shrink-0 mt-0.5 text-amber-400" />
                             <span className="leading-snug text-[11px]">{inlineError}</span>
                         </div>
                     )}

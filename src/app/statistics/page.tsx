@@ -7,7 +7,8 @@
 
 import React, { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowLeft01Icon, ArrowRight01Icon } from '@hugeicons/core-free-icons';
+import { AppIcon } from '@/components/ui/AppIcon';
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import { OverviewCards } from '@/components/statistics/OverviewCards';
 import { RecordHighlights } from '@/components/statistics/RecordHighlights';
@@ -25,10 +26,13 @@ const MonthlyTrendsChart = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="bg-white rounded-xl shadow-sm border border-stone-100 p-5 min-h-[340px] select-none" aria-busy="true">
-        <div className="flex items-center gap-2 mb-4">
-          <div className="w-4 h-4 rounded bg-stone-100 animate-pulse" />
-          <div className="w-36 h-3.5 rounded bg-stone-100 animate-pulse" />
+      <div className="bg-white rounded-2xl shadow-[0_1px_3px_rgba(0,0,0,0.03),0_1px_2px_rgba(0,0,0,0.02)] border border-stone-200/70 p-5 min-h-[340px] select-none" aria-busy="true">
+        <div className="flex items-center gap-2.5 mb-4">
+          <div className="w-7 h-7 rounded-lg bg-stone-100 animate-pulse" />
+          <div className="flex flex-col gap-1">
+            <div className="w-36 h-3.5 rounded bg-stone-100 animate-pulse" />
+            <div className="w-24 h-2.5 rounded bg-stone-100/70 animate-pulse" />
+          </div>
         </div>
         <div className="h-[240px] flex items-end justify-between pt-6 px-2 sm:px-6 gap-1.5 sm:gap-3 border-b border-stone-100 pb-2">
           {[45, 75, 60, 90, 50, 80, 65, 95, 70, 85, 55, 68].map((h, i) => (
@@ -92,21 +96,21 @@ export default function StatisticsPage(): React.ReactElement {
             <div className="flex items-center justify-center gap-4 mb-6">
                 <button
                     onClick={() => setYear((y) => y - 1)}
-                    className="flex items-center justify-center w-9 h-9 rounded-full border border-gray-200 text-gray-500 hover:border-gray-400 hover:text-gray-700 transition-colors"
+                    className="flex items-center justify-center w-9 h-9 rounded-full border border-stone-200 bg-white text-stone-500 hover:border-stone-400 hover:text-stone-800 hover:bg-stone-50 active:scale-[0.97] transition-all shadow-2xs"
                     aria-label="Предишна година"
                 >
-                    <ChevronLeft size={18} />
+                    <AppIcon icon={ArrowLeft01Icon} size={18} />
                 </button>
-                <span className="text-lg font-bold text-gray-800 tabular-nums min-w-[60px] text-center">
+                <span className="text-lg font-bold text-stone-800 tabular-nums min-w-[60px] text-center">
                     {year}
                 </span>
                 <button
                     onClick={() => setYear((y) => y + 1)}
                     disabled={year >= currentYear}
-                    className="flex items-center justify-center w-9 h-9 rounded-full border border-gray-200 text-gray-500 hover:border-gray-400 hover:text-gray-700 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                    className="flex items-center justify-center w-9 h-9 rounded-full border border-stone-200 bg-white text-stone-500 hover:border-stone-400 hover:text-stone-800 hover:bg-stone-50 active:scale-[0.97] disabled:opacity-30 disabled:cursor-not-allowed transition-all shadow-2xs"
                     aria-label="Следваща година"
                 >
-                    <ChevronRight size={18} />
+                    <AppIcon icon={ArrowRight01Icon} size={18} />
                 </button>
             </div>
 

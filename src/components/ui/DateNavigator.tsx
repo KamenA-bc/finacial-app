@@ -2,10 +2,11 @@
 
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import {
-    ChevronLeft,
-    ChevronRight,
-    CalendarDays,
-} from 'lucide-react';
+    ArrowLeft01Icon,
+    ArrowRight01Icon,
+    Calendar01Icon,
+} from '@hugeicons/core-free-icons';
+import { AppIcon } from '@/components/ui/AppIcon';
 import { useFinancialStore } from '@/store/transactionStore';
 import {
     addDays,
@@ -304,29 +305,30 @@ export const DateNavigator = (): React.ReactElement => {
                 onClick={handlePrev}
                 disabled={atLimit}
                 aria-label="Предишен ден"
-                className="flex items-center justify-center w-9 h-9 rounded-full border border-gray-200 text-gray-500 hover:border-gray-400 hover:text-gray-700 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                className="flex items-center justify-center w-9 h-9 rounded-full border border-stone-200 bg-white text-stone-600 hover:border-stone-300 hover:bg-stone-100/70 hover:text-stone-900 disabled:opacity-30 disabled:cursor-not-allowed transition-transform duration-150 active:scale-[0.97] cursor-pointer shadow-2xs focus-visible:ring-2 focus-visible:ring-emerald-500/60 focus-visible:outline-none"
             >
-                <ChevronLeft size={18} />
+                <AppIcon icon={ArrowLeft01Icon} size={18} />
             </button>
 
             {/* Date label – clickable to open calendar */}
             <button
                 ref={triggerRef}
                 onClick={() => (calendarOpen ? closeCalendar() : openCalendar())}
-                className="flex items-center gap-2 text-gray-700 hover:text-gray-900 transition-colors cursor-pointer group"
+                className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-stone-700 hover:text-stone-900 hover:bg-stone-100/60 transition-transform duration-150 active:scale-[0.98] cursor-pointer group focus-visible:ring-2 focus-visible:ring-emerald-500/60 focus-visible:outline-none"
                 aria-label="Отвори календар"
                 aria-expanded={calendarOpen}
                 id="date-navigator-trigger"
             >
-                <CalendarDays
+                <AppIcon
+                    icon={Calendar01Icon}
                     size={16}
-                    className="text-gray-400 group-hover:text-emerald-500 transition-colors"
+                    className="text-stone-400 group-hover:text-emerald-600 transition-colors"
                 />
-                <span className="text-sm font-medium tracking-wide underline decoration-dashed decoration-gray-300 underline-offset-4 group-hover:decoration-emerald-400 transition-colors">
+                <span className="text-sm font-semibold tracking-tight tabular-nums underline decoration-dashed decoration-stone-300 underline-offset-4 group-hover:decoration-emerald-400 transition-colors">
                     {formatDisplayDate(selectedDate)}
                 </span>
                 {atToday && (
-                    <span className="text-xs font-medium text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">
+                    <span className="text-xs font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200/70 px-2 py-0.5 rounded-full">
                         Днес
                     </span>
                 )}
@@ -337,16 +339,16 @@ export const DateNavigator = (): React.ReactElement => {
                 onClick={handleNext}
                 disabled={atToday}
                 aria-label="Следващ ден"
-                className="flex items-center justify-center w-9 h-9 rounded-full border border-gray-200 text-gray-500 hover:border-gray-400 hover:text-gray-700 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                className="flex items-center justify-center w-9 h-9 rounded-full border border-stone-200 bg-white text-stone-600 hover:border-stone-300 hover:bg-stone-100/70 hover:text-stone-900 disabled:opacity-30 disabled:cursor-not-allowed transition-transform duration-150 active:scale-[0.97] cursor-pointer shadow-2xs focus-visible:ring-2 focus-visible:ring-emerald-500/60 focus-visible:outline-none"
             >
-                <ChevronRight size={18} />
+                <AppIcon icon={ArrowRight01Icon} size={18} />
             </button>
 
             {/* ── Calendar Popover ────────────────────────────────────────── */}
             {calendarOpen && (
                 <div
                     ref={popoverRef}
-                    className="absolute top-full left-1/2 -translate-x-1/2 mt-2 z-50 bg-white rounded-xl shadow-lg border border-gray-100 p-4 w-[300px] animate-[fadeSlideIn_150ms_ease-out]"
+                    className="absolute top-full left-1/2 -translate-x-1/2 mt-2 z-50 origin-top bg-white rounded-2xl shadow-xl border border-stone-200/80 p-4 w-[300px] animate-[fadeSlideIn_150ms_cubic-bezier(0.23,1,0.32,1)]"
                     role="dialog"
                     aria-label="Избор на дата"
                     id="date-navigator-calendar"
@@ -356,21 +358,21 @@ export const DateNavigator = (): React.ReactElement => {
                         <button
                             onClick={goToPrevMonth}
                             disabled={!canGoPrevMonth}
-                            className="flex items-center justify-center w-7 h-7 rounded-full text-gray-400 hover:bg-gray-100 hover:text-gray-700 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                            className="flex items-center justify-center w-7 h-7 rounded-full text-stone-400 hover:bg-stone-100 hover:text-stone-700 disabled:opacity-30 disabled:cursor-not-allowed transition-transform duration-150 active:scale-[0.97] cursor-pointer focus-visible:ring-2 focus-visible:ring-emerald-500/60 focus-visible:outline-none"
                             aria-label="Предишен месец"
                         >
-                            <ChevronLeft size={16} />
+                            <AppIcon icon={ArrowLeft01Icon} size={16} />
                         </button>
-                        <span className="text-sm font-semibold text-gray-700 tabular-nums">
+                        <span className="text-sm font-semibold text-stone-800 tabular-nums">
                             {MONTH_NAMES_SHORT[viewMonth]} {viewYear}
                         </span>
                         <button
                             onClick={goToNextMonth}
                             disabled={!canGoNextMonth}
-                            className="flex items-center justify-center w-7 h-7 rounded-full text-gray-400 hover:bg-gray-100 hover:text-gray-700 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                            className="flex items-center justify-center w-7 h-7 rounded-full text-stone-400 hover:bg-stone-100 hover:text-stone-700 disabled:opacity-30 disabled:cursor-not-allowed transition-transform duration-150 active:scale-[0.97] cursor-pointer focus-visible:ring-2 focus-visible:ring-emerald-500/60 focus-visible:outline-none"
                             aria-label="Следващ месец"
                         >
-                            <ChevronRight size={16} />
+                            <AppIcon icon={ArrowRight01Icon} size={16} />
                         </button>
                     </div>
 
@@ -379,7 +381,7 @@ export const DateNavigator = (): React.ReactElement => {
                         {WEEKDAY_LABELS.map((day) => (
                             <div
                                 key={day}
-                                className="text-center text-[10px] font-medium text-gray-400 uppercase tracking-wider py-1"
+                                className="text-center text-[10px] font-semibold text-stone-400 uppercase tracking-wider py-1"
                             >
                                 {day}
                             </div>
@@ -389,22 +391,22 @@ export const DateNavigator = (): React.ReactElement => {
                     {/* Calendar grid */}
                     <div className="grid grid-cols-7 gap-0">
                         {calendarGrid.map((day) => {
-                            const base = 'flex items-center justify-center w-9 h-9 rounded-full text-xs transition-all duration-100 mx-auto';
+                            const base = 'flex items-center justify-center w-9 h-9 rounded-full text-xs tabular-nums transition-transform duration-100 active:scale-[0.96] mx-auto focus-visible:ring-2 focus-visible:ring-emerald-500/60 focus-visible:outline-none';
 
                             let classes = base;
 
                             if (day.isSelected) {
-                                classes += ' bg-gray-900 text-white font-semibold';
+                                classes += ' bg-stone-900 text-white font-semibold shadow-2xs';
                             } else if (day.isToday) {
-                                classes += ' border-2 border-emerald-400 text-emerald-600 font-semibold';
+                                classes += ' border-2 border-emerald-400 text-emerald-700 font-semibold';
                             } else if (day.isSelectable && day.isCurrentMonth) {
-                                classes += ' text-gray-700 hover:bg-gray-100 cursor-pointer font-medium';
+                                classes += ' text-stone-700 hover:bg-stone-100 cursor-pointer font-medium';
                             } else if (day.isSelectable && !day.isCurrentMonth) {
-                                classes += ' text-gray-300 hover:bg-gray-50 cursor-pointer';
+                                classes += ' text-stone-300 hover:bg-stone-50 cursor-pointer';
                             } else if (!day.isSelectable && day.isCurrentMonth) {
-                                classes += ' text-gray-200 cursor-not-allowed';
+                                classes += ' text-stone-200 cursor-not-allowed';
                             } else {
-                                classes += ' text-gray-150 cursor-not-allowed opacity-40';
+                                classes += ' text-stone-200 cursor-not-allowed opacity-40';
                             }
 
                             return (
@@ -422,22 +424,26 @@ export const DateNavigator = (): React.ReactElement => {
                     </div>
 
                     {/* Manual Input Footer */}
-                    <div className="mt-4 pt-3 border-t border-gray-100">
-                        <label className="block text-xs text-gray-400 font-medium mb-1.5 px-1">
+                    <div className="mt-4 pt-3 border-t border-stone-100">
+                        <label
+                            htmlFor="date-navigator-manual-input"
+                            className="block text-xs text-stone-400 font-medium mb-1.5 px-1"
+                        >
                             Въведете дата (ДД/ММ/ГГГГ)
                         </label>
                         <div className="flex gap-2 items-center px-1">
                             <input
+                                id="date-navigator-manual-input"
                                 type="text"
                                 placeholder="напр. 25/12/2023"
                                 value={manualDate}
                                 onChange={(e) => setManualDate(e.target.value)}
                                 onKeyDown={(e) => e.key === 'Enter' && handleManualSubmit()}
-                                className="flex-1 w-full px-2.5 py-1.5 text-xs text-gray-700 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:bg-white focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400 transition-colors"
+                                className="flex-1 w-full px-2.5 py-1.5 text-xs text-stone-800 placeholder-stone-400 bg-stone-50/70 border border-stone-200 rounded-lg focus:outline-none focus:bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 tabular-nums transition-all"
                             />
                             <button
                                 onClick={handleManualSubmit}
-                                className="px-3 py-1.5 bg-gray-900 text-white text-xs font-medium rounded-md hover:bg-gray-800 transition-colors"
+                                className="px-3 py-1.5 bg-stone-900 text-white text-xs font-semibold rounded-lg hover:bg-stone-800 transition-transform duration-150 active:scale-[0.97] cursor-pointer shadow-2xs focus-visible:ring-2 focus-visible:ring-emerald-500/60 focus-visible:outline-none"
                             >
                                 Отиди
                             </button>
@@ -450,10 +456,10 @@ export const DateNavigator = (): React.ReactElement => {
                     </div>
 
                     {/* Footer: Today button */}
-                    <div className="mt-2 pt-2 border-t border-gray-100 flex justify-center">
+                    <div className="mt-2 pt-2 border-t border-stone-100 flex justify-center">
                         <button
                             onClick={handleTodayClick}
-                            className="text-xs font-medium text-emerald-600 hover:text-emerald-700 hover:bg-emerald-50 px-3 py-1.5 rounded-md transition-colors w-full"
+                            className="text-xs font-semibold text-emerald-600 hover:text-emerald-700 hover:bg-emerald-50 px-3 py-1.5 rounded-lg transition-transform duration-150 active:scale-[0.98] cursor-pointer w-full focus-visible:ring-2 focus-visible:ring-emerald-500/60 focus-visible:outline-none"
                         >
                             Отиди на Днес
                         </button>

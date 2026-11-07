@@ -8,7 +8,13 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { LogIn, Mail, Lock, Loader2 } from 'lucide-react';
+import {
+    Login01Icon,
+    Mail01Icon,
+    LockPasswordIcon,
+    Loading03Icon,
+} from '@hugeicons/core-free-icons';
+import { AppIcon } from '@/components/ui/AppIcon';
 import { useAuth } from '@/components/auth/AuthProvider';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
@@ -44,33 +50,33 @@ export default function LoginPage(): React.ReactElement {
     };
 
     const inputClass =
-        'w-full px-3 py-2.5 pl-10 border border-gray-200 rounded-md text-sm text-gray-800 placeholder-gray-300 focus:outline-none focus:border-gray-900 focus:ring-1 focus:ring-gray-900 transition-colors bg-white';
+        'w-full px-3 py-2.5 pl-10 border border-stone-200 rounded-lg text-sm text-stone-800 placeholder-stone-400 focus:outline-none focus:border-stone-900 focus:ring-1 focus:ring-stone-900 transition-colors bg-white';
 
     return (
-        <div className="min-h-screen flex items-center justify-center px-4" style={{ backgroundColor: '#faf9f7' }}>
+        <div className="min-h-screen flex items-center justify-center px-4 bg-[#faf9f7]">
             <div className="w-full max-w-sm">
                 {/* Header */}
                 <div className="text-center mb-8">
-                    <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gray-900 mb-4">
-                        <LogIn size={22} className="text-white" />
+                    <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-stone-900 shadow-xs mb-4">
+                        <AppIcon icon={Login01Icon} size={22} className="text-white" />
                     </div>
-                    <h1 className="text-xl font-bold text-gray-900 tracking-tight">
+                    <h1 className="text-xl font-bold text-stone-900 tracking-tight">
                         Welcome back
                     </h1>
-                    <p className="text-sm text-gray-400 mt-1">
+                    <p className="text-sm text-stone-500 mt-1">
                         Sign in to your Finance Tracker
                     </p>
                 </div>
 
                 {/* Form */}
-                <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+                <div className="bg-white rounded-2xl shadow-[0_1px_3px_rgba(0,0,0,0.03),0_1px_2px_rgba(0,0,0,0.02)] border border-stone-200/70 p-6">
                     <form
                         onSubmit={handleSubmit(onSubmit)}
                         className="flex flex-col gap-4"
                         noValidate
                     >
                         {serverError && (
-                            <div className="bg-rose-50 border border-rose-200 text-rose-600 text-xs rounded-md px-3 py-2.5">
+                            <div className="bg-rose-50 border border-rose-200 text-rose-600 text-xs rounded-lg px-3 py-2.5">
                                 {serverError}
                             </div>
                         )}
@@ -79,14 +85,15 @@ export default function LoginPage(): React.ReactElement {
                         <div className="flex flex-col gap-1">
                             <label
                                 htmlFor="login-email"
-                                className="text-xs text-gray-500 font-medium"
+                                className="text-xs text-stone-600 font-medium"
                             >
                                 Email
                             </label>
                             <div className="relative">
-                                <Mail
+                                <AppIcon
+                                    icon={Mail01Icon}
                                     size={15}
-                                    className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-300"
+                                    className="absolute left-3 top-1/2 -translate-y-1/2 text-stone-400"
                                 />
                                 <input
                                     id="login-email"
@@ -109,21 +116,22 @@ export default function LoginPage(): React.ReactElement {
                             <div className="flex justify-between items-center">
                                 <label
                                     htmlFor="login-password"
-                                    className="text-xs text-gray-500 font-medium"
+                                    className="text-xs text-stone-600 font-medium"
                                 >
                                     Password
                                 </label>
                                 <Link
                                     href="/forgot-password"
-                                    className="text-[11px] text-gray-400 hover:text-gray-900 transition-colors"
+                                    className="text-[11px] text-stone-500 hover:text-stone-900 transition-colors"
                                 >
                                     Forgot password?
                                 </Link>
                             </div>
                             <div className="relative">
-                                <Lock
+                                <AppIcon
+                                    icon={LockPasswordIcon}
                                     size={15}
-                                    className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-300"
+                                    className="absolute left-3 top-1/2 -translate-y-1/2 text-stone-400"
                                 />
                                 <input
                                     id="login-password"
@@ -144,12 +152,12 @@ export default function LoginPage(): React.ReactElement {
                         <button
                             type="submit"
                             disabled={isSubmitting}
-                            className="flex items-center justify-center gap-2 w-full py-2.5 rounded-md bg-gray-900 text-white text-sm font-medium hover:bg-gray-800 active:scale-[0.98] disabled:opacity-60 transition-all mt-1"
+                            className="flex items-center justify-center gap-2 w-full py-2.5 rounded-lg bg-stone-900 text-white text-sm font-medium hover:bg-stone-800 active:scale-[0.98] disabled:opacity-60 transition-all mt-1"
                         >
                             {isSubmitting ? (
-                                <Loader2 size={16} className="animate-spin" />
+                                <AppIcon icon={Loading03Icon} size={16} className="animate-spin" />
                             ) : (
-                                <LogIn size={16} />
+                                <AppIcon icon={Login01Icon} size={16} />
                             )}
                             {isSubmitting ? 'Signing in…' : 'Sign In'}
                         </button>
@@ -157,11 +165,11 @@ export default function LoginPage(): React.ReactElement {
                 </div>
 
                 {/* Footer */}
-                <p className="text-center text-xs text-gray-400 mt-5">
+                <p className="text-center text-xs text-stone-500 mt-5">
                     Don&apos;t have an account?{' '}
                     <Link
                         href="/register"
-                        className="text-gray-700 font-medium hover:text-gray-900 transition-colors"
+                        className="text-stone-800 font-semibold hover:text-stone-950 transition-colors"
                     >
                         Create one
                     </Link>

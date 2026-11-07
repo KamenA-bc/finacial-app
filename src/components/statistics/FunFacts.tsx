@@ -32,11 +32,11 @@ interface FunFactsProps {
     kamiSpending: number;
 }
 
-const fmt = (amount: number, year: number): string =>
-    `${getCurrencySymbol(`${year}-01-01`)}${amount.toLocaleString(
-        NUMBER_LOCALE,
-        CURRENCY_FORMAT_OPTIONS
-    )}`;
+const fmt = (amount: number, year: number): string => {
+    const symbol = getCurrencySymbol(`${year}-01-01`);
+    const num = amount.toLocaleString(NUMBER_LOCALE, CURRENCY_FORMAT_OPTIONS);
+    return symbol === '€' ? `€${num}` : `${num}\u00A0${symbol}`;
+};
 
 interface FactCardProps {
     label: string;
@@ -53,21 +53,21 @@ const FactCard = ({
     subtext,
     icon,
     iconBg,
-    valueClass = 'text-gray-700',
+    valueClass = 'text-stone-700',
 }: FactCardProps): React.ReactElement => (
-    <div className="flex items-center gap-3 p-4 bg-gray-50/50 rounded-xl border border-gray-100">
+    <div className="flex items-center gap-3 p-4 bg-stone-50/70 rounded-xl border border-stone-200/60">
         <IconSquircle size="lg" className={iconBg}>
             {icon}
         </IconSquircle>
         <div className="min-w-0">
-            <p className="text-xs text-gray-400 font-medium uppercase tracking-wider">
+            <p className="text-xs text-stone-400 font-medium uppercase tracking-wider">
                 {label}
             </p>
             <p className={`text-lg font-bold tabular-nums ${valueClass}`}>
                 {value}
             </p>
             {subtext && (
-                <p className="text-xs text-gray-400 mt-0.5">{subtext}</p>
+                <p className="text-xs text-stone-400 mt-0.5">{subtext}</p>
             )}
         </div>
     </div>
@@ -79,12 +79,19 @@ export const FunFacts = ({
     avgDailyExpense,
     kamiSpending,
 }: FunFactsProps): React.ReactElement => (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-5">
-        <div className="flex items-center gap-2 mb-4">
-            <AppIcon icon={Fire02Icon} size={16} className="text-orange-500" />
-            <h2 className="text-xs font-semibold uppercase tracking-widest text-gray-400">
-                Интересни факти
-            </h2>
+    <div className="bg-white rounded-2xl shadow-[0_1px_3px_rgba(0,0,0,0.03),0_1px_2px_rgba(0,0,0,0.02)] border border-stone-200/70 p-4 sm:p-5">
+        <div className="flex items-center gap-2 sm:gap-2.5 mb-4">
+            <IconSquircle size="sm" className="bg-orange-50 text-orange-600 border-orange-200/70">
+                <AppIcon icon={Fire02Icon} size={14} />
+            </IconSquircle>
+            <div>
+                <h2 className="text-xs sm:text-sm font-semibold text-stone-800 tracking-tight">
+                    Интересни факти
+                </h2>
+                <p className="text-[10px] sm:text-[11px] text-stone-400 font-medium">
+                    Ключови акценти и средни стойности за {year}
+                </p>
+            </div>
         </div>
 
         <div className="flex flex-col gap-3">
@@ -96,7 +103,7 @@ export const FunFacts = ({
                     subtext={kamiSpending > 0 ? 'общо за годината' : 'Няма маркирани'}
                     icon={<AppIcon icon={FavouriteIcon} size={15} className="text-pink-500" />}
                     iconBg="bg-pink-50 text-pink-500 border-pink-200/70"
-                    valueClass={kamiSpending > 0 ? 'text-pink-500' : 'text-gray-300'}
+                    valueClass={kamiSpending > 0 ? 'text-pink-500' : 'text-stone-300'}
                 />
                 <FactCard
                     label="Най-скъп ден"
@@ -114,7 +121,7 @@ export const FunFacts = ({
                 value={fmt(avgDailyExpense, year)}
                 icon={<AppIcon icon={Calculator01Icon} size={15} className="text-blue-500" />}
                 iconBg="bg-blue-50 text-blue-500 border-blue-200/70"
-                valueClass="text-gray-700"
+                valueClass="text-stone-700"
             />
         </div>
     </div>

@@ -31,11 +31,11 @@ interface RecordHighlightsProps {
     worstMonth: MonthRecord | null;
 }
 
-const fmt = (amount: number, year: number): string =>
-    `${getCurrencySymbol(`${year}-01-01`)}${Math.abs(amount).toLocaleString(
-        NUMBER_LOCALE,
-        CURRENCY_FORMAT_OPTIONS
-    )}`;
+const fmt = (amount: number, year: number): string => {
+    const symbol = getCurrencySymbol(`${year}-01-01`);
+    const num = Math.abs(amount).toLocaleString(NUMBER_LOCALE, CURRENCY_FORMAT_OPTIONS);
+    return symbol === '€' ? `€${num}` : `${num}\u00A0${symbol}`;
+};
 
 interface RecordCardProps {
     label: string;
@@ -54,23 +54,23 @@ const RecordCard = ({
     value,
     valueClass,
 }: RecordCardProps): React.ReactElement => (
-    <div className="flex items-center gap-3 p-4 bg-gray-50/50 rounded-xl border border-gray-100">
+    <div className="flex items-center gap-3 p-4 bg-stone-50/70 rounded-xl border border-stone-200/60">
         <IconSquircle size="lg" className={iconBg}>
             {icon}
         </IconSquircle>
         <div className="flex-1 min-w-0">
-            <p className="text-xs text-gray-400 font-medium uppercase tracking-wider">
+            <p className="text-xs text-stone-400 font-medium uppercase tracking-wider">
                 {label}
             </p>
             {month ? (
                 <>
-                    <p className="text-sm font-semibold text-gray-700 truncate">{month}</p>
+                    <p className="text-sm font-semibold text-stone-700 truncate">{month}</p>
                     <p className={`text-lg font-bold tabular-nums ${valueClass}`}>
                         {value}
                     </p>
                 </>
             ) : (
-                <p className="text-xs text-gray-300 mt-1">Няма данни</p>
+                <p className="text-xs text-stone-400 mt-1">Няма данни</p>
             )}
         </div>
     </div>
@@ -127,12 +127,19 @@ export const RecordHighlights = ({
     ];
 
     return (
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-5">
-            <div className="flex items-center gap-2 mb-4">
-                <AppIcon icon={TrophyIcon} size={16} className="text-amber-500" />
-                <h2 className="text-xs font-semibold uppercase tracking-widest text-gray-400">
-                    Рекорди
-                </h2>
+        <div className="bg-white rounded-2xl shadow-[0_1px_3px_rgba(0,0,0,0.03),0_1px_2px_rgba(0,0,0,0.02)] border border-stone-200/70 p-4 sm:p-5">
+            <div className="flex items-center gap-2 sm:gap-2.5 mb-4">
+                <IconSquircle size="sm" className="bg-amber-50 text-amber-600 border-amber-200/70">
+                    <AppIcon icon={TrophyIcon} size={14} />
+                </IconSquircle>
+                <div>
+                    <h2 className="text-xs sm:text-sm font-semibold text-stone-800 tracking-tight">
+                        Рекорди
+                    </h2>
+                    <p className="text-[10px] sm:text-[11px] text-stone-400 font-medium">
+                        Най-силни и най-слаби месеци през {year}
+                    </p>
+                </div>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {records.map((r) => (

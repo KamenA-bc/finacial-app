@@ -7,14 +7,15 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import {
-    Download,
-    FileText,
-    Table,
-    FileSpreadsheet,
-    ChevronDown,
-    CheckCircle,
-    Loader2,
-} from 'lucide-react';
+    Download01Icon,
+    File01Icon,
+    GridTableIcon,
+    Csv01Icon,
+    ArrowDown01Icon,
+    CheckmarkCircle02Icon,
+    Loading03Icon,
+} from '@hugeicons/core-free-icons';
+import { AppIcon, IconSquircle } from '@/components/ui/AppIcon';
 import { useFinancialStore } from '@/store/transactionStore';
 import { useStatisticsData } from '@/hooks/useStatisticsData';
 import { exportToCsv } from '@/lib/csvExport';
@@ -136,16 +137,16 @@ export const ExportDropdown = ({ year: propYear }: ExportDropdownProps): React.R
                 ref={buttonRef}
                 onClick={() => setIsOpen((prev) => !prev)}
                 disabled={loadingFormat !== null}
-                className="flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-medium border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 hover:border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 transition-all shadow-sm disabled:opacity-50 disabled:cursor-wait"
+                className="flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-semibold border border-stone-200/80 bg-white text-stone-700 hover:bg-stone-50 hover:border-stone-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/60 transition-transform duration-150 active:scale-[0.97] shadow-2xs cursor-pointer disabled:opacity-50 disabled:cursor-wait"
                 aria-label="Експортирай данни"
                 aria-expanded={isOpen}
             >
                 {loadingFormat ? (
-                    <Loader2 size={14} className="animate-spin text-emerald-600" />
+                    <AppIcon icon={Loading03Icon} size={14} className="animate-spin text-emerald-600" />
                 ) : doneFormat ? (
-                    <CheckCircle size={14} className="text-emerald-600" />
+                    <AppIcon icon={CheckmarkCircle02Icon} size={14} className="text-emerald-600" />
                 ) : (
-                    <Download size={14} className="text-gray-500" />
+                    <AppIcon icon={Download01Icon} size={14} className="text-stone-500" />
                 )}
 
                 <span>
@@ -156,9 +157,10 @@ export const ExportDropdown = ({ year: propYear }: ExportDropdownProps): React.R
                         : 'Експортирай'}
                 </span>
 
-                <ChevronDown
+                <AppIcon
+                    icon={ArrowDown01Icon}
                     size={13}
-                    className={`text-gray-400 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
+                    className={`text-stone-400 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
                 />
             </button>
 
@@ -166,12 +168,12 @@ export const ExportDropdown = ({ year: propYear }: ExportDropdownProps): React.R
             {isOpen && (
                 <div
                     ref={dropdownRef}
-                    className="absolute right-0 top-full mt-2 w-72 z-50 bg-white rounded-xl shadow-xl border border-gray-100 p-1.5 animate-[fadeSlideIn_150ms_ease-out]"
+                    className="absolute right-0 top-full mt-2 w-72 z-50 origin-top-right bg-white rounded-2xl shadow-xl border border-stone-200/80 p-1.5 animate-[fadeSlideIn_150ms_cubic-bezier(0.23,1,0.32,1)]"
                     role="menu"
                     aria-orientation="vertical"
                 >
-                    <div className="px-3 py-2 border-b border-gray-100 mb-1">
-                        <p className="text-[11px] font-semibold text-gray-400 uppercase tracking-wider">
+                    <div className="px-3 py-2 border-b border-stone-100 mb-1">
+                        <p className="text-[11px] font-semibold text-stone-400 uppercase tracking-wider">
                             Изберете формат
                         </p>
                     </div>
@@ -179,20 +181,23 @@ export const ExportDropdown = ({ year: propYear }: ExportDropdownProps): React.R
                     {/* PDF Option */}
                     <button
                         onClick={handleExportPdf}
-                        className="w-full flex items-start gap-3 p-2.5 rounded-lg text-left hover:bg-gray-50 transition-colors group"
+                        className="w-full flex items-start gap-3 p-2.5 rounded-xl text-left hover:bg-stone-50 transition-transform duration-150 active:scale-[0.98] cursor-pointer group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/60"
                         role="menuitem"
                     >
-                        <div className="p-2 rounded-md bg-rose-50 text-rose-600 group-hover:bg-rose-100 transition-colors mt-0.5">
-                            <FileText size={16} />
-                        </div>
+                        <IconSquircle
+                            size="md"
+                            className="bg-rose-50 text-rose-600 border-rose-200/70 group-hover:bg-rose-100/80 mt-0.5"
+                        >
+                            <AppIcon icon={File01Icon} size={15} />
+                        </IconSquircle>
                         <div>
-                            <div className="text-xs font-semibold text-gray-800 flex items-center gap-1.5">
+                            <div className="text-xs font-semibold text-stone-800 flex items-center gap-1.5">
                                 Годишен PDF отчет
-                                <span className="text-[10px] font-normal text-rose-600 bg-rose-50 px-1.5 py-0.2 rounded">
-                                    {year} г.
+                                <span className="text-[10px] font-medium text-rose-600 bg-rose-50 border border-rose-200/60 px-1.5 py-0.5 rounded-md tabular-nums">
+                                    {year}&nbsp;г.
                                 </span>
                             </div>
-                            <p className="text-[11px] text-gray-400 mt-0.5 leading-snug">
+                            <p className="text-[11px] text-stone-400 mt-0.5 leading-snug">
                                 Векторни графики, KPI карти и анализи
                             </p>
                         </div>
@@ -201,20 +206,23 @@ export const ExportDropdown = ({ year: propYear }: ExportDropdownProps): React.R
                     {/* Excel Option */}
                     <button
                         onClick={handleExportExcel}
-                        className="w-full flex items-start gap-3 p-2.5 rounded-lg text-left hover:bg-gray-50 transition-colors group"
+                        className="w-full flex items-start gap-3 p-2.5 rounded-xl text-left hover:bg-stone-50 transition-transform duration-150 active:scale-[0.98] cursor-pointer group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/60"
                         role="menuitem"
                     >
-                        <div className="p-2 rounded-md bg-emerald-50 text-emerald-600 group-hover:bg-emerald-100 transition-colors mt-0.5">
-                            <Table size={16} />
-                        </div>
+                        <IconSquircle
+                            size="md"
+                            className="bg-emerald-50 text-emerald-600 border-emerald-200/70 group-hover:bg-emerald-100/80 mt-0.5"
+                        >
+                            <AppIcon icon={GridTableIcon} size={15} />
+                        </IconSquircle>
                         <div>
-                            <div className="text-xs font-semibold text-gray-800 flex items-center gap-1.5">
+                            <div className="text-xs font-semibold text-stone-800 flex items-center gap-1.5">
                                 Excel (.xlsx)
-                                <span className="text-[10px] font-normal text-emerald-600 bg-emerald-50 px-1.5 py-0.2 rounded">
+                                <span className="text-[10px] font-medium text-emerald-700 bg-emerald-50 border border-emerald-200/60 px-1.5 py-0.5 rounded-md">
                                     Google Sheets
                                 </span>
                             </div>
-                            <p className="text-[11px] text-gray-400 mt-0.5 leading-snug">
+                            <p className="text-[11px] text-stone-400 mt-0.5 leading-snug">
                                 12 месечни раздела с форматирани таблици
                             </p>
                         </div>
@@ -223,30 +231,33 @@ export const ExportDropdown = ({ year: propYear }: ExportDropdownProps): React.R
                     {/* CSV Option */}
                     <button
                         onClick={handleExportCsv}
-                        className="w-full flex items-start gap-3 p-2.5 rounded-lg text-left hover:bg-gray-50 transition-colors group"
+                        className="w-full flex items-start gap-3 p-2.5 rounded-xl text-left hover:bg-stone-50 transition-transform duration-150 active:scale-[0.98] cursor-pointer group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/60"
                         role="menuitem"
                     >
-                        <div className="p-2 rounded-md bg-blue-50 text-blue-600 group-hover:bg-blue-100 transition-colors mt-0.5">
-                            <FileSpreadsheet size={16} />
-                        </div>
+                        <IconSquircle
+                            size="md"
+                            className="bg-blue-50 text-blue-600 border-blue-200/70 group-hover:bg-blue-100/80 mt-0.5"
+                        >
+                            <AppIcon icon={Csv01Icon} size={15} />
+                        </IconSquircle>
                         <div>
-                            <div className="text-xs font-semibold text-gray-800">
+                            <div className="text-xs font-semibold text-stone-800">
                                 CSV Файл (.csv)
                             </div>
-                            <p className="text-[11px] text-gray-400 mt-0.5 leading-snug">
+                            <p className="text-[11px] text-stone-400 mt-0.5 leading-snug">
                                 Сурови данни за последните 30 дни
                             </p>
                         </div>
                     </button>
 
                     {/* Google Sheets Import Hint Footer */}
-                    <div className="mt-1.5 pt-2 border-t border-gray-100 px-2.5 py-2 bg-gray-50/80 rounded-b-lg">
-                        <p className="text-[10px] font-semibold text-gray-600 flex items-center gap-1 mb-1">
+                    <div className="mt-1.5 pt-2 border-t border-stone-100 px-2.5 py-2 bg-stone-50/80 rounded-b-xl">
+                        <p className="text-[10px] font-semibold text-stone-600 flex items-center gap-1 mb-1">
                             💡 Как да импортирате в Google Sheets:
                         </p>
-                        <ol className="text-[10px] text-gray-400 leading-relaxed list-decimal list-inside space-y-0.5">
-                            <li>Отворете <span className="font-medium text-gray-600">drive.google.com</span> или <span className="font-medium text-gray-600">Google Sheets</span></li>
-                            <li>Натиснете <span className="font-medium text-gray-600">File › Import</span> (Файл › Импортиране)</li>
+                        <ol className="text-[10px] text-stone-400 leading-relaxed list-decimal list-inside space-y-0.5">
+                            <li>Отворете <span className="font-medium text-stone-600">drive.google.com</span> или <span className="font-medium text-stone-600">Google Sheets</span></li>
+                            <li>Натиснете <span className="font-medium text-stone-600">File › Import</span> (Файл › Импортиране)</li>
                             <li>Качете изтегления <span className="font-medium text-emerald-600">.xlsx</span> или <span className="font-medium text-blue-600">.csv</span> файл</li>
                         </ol>
                     </div>
